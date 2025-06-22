@@ -27,8 +27,20 @@
     <h1>מחולל פודקאסטים AI</h1>
     <label for="apiKeyInput">מפתח API (או הגדר משתנה סביבה GEMINI_API_KEY בדפדפן)</label>
     <input id="apiKeyInput" type="password" placeholder="הכנס מפתח או השאר ריק אם הוגדר משתנה סביבה" />
+    
     <label for="topicInput">נושא הפודקאסט</label>
     <input id="topicInput" type="text" placeholder="הכנס את הנושא שלך" />
+
+    <label for="durationInput">אורך רצוי (דקות)</label>
+    <input id="durationInput" type="number" value="7" min="1" max="20" />
+
+    <label for="speakersConfig">תצורת דוברים</label>
+    <select id="speakersConfig">
+      <option value="male_female" selected>גבר ואישה</option>
+      <option value="two_males">שני גברים</option>
+      <option value="two_females">שתי נשים</option>
+    </select>
+    
     <button id="genScriptBtn">צור תסריט</button>
     <div id="status"></div>
   </div>
@@ -61,40 +73,87 @@
         }
     };
 
-    async function generateScript() {
-      // הנחיית המערכת המלאה מוטמעת כאן ישירות
-      const systemPrompt = `You are an AI specializing in writing podcast scripts. Your task is to create a dialogue that feels like a lively, engaging, and humorous **intellectual sparring match**. The conversation must be dynamic, fast-paced, and above all, thought-provoking.
+    function buildSystemPrompt(duration, speakersConfig) {
+      const baseIntro = `You are an AI specializing in writing podcast scripts. Your task is to create a dialogue that feels like a lively, engaging, and humorous **intellectual sparring match**. The conversation must be dynamic, fast-paced, and above all, thought-provoking.
 
-The desired podcast length is approximately 7 minutes.
+The desired podcast length is approximately ${duration} minutes.
 
 #### **General Conversation Style:**
-The guiding style is one of **sharp and amused cynicism**. The speakers don't aim to belittle or dismiss; they use biting wit as a tool to expose absurdities, deconstruct conventions, and examine ideas from unexpected angles. The dialogue should be intelligent yet accessible; critical, yet driven by genuine curiosity. The goal is to make the listener smile, but more importantly, to make them think.
+The guiding style is one of **sharp and amused cynicism**. The speakers don't aim to belittle or dismiss; they use biting wit as a tool to expose absurdities, deconstruct conventions, and examine ideas from unexpected angles. The dialogue should be intelligent yet accessible; critical, yet driven by genuine curiosity. The goal is to make the listener smile, but more importantly, to make them think.`;
 
-#### **Character Profiles:**
-Their interaction is the heart of the podcast. They complement and challenge each other, creating a dialogue that is greater than the sum of its parts.
-
-*   **man:** He possesses a **captivating intellectual presence and a lively, fascinating speaking style**. His approach is analytical, but he presents it with engaging energy and personal charm. He uses sharp cynicism and provocative arguments to deconstruct ideas, doing so in a way that captivates the listener and draws them into his line of thought. He is not dry, but filled with intellectual enthusiasm.
-*   **girl:** She possesses a **quicker, more energetic wit**. She often acts as a pragmatic foil to his statements, bringing the discussion back down to earth or to the human element. She uses playful irony to challenge his assumptions, and can turn an argument on its head with charm and sharpness.
-
+      const outputStructureTemplate = `
 #### **Exact Output Structure:**
 
 1.  **English Directive:**
     *   The output must begin **directly** with an English directive for a Text-to-Speech (TTS) model.
     *   This directive will describe **only** the required manner of speaking (tone, pace, style). **Do not mention the episode's topic.**
-    *   The speaking styles for \`man\` and \`girl\` must be **different and adapted for each new script.**
-    *   **Crucially:** The directive must be written as a **single, continuous sentence** describing the dynamic between the speakers (e.g., "man should adopt a thoughtfully provocative tone, while girl counters with rapid-fire, incisive questions"). It should **not** be broken down into a list format with separate instructions for each speaker.
+    *   The speaking styles for the speakers must be **different and adapted for each new script.**
+    *   **Crucially:** The directive must be written as a **single, continuous sentence** describing the dynamic between the speakers (e.g., "[EXAMPLE_DIRECTIVE]"). It should **not** be broken down into a list format with separate instructions for each speaker.
     *   The directive should state that short vocal cues in parentheses, like (צוחק) or (אנחה), should be incorporated and used **sparingly**.
     *   The cues will be in Hebrew, without Nikkud, and include **only simple, audible actions** (no facial expressions or gestures).
     *   The English directive **must not** end with a colon (:).
 
 2.  **Hebrew Dialogue:**
     *   Immediately following the English directive, the dialogue will appear.
-    *   Speaker names will appear in English: \`man:\`, \`girl:\`.
+    *   Speaker names will appear in English: [SPEAKER_TAGS].
     *   **Ensure grammatically correct gender agreement throughout the dialogue** (masculine/feminine forms) to maintain natural and fluent Hebrew.
     *   The entire text will be in **Hebrew, without Nikkud (vocalization).**`;
+      
+      let characterProfiles = '';
+      let speakerTags = '';
+      let exampleDirective = '';
 
+      switch (speakersConfig) {
+        case 'two_males':
+          characterProfiles = `
+#### **Character Profiles:**
+Their interaction is the heart of the podcast. They complement and challenge each other.
+
+*   **speaker1:** He possesses a **captivating intellectual presence and a lively, fascinating speaking style**. He uses sharp cynicism and provocative arguments to deconstruct ideas, captivating the listener.
+*   **speaker2:** He is a natural storyteller with a calm, resonant voice. He often grounds the abstract arguments of speaker1 with historical anecdotes, real-world examples, and a touch of philosophical melancholy.`;
+          speakerTags = '`speaker1:`, `speaker2:`';
+          exampleDirective = 'speaker1 should adopt a thoughtfully provocative tone, while speaker2 counters with calm, story-driven insights';
+          break;
+
+        case 'two_females':
+          characterProfiles = `
+#### **Character Profiles:**
+Their interaction is the heart of the podcast. They complement and challenge each other.
+
+*   **speaker1:** She possesses a **quicker, more energetic wit**. She acts as a pragmatic foil, bringing discussions back to the human element with playful irony.
+*   **speaker2:** She has a more deliberate, thoughtful delivery. She enjoys exploring the philosophical and societal implications of the topic, expanding the conversation with 'what if' scenarios and dry humor.`;
+          speakerTags = '`speaker1:`, `speaker2:`';
+          exampleDirective = 'speaker1 should adopt a rapid-fire, incisive style, while speaker2 responds with thoughtful, philosophical expansions';
+          break;
+
+        case 'male_female':
+        default:
+          characterProfiles = `
+#### **Character Profiles:**
+Their interaction is the heart of the podcast. They complement and challenge each other.
+
+*   **man:** He possesses a **captivating intellectual presence and a lively, fascinating speaking style**. His approach is analytical, but he presents it with engaging energy and personal charm. He uses sharp cynicism and provocative arguments to deconstruct ideas.
+*   **girl:** She possesses a **quicker, more energetic wit**. She often acts as a pragmatic foil to his statements, bringing the discussion back down to earth with playful irony.`;
+          speakerTags = '`man:`, `girl:`';
+          exampleDirective = 'man should adopt a thoughtfully provocative tone, while girl counters with rapid-fire, incisive questions';
+          break;
+      }
+
+      const outputStructure = outputStructureTemplate
+        .replace('[SPEAKER_TAGS]', speakerTags)
+        .replace('[EXAMPLE_DIRECTIVE]', exampleDirective);
+
+      return `${baseIntro}\n${characterProfiles}\n${outputStructure}`;
+    }
+
+
+    async function generateScript() {
       updateStatus('יוצר תסריט...');
+
       const topic = document.getElementById('topicInput').value.trim();
+      const duration = document.getElementById('durationInput').value;
+      const speakersConfig = document.getElementById('speakersConfig').value;
+
       if (!topic) {
         alert('יש להזין נושא.');
         updateStatus('');
@@ -106,6 +165,8 @@ Their interaction is the heart of the podcast. They complement and challenge eac
         updateStatus('');
         return;
       }
+      
+      const systemPrompt = buildSystemPrompt(duration, speakersConfig);
 
       const model = 'gemini-2.5-flash';
       const url = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent`;
@@ -177,6 +238,65 @@ Their interaction is the heart of the podcast. They complement and challenge eac
         return;
       }
       
+      const speakersConfigChoice = document.getElementById('speakersConfig').value;
+      let speechConfig;
+      
+      // *** START OF UPDATED CODE BLOCK ***
+      // This block now builds the speechConfig object according to the new documentation.
+      // The main object is 'multiSpeakerVoiceConfig' containing an array 'speakerVoiceConfigs'.
+      switch (speakersConfigChoice) {
+        case 'two_males':
+          speechConfig = {
+            multiSpeakerVoiceConfig: {
+              speakerVoiceConfigs: [
+                {
+                  speaker: "speaker1",
+                  voiceConfig: { prebuiltVoiceConfig: { voiceName: "Sadaltager" } }
+                },
+                {
+                  speaker: "speaker2",
+                  voiceConfig: { prebuiltVoiceConfig: { voiceName: "Alnilam" } }
+                }
+              ]
+            }
+          };
+          break;
+        case 'two_females':
+          speechConfig = {
+            multiSpeakerVoiceConfig: {
+              speakerVoiceConfigs: [
+                {
+                  speaker: "speaker1",
+                  voiceConfig: { prebuiltVoiceConfig: { voiceName: "Kore" } }
+                },
+                {
+                  speaker: "speaker2",
+                  voiceConfig: { prebuiltVoiceConfig: { voiceName: "Aoede" } }
+                }
+              ]
+            }
+          };
+          break;
+        case 'male_female':
+        default:
+          speechConfig = {
+            multiSpeakerVoiceConfig: {
+              speakerVoiceConfigs: [
+                {
+                  speaker: "man",
+                  voiceConfig: { prebuiltVoiceConfig: { voiceName: "Sadaltager" } }
+                },
+                {
+                  speaker: "girl",
+                  voiceConfig: { prebuiltVoiceConfig: { voiceName: "Kore" } }
+                }
+              ]
+            }
+          };
+          break;
+      }
+      // *** END OF UPDATED CODE BLOCK ***
+      
       const model = 'gemini-2.5-flash-preview-tts'; 
       const url = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent`;
 
@@ -186,9 +306,8 @@ Their interaction is the heart of the podcast. They complement and challenge eac
         }],
         "generationConfig": {
           "responseModalities": ["AUDIO"],
-          // When providing raw SSML-like text, the multi-speaker config isn't needed
-          // The model parses the directives and names from the text itself.
-          "speechConfig": {}
+          // The correctly structured speechConfig object is placed here
+          "speechConfig": speechConfig
         }
       };
 
@@ -207,7 +326,7 @@ Their interaction is the heart of the podcast. They complement and challenge eac
 
         if (!audioPart) {
             const textResponse = data.candidates?.[0]?.content?.parts?.[0]?.text || "לא התקבל מידע שמע מה-API.";
-            throw new Error(`ה-API לא החזיר אודיו. ייתכן שה-SSML אינו תקין. תגובת המודל: ${textResponse}`);
+            throw new Error(`ה-API לא החזיר אודיו. ייתכן שהתסריט אינו תקין. תגובת המודל: ${textResponse}`);
         }
 
         const b64 = audioPart.inlineData.data;
