@@ -8,7 +8,33 @@
     /* Material Design 3 & Fluent-inspired styling */
     :root { --surface: #F3F2F1; --on-surface: #323130; --primary: #6750A4; --primary-container: #EADDFF; --on-primary-container: #21005D; --secondary: #625B71; --secondary-container: #E8DEF8; --on-secondary-container: #1D192B; --radius: 16px; --padding: 16px; --shadow: 0 4px 16px rgba(0,0,0,0.1); font-family: 'Segoe UI', Roboto, sans-serif; }
     * { box-sizing: border-box; }
-    body { margin: 0; padding: var(--padding); background: var(--surface); color: var(--on-surface); }
+    body {
+      margin: 0;
+      padding: var(--padding);
+      background: var(--surface);
+      color: var(--on-surface);
+      max-width: 720px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    @media (max-width: 800px) {
+      body {
+        max-width: 100vw;
+        padding: 8px;
+      }
+      .card, details {
+        padding: 10px;
+        border-radius: 10px;
+      }
+      input, textarea, select, button {
+        font-size: 0.98rem;
+        padding: 10px;
+      }
+      a#downloadLink {
+        font-size: 0.98rem;
+        padding: 10px 12px;
+      }
+    }
     .card { background: white; border-radius: var(--radius); box-shadow: var(--shadow); padding: var(--padding); margin-bottom: var(--padding); }
     h1 { margin-top: 0; font-size: 1.5rem; }
     label { display: block; margin-bottom: 8px; font-weight: 500; }
@@ -411,7 +437,15 @@ Their interaction is the heart of the podcast. They complement and challenge eac
         const player = document.getElementById('audioPlayer');
         player.src = urlObj;
         player.play();
-        document.getElementById('downloadLink').href = urlObj;
+        // Set download filename: topic + date
+        const topic = document.getElementById('topicInput').value.trim();
+        const dateStr = new Date().toISOString().slice(0,10).replace(/-/g, '');
+        // Sanitize topic for filename (remove forbidden chars)
+        const safeTopic = topic.replace(/[^\w\u0590-\u05FF\- ]+/g, '').replace(/\s+/g, '_').slice(0,40) || 'podcast';
+        const filename = `${safeTopic}_${dateStr}.wav`;
+        const downloadLink = document.getElementById('downloadLink');
+        downloadLink.href = urlObj;
+        downloadLink.setAttribute('download', filename);
         setDownloadLinkEnabled(true);
         updateStatus('השמע מוכן');
       } catch(error) {
