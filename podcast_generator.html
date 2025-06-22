@@ -28,6 +28,26 @@
     summary { font-weight: 600; cursor: pointer; }
     audio { width: 100%; margin-top: 8px; }
     #status { font-size: 0.9rem; color: var(--secondary); }
+    a#downloadLink {
+      display: inline-block;
+      margin-top: 12px;
+      padding: 12px 24px;
+      background: var(--primary);
+      color: #fff;
+      border-radius: calc(var(--radius)/2);
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 1rem;
+      box-shadow: var(--shadow);
+      transition: background 0.3s, color 0.3s, box-shadow 0.3s;
+      cursor: pointer;
+    }
+    a#downloadLink:hover, a#downloadLink:focus {
+      background: var(--on-primary-container);
+      color: #fff;
+      box-shadow: 0 2px 8px rgba(103,80,164,0.15);
+      outline: none;
+    }
   </style>
 </head>
 <body>
@@ -61,15 +81,36 @@
   <div class="card">
     <button id="genAudioBtn">צור שמע (WAV)</button>
     <audio id="audioPlayer" controls></audio>
-    <a id="downloadLink" download="podcast.wav">הורד קובץ WAV</a>
+    <a id="downloadLink" download="podcast.wav" style="pointer-events: none; opacity: 0.5;">הורד קובץ WAV</a>
   </div>
 
   <script>
     function getApiKey() {
+      // 1. מהשדה הידני
       const manualKey = document.getElementById('apiKeyInput').value.trim();
       if (manualKey) return manualKey;
-      return window.GEMINI_API_KEY || ''; // Fallback to the predefined environment variable
+      // 2. window (אם הוזרק ע"י סקריפט)
+      if (window.GEMINI_API_KEY && typeof window.GEMINI_API_KEY === 'string' && window.GEMINI_API_KEY.length > 0) {
+        return window.GEMINI_API_KEY;
+      }
+      // 3. localStorage (אם נשמר שם)
+      if (localStorage.getItem('GEMINI_API_KEY')) {
+        return localStorage.getItem('GEMINI_API_KEY');
+      }
+      // 4. שדה חבוי (אם הוספת כזה)
+      const envInput = document.getElementById('envApiKey');
+      if (envInput && envInput.value) {
+        return envInput.value;
+      }
+      return '';
     }
+
+    // שמירת מפתח ל-localStorage אוטומטית אם הוזן ידנית
+    document.getElementById('apiKeyInput').addEventListener('change', function(e) {
+      if (e.target.value.trim()) {
+        localStorage.setItem('GEMINI_API_KEY', e.target.value.trim());
+      }
+    });
 
     function updateStatus(msg) {
       document.getElementById('status').textContent = msg;
@@ -235,10 +276,28 @@ Their interaction is the heart of the podcast. They complement and challenge eac
         return new Blob([buffer], { type: 'audio/wav' });
     }
 
+    function setDownloadLinkEnabled(enabled) {
+      const link = document.getElementById('downloadLink');
+      if (enabled) {
+        link.style.pointerEvents = '';
+        link.style.opacity = '';
+        link.setAttribute('aria-disabled', 'false');
+        link.tabIndex = 0;
+      } else {
+        link.style.pointerEvents = 'none';
+        link.style.opacity = '0.5';
+        link.setAttribute('aria-disabled', 'true');
+        link.tabIndex = -1;
+        link.removeAttribute('href');
+      }
+    }
+    setDownloadLinkEnabled(false);
+
     async function generateAudio() {
       updateStatus('יוצר שמע...');
       const genAudioBtn = document.getElementById('genAudioBtn');
       genAudioBtn.disabled = true;
+      setDownloadLinkEnabled(false);
 
       const script = document.getElementById('scriptArea').value.trim();
       if (!script) {
@@ -353,8 +412,10 @@ Their interaction is the heart of the podcast. They complement and challenge eac
         player.src = urlObj;
         player.play();
         document.getElementById('downloadLink').href = urlObj;
+        setDownloadLinkEnabled(true);
         updateStatus('השמע מוכן');
       } catch(error) {
+        setDownloadLinkEnabled(false);
         updateStatus(`שגיאה ביצירת השמע: ${error.message}`);
         console.error(error);
       } finally {
