@@ -16,6 +16,14 @@
     input:focus, textarea:focus, select:focus { outline: 2px solid var(--primary); }
     button { cursor: pointer; background: var(--primary); color: white; font-weight: 600; transition: background 0.3s; }
     button:hover { background: var(--on-primary-container); }
+    button:disabled {
+      background: #d1cfe2;
+      color: #888;
+      cursor: not-allowed;
+      opacity: 0.7;
+      box-shadow: none;
+      border: 1px solid #ccc;
+    }
     details { background: var(--secondary-container); border-radius: var(--radius); padding: var(--padding); margin-bottom: var(--padding); }
     summary { font-weight: 600; cursor: pointer; }
     audio { width: 100%; margin-top: 8px; }
@@ -149,6 +157,8 @@ Their interaction is the heart of the podcast. They complement and challenge eac
 
     async function generateScript() {
       updateStatus('יוצר תסריט...');
+      const genScriptBtn = document.getElementById('genScriptBtn');
+      genScriptBtn.disabled = true;
 
       const topic = document.getElementById('topicInput').value.trim();
       const duration = document.getElementById('durationInput').value;
@@ -194,6 +204,8 @@ Their interaction is the heart of the podcast. They complement and challenge eac
       } catch (error) {
         updateStatus(`שגיאה ביצירת התסריט: ${error.message}`);
         console.error(error);
+      } finally {
+        genScriptBtn.disabled = false;
       }
     }
 
@@ -225,6 +237,9 @@ Their interaction is the heart of the podcast. They complement and challenge eac
 
     async function generateAudio() {
       updateStatus('יוצר שמע...');
+      const genAudioBtn = document.getElementById('genAudioBtn');
+      genAudioBtn.disabled = true;
+
       const script = document.getElementById('scriptArea').value.trim();
       if (!script) {
         alert('התסריט ריק');
@@ -342,6 +357,8 @@ Their interaction is the heart of the podcast. They complement and challenge eac
       } catch(error) {
         updateStatus(`שגיאה ביצירת השמע: ${error.message}`);
         console.error(error);
+      } finally {
+        genAudioBtn.disabled = false;
       }
     }
 
