@@ -122,13 +122,38 @@
         const applyTheme = (theme) => {
             if (theme === 'dark') {
                 document.body.classList.add('dark-mode');
-                themeToggle.textContent = '[מצב בהיר]'; // שונה מטקסט
+                themeToggle.textContent = '[מצב בהיר]';
             } else {
                 document.body.classList.remove('dark-mode');
-                themeToggle.textContent = '[מצב כהה]'; // שונה מטקסט
+                themeToggle.textContent = '[מצב כהה]';
             }
             localStorage.setItem('theme', theme);
         };
+
+        // --- START: שינוי נדרש 1 - פונקציה לאילוץ הורדה ---
+        // פונקציה זו משתמשת ב-fetch כדי להוריד קובץ כ-Blob ומפעילה הורדה בצד הלקוח.
+        // זה עוקף את המגבלה של תכונת ה-'download' בקישורים חוצי-דומיינים.
+        async function forceDownload(url, filename) {
+            try {
+                const response = await fetch(url);
+                if (!response.ok) throw new Error(`Network response was not ok: ${response.statusText}`);
+                const blob = await response.blob();
+                
+                const link = document.createElement('a');
+                link.href = URL.createObjectURL(blob);
+                link.download = filename;
+                
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+                
+                URL.revokeObjectURL(link.href); // שחרור הזיכרון
+            } catch (error) {
+                console.error('Download failed:', error);
+                alert(`ההורדה נכשלה עבור ${filename}. אנא בדוק את ה-console.`);
+            }
+        }
+        // --- END: שינוי נדרש 1 ---
 
         // החלפת ערכת נושא בלחיצה
         themeToggle.addEventListener('click', () => {
@@ -138,12 +163,10 @@
 
         // טעינה ראשונית של הדף
         document.addEventListener('DOMContentLoaded', async () => {
-            // קבע את ערכת הנושא ההתחלתית לפי שמירה או העדפת מערכת הפעלה
             const savedTheme = localStorage.getItem('theme') || 
                                (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
             applyTheme(savedTheme);
 
-            // טען את תוכן ה-README
             const contentElement = document.getElementById('content');
             try {
                 const response = await fetch('README.md');
@@ -151,9 +174,8 @@
                 const markdownText = await response.text();
                 contentElement.innerHTML = DOMPurify.sanitize(marked.parse(markdownText));
 
-                const mainBranch = 'main'; // שנה ל-'master' אם צריך
+                const mainBranch = 'main';
                 
-                // עדכן את רשימת הכלים
                 contentElement.querySelectorAll('ul li').forEach(li => {
                     const link = li.querySelector('a[href^="tools/"]');
                     if (!link) return;
@@ -164,6 +186,10 @@
                     const toolPath = link.getAttribute('href');
                     const sourceUrl = `https://raw.githubusercontent.com/${GITHUB_USERNAME}/${GITHUB_REPO_NAME}/${mainBranch}/${toolPath}`;
 
+                    // --- START: שינוי נדרש 2 - עדכון תבנית ה-HTML של הקישור ---
+                    // אנו מחליפים את קישור ההורדה הרגיל בכזה שיפעיל את פונקציית forceDownload
+                    const filename = toolPath.split('/').pop(); // מחלץ את שם הקובץ מהנתיב
+
                     li.className = 'tool-item';
                     li.innerHTML = `
                         <div class="tool-info">
@@ -172,9 +198,10 @@
                         </div>
                         <div class="tool-actions">
                             <a href="${toolPath}">> הפעל</a>
-                            <a href="${sourceUrl}" download>> הורד</a>
+                            <a href="${sourceUrl}" onclick="event.preventDefault(); forceDownload(this.href, '${filename}');">> הורד</a>
                         </div>
                     `;
+                    // --- END: שינוי נדרש 2 ---
                 });
 
             } catch (error) {
