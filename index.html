@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ארגז הכלים שלי</title>
+    
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/dompurify@2.4.1/dist/purify.min.js"></script>
+
+    <style>
+        :root {
+            /* ערכת נושא בהירה (ברירת מחדל) */
+            --bg-color: #ffffff;
+            --text-color: #212121;
+            --border-color: #e0e0e0;
+            --accent-color: #0078d4;
+            --button-bg: #f0f0f0;
+            --button-border: #e0e0e0;
+            --button-hover-bg: #e0e0e0;
+        }
+
+        body.dark-mode {
+            /* ערכת נושא כהה */
+            --bg-color: #1e1e1e;
+            --text-color: #dcdcdc;
+            --border-color: #444;
+            --accent-color: #dcdcdc;
+            --button-bg: #333;
+            --button-border: #444;
+            --button-hover-bg: #444;
+        }
+
+        body {
+            font-family: 'Menlo', 'Consolas', 'Courier New', monospace;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            margin: 0;
+            padding: 20px;
+            transition: background-color 0.2s, color 0.2s;
+        }
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        
+        /* כפתור החלפת ערכת נושא - מעוצב לטקסט */
+        .header-utils {
+            text-align: left; /* ממקם לשמאל בדף RTL */
+            margin-bottom: 20px;
+        }
+        #theme-toggle {
+            background-color: transparent;
+            border: 1px solid var(--border-color);
+            color: var(--text-color);
+            font-family: inherit; /* יורש את פונט ה-monospace */
+            font-size: 0.9em;
+            cursor: pointer;
+            padding: 8px 12px;
+            transition: background-color 0.2s;
+        }
+        #theme-toggle:hover {
+            background-color: var(--button-hover-bg);
+        }
+
+        /* עיצוב התוכן מה-README */
+        main h1 { font-size: 2em; color: var(--accent-color); }
+        main h2 { border-bottom: 1px solid var(--border-color); padding-bottom: 0.5em; margin-top: 2em; }
+        main a { color: var(--accent-color); text-decoration: underline; }
+        main p { max-width: 70ch; }
+        main hr { border-color: var(--border-color); }
+        main ul { list-style: none; padding: 0; }
+
+        .tool-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 20px;
+            padding: 1.2em 0;
+            border-bottom: 1px solid var(--border-color);
+        }
+        .tool-info { flex: 1; min-width: 250px; }
+        .tool-info h3 { margin: 0 0 0.2em 0; font-size: 1.1em; }
+        .tool-info p { margin: 0; color: #888; font-size: 0.9em; }
+        body.dark-mode .tool-info p { color: #aaa; }
+
+        .tool-actions { display: flex; gap: 10px; flex-shrink: 0; }
+        .tool-actions a {
+            display: inline-block;
+            padding: 8px 14px;
+            border: 1px solid var(--button-border);
+            background-color: var(--button-bg);
+            color: var(--text-color);
+            text-decoration: none;
+            font-size: 0.9em;
+            white-space: nowrap;
+            transition: background-color 0.2s;
+        }
+        .tool-actions a:hover { background-color: var(--button-hover-bg); }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header class="header-utils">
+            <button id="theme-toggle" title="שנה ערכת נושא"></button>
+        </header>
+        <main id="content">
+            <p style="text-align: center;">> טוען מערכת כלים...</p>
+        </main>
+    </div>
+
+    <script>
+        // --- ★★★ הגדרות חובה - יש לעדכן! ★★★ ---
+        const GITHUB_USERNAME = 'your-username'; //  <-- החלף בשם המשתמש שלך
+        const GITHUB_REPO_NAME = 'your-repo-name';   //  <-- החלף בשם הריפו שלך
+        // ---------------------------------------------
+
+        const themeToggle = document.getElementById('theme-toggle');
+
+        // פונקציה שמטפלת בהחלת ערכת הנושא ובשמירתה
+        const applyTheme = (theme) => {
+            if (theme === 'dark') {
+                document.body.classList.add('dark-mode');
+                themeToggle.textContent = '[מצב בהיר]'; // שונה מטקסט
+            } else {
+                document.body.classList.remove('dark-mode');
+                themeToggle.textContent = '[מצב כהה]'; // שונה מטקסט
+            }
+            localStorage.setItem('theme', theme);
+        };
+
+        // החלפת ערכת נושא בלחיצה
+        themeToggle.addEventListener('click', () => {
+            const newTheme = document.body.classList.contains('dark-mode') ? 'light' : 'dark';
+            applyTheme(newTheme);
+        });
+
+        // טעינה ראשונית של הדף
+        document.addEventListener('DOMContentLoaded', async () => {
+            // קבע את ערכת הנושא ההתחלתית לפי שמירה או העדפת מערכת הפעלה
+            const savedTheme = localStorage.getItem('theme') || 
+                               (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+            applyTheme(savedTheme);
+
+            // טען את תוכן ה-README
+            const contentElement = document.getElementById('content');
+            try {
+                const response = await fetch('README.md');
+                if (!response.ok) throw new Error('Could not fetch README.md');
+                const markdownText = await response.text();
+                contentElement.innerHTML = DOMPurify.sanitize(marked.parse(markdownText));
+
+                const mainBranch = 'main'; // שנה ל-'master' אם צריך
+                
+                // עדכן את רשימת הכלים
+                contentElement.querySelectorAll('ul li').forEach(li => {
+                    const link = li.querySelector('a[href^="tools/"]');
+                    if (!link) return;
+
+                    const originalText = li.textContent;
+                    const toolName = DOMPurify.sanitize(link.textContent);
+                    const description = DOMPurify.sanitize(originalText.substring(originalText.indexOf(' - ') + 3));
+                    const toolPath = link.getAttribute('href');
+                    const sourceUrl = `https://raw.githubusercontent.com/${GITHUB_USERNAME}/${GITHUB_REPO_NAME}/${mainBranch}/${toolPath}`;
+
+                    li.className = 'tool-item';
+                    li.innerHTML = `
+                        <div class="tool-info">
+                            <h3>${toolName}</h3>
+                            <p>${description}</p>
+                        </div>
+                        <div class="tool-actions">
+                            <a href="${toolPath}">> הפעל</a>
+                            <a href="${sourceUrl}" download>> הורד</a>
+                        </div>
+                    `;
+                });
+
+            } catch (error) {
+                console.error('Error:', error);
+                contentElement.innerHTML = '<p style="text-align:center;">[ERROR] Failed to load tool manifest.</p>';
+            }
+        });
+    </script>
+</body>
+</html>
