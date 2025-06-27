@@ -12,59 +12,35 @@
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
 
     <style>
-        /* --- Material Design 3 - משתני צבע --- */
         :root {
             --md-sys-color-primary: #6750A4;
             --md-sys-color-on-primary: #FFFFFF;
             --md-sys-color-primary-container: #EADDFF;
             --md-sys-color-on-primary-container: #21005D;
             --md-sys-color-secondary: #625B71;
-            --md-sys-color-on-secondary: #FFFFFF;
-            --md-sys-color-secondary-container: #E8DEF8;
             --md-sys-color-on-secondary-container: #1D192B;
             --md-sys-color-error: #B3261E;
-            --md-sys-color-on-error: #FFFFFF;
             --md-sys-color-background: #FFFBFE;
             --md-sys-color-on-background: #1C1B1F;
             --md-sys-color-surface: #FFFBFE;
-            --md-sys-color-on-surface: #1C1B1F;
             --md-sys-color-surface-variant: #E7E0EC;
-            --md-sys-color-on-surface-variant: #49454F;
             --md-sys-color-outline: #79747E;
-            --md-sys-color-shadow: #000000;
             --md-sys-color-surface-container-low: #F7F2FA;
-            
             --border-radius: 16px;
             --border-radius-small: 8px;
         }
-
-        /* --- עיצוב בסיסי --- */
         * { box-sizing: border-box; margin: 0; padding: 0; }
         html { scroll-behavior: smooth; }
-        body {
-            font-family: 'Assistant', sans-serif;
-            background-color: var(--md-sys-color-background);
-            color: var(--md-sys-color-on-background);
-            line-height: 1.6;
-        }
+        body { font-family: 'Assistant', sans-serif; background-color: var(--md-sys-color-background); color: var(--md-sys-color-on-background); line-height: 1.6; }
         .container { max-width: 1400px; margin: 0 auto; padding: 0 1.5rem; }
         .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; padding-top: 2rem; }
-        .card {
-            background-color: var(--md-sys-color-surface-container-low);
-            border-radius: var(--border-radius);
-            padding: 2rem; border: 1px solid var(--md-sys-color-outline-variant);
-            box-shadow: 0 2px 8px rgba(0,0,0,0.05); display: flex; flex-direction: column;
-        }
+        .card { background-color: var(--md-sys-color-surface-container-low); border-radius: var(--border-radius); padding: 2rem; border: 1px solid var(--md-sys-color-outline-variant); box-shadow: 0 2px 8px rgba(0,0,0,0.05); display: flex; flex-direction: column; }
         header { padding-top: 1.5rem; }
         h1, h2 { font-weight: 700; color: var(--md-sys-color-primary); }
         h1 { font-size: 2.5rem; display: flex; align-items: center; gap: 1rem; }
         h2 { font-size: 1.5rem; margin-bottom: 1rem; border-bottom: 2px solid var(--md-sys-color-primary-container); padding-bottom: 0.5rem; }
         .material-symbols-outlined { font-size: inherit; vertical-align: middle; }
-        .btn {
-            display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem;
-            padding: 10px 24px; font-family: 'Assistant', sans-serif; font-size: 1rem; font-weight: 600;
-            border-radius: 99px; border: none; cursor: pointer; transition: all 0.2s ease-in-out; text-decoration: none;
-        }
+        .btn { display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem; padding: 10px 24px; font-family: 'Assistant', sans-serif; font-size: 1rem; font-weight: 600; border-radius: 99px; border: none; cursor: pointer; transition: all 0.2s ease-in-out; text-decoration: none; }
         .btn:disabled { opacity: 0.6; cursor: not-allowed; }
         .btn-primary { background-color: var(--md-sys-color-primary); color: var(--md-sys-color-on-primary); }
         .btn-primary:hover:not(:disabled) { background-color: #5a3f92; box-shadow: 0 4px 8px rgba(0,0,0,0.15); }
@@ -72,38 +48,29 @@
         .btn-secondary:hover:not(:disabled) { background-color: #d8d0e7; }
         .input-group { margin-bottom: 1.5rem; }
         .input-group label { display: block; margin-bottom: 0.5rem; font-weight: 600; color: var(--md-sys-color-on-surface-variant); }
-        textarea#json-text-input {
-            width: 100%; min-height: 200px; padding: 1rem; border: 1px solid var(--md-sys-color-outline);
-            border-radius: var(--border-radius-small); font-family: monospace; direction: ltr; text-align: left;
-            background-color: var(--md-sys-color-surface); font-size: 0.9rem; resize: vertical;
-        }
-        .file-input-wrapper {
-            border: 2px dashed var(--md-sys-color-outline); border-radius: var(--border-radius); padding: 2rem;
-            text-align: center; cursor: pointer; transition: all 0.2s; flex-grow: 1; display: flex;
-            flex-direction: column; justify-content: center;
-        }
+        textarea#json-text-input { width: 100%; min-height: 200px; padding: 1rem; border: 1px solid var(--md-sys-color-outline); border-radius: var(--border-radius-small); font-family: monospace; direction: ltr; text-align: left; background-color: var(--md-sys-color-surface); font-size: 0.9rem; resize: vertical; }
+        .file-input-wrapper { border: 2px dashed var(--md-sys-color-outline); border-radius: var(--border-radius); padding: 2rem; text-align: center; cursor: pointer; transition: all 0.2s; flex-grow: 1; display: flex; flex-direction: column; justify-content: center; }
         .file-input-wrapper:hover, .file-input-wrapper.drag-over { background-color: var(--md-sys-color-primary-container); border-color: var(--md-sys-color-primary); }
         .file-input-wrapper .material-symbols-outlined { font-size: 3rem; color: var(--md-sys-color-primary); }
         .file-input-wrapper input[type="file"] { display: none; }
         .file-name { margin-top: 1rem; font-weight: 600; color: var(--md-sys-color-secondary); }
-
-        /* --- מסך העריכה --- */
         #editor-section { display: none; }
-        .editor-controls {
-            display: flex; gap: 1rem; align-items: center; padding: 1.5rem 0;
-            position: sticky; top: 0; background-color: var(--md-sys-color-background);
-            z-index: 10; border-bottom: 1px solid var(--md-sys-color-surface-variant);
-        }
+        .editor-controls { display: flex; gap: 1rem; align-items: center; padding: 1.5rem 0; position: sticky; top: 0; background-color: var(--md-sys-color-background); z-index: 10; border-bottom: 1px solid var(--md-sys-color-surface-variant); }
         #editor-grid { display: grid; grid-template-columns: 40% 1fr; gap: 2rem; align-items: start; padding-top: 2rem; }
         
-        /* --- נגן מדיה מעוצב - חדש --- */
-        #media-player-container { position: sticky; top: 110px; align-self: start; }
-        #media-player { width: 100%; border-radius: var(--border-radius-small); background-color: black; cursor: pointer; }
-        .custom-controls {
-            background-color: var(--md-sys-color-surface-container-low);
-            border-radius: var(--border-radius); padding: 0.75rem 1rem; margin-top: 1rem;
-            border: 1px solid var(--md-sys-color-surface-variant);
+        /* --- נגן מדיה מעוצב --- */
+        #media-player-wrapper { position: relative; }
+        #media-player { width: 100%; border-radius: var(--border-radius-small); background-color: black; cursor: pointer; display: block; }
+        #audio-poster {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background-color: black; color: white; display: none;
+            justify-content: center; align-items: center; text-align: center;
+            font-size: 1.2rem; font-weight: 600; padding: 1rem;
+            border-radius: var(--border-radius-small);
         }
+        #audio-poster.visible { display: flex; }
+        #media-player-container { position: sticky; top: 110px; align-self: start; }
+        .custom-controls { direction: ltr; background-color: var(--md-sys-color-surface-container-low); border-radius: var(--border-radius); padding: 0.75rem 1rem; margin-top: 1rem; border: 1px solid var(--md-sys-color-surface-variant); }
         .progress-container { display: flex; align-items: center; gap: 1rem; }
         .progress-container .time-display { font-family: monospace; font-size: 0.9rem; color: var(--md-sys-color-secondary); }
         .progress-bar { flex-grow: 1; }
@@ -115,49 +82,21 @@
         .volume-container .material-symbols-outlined { font-size: 1.5rem; }
         input[type=range] { -webkit-appearance: none; width: 100%; background: transparent; cursor: pointer; }
         input[type=range]:focus { outline: none; }
-        input[type=range]::-webkit-slider-runnable-track {
-            width: 100%; height: 6px; background: var(--md-sys-color-surface-variant); border-radius: 3px;
-        }
-        input[type=range]::-webkit-slider-thumb {
-            -webkit-appearance: none; height: 16px; width: 16px; border-radius: 50%;
-            background: var(--md-sys-color-primary); margin-top: -5px;
-        }
+        input[type=range]::-webkit-slider-runnable-track { width: 100%; height: 6px; background: var(--md-sys-color-surface-variant); border-radius: 3px; }
+        input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; height: 16px; width: 16px; border-radius: 50%; background: var(--md-sys-color-primary); margin-top: -5px; }
         
-        /* --- רשימת כתוביות --- */
         #subtitle-list-container h3 { margin-bottom: 1rem; color: var(--md-sys-color-secondary); }
-        .subtitle-item {
-            background-color: var(--md-sys-color-surface); border: 1px solid var(--md-sys-color-surface-variant);
-            border-radius: var(--border-radius-small); padding: 1rem; margin-bottom: 0.75rem;
-            cursor: pointer; transition: all 0.3s ease-in-out; display: flex; flex-direction: column; gap: 0.75rem;
-        }
+        .subtitle-item { background-color: var(--md-sys-color-surface); border: 1px solid var(--md-sys-color-surface-variant); border-radius: var(--border-radius-small); padding: 1rem; margin-bottom: 0.75rem; cursor: pointer; transition: all 0.3s ease-in-out; display: flex; flex-direction: column; gap: 0.75rem; }
         .subtitle-item:hover { border-color: var(--md-sys-color-primary); box-shadow: 0 2px 6px rgba(0,0,0,0.08); }
-        .subtitle-item.active {
-            background-color: var(--md-sys-color-primary-container); border-color: var(--md-sys-color-primary);
-            transform: scale(1.02);
-        }
-        /* --- שינוי יישור זמנים --- */
+        .subtitle-item.active { background-color: var(--md-sys-color-primary-container); border-color: var(--md-sys-color-primary); transform: scale(1.02); }
         .subtitle-item .time-inputs { display: flex; gap: 0.5rem; align-items: center; direction: ltr; }
-        .subtitle-item .time-input {
-            width: 120px; padding: 4px 8px; border: 1px solid var(--md-sys-color-outline);
-            border-radius: 4px; font-family: monospace; font-size: 0.9rem; direction: ltr; text-align: left;
-        }
-        .subtitle-item .text-input {
-            width: 100%; padding: 8px; border: 1px solid var(--md-sys-color-outline);
-            border-radius: 4px; font-family: 'Assistant', sans-serif; font-size: 1rem;
-            resize: vertical; min-height: 40px; direction: rtl;
-        }
-
-        /* --- התראות --- */
-        #notification {
-            position: fixed; bottom: -100px; left: 50%; transform: translateX(-50%);
-            background-color: var(--md-sys-color-on-background); color: var(--md-sys-color-background);
-            padding: 12px 24px; border-radius: 99px; box-shadow: 0 4px 12px rgba(0,0,0,0.2);
-            opacity: 0; visibility: hidden; transition: all 0.4s ease-in-out; z-index: 1000;
-        }
+        .subtitle-item .time-input { width: 120px; padding: 4px 8px; border: 1px solid var(--md-sys-color-outline); border-radius: 4px; font-family: monospace; font-size: 0.9rem; direction: ltr; text-align: left; }
+        .subtitle-item .text-input { width: 100%; padding: 8px; border: 1px solid var(--md-sys-color-outline); border-radius: 4px; font-family: 'Assistant', sans-serif; font-size: 1rem; resize: vertical; min-height: 40px; direction: rtl; }
+        
+        #notification { position: fixed; bottom: -100px; left: 50%; transform: translateX(-50%); background-color: var(--md-sys-color-on-background); color: var(--md-sys-color-background); padding: 12px 24px; border-radius: 99px; box-shadow: 0 4px 12px rgba(0,0,0,0.2); opacity: 0; visibility: hidden; transition: all 0.4s ease-in-out; z-index: 1000; }
         #notification.show { opacity: 1; visibility: visible; bottom: 40px; }
-        #notification.error { background-color: var(--md-sys-color-error); color: var(--md-sys-color-on-error); }
-
-        /* --- רספונסיביות --- */
+        #notification.error { background-color: var(--md-sys-color-error); }
+        
         @media (max-width: 900px) {
             #editor-grid { grid-template-columns: 1fr; }
             #media-player-container { position: relative; top: auto; }
@@ -180,11 +119,7 @@
                         <h2>שלב 1: הוספת תמלול (JSON)</h2>
                         <div class="input-group">
                             <label for="json-file-input">א. העלאת קובץ JSON</label>
-                            <label for="json-file-input" class="file-input-wrapper" id="json-drop-zone">
-                                <span class="material-symbols-outlined">upload_file</span>
-                                <p>לחץ לבחירת קובץ או גרור לכאן</p>
-                                <div id="json-file-name" class="file-name"></div>
-                            </label>
+                            <label for="json-file-input" class="file-input-wrapper" id="json-drop-zone"><span class="material-symbols-outlined">upload_file</span><p>לחץ לבחירת קובץ או גרור לכאן</p><div id="json-file-name" class="file-name"></div></label>
                             <input type="file" id="json-file-input" accept=".json,application/json">
                         </div>
                         <div class="input-group">
@@ -196,17 +131,11 @@
                         <h2>שלב 2: הוספת מדיה</h2>
                         <div class="input-group" style="flex-grow: 1; display: flex; flex-direction: column;">
                             <label for="media-file-input">העלאת קובץ MP3 או MP4</label>
-                            <label for="media-file-input" class="file-input-wrapper" id="media-drop-zone">
-                                <span class="material-symbols-outlined">movie</span>
-                                <p>לחץ לבחירת קובץ או גרור לכאן</p>
-                                <div id="media-file-name" class="file-name"></div>
-                            </label>
+                            <label for="media-file-input" class="file-input-wrapper" id="media-drop-zone"><span class="material-symbols-outlined">movie</span><p>לחץ לבחירת קובץ או גרור לכאן</p><div id="media-file-name" class="file-name"></div></label>
                             <input type="file" id="media-file-input" accept="audio/mp3,video/mp4">
                         </div>
                          <div style="text-align: center; margin-top: 2rem;">
-                            <button id="process-button" class="btn btn-primary" style="padding: 16px 32px; font-size: 1.2rem;" disabled>
-                                <span class="material-symbols-outlined">edit_note</span> צור וערוך כתוביות
-                            </button>
+                            <button id="process-button" class="btn btn-primary" style="padding: 16px 32px; font-size: 1.2rem;" disabled><span class="material-symbols-outlined">edit_note</span> צור וערוך כתוביות</button>
                         </div>
                     </div>
                 </div>
@@ -219,7 +148,10 @@
                  </div>
                 <div id="editor-grid">
                     <div id="media-player-container">
-                        <video id="media-player"></video>
+                        <div id="media-player-wrapper">
+                            <video id="media-player"></video>
+                            <div id="audio-poster"></div>
+                        </div>
                         <div class="custom-controls">
                             <div class="progress-container">
                                 <span class="time-display" id="current-time">00:00</span>
@@ -247,34 +179,32 @@
 
     <script>
     document.addEventListener('DOMContentLoaded', () => {
-        // --- DOM Elements ---
-        const jsonFileInput = document.getElementById('json-file-input');
-        const jsonDropZone = document.getElementById('json-drop-zone');
-        const jsonTextInput = document.getElementById('json-text-input');
-        const mediaFileInput = document.getElementById('media-file-input');
-        const mediaDropZone = document.getElementById('media-drop-zone');
-        const jsonFileName = document.getElementById('json-file-name');
-        const mediaFileName = document.getElementById('media-file-name');
-        const processButton = document.getElementById('process-button');
-        const backToInputBtn = document.getElementById('back-to-input-btn');
-        const downloadSrtButton = document.getElementById('download-srt-button');
-        const inputSection = document.getElementById('input-section');
-        const editorSection = document.getElementById('editor-section');
-        const notification = document.getElementById('notification');
-        
-        // Player Elements
-        const mediaPlayer = document.getElementById('media-player');
-        const playPauseBtn = document.getElementById('play-pause-btn');
-        const playPauseIcon = playPauseBtn.querySelector('span');
-        const progressBar = document.getElementById('progress-bar');
-        const currentTimeEl = document.getElementById('current-time');
-        const durationEl = document.getElementById('duration');
-        const volumeBtn = document.getElementById('volume-btn');
-        const volumeIcon = volumeBtn.querySelector('span');
-        const volumeBar = document.getElementById('volume-bar');
-        const subtitleList = document.getElementById('subtitle-list');
+        const jsonFileInput = document.getElementById('json-file-input'),
+            jsonDropZone = document.getElementById('json-drop-zone'),
+            jsonTextInput = document.getElementById('json-text-input'),
+            mediaFileInput = document.getElementById('media-file-input'),
+            mediaDropZone = document.getElementById('media-drop-zone'),
+            jsonFileName = document.getElementById('json-file-name'),
+            mediaFileName = document.getElementById('media-file-name'),
+            processButton = document.getElementById('process-button'),
+            backToInputBtn = document.getElementById('back-to-input-btn'),
+            downloadSrtButton = document.getElementById('download-srt-button'),
+            inputSection = document.getElementById('input-section'),
+            editorSection = document.getElementById('editor-section'),
+            notification = document.getElementById('notification'),
+            mediaPlayer = document.getElementById('media-player'),
+            audioPoster = document.getElementById('audio-poster'),
+            playPauseBtn = document.getElementById('play-pause-btn'),
+            playPauseIcon = playPauseBtn.querySelector('span'),
+            progressBar = document.getElementById('progress-bar'),
+            currentTimeEl = document.getElementById('current-time'),
+            durationEl = document.getElementById('duration'),
+            volumeBtn = document.getElementById('volume-btn'),
+            volumeIcon = volumeBtn.querySelector('span'),
+            volumeBar = document.getElementById('volume-bar'),
+            subtitleList = document.getElementById('subtitle-list');
 
-        let state = { subtitles: [], mediaURL: null, jsonContent: null, activeSubtitleId: null };
+        let state = { subtitles: [], mediaURL: null, jsonContent: null, mediaFile: null, activeSubtitleId: null };
         
         const showNotification = (message, type = 'info', duration = 3000) => {
             notification.textContent = message;
@@ -304,17 +234,17 @@
 
         const secondsToTimeString = (seconds, useComma = false) => {
             if (isNaN(seconds) || seconds < 0) seconds = 0;
-            const h = Math.floor(seconds / 3600).toString().padStart(2, '0');
-            const m = Math.floor((seconds % 3600) / 60).toString().padStart(2, '0');
-            const s = Math.floor(seconds % 60).toString().padStart(2, '0');
-            const ms = Math.round((seconds - Math.floor(seconds)) * 1000).toString().padStart(3, '0');
+            const h = Math.floor(seconds / 3600).toString().padStart(2, '0'),
+                m = Math.floor((seconds % 3600) / 60).toString().padStart(2, '0'),
+                s = Math.floor(seconds % 60).toString().padStart(2, '0'),
+                ms = Math.round((seconds - Math.floor(seconds)) * 1000).toString().padStart(3, '0');
             return `${h}:${m}:${s}${useComma ? ',' : '.'}${ms}`;
         };
 
         const formatTimeForDisplay = (time) => {
             if (isNaN(time)) return "00:00";
-            const m = Math.floor(time / 60).toString().padStart(2, '0');
-            const s = Math.floor(time % 60).toString().padStart(2, '0');
+            const m = Math.floor(time / 60).toString().padStart(2, '0'),
+                s = Math.floor(time % 60).toString().padStart(2, '0');
             return `${m}:${s}`;
         };
 
@@ -327,14 +257,15 @@
                     jsonTextInput.value = '';
                     checkInputs();
                 };
-                reader.onerror = () => showNotification('שגיאה בקריאת קובץ ה-JSON.', 'error');
+                reader.onerror = () => showNotification('שגיאה בקריאת ה-JSON.', 'error');
                 reader.readAsText(file);
-            } else { showNotification('יש לבחור קובץ מסוג JSON.', 'error'); }
+            } else { showNotification('יש לבחור קובץ JSON.', 'error'); }
         };
         
         const handleMediaFile = (file) => {
              if (file && (file.type.startsWith('audio/') || file.type.startsWith('video/'))) {
                 if (state.mediaURL) URL.revokeObjectURL(state.mediaURL);
+                state.mediaFile = file; // Store the file object
                 state.mediaURL = URL.createObjectURL(file);
                 mediaFileName.textContent = `קובץ: ${file.name}`;
                 checkInputs();
@@ -376,28 +307,22 @@
             inputSection.style.display = 'none';
             editorSection.style.display = 'block';
             mediaPlayer.src = state.mediaURL;
+            if (state.mediaFile.type.startsWith('audio/')) {
+                audioPoster.textContent = state.mediaFile.name;
+                audioPoster.classList.add('visible');
+            } else {
+                audioPoster.classList.remove('visible');
+            }
             subtitleList.innerHTML = '';
             state.subtitles.sort((a,b) => timeStringToSeconds(a.start_time) - timeStringToSeconds(b.start_time));
-            
             state.subtitles.forEach(sub => {
                 const itemEl = document.createElement('div');
                 itemEl.className = 'subtitle-item';
                 itemEl.dataset.id = sub.id;
-                const displayStartTime = secondsToTimeString(timeStringToSeconds(sub.start_time));
-                const displayEndTime = secondsToTimeString(timeStringToSeconds(sub.end_time));
-                itemEl.innerHTML = `
-                    <div class="time-inputs">
-                        <input type="text" class="time-input start-time" value="${displayStartTime}">
-                        <span>&rarr;</span>
-                        <input type="text" class="time-input end-time" value="${displayEndTime}">
-                    </div>
-                    <textarea class="text-input">${sub.text}</textarea>`;
-                itemEl.addEventListener('click', e => {
-                    if (e.target.tagName !== 'INPUT' && e.target.tagName !== 'TEXTAREA') {
-                        mediaPlayer.currentTime = timeStringToSeconds(sub.start_time);
-                        mediaPlayer.play();
-                    }
-                });
+                const displayStartTime = secondsToTimeString(timeStringToSeconds(sub.start_time)),
+                      displayEndTime = secondsToTimeString(timeStringToSeconds(sub.end_time));
+                itemEl.innerHTML = `<div class="time-inputs"><input type="text" class="time-input start-time" value="${displayStartTime}"><span>&rarr;</span><input type="text" class="time-input end-time" value="${displayEndTime}"></div><textarea class="text-input">${sub.text}</textarea>`;
+                itemEl.addEventListener('click', e => { if (e.target.tagName !== 'INPUT' && e.target.tagName !== 'TEXTAREA') { mediaPlayer.currentTime = timeStringToSeconds(sub.start_time); mediaPlayer.play(); } });
                 const updateSub = (field, value) => state.subtitles.find(s => s.id == sub.id)[field] = value;
                 itemEl.querySelector('.start-time').addEventListener('change', e => updateSub('start_time', e.target.value));
                 itemEl.querySelector('.end-time').addEventListener('change', e => updateSub('end_time', e.target.value));
@@ -406,10 +331,10 @@
             });
         };
         
-        // --- Player Logic ---
         const togglePlay = () => mediaPlayer.paused ? mediaPlayer.play() : mediaPlayer.pause();
         playPauseBtn.addEventListener('click', togglePlay);
         mediaPlayer.addEventListener('click', togglePlay);
+        audioPoster.addEventListener('click', togglePlay);
         mediaPlayer.addEventListener('play', () => playPauseIcon.textContent = 'pause');
         mediaPlayer.addEventListener('pause', () => playPauseIcon.textContent = 'play_arrow');
         mediaPlayer.addEventListener('loadedmetadata', () => durationEl.textContent = formatTimeForDisplay(mediaPlayer.duration));
@@ -420,10 +345,7 @@
             if (currentSub && state.activeSubtitleId !== currentSub.id) {
                 subtitleList.querySelector(`[data-id="${state.activeSubtitleId}"]`)?.classList.remove('active');
                 const newActiveEl = subtitleList.querySelector(`[data-id="${currentSub.id}"]`);
-                if(newActiveEl) {
-                    newActiveEl.classList.add('active');
-                    newActiveEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                }
+                if(newActiveEl) { newActiveEl.classList.add('active'); newActiveEl.scrollIntoView({ behavior: 'smooth', block: 'center' }); }
                 state.activeSubtitleId = currentSub.id;
             } else if (!currentSub && state.activeSubtitleId) {
                 subtitleList.querySelector(`[data-id="${state.activeSubtitleId}"]`)?.classList.remove('active');
@@ -431,23 +353,18 @@
             }
         });
         progressBar.addEventListener('input', () => mediaPlayer.currentTime = (progressBar.value / 100) * mediaPlayer.duration);
-        volumeBar.addEventListener('input', (e) => mediaPlayer.volume = e.target.value);
+        volumeBar.addEventListener('input', (e) => { mediaPlayer.volume = e.target.value; mediaPlayer.muted = e.target.value == 0; });
         mediaPlayer.addEventListener('volumechange', () => {
-            volumeBar.value = mediaPlayer.volume;
+            volumeBar.value = mediaPlayer.muted ? 0 : mediaPlayer.volume;
             if (mediaPlayer.muted || mediaPlayer.volume === 0) volumeIcon.textContent = 'volume_off';
             else if (mediaPlayer.volume < 0.5) volumeIcon.textContent = 'volume_down';
             else volumeIcon.textContent = 'volume_up';
         });
         volumeBtn.addEventListener('click', () => mediaPlayer.muted = !mediaPlayer.muted);
         
-        // --- SRT Download ---
         const generateSrtContent = () => {
             const sortedSubs = [...state.subtitles].sort((a,b) => timeStringToSeconds(a.start_time) - timeStringToSeconds(b.start_time));
-            return sortedSubs.map((sub, index) => {
-                const startTime = secondsToTimeString(timeStringToSeconds(sub.start_time), true);
-                const endTime = secondsToTimeString(timeStringToSeconds(sub.end_time), true);
-                return `${index + 1}\n${startTime} --> ${endTime}\n${sub.text.trim()}\n`;
-            }).join('\n');
+            return sortedSubs.map((sub, index) => `${index + 1}\n${secondsToTimeString(timeStringToSeconds(sub.start_time), true)} --> ${secondsToTimeString(timeStringToSeconds(sub.end_time), true)}\n${sub.text.trim()}\n`).join('\n');
         };
         
         downloadSrtButton.addEventListener('click', () => {
@@ -456,7 +373,7 @@
             const blob = new Blob([srtContent], { type: 'text/plain;charset=utf-8' });
             const a = document.createElement('a');
             a.href = URL.createObjectURL(blob);
-            a.download = 'subtitles.srt';
+            a.download = `${(state.mediaFile.name || 'subtitles').replace(/\.[^/.]+$/, "")}.srt`;
             a.click();
             URL.revokeObjectURL(a.href);
             showNotification('קובץ SRT נוצר והורד בהצלחה!');
