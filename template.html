@@ -105,6 +105,23 @@
             transition: background-color 0.2s;
         }
         .tool-actions a:hover { background-color: var(--button-hover-bg); }
+
+        main h1 {
+            display: flex;
+            align-items: center;
+            gap: 0.5em;
+            font-size: 1.7em;
+            font-weight: bold;
+        }
+        main h1 .favicon-title {
+            width: 1.5em;
+            height: 1.5em;
+            vertical-align: middle;
+            transition: filter 0.2s;
+        }
+        body.dark-mode main h1 .favicon-title {
+            filter: brightness(0.8) invert(1) grayscale(0.2) contrast(1.2);
+        }
     </style>
     <script src="https://nhlocal.github.io/general-settings.js"></script>
 </head>
@@ -191,6 +208,17 @@
             applyTheme(savedTheme);
 
             createDynamicMailLink();
+
+            // הוספת favicon ליד h1 אם קיים
+            const mainH1 = document.querySelector('main h1');
+            if (mainH1 && !mainH1.querySelector('.favicon-title')) {
+                const faviconImg = document.createElement('img');
+                faviconImg.src = 'favicon.png';
+                faviconImg.alt = 'favicon';
+                faviconImg.className = 'favicon-title';
+                faviconImg.setAttribute('aria-hidden', 'true');
+                mainH1.insertBefore(faviconImg, mainH1.firstChild);
+            }
         });
     </script>
 </body>
