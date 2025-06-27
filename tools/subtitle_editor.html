@@ -289,12 +289,36 @@
             processButton.disabled = !(state.jsonContent && state.mediaURL);
         };
         
+        // ==========================================================
+        // ===            THE UPDATED FUNCTION - START            ===
+        // ==========================================================
         const timeStringToSeconds = (timeStr) => {
-            if (!timeStr || !/^\d{2}:\d{2}:\d{2}[\.,]\d{3}$/.test(timeStr)) return 0;
+            if (!timeStr || typeof timeStr !== 'string') return 0;
+
+            // Handles formats: HH:MM:SS.ms, MM:SS.ms, and the user's MM:SS:ms (e.g., "09:41:517")
             const parts = timeStr.replace(',', '.').split(':');
-            const secondsParts = parts[2].split('.');
-            return parseInt(parts[0], 10) * 3600 + parseInt(parts[1], 10) * 60 + parseInt(secondsParts[0], 10) + parseInt(secondsParts[1], 10) / 1000;
+            let seconds = 0;
+
+            if (parts.length === 3) { // Could be HH:MM:SS.ms or MM:SS:ms (non-standard)
+                const lastPart = parts[2];
+                if (lastPart.includes('.')) {
+                    // Standard HH:MM:SS.ms
+                    seconds = parseFloat(parts[0]) * 3600 + parseFloat(parts[1]) * 60 + parseFloat(lastPart);
+                } else {
+                    // Non-standard MM:SS:ms format, e.g., "09:41:517"
+                    seconds = parseFloat(parts[0]) * 60 + parseFloat(parts[1]) + parseFloat(lastPart) / 1000;
+                }
+            } else if (parts.length === 2) { // MM:SS.ms
+                seconds = parseFloat(parts[0]) * 60 + parseFloat(parts[1]);
+            } else if (parts.length === 1) { // SS.ms
+                seconds = parseFloat(parts[0]);
+            }
+
+            return isNaN(seconds) ? 0 : seconds;
         };
+        // ==========================================================
+        // ===             THE UPDATED FUNCTION - END             ===
+        // ==========================================================
 
         const secondsToTimeString = (seconds, useComma = false) => {
             if (isNaN(seconds) || seconds < 0) seconds = 0;
@@ -307,7 +331,7 @@
         
         // --- File Handling Logic (Refactored for Reusability) ---
         const handleJsonFile = (file) => {
-            if (file && file.type === "application/json") {
+            if (file && (file.type === "application/json" || file.name.endsWith('.json'))) {
                 const reader = new FileReader();
                 reader.onload = (event) => {
                     state.jsonContent = event.target.result;
@@ -334,12 +358,8 @@
         };
 
         // --- Event Listeners ---
-        
-        // Input via file selector
         jsonFileInput.addEventListener('change', (e) => handleJsonFile(e.target.files[0]));
         mediaFileInput.addEventListener('change', (e) => handleMediaFile(e.target.files[0]));
-
-        // Input via text paste
         jsonTextInput.addEventListener('input', () => {
             if (jsonTextInput.value.trim().length > 0) {
                 state.jsonContent = jsonTextInput.value;
@@ -352,24 +372,17 @@
             }
         });
         
-        // Drag and Drop Logic
         ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
-            document.body.addEventListener(eventName, e => {
-                e.preventDefault();
-                e.stopPropagation();
-            });
+            document.body.addEventListener(eventName, e => { e.preventDefault(); e.stopPropagation(); });
         });
-
         [jsonDropZone, mediaDropZone].forEach(zone => {
             zone.addEventListener('dragover', () => zone.classList.add('drag-over'), false);
             zone.addEventListener('dragleave', () => zone.classList.remove('drag-over'), false);
         });
-
         jsonDropZone.addEventListener('drop', e => {
             jsonDropZone.classList.remove('drag-over');
             handleJsonFile(e.dataTransfer.files[0]);
         });
-        
         mediaDropZone.addEventListener('drop', e => {
             mediaDropZone.classList.remove('drag-over');
             handleMediaFile(e.dataTransfer.files[0]);
@@ -410,11 +423,15 @@
                 const itemEl = document.createElement('div');
                 itemEl.className = 'subtitle-item';
                 itemEl.dataset.id = sub.id;
+                // Display the time in the editor in the standard format for consistency
+                const displayStartTime = secondsToTimeString(timeStringToSeconds(sub.start_time));
+                const displayEndTime = secondsToTimeString(timeStringToSeconds(sub.end_time));
+                
                 itemEl.innerHTML = `
                     <div class="time-inputs">
-                        <input type="text" class="time-input start-time" value="${secondsToTimeString(timeStringToSeconds(sub.start_time))}">
+                        <input type="text" class="time-input start-time" value="${displayStartTime}">
                         <span>&rarr;</span>
-                        <input type="text" class="time-input end-time" value="${secondsToTimeString(timeStringToSeconds(sub.end_time))}">
+                        <input type="text" class="time-input end-time" value="${displayEndTime}">
                     </div>
                     <textarea class="text-input">${sub.text}</textarea>`;
                 
