@@ -36,9 +36,10 @@
         .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; padding-top: 2rem; }
         .card { background-color: var(--md-sys-color-surface-container-low); border-radius: var(--border-radius); padding: 2rem; border: 1px solid var(--md-sys-color-outline-variant); box-shadow: 0 2px 8px rgba(0,0,0,0.05); display: flex; flex-direction: column; }
         header { padding-top: 1.5rem; }
-        h1, h2 { font-weight: 700; color: var(--md-sys-color-primary); }
+        h1, h2, h3 { font-weight: 700; color: var(--md-sys-color-primary); }
         h1 { font-size: 2.5rem; display: flex; align-items: center; gap: 1rem; }
         h2 { font-size: 1.5rem; margin-bottom: 1rem; border-bottom: 2px solid var(--md-sys-color-primary-container); padding-bottom: 0.5rem; }
+        h3 { font-size: 1.25rem; margin-bottom: 1rem; color: var(--md-sys-color-secondary); }
         .material-symbols-outlined { font-size: inherit; vertical-align: middle; }
         .btn { display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem; padding: 10px 24px; font-family: 'Assistant', sans-serif; font-size: 1rem; font-weight: 600; border-radius: 99px; border: none; cursor: pointer; transition: all 0.2s ease-in-out; text-decoration: none; }
         .btn:disabled { opacity: 0.6; cursor: not-allowed; }
@@ -61,13 +62,7 @@
         /* --- נגן מדיה מעוצב --- */
         #media-player-wrapper { position: relative; }
         #media-player { width: 100%; border-radius: var(--border-radius-small); background-color: black; cursor: pointer; display: block; }
-        #audio-poster {
-            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-            background-color: black; color: white; display: none;
-            justify-content: center; align-items: center; text-align: center;
-            font-size: 1.2rem; font-weight: 600; padding: 1rem;
-            border-radius: var(--border-radius-small);
-        }
+        #audio-poster { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background-color: black; color: white; display: none; justify-content: center; align-items: center; text-align: center; font-size: 1.2rem; font-weight: 600; padding: 1rem; border-radius: var(--border-radius-small); }
         #audio-poster.visible { display: flex; }
         #media-player-container { position: sticky; top: 110px; align-self: start; }
         .custom-controls { direction: ltr; background-color: var(--md-sys-color-surface-container-low); border-radius: var(--border-radius); padding: 0.75rem 1rem; margin-top: 1rem; border: 1px solid var(--md-sys-color-surface-variant); }
@@ -75,17 +70,27 @@
         .progress-container .time-display { font-family: monospace; font-size: 0.9rem; color: var(--md-sys-color-secondary); }
         .progress-bar { flex-grow: 1; }
         .bottom-controls { display: flex; align-items: center; justify-content: space-between; margin-top: 0.5rem; }
-        .control-btn { background: none; border: none; cursor: pointer; color: var(--md-sys-color-on-surface-variant); padding: 0.5rem; border-radius: 50%; }
+        .control-btn { background: none; border: none; cursor: pointer; color: var(--md-sys-color-on-surface-variant); padding: 0.5rem; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; }
         .control-btn:hover { background-color: rgba(0,0,0,0.1); }
         .control-btn .material-symbols-outlined { font-size: 2.25rem; display: block; }
-        .volume-container { display: flex; align-items: center; gap: 0.5rem; }
-        .volume-container .material-symbols-outlined { font-size: 1.5rem; }
+        .volume-container, .speed-container { display: flex; align-items: center; gap: 0.5rem; }
+        .volume-container .material-symbols-outlined, .speed-container .material-symbols-outlined { font-size: 1.5rem; }
+        .speed-container #playback-speed { font-family: monospace; font-weight: 600; font-size: 1rem; color: var(--md-sys-color-secondary); min-width: 4ch; text-align: center;}
         input[type=range] { -webkit-appearance: none; width: 100%; background: transparent; cursor: pointer; }
         input[type=range]:focus { outline: none; }
         input[type=range]::-webkit-slider-runnable-track { width: 100%; height: 6px; background: var(--md-sys-color-surface-variant); border-radius: 3px; }
         input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; height: 16px; width: 16px; border-radius: 50%; background: var(--md-sys-color-primary); margin-top: -5px; }
         
-        #subtitle-list-container h3 { margin-bottom: 1rem; color: var(--md-sys-color-secondary); }
+        /* --- כלי עריכה גורפת --- */
+        #subtitle-tools-card { direction: rtl; margin-top: 1.5rem; background-color: var(--md-sys-color-surface-container-low); border-radius: var(--border-radius); padding: 1.5rem; border: 1px solid var(--md-sys-color-surface-variant); }
+        .tool-group { margin-bottom: 1.5rem; }
+        .tool-group:last-child { margin-bottom: 0; }
+        .tool-group h4 { font-weight: 600; color: var(--md-sys-color-on-secondary-container); margin-bottom: 0.75rem; display: flex; align-items: center; gap: 0.5rem; }
+        .tool-group .input-row { display: flex; gap: 0.75rem; align-items: center; }
+        .tool-group input[type="text"], .tool-group input[type="number"] { flex-grow: 1; padding: 8px 12px; border: 1px solid var(--md-sys-color-outline); border-radius: var(--border-radius-small); font-family: 'Assistant', sans-serif; font-size: 1rem; }
+        .tool-group .btn-small { padding: 8px 16px; font-size: 0.9rem; }
+
+        #subtitle-list-container h3 { margin-bottom: 1rem; }
         .subtitle-item { background-color: var(--md-sys-color-surface); border: 1px solid var(--md-sys-color-surface-variant); border-radius: var(--border-radius-small); padding: 1rem; margin-bottom: 0.75rem; cursor: pointer; transition: all 0.3s ease-in-out; display: flex; flex-direction: column; gap: 0.75rem; }
         .subtitle-item:hover { border-color: var(--md-sys-color-primary); box-shadow: 0 2px 6px rgba(0,0,0,0.08); }
         .subtitle-item.active { background-color: var(--md-sys-color-primary-container); border-color: var(--md-sys-color-primary); transform: scale(1.02); }
@@ -132,7 +137,7 @@
                         <div class="input-group" style="flex-grow: 1; display: flex; flex-direction: column;">
                             <label for="media-file-input">העלאת קובץ MP3 או MP4</label>
                             <label for="media-file-input" class="file-input-wrapper" id="media-drop-zone"><span class="material-symbols-outlined">movie</span><p>לחץ לבחירת קובץ או גרור לכאן</p><div id="media-file-name" class="file-name"></div></label>
-                            <input type="file" id="media-file-input" accept="audio/mp3,video/mp4">
+                            <input type="file" id="media-file-input" accept="audio/*,video/*">
                         </div>
                          <div style="text-align: center; margin-top: 2rem;">
                             <button id="process-button" class="btn btn-primary" style="padding: 16px 32px; font-size: 1.2rem;" disabled><span class="material-symbols-outlined">edit_note</span> צור וערוך כתוביות</button>
@@ -159,10 +164,33 @@
                                 <span class="time-display" id="duration">00:00</span>
                             </div>
                             <div class="bottom-controls">
+                                 <div class="speed-container">
+                                    <button class="control-btn" id="decrease-speed-btn" title="האט מהירות"><span class="material-symbols-outlined">remove</span></button>
+                                    <span id="playback-speed">1x</span>
+                                    <button class="control-btn" id="increase-speed-btn" title="הגבר מהירות"><span class="material-symbols-outlined">add</span></button>
+                                </div>
                                 <button class="control-btn" id="play-pause-btn"><span class="material-symbols-outlined">play_arrow</span></button>
                                 <div class="volume-container">
                                     <button class="control-btn" id="volume-btn"><span class="material-symbols-outlined">volume_up</span></button>
                                     <input type="range" id="volume-bar" min="0" max="1" step="0.01" value="1">
+                                </div>
+                            </div>
+                        </div>
+                        <div id="subtitle-tools-card">
+                            <h3>כלים לעריכה גורפת</h3>
+                            <div class="tool-group">
+                                <h4><span class="material-symbols-outlined">find_replace</span> חיפוש והחלפה</h4>
+                                <div class="input-row" style="margin-bottom: 0.5rem;">
+                                    <input type="text" id="find-input" placeholder="חפש טקסט...">
+                                    <input type="text" id="replace-input" placeholder="החלף ב...">
+                                </div>
+                                <button id="replace-all-btn" class="btn btn-secondary btn-small" style="width: 100%;">החלף הכל</button>
+                            </div>
+                            <div class="tool-group">
+                                <h4><span class="material-symbols-outlined">schedule</span> הזזת תזמונים (Offset)</h4>
+                                <div class="input-row">
+                                    <input type="number" id="offset-input" step="0.1" value="0" placeholder="שניות (למשל 1.5 או -2)">
+                                    <button id="apply-offset-btn" class="btn btn-secondary btn-small">החל הזזה</button>
                                 </div>
                             </div>
                         </div>
@@ -179,6 +207,7 @@
 
     <script>
     document.addEventListener('DOMContentLoaded', () => {
+        // --- Element selection ---
         const jsonFileInput = document.getElementById('json-file-input'),
             jsonDropZone = document.getElementById('json-drop-zone'),
             jsonTextInput = document.getElementById('json-text-input'),
@@ -202,10 +231,20 @@
             volumeBtn = document.getElementById('volume-btn'),
             volumeIcon = volumeBtn.querySelector('span'),
             volumeBar = document.getElementById('volume-bar'),
-            subtitleList = document.getElementById('subtitle-list');
+            subtitleList = document.getElementById('subtitle-list'),
+            decreaseSpeedBtn = document.getElementById('decrease-speed-btn'),
+            increaseSpeedBtn = document.getElementById('increase-speed-btn'),
+            playbackSpeedEl = document.getElementById('playback-speed'),
+            findInput = document.getElementById('find-input'),
+            replaceInput = document.getElementById('replace-input'),
+            replaceAllBtn = document.getElementById('replace-all-btn'),
+            offsetInput = document.getElementById('offset-input'),
+            applyOffsetBtn = document.getElementById('apply-offset-btn');
 
+        // --- State management ---
         let state = { subtitles: [], mediaURL: null, jsonContent: null, mediaFile: null, activeSubtitleId: null };
         
+        // --- Helper functions ---
         const showNotification = (message, type = 'info', duration = 3000) => {
             notification.textContent = message;
             notification.className = 'show';
@@ -220,12 +259,7 @@
             const parts = timeStr.replace(',', '.').split(':');
             let seconds = 0;
             if (parts.length === 3) {
-                const lastPart = parts[2];
-                if (lastPart.includes('.')) {
-                    seconds = parseFloat(parts[0]) * 3600 + parseFloat(parts[1]) * 60 + parseFloat(lastPart);
-                } else {
-                    seconds = parseFloat(parts[0]) * 60 + parseFloat(parts[1]) + parseFloat(lastPart) / 1000;
-                }
+                 seconds = parseFloat(parts[0]) * 3600 + parseFloat(parts[1]) * 60 + parseFloat(parts[2]);
             } else if (parts.length === 2) {
                 seconds = parseFloat(parts[0]) * 60 + parseFloat(parts[1]);
             }
@@ -243,11 +277,14 @@
 
         const formatTimeForDisplay = (time) => {
             if (isNaN(time)) return "00:00";
-            const m = Math.floor(time / 60).toString().padStart(2, '0'),
-                s = Math.floor(time % 60).toString().padStart(2, '0');
-            return `${m}:${s}`;
+            const totalSeconds = Math.floor(time);
+            const h = Math.floor(totalSeconds / 3600);
+            const m = Math.floor((totalSeconds % 3600) / 60).toString().padStart(2, '0');
+            const s = (totalSeconds % 60).toString().padStart(2, '0');
+            return h > 0 ? `${h}:${m}:${s}` : `${m}:${s}`;
         };
 
+        // --- File handling ---
         const handleJsonFile = (file) => {
             if (file && (file.type === "application/json" || file.name.endsWith('.json'))) {
                 const reader = new FileReader();
@@ -265,11 +302,11 @@
         const handleMediaFile = (file) => {
              if (file && (file.type.startsWith('audio/') || file.type.startsWith('video/'))) {
                 if (state.mediaURL) URL.revokeObjectURL(state.mediaURL);
-                state.mediaFile = file; // Store the file object
+                state.mediaFile = file;
                 state.mediaURL = URL.createObjectURL(file);
                 mediaFileName.textContent = `קובץ: ${file.name}`;
                 checkInputs();
-            } else { showNotification('יש לבחור קובץ MP3 או MP4.', 'error'); }
+            } else { showNotification('יש לבחור קובץ שמע או וידאו.', 'error'); }
         };
 
         jsonFileInput.addEventListener('change', (e) => handleJsonFile(e.target.files[0]));
@@ -288,12 +325,13 @@
         jsonDropZone.addEventListener('drop', e => { jsonDropZone.classList.remove('drag-over'); handleJsonFile(e.dataTransfer.files[0]); });
         mediaDropZone.addEventListener('drop', e => { mediaDropZone.classList.remove('drag-over'); handleMediaFile(e.dataTransfer.files[0]); });
 
+        // --- Core app logic ---
         processButton.addEventListener('click', () => {
             try {
                 const parsedJson = JSON.parse(state.jsonContent);
                 if (!Array.isArray(parsedJson)) throw new Error("ה-JSON אינו מערך.");
                 state.subtitles = parsedJson.map((item, index) => ({ ...item, id: item.id || Date.now() + index }));
-                renderEditor();
+                renderUI();
             } catch (error) { showNotification(`שגיאה ב-JSON: ${error.message}`, 'error'); }
         });
         
@@ -302,8 +340,8 @@
             inputSection.style.display = 'block';
             mediaPlayer.pause();
         });
-        
-        const renderEditor = () => {
+
+        const renderUI = () => {
             inputSection.style.display = 'none';
             editorSection.style.display = 'block';
             mediaPlayer.src = state.mediaURL;
@@ -313,6 +351,10 @@
             } else {
                 audioPoster.classList.remove('visible');
             }
+            renderSubtitleList();
+        };
+
+        const renderSubtitleList = () => {
             subtitleList.innerHTML = '';
             state.subtitles.sort((a,b) => timeStringToSeconds(a.start_time) - timeStringToSeconds(b.start_time));
             state.subtitles.forEach(sub => {
@@ -329,8 +371,10 @@
                 itemEl.querySelector('.text-input').addEventListener('input', e => updateSub('text', e.target.value));
                 subtitleList.appendChild(itemEl);
             });
-        };
+             updateActiveSubtitle();
+        }
         
+        // --- Media Player Controls ---
         const togglePlay = () => mediaPlayer.paused ? mediaPlayer.play() : mediaPlayer.pause();
         playPauseBtn.addEventListener('click', togglePlay);
         mediaPlayer.addEventListener('click', togglePlay);
@@ -338,9 +382,8 @@
         mediaPlayer.addEventListener('play', () => playPauseIcon.textContent = 'pause');
         mediaPlayer.addEventListener('pause', () => playPauseIcon.textContent = 'play_arrow');
         mediaPlayer.addEventListener('loadedmetadata', () => durationEl.textContent = formatTimeForDisplay(mediaPlayer.duration));
-        mediaPlayer.addEventListener('timeupdate', () => {
-            progressBar.value = (mediaPlayer.currentTime / mediaPlayer.duration) * 100;
-            currentTimeEl.textContent = formatTimeForDisplay(mediaPlayer.currentTime);
+        
+        const updateActiveSubtitle = () => {
             const currentSub = state.subtitles.find(s => mediaPlayer.currentTime >= timeStringToSeconds(s.start_time) && mediaPlayer.currentTime < timeStringToSeconds(s.end_time));
             if (currentSub && state.activeSubtitleId !== currentSub.id) {
                 subtitleList.querySelector(`[data-id="${state.activeSubtitleId}"]`)?.classList.remove('active');
@@ -351,7 +394,14 @@
                 subtitleList.querySelector(`[data-id="${state.activeSubtitleId}"]`)?.classList.remove('active');
                 state.activeSubtitleId = null;
             }
+        };
+
+        mediaPlayer.addEventListener('timeupdate', () => {
+            progressBar.value = (mediaPlayer.currentTime / mediaPlayer.duration) * 100;
+            currentTimeEl.textContent = formatTimeForDisplay(mediaPlayer.currentTime);
+            updateActiveSubtitle();
         });
+
         progressBar.addEventListener('input', () => mediaPlayer.currentTime = (progressBar.value / 100) * mediaPlayer.duration);
         volumeBar.addEventListener('input', (e) => { mediaPlayer.volume = e.target.value; mediaPlayer.muted = e.target.value == 0; });
         mediaPlayer.addEventListener('volumechange', () => {
@@ -362,9 +412,62 @@
         });
         volumeBtn.addEventListener('click', () => mediaPlayer.muted = !mediaPlayer.muted);
         
+        const updatePlaybackSpeed = (change) => {
+            let newRate = Math.round((mediaPlayer.playbackRate + change) * 100) / 100;
+            if (newRate >= 0.25 && newRate <= 4) {
+                mediaPlayer.playbackRate = newRate;
+                playbackSpeedEl.textContent = `${newRate.toFixed(2).replace(/\.?0+$/, '')}x`;
+            }
+        };
+        increaseSpeedBtn.addEventListener('click', () => updatePlaybackSpeed(0.25));
+        decreaseSpeedBtn.addEventListener('click', () => updatePlaybackSpeed(-0.25));
+
+        // --- Bulk Edit Tools ---
+        replaceAllBtn.addEventListener('click', () => {
+            const findText = findInput.value;
+            const replaceText = replaceInput.value;
+            if (!findText) return showNotification('יש להזין טקסט לחיפוש.', 'error');
+            
+            let replacementsCount = 0;
+            state.subtitles.forEach(sub => {
+                const originalText = sub.text;
+                sub.text = sub.text.replaceAll(findText, replaceText);
+                if (sub.text !== originalText) {
+                    replacementsCount++;
+                }
+            });
+
+            if (replacementsCount > 0) {
+                renderSubtitleList();
+                showNotification(`הוחלפו ${replacementsCount} מופעים.`);
+            } else {
+                showNotification('הטקסט לחיפוש לא נמצא.', 'info');
+            }
+        });
+
+        applyOffsetBtn.addEventListener('click', () => {
+            const offset = parseFloat(offsetInput.value);
+            if (isNaN(offset)) return showNotification('ערך הזזה לא תקין.', 'error');
+
+            state.subtitles.forEach(sub => {
+                let startSeconds = timeStringToSeconds(sub.start_time) + offset;
+                let endSeconds = timeStringToSeconds(sub.end_time) + offset;
+                sub.start_time = secondsToTimeString(Math.max(0, startSeconds));
+                sub.end_time = secondsToTimeString(Math.max(0, endSeconds));
+            });
+
+            renderSubtitleList();
+            showNotification(`התזמונים הוזזו ב-${offset} שניות.`);
+        });
+        
+        // --- SRT Generation ---
         const generateSrtContent = () => {
             const sortedSubs = [...state.subtitles].sort((a,b) => timeStringToSeconds(a.start_time) - timeStringToSeconds(b.start_time));
-            return sortedSubs.map((sub, index) => `${index + 1}\n${secondsToTimeString(timeStringToSeconds(sub.start_time), true)} --> ${secondsToTimeString(timeStringToSeconds(sub.end_time), true)}\n${sub.text.trim()}\n`).join('\n');
+            return sortedSubs.map((sub, index) => {
+                const start = secondsToTimeString(timeStringToSeconds(sub.start_time), true);
+                const end = secondsToTimeString(timeStringToSeconds(sub.end_time), true);
+                return `${index + 1}\n${start} --> ${end}\n${sub.text.trim()}\n`;
+            }).join('\n');
         };
         
         downloadSrtButton.addEventListener('click', () => {
@@ -374,7 +477,9 @@
             const a = document.createElement('a');
             a.href = URL.createObjectURL(blob);
             a.download = `${(state.mediaFile.name || 'subtitles').replace(/\.[^/.]+$/, "")}.srt`;
+            document.body.appendChild(a);
             a.click();
+            document.body.removeChild(a);
             URL.revokeObjectURL(a.href);
             showNotification('קובץ SRT נוצר והורד בהצלחה!');
         });
