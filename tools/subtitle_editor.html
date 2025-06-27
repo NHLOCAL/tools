@@ -39,60 +39,27 @@
         }
 
         /* --- עיצוב בסיסי --- */
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
-
-        html {
-            scroll-behavior: smooth;
-        }
-        
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        html { scroll-behavior: smooth; }
         body {
             font-family: 'Assistant', sans-serif;
             background-color: var(--md-sys-color-background);
             color: var(--md-sys-color-on-background);
             line-height: 1.6;
         }
-
-        /* --- קונטיינרים ופריסה --- */
-        .container {
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: 0 1.5rem;
-        }
-
-        .grid-2 {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 2rem;
-            padding-top: 2rem;
-        }
-        
+        .container { max-width: 1400px; margin: 0 auto; padding: 0 1.5rem; }
+        .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; padding-top: 2rem; }
         .card {
             background-color: var(--md-sys-color-surface-container-low);
             border-radius: var(--border-radius);
-            padding: 2rem;
-            border: 1px solid var(--md-sys-color-outline-variant);
-            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-            display: flex;
-            flex-direction: column;
+            padding: 2rem; border: 1px solid var(--md-sys-color-outline-variant);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05); display: flex; flex-direction: column;
         }
-
-        /* --- כותרות וטקסטים --- */
-        header {
-            padding-top: 1.5rem;
-        }
-        h1, h2 {
-            font-weight: 700;
-            color: var(--md-sys-color-primary);
-        }
+        header { padding-top: 1.5rem; }
+        h1, h2 { font-weight: 700; color: var(--md-sys-color-primary); }
         h1 { font-size: 2.5rem; display: flex; align-items: center; gap: 1rem; }
         h2 { font-size: 1.5rem; margin-bottom: 1rem; border-bottom: 2px solid var(--md-sys-color-primary-container); padding-bottom: 0.5rem; }
         .material-symbols-outlined { font-size: inherit; vertical-align: middle; }
-
-        /* --- כפתורים --- */
         .btn {
             display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem;
             padding: 10px 24px; font-family: 'Assistant', sans-serif; font-size: 1rem; font-weight: 600;
@@ -103,8 +70,6 @@
         .btn-primary:hover:not(:disabled) { background-color: #5a3f92; box-shadow: 0 4px 8px rgba(0,0,0,0.15); }
         .btn-secondary { background-color: var(--md-sys-color-secondary-container); color: var(--md-sys-color-on-secondary-container); }
         .btn-secondary:hover:not(:disabled) { background-color: #d8d0e7; }
-
-        /* --- טפסים וקלט (עם תמיכה בגרירה) --- */
         .input-group { margin-bottom: 1.5rem; }
         .input-group label { display: block; margin-bottom: 0.5rem; font-weight: 600; color: var(--md-sys-color-on-surface-variant); }
         textarea#json-text-input {
@@ -112,58 +77,74 @@
             border-radius: var(--border-radius-small); font-family: monospace; direction: ltr; text-align: left;
             background-color: var(--md-sys-color-surface); font-size: 0.9rem; resize: vertical;
         }
-        
         .file-input-wrapper {
-            border: 2px dashed var(--md-sys-color-outline);
-            border-radius: var(--border-radius);
-            padding: 2rem; text-align: center; cursor: pointer; transition: all 0.2s; flex-grow: 1; display: flex; flex-direction: column; justify-content: center;
+            border: 2px dashed var(--md-sys-color-outline); border-radius: var(--border-radius); padding: 2rem;
+            text-align: center; cursor: pointer; transition: all 0.2s; flex-grow: 1; display: flex;
+            flex-direction: column; justify-content: center;
         }
-        .file-input-wrapper:hover, .file-input-wrapper.drag-over {
-            background-color: var(--md-sys-color-primary-container);
-            border-color: var(--md-sys-color-primary);
-        }
+        .file-input-wrapper:hover, .file-input-wrapper.drag-over { background-color: var(--md-sys-color-primary-container); border-color: var(--md-sys-color-primary); }
         .file-input-wrapper .material-symbols-outlined { font-size: 3rem; color: var(--md-sys-color-primary); }
         .file-input-wrapper input[type="file"] { display: none; }
         .file-name { margin-top: 1rem; font-weight: 600; color: var(--md-sys-color-secondary); }
 
-        /* --- מסך העריכה - פריסה קבועה --- */
+        /* --- מסך העריכה --- */
         #editor-section { display: none; }
         .editor-controls {
             display: flex; gap: 1rem; align-items: center; padding: 1.5rem 0;
             position: sticky; top: 0; background-color: var(--md-sys-color-background);
             z-index: 10; border-bottom: 1px solid var(--md-sys-color-surface-variant);
         }
-        #editor-grid {
-            display: grid; grid-template-columns: 40% 1fr;
-            gap: 2rem; align-items: start; padding-top: 2rem;
-        }
-        #media-player-container {
-            position: sticky; top: 110px; align-self: start;
-        }
-        #media-player { width: 100%; border-radius: var(--border-radius-small); }
-        #subtitle-list-container h3 { margin-bottom: 1rem; color: var(--md-sys-color-secondary); }
+        #editor-grid { display: grid; grid-template-columns: 40% 1fr; gap: 2rem; align-items: start; padding-top: 2rem; }
         
+        /* --- נגן מדיה מעוצב - חדש --- */
+        #media-player-container { position: sticky; top: 110px; align-self: start; }
+        #media-player { width: 100%; border-radius: var(--border-radius-small); background-color: black; cursor: pointer; }
+        .custom-controls {
+            background-color: var(--md-sys-color-surface-container-low);
+            border-radius: var(--border-radius); padding: 0.75rem 1rem; margin-top: 1rem;
+            border: 1px solid var(--md-sys-color-surface-variant);
+        }
+        .progress-container { display: flex; align-items: center; gap: 1rem; }
+        .progress-container .time-display { font-family: monospace; font-size: 0.9rem; color: var(--md-sys-color-secondary); }
+        .progress-bar { flex-grow: 1; }
+        .bottom-controls { display: flex; align-items: center; justify-content: space-between; margin-top: 0.5rem; }
+        .control-btn { background: none; border: none; cursor: pointer; color: var(--md-sys-color-on-surface-variant); padding: 0.5rem; border-radius: 50%; }
+        .control-btn:hover { background-color: rgba(0,0,0,0.1); }
+        .control-btn .material-symbols-outlined { font-size: 2.25rem; display: block; }
+        .volume-container { display: flex; align-items: center; gap: 0.5rem; }
+        .volume-container .material-symbols-outlined { font-size: 1.5rem; }
+        input[type=range] { -webkit-appearance: none; width: 100%; background: transparent; cursor: pointer; }
+        input[type=range]:focus { outline: none; }
+        input[type=range]::-webkit-slider-runnable-track {
+            width: 100%; height: 6px; background: var(--md-sys-color-surface-variant); border-radius: 3px;
+        }
+        input[type=range]::-webkit-slider-thumb {
+            -webkit-appearance: none; height: 16px; width: 16px; border-radius: 50%;
+            background: var(--md-sys-color-primary); margin-top: -5px;
+        }
+        
+        /* --- רשימת כתוביות --- */
+        #subtitle-list-container h3 { margin-bottom: 1rem; color: var(--md-sys-color-secondary); }
         .subtitle-item {
             background-color: var(--md-sys-color-surface); border: 1px solid var(--md-sys-color-surface-variant);
             border-radius: var(--border-radius-small); padding: 1rem; margin-bottom: 0.75rem;
             cursor: pointer; transition: all 0.3s ease-in-out; display: flex; flex-direction: column; gap: 0.75rem;
         }
-        .subtitle-item:hover {
-            border-color: var(--md-sys-color-primary); box-shadow: 0 2px 6px rgba(0,0,0,0.08);
-        }
+        .subtitle-item:hover { border-color: var(--md-sys-color-primary); box-shadow: 0 2px 6px rgba(0,0,0,0.08); }
         .subtitle-item.active {
             background-color: var(--md-sys-color-primary-container); border-color: var(--md-sys-color-primary);
             transform: scale(1.02);
         }
-        .subtitle-item .time-inputs { display: flex; gap: 0.5rem; align-items: center; }
+        /* --- שינוי יישור זמנים --- */
+        .subtitle-item .time-inputs { display: flex; gap: 0.5rem; align-items: center; direction: ltr; }
         .subtitle-item .time-input {
             width: 120px; padding: 4px 8px; border: 1px solid var(--md-sys-color-outline);
-            border-radius: 4px; font-family: monospace; font-size: 0.9rem; direction: ltr;
+            border-radius: 4px; font-family: monospace; font-size: 0.9rem; direction: ltr; text-align: left;
         }
         .subtitle-item .text-input {
             width: 100%; padding: 8px; border: 1px solid var(--md-sys-color-outline);
             border-radius: 4px; font-family: 'Assistant', sans-serif; font-size: 1rem;
-            resize: vertical; min-height: 40px;
+            resize: vertical; min-height: 40px; direction: rtl;
         }
 
         /* --- התראות --- */
@@ -191,12 +172,8 @@
 </head>
 <body>
     <div class="container">
-        <header>
-            <h1><span class="material-symbols-outlined" style="font-size: 2.8rem;">subtitles</span> עורך כתוביות חכם</h1>
-        </header>
-
+        <header><h1><span class="material-symbols-outlined" style="font-size: 2.8rem;">subtitles</span> עורך כתוביות חכם</h1></header>
         <main>
-            <!-- שלב 1: קלט -->
             <section id="input-section">
                 <div class="grid-2">
                     <div class="card">
@@ -212,7 +189,7 @@
                         </div>
                         <div class="input-group">
                              <label for="json-text-input">ב. או הדבקת טקסט JSON</label>
-                            <textarea id="json-text-input" placeholder='[&#10;  {&#10;    "id": 1,&#10;    "start_time": "00:00:01.234",&#10;    "end_time": "00:00:05.678",&#10;    "text": "טקסט לדוגמה..."&#10;  }&#10;]'></textarea>
+                            <textarea id="json-text-input" placeholder='[{"id":1,"start_time":"00:00:01.234","end_time":"00:00:05.678","text":"..."}]'></textarea>
                         </div>
                     </div>
                     <div class="card">
@@ -234,8 +211,6 @@
                     </div>
                 </div>
             </section>
-
-            <!-- שלב 2: עריכה -->
             <section id="editor-section">
                  <div class="editor-controls">
                      <button id="back-to-input-btn" class="btn btn-secondary"><span class="material-symbols-outlined">arrow_back</span> חזרה</button>
@@ -243,7 +218,23 @@
                      <h2 style="margin: 0; border: none; padding: 0;">עריכת כתוביות</h2>
                  </div>
                 <div id="editor-grid">
-                    <div id="media-player-container"><video id="media-player" controls></video></div>
+                    <div id="media-player-container">
+                        <video id="media-player"></video>
+                        <div class="custom-controls">
+                            <div class="progress-container">
+                                <span class="time-display" id="current-time">00:00</span>
+                                <input type="range" id="progress-bar" class="progress-bar" value="0" min="0" max="100" step="0.1">
+                                <span class="time-display" id="duration">00:00</span>
+                            </div>
+                            <div class="bottom-controls">
+                                <button class="control-btn" id="play-pause-btn"><span class="material-symbols-outlined">play_arrow</span></button>
+                                <div class="volume-container">
+                                    <button class="control-btn" id="volume-btn"><span class="material-symbols-outlined">volume_up</span></button>
+                                    <input type="range" id="volume-bar" min="0" max="1" step="0.01" value="1">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                     <div id="subtitle-list-container">
                         <h3>רשימת כתוביות</h3>
                         <div id="subtitle-list"></div>
@@ -251,7 +242,6 @@
                 </div>
             </section>
         </main>
-        
         <div id="notification"></div>
     </div>
 
@@ -268,16 +258,24 @@
         const processButton = document.getElementById('process-button');
         const backToInputBtn = document.getElementById('back-to-input-btn');
         const downloadSrtButton = document.getElementById('download-srt-button');
-        const mediaPlayer = document.getElementById('media-player');
-        const subtitleList = document.getElementById('subtitle-list');
         const inputSection = document.getElementById('input-section');
         const editorSection = document.getElementById('editor-section');
         const notification = document.getElementById('notification');
+        
+        // Player Elements
+        const mediaPlayer = document.getElementById('media-player');
+        const playPauseBtn = document.getElementById('play-pause-btn');
+        const playPauseIcon = playPauseBtn.querySelector('span');
+        const progressBar = document.getElementById('progress-bar');
+        const currentTimeEl = document.getElementById('current-time');
+        const durationEl = document.getElementById('duration');
+        const volumeBtn = document.getElementById('volume-btn');
+        const volumeIcon = volumeBtn.querySelector('span');
+        const volumeBar = document.getElementById('volume-bar');
+        const subtitleList = document.getElementById('subtitle-list');
 
-        // --- State ---
         let state = { subtitles: [], mediaURL: null, jsonContent: null, activeSubtitleId: null };
         
-        // --- Utility Functions ---
         const showNotification = (message, type = 'info', duration = 3000) => {
             notification.textContent = message;
             notification.className = 'show';
@@ -285,40 +283,24 @@
             setTimeout(() => { notification.className = ''; }, duration);
         };
 
-        const checkInputs = () => {
-            processButton.disabled = !(state.jsonContent && state.mediaURL);
-        };
+        const checkInputs = () => { processButton.disabled = !(state.jsonContent && state.mediaURL); };
         
-        // ==========================================================
-        // ===            THE UPDATED FUNCTION - START            ===
-        // ==========================================================
         const timeStringToSeconds = (timeStr) => {
             if (!timeStr || typeof timeStr !== 'string') return 0;
-
-            // Handles formats: HH:MM:SS.ms, MM:SS.ms, and the user's MM:SS:ms (e.g., "09:41:517")
             const parts = timeStr.replace(',', '.').split(':');
             let seconds = 0;
-
-            if (parts.length === 3) { // Could be HH:MM:SS.ms or MM:SS:ms (non-standard)
+            if (parts.length === 3) {
                 const lastPart = parts[2];
                 if (lastPart.includes('.')) {
-                    // Standard HH:MM:SS.ms
                     seconds = parseFloat(parts[0]) * 3600 + parseFloat(parts[1]) * 60 + parseFloat(lastPart);
                 } else {
-                    // Non-standard MM:SS:ms format, e.g., "09:41:517"
                     seconds = parseFloat(parts[0]) * 60 + parseFloat(parts[1]) + parseFloat(lastPart) / 1000;
                 }
-            } else if (parts.length === 2) { // MM:SS.ms
+            } else if (parts.length === 2) {
                 seconds = parseFloat(parts[0]) * 60 + parseFloat(parts[1]);
-            } else if (parts.length === 1) { // SS.ms
-                seconds = parseFloat(parts[0]);
             }
-
             return isNaN(seconds) ? 0 : seconds;
         };
-        // ==========================================================
-        // ===             THE UPDATED FUNCTION - END             ===
-        // ==========================================================
 
         const secondsToTimeString = (seconds, useComma = false) => {
             if (isNaN(seconds) || seconds < 0) seconds = 0;
@@ -328,22 +310,26 @@
             const ms = Math.round((seconds - Math.floor(seconds)) * 1000).toString().padStart(3, '0');
             return `${h}:${m}:${s}${useComma ? ',' : '.'}${ms}`;
         };
-        
-        // --- File Handling Logic (Refactored for Reusability) ---
+
+        const formatTimeForDisplay = (time) => {
+            if (isNaN(time)) return "00:00";
+            const m = Math.floor(time / 60).toString().padStart(2, '0');
+            const s = Math.floor(time % 60).toString().padStart(2, '0');
+            return `${m}:${s}`;
+        };
+
         const handleJsonFile = (file) => {
             if (file && (file.type === "application/json" || file.name.endsWith('.json'))) {
                 const reader = new FileReader();
-                reader.onload = (event) => {
-                    state.jsonContent = event.target.result;
+                reader.onload = (e) => {
+                    state.jsonContent = e.target.result;
                     jsonFileName.textContent = `קובץ: ${file.name}`;
                     jsonTextInput.value = '';
                     checkInputs();
                 };
                 reader.onerror = () => showNotification('שגיאה בקריאת קובץ ה-JSON.', 'error');
                 reader.readAsText(file);
-            } else {
-                showNotification('יש לבחור קובץ מסוג JSON.', 'error');
-            }
+            } else { showNotification('יש לבחור קובץ מסוג JSON.', 'error'); }
         };
         
         const handleMediaFile = (file) => {
@@ -352,57 +338,32 @@
                 state.mediaURL = URL.createObjectURL(file);
                 mediaFileName.textContent = `קובץ: ${file.name}`;
                 checkInputs();
-            } else {
-                showNotification('יש לבחור קובץ MP3 או MP4.', 'error');
-            }
+            } else { showNotification('יש לבחור קובץ MP3 או MP4.', 'error'); }
         };
 
-        // --- Event Listeners ---
         jsonFileInput.addEventListener('change', (e) => handleJsonFile(e.target.files[0]));
         mediaFileInput.addEventListener('change', (e) => handleMediaFile(e.target.files[0]));
         jsonTextInput.addEventListener('input', () => {
-            if (jsonTextInput.value.trim().length > 0) {
-                state.jsonContent = jsonTextInput.value;
-                jsonFileInput.value = '';
-                jsonFileName.textContent = '';
-                checkInputs();
-            } else {
-                state.jsonContent = null;
-                checkInputs();
-            }
+            state.jsonContent = jsonTextInput.value.trim().length > 0 ? jsonTextInput.value : null;
+            if(state.jsonContent) { jsonFileInput.value = ''; jsonFileName.textContent = ''; }
+            checkInputs();
         });
         
-        ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
-            document.body.addEventListener(eventName, e => { e.preventDefault(); e.stopPropagation(); });
-        });
+        ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => { document.body.addEventListener(eventName, e => { e.preventDefault(); e.stopPropagation(); }); });
         [jsonDropZone, mediaDropZone].forEach(zone => {
             zone.addEventListener('dragover', () => zone.classList.add('drag-over'), false);
             zone.addEventListener('dragleave', () => zone.classList.remove('drag-over'), false);
         });
-        jsonDropZone.addEventListener('drop', e => {
-            jsonDropZone.classList.remove('drag-over');
-            handleJsonFile(e.dataTransfer.files[0]);
-        });
-        mediaDropZone.addEventListener('drop', e => {
-            mediaDropZone.classList.remove('drag-over');
-            handleMediaFile(e.dataTransfer.files[0]);
-        });
+        jsonDropZone.addEventListener('drop', e => { jsonDropZone.classList.remove('drag-over'); handleJsonFile(e.dataTransfer.files[0]); });
+        mediaDropZone.addEventListener('drop', e => { mediaDropZone.classList.remove('drag-over'); handleMediaFile(e.dataTransfer.files[0]); });
 
-        // --- Main App Flow ---
         processButton.addEventListener('click', () => {
             try {
                 const parsedJson = JSON.parse(state.jsonContent);
                 if (!Array.isArray(parsedJson)) throw new Error("ה-JSON אינו מערך.");
-                state.subtitles = parsedJson.map((item, index) => {
-                    if (typeof item.start_time === 'undefined' || typeof item.end_time === 'undefined' || typeof item.text === 'undefined') {
-                        throw new Error(`פריט ${index + 1} חסר שדות נדרשים.`);
-                    }
-                    return { ...item, id: item.id || Date.now() + index };
-                });
+                state.subtitles = parsedJson.map((item, index) => ({ ...item, id: item.id || Date.now() + index }));
                 renderEditor();
-            } catch (error) {
-                showNotification(`שגיאה ב-JSON: ${error.message}`, 'error');
-            }
+            } catch (error) { showNotification(`שגיאה ב-JSON: ${error.message}`, 'error'); }
         });
         
         backToInputBtn.addEventListener('click', () => {
@@ -411,7 +372,6 @@
             mediaPlayer.pause();
         });
         
-        // --- Editor Core Logic ---
         const renderEditor = () => {
             inputSection.style.display = 'none';
             editorSection.style.display = 'block';
@@ -423,10 +383,8 @@
                 const itemEl = document.createElement('div');
                 itemEl.className = 'subtitle-item';
                 itemEl.dataset.id = sub.id;
-                // Display the time in the editor in the standard format for consistency
                 const displayStartTime = secondsToTimeString(timeStringToSeconds(sub.start_time));
                 const displayEndTime = secondsToTimeString(timeStringToSeconds(sub.end_time));
-                
                 itemEl.innerHTML = `
                     <div class="time-inputs">
                         <input type="text" class="time-input start-time" value="${displayStartTime}">
@@ -434,38 +392,35 @@
                         <input type="text" class="time-input end-time" value="${displayEndTime}">
                     </div>
                     <textarea class="text-input">${sub.text}</textarea>`;
-                
-                itemEl.addEventListener('click', (e) => {
+                itemEl.addEventListener('click', e => {
                     if (e.target.tagName !== 'INPUT' && e.target.tagName !== 'TEXTAREA') {
                         mediaPlayer.currentTime = timeStringToSeconds(sub.start_time);
                         mediaPlayer.play();
                     }
                 });
-                
-                const updateSub = (field, value) => {
-                    const subToUpdate = state.subtitles.find(s => s.id == sub.id);
-                    if (subToUpdate) subToUpdate[field] = value;
-                };
-
-                itemEl.querySelector('.start-time').addEventListener('change', (e) => updateSub('start_time', e.target.value));
-                itemEl.querySelector('.end-time').addEventListener('change', (e) => updateSub('end_time', e.target.value));
-                itemEl.querySelector('.text-input').addEventListener('input', (e) => updateSub('text', e.target.value));
-
+                const updateSub = (field, value) => state.subtitles.find(s => s.id == sub.id)[field] = value;
+                itemEl.querySelector('.start-time').addEventListener('change', e => updateSub('start_time', e.target.value));
+                itemEl.querySelector('.end-time').addEventListener('change', e => updateSub('end_time', e.target.value));
+                itemEl.querySelector('.text-input').addEventListener('input', e => updateSub('text', e.target.value));
                 subtitleList.appendChild(itemEl);
             });
         };
         
-        // Player Synchronization & Auto-scroll
+        // --- Player Logic ---
+        const togglePlay = () => mediaPlayer.paused ? mediaPlayer.play() : mediaPlayer.pause();
+        playPauseBtn.addEventListener('click', togglePlay);
+        mediaPlayer.addEventListener('click', togglePlay);
+        mediaPlayer.addEventListener('play', () => playPauseIcon.textContent = 'pause');
+        mediaPlayer.addEventListener('pause', () => playPauseIcon.textContent = 'play_arrow');
+        mediaPlayer.addEventListener('loadedmetadata', () => durationEl.textContent = formatTimeForDisplay(mediaPlayer.duration));
         mediaPlayer.addEventListener('timeupdate', () => {
-            const currentTime = mediaPlayer.currentTime;
-            const currentSub = state.subtitles.find(sub => currentTime >= timeStringToSeconds(sub.start_time) && currentTime < timeStringToSeconds(sub.end_time));
-
+            progressBar.value = (mediaPlayer.currentTime / mediaPlayer.duration) * 100;
+            currentTimeEl.textContent = formatTimeForDisplay(mediaPlayer.currentTime);
+            const currentSub = state.subtitles.find(s => mediaPlayer.currentTime >= timeStringToSeconds(s.start_time) && mediaPlayer.currentTime < timeStringToSeconds(s.end_time));
             if (currentSub && state.activeSubtitleId !== currentSub.id) {
-                if (state.activeSubtitleId) {
-                    subtitleList.querySelector(`[data-id="${state.activeSubtitleId}"]`)?.classList.remove('active');
-                }
+                subtitleList.querySelector(`[data-id="${state.activeSubtitleId}"]`)?.classList.remove('active');
                 const newActiveEl = subtitleList.querySelector(`[data-id="${currentSub.id}"]`);
-                if (newActiveEl) {
+                if(newActiveEl) {
                     newActiveEl.classList.add('active');
                     newActiveEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
                 }
@@ -475,8 +430,17 @@
                 state.activeSubtitleId = null;
             }
         });
+        progressBar.addEventListener('input', () => mediaPlayer.currentTime = (progressBar.value / 100) * mediaPlayer.duration);
+        volumeBar.addEventListener('input', (e) => mediaPlayer.volume = e.target.value);
+        mediaPlayer.addEventListener('volumechange', () => {
+            volumeBar.value = mediaPlayer.volume;
+            if (mediaPlayer.muted || mediaPlayer.volume === 0) volumeIcon.textContent = 'volume_off';
+            else if (mediaPlayer.volume < 0.5) volumeIcon.textContent = 'volume_down';
+            else volumeIcon.textContent = 'volume_up';
+        });
+        volumeBtn.addEventListener('click', () => mediaPlayer.muted = !mediaPlayer.muted);
         
-        // --- SRT Generation and Download ---
+        // --- SRT Download ---
         const generateSrtContent = () => {
             const sortedSubs = [...state.subtitles].sort((a,b) => timeStringToSeconds(a.start_time) - timeStringToSeconds(b.start_time));
             return sortedSubs.map((sub, index) => {
@@ -489,7 +453,6 @@
         downloadSrtButton.addEventListener('click', () => {
             const srtContent = generateSrtContent();
             if (!srtContent) return showNotification('אין כתוביות להורדה.', 'error');
-            
             const blob = new Blob([srtContent], { type: 'text/plain;charset=utf-8' });
             const a = document.createElement('a');
             a.href = URL.createObjectURL(blob);
