@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>יצירת כתוביות אוטומטית עם Gemini</title>
+
+    <!-- Google Fonts & Material Symbols -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Assistant:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
+
+    <style>
+        :root {
+            --md-sys-color-primary: #006d77;
+            --md-sys-color-on-primary: #ffffff;
+            --md-sys-color-primary-container: #81d4fa;
+            --md-sys-color-on-primary-container: #001f25;
+            --md-sys-color-secondary: #4a6367;
+            --md-sys-color-error: #ba1a1a;
+            --md-sys-color-background: #f8fcfd;
+            --md-sys-color-surface: #f8fcfd;
+            --md-sys-color-surface-variant: #dbe4e6;
+            --md-sys-color-outline: #6f797a;
+            --md-sys-color-surface-container-low: #eff4f5;
+            --border-radius: 16px;
+            --border-radius-small: 8px;
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        html { scroll-behavior: smooth; }
+        body { font-family: 'Assistant', sans-serif; background-color: var(--md-sys-color-background); color: var(--md-sys-color-on-background); line-height: 1.6; }
+        .container { max-width: 800px; margin: 0 auto; padding: 2rem 1.5rem; }
+        .card { background-color: var(--md-sys-color-surface-container-low); border-radius: var(--border-radius); padding: 2rem; border: 1px solid var(--md-sys-color-surface-variant); box-shadow: 0 2px 8px rgba(0,0,0,0.05); margin-bottom: 2rem; }
+        header { padding-bottom: 1rem; text-align: center; }
+        h1, h2, h3 { font-weight: 700; color: var(--md-sys-color-primary); }
+        h1 { font-size: 2.5rem; display: flex; align-items: center; justify-content: center; gap: 1rem; }
+        h2 { font-size: 1.5rem; margin-bottom: 1.5rem; border-bottom: 2px solid var(--md-sys-color-primary-container); padding-bottom: 0.5rem; display: flex; align-items: center; gap: 0.5rem; }
+        .material-symbols-outlined { font-size: inherit; vertical-align: middle; }
+        .btn { display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem; padding: 12px 28px; font-family: 'Assistant', sans-serif; font-size: 1.1rem; font-weight: 600; border-radius: 99px; border: none; cursor: pointer; transition: all 0.2s ease-in-out; text-decoration: none; }
+        .btn:disabled { opacity: 0.5; cursor: not-allowed; background-color: var(--md-sys-color-outline); color: var(--md-sys-color-surface); }
+        .btn-primary { background-color: var(--md-sys-color-primary); color: var(--md-sys-color-on-primary); }
+        .btn-primary:hover:not(:disabled) { background-color: #005a63; box-shadow: 0 4px 8px rgba(0,0,0,0.15); }
+        .input-group { margin-bottom: 1.5rem; }
+        .input-group label { display: block; margin-bottom: 0.5rem; font-weight: 600; color: var(--md-sys-color-outline); }
+        .input-field { width: 100%; padding: 12px 16px; border: 1px solid var(--md-sys-color-outline); border-radius: var(--border-radius-small); font-family: 'Assistant', sans-serif; font-size: 1rem; direction: ltr; text-align: left; }
+        .file-input-wrapper { border: 2px dashed var(--md-sys-color-outline); border-radius: var(--border-radius); padding: 2rem; text-align: center; cursor: pointer; transition: all 0.2s; }
+        .file-input-wrapper:hover, .file-input-wrapper.drag-over { background-color: var(--md-sys-color-primary-container); border-color: var(--md-sys-color-primary); }
+        .file-input-wrapper .material-symbols-outlined { font-size: 3rem; color: var(--md-sys-color-primary); }
+        .file-input-wrapper input[type="file"] { display: none; }
+        .file-name { margin-top: 1rem; font-weight: 600; color: var(--md-sys-color-secondary); }
+        #progress-section { display: none; }
+        #log-console { background-color: #2d2d2d; color: #f1f1f1; border-radius: var(--border-radius-small); padding: 1.5rem; height: 300px; overflow-y: auto; font-family: monospace; direction: ltr; text-align: left; white-space: pre-wrap; word-wrap: break-word; }
+        #log-console .log-entry { margin-bottom: 0.5em; }
+        #log-console .log-success { color: #81d4fa; }
+        #log-console .log-error { color: #f28b82; font-weight: bold; }
+        #log-console .log-info { color: #e0e0e0; }
+        #log-console .log-step { color: #fdd835; font-weight: bold; }
+        #results-section { display: none; text-align: center; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1><span class="material-symbols-outlined" style="font-size: 2.8rem;">auto_fix_high</span> יצירת כתוביות אוטומטית</h1>
+        </header>
+
+        <main>
+            <div id="setup-section">
+                <div class="card">
+                    <h2><span class="material-symbols-outlined">settings</span>שלב 1: הגדרות</h2>
+                    <div class="input-group">
+                        <label for="api-key-input">Gemini API Key</label>
+                        <input type="password" id="api-key-input" class="input-field" placeholder="הדבק כאן את מפתח ה-API שלך">
+                    </div>
+                    <div class="input-group">
+                        <label for="audio-file-input">שלב 2: העלאת קובץ שמע</label>
+                        <label for="audio-file-input" class="file-input-wrapper" id="audio-drop-zone">
+                            <span class="material-symbols-outlined">upload_file</span>
+                            <p>לחץ לבחירת קובץ או גרור לכאן (MP3, WAV, M4A, וכו')</p>
+                            <div id="audio-file-name" class="file-name"></div>
+                        </label>
+                        <input type="file" id="audio-file-input" accept="audio/*">
+                    </div>
+                     <div style="text-align: center; margin-top: 2rem;">
+                        <button id="start-button" class="btn btn-primary" disabled>
+                            <span class="material-symbols-outlined">play_circle</span> התחל תמלול
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div id="progress-section" class="card">
+                <h2><span class="material-symbols-outlined">sync</span>שלב 3: התקדמות התמלול</h2>
+                <div id="log-console"></div>
+            </div>
+
+            <div id="results-section" class="card">
+                <h2><span class="material-symbols-outlined">download_done</span>שלב 4: הורדה</h2>
+                <p style="margin-bottom: 1.5rem;">התמלול הושלם בהצלחה!</p>
+                <button id="download-srt-button" class="btn btn-primary">
+                    <span class="material-symbols-outlined">download</span> הורד קובץ SRT
+                </button>
+            </div>
+
+        </main>
+    </div>
+
+    <script>
+    document.addEventListener('DOMContentLoaded', () => {
+        // --- Element Selection ---
+        const apiKeyInput = document.getElementById('api-key-input');
+        const audioFileInput = document.getElementById('audio-file-input');
+        const audioDropZone = document.getElementById('audio-drop-zone');
+        const audioFileName = document.getElementById('audio-file-name');
+        const startButton = document.getElementById('start-button');
+        const setupSection = document.getElementById('setup-section');
+        const progressSection = document.getElementById('progress-section');
+        const resultsSection = document.getElementById('results-section');
+        const logConsole = document.getElementById('log-console');
+        const downloadSrtButton = document.getElementById('download-srt-button');
+
+        // --- State Management ---
+        let audioFile = null;
+        let finalSrtContent = '';
+
+        // --- Gemini Configuration ---
+        const GEMINI_MODEL = 'gemini-2.5-flash';
+        const SYSTEM_PROMPT = `**System Prompt: Torah Lesson Transcription (Ashkenazi-Lithuanian Pronunciation)**
+
+**Primary Task:** Accurately transcribe Torah lessons. These lessons are delivered in Hebrew, featuring a distinct **Ashkenazi-Lithuanian pronunciation** (often referred to as "Lashon HaKodesh"), and may include **Aramaic** words and phrases. The output must be in **JSON format**, and the transcribed text itself must be in **Hebrew**.
+
+**Core Challenge: Pronunciation Handling**
+
+The speakers in these lessons use a unique pronunciation. Your primary function is to identify the correct Hebrew or Aramaic words based on this pronunciation and transcribe them using **standard Hebrew/Aramaic orthography**. Do **not** transcribe phonetically based on the exact sound you hear. Adhere to the following "Hear X - Write Y" conversion rules:
+
+1.  **ת' without dagesh (Taf Rapha - sounds like 'S'):**
+    * **You Hear:** "ברֵישִי**ס**" (transliterated: Breishi**s**), "אֶמֶ**ס**" (transliterated: Eme**s**)
+    * **You Write:** "בראשי**ת**" (transliterated: Bereshi**t**), "אמ**ת**" (transliterated: Eme**t**)
+
+2.  **Kamatz (ָ) vowel (often sounds like an 'O' vowel, similar to Cholam, or an 'OY' diphthong):**
+    * **You Hear:** "**חוֹ**כמָה" (transliterated: **Cho**chma), "**אוֹ**דָם" (transliterated: **O**dom), "ע**וֹי**לם" (transliterated: O**y**lam)
+    * **You Write:** "**חָ**כמה" (transliterated: **Cha**chma), "**אָ**דם" (transliterated: **A**dam), "ע**וֹ**לם" (transliterated: O**la**m)
+
+3.  **Tzeire (ֵ) vowel (often sounds like an 'EY' or 'AY' diphthong):**
+    * **You Hear:** "ח**ֵיי**לֶק" (transliterated: Ch**ey**lek), "ב**ֵּיי**ן" (transliterated: B**ey**n)
+    * **You Write:** "ח**ֵ**לֶק" (transliterated: Ch**e**lek), "בּ**ֵ**ן" (transliterated: B**e**n)
+
+4.  **Cholam (וֹ , ֹ) vowel (often sounds like an 'OY' diphthong):**
+    * **You Hear:** "ש**וֹי**לֶם" (transliterated: Sh**oy**lem), "ט**וֹי**ב" (transliterated: T**oy**v)
+    * **You Write:** "של**וֹ**ם" (transliterated: Shal**o**m), "ט**וֹ**ב" (transliterated: T**o**v)
+
+**Transcription and Writing Guidelines:**
+
+* **Language of Transcription:** All transcribed text in the \`text\` field of the JSON output must be in **Hebrew**.
+* **Aramaic:** Transcribe Aramaic terms and quotations using their standard accepted spelling (e.g., write "אביי", "רבא", even if the pronunciation sounds like "אבַייֶה", "רוֹבֶה").
+* **Content Accuracy:** Maintain the highest possible accuracy regarding the spoken content, including names of sages, cited books, and direct quotations.
+* **Hebrew Spelling:** Use **standard full Hebrew spelling (כתיב מלא)** as the default. Use defective spelling (כתיב חסר) only if it is part of a direct quotation from a source that specifically requires it (e.g., a biblical verse).
+* **Nikud (Vocalization Marks):** **Do not add Nikud** (Hebrew vowel markings) to the transcribed text.
+* **Punctuation:** Insert basic punctuation (e.g., commas, periods, question marks) as appropriate to ensure the clarity of sentence structure and readability of the transcribed Hebrew text.
+* **Text Cleanliness:** Omit hesitations (e.g., "um," "uh"), stutters, and filler words that are not integral to the meaning or emphasis of the content. Retain deliberate repetitions if they are used for emphasis.
+* **Quotations:** When direct quotations from sources are clearly identifiable in the speech, enclose them in standard quotation marks ("...").
+* **Unclear or Unidentified Words:** If you cannot confidently identify a word, attempt a phonetic transcription enclosed in square brackets followed by a question mark, using Hebrew characters for the guess. e.g., \`"[נראה כמו קצו"צ?]" \`
+* **Speaker Identification:** Assuming a single primary speaker, there is no need to identify the speaker.
+* **Timestamps:** **This is critical.** You will be given an audio segment from a larger file. The prompt will specify the start time of this segment (e.g., "This audio starts at 00:10:00,000"). All timestamps (\`start_time\`, \`end_time\`) in your JSON output **must be absolute**, reflecting their position in the original, full-length audio file. They must be offset by the provided start time.
+`;
+
+        const JSON_SCHEMA = {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": { "type": "integer", "description": "A sequential integer ID for the subtitle." },
+              "start_time": { "type": "string", "description": "Start time in HH:MM:SS,mmm format.", "pattern": "^\\d{2}:\\d{2}:\\d{2},\\d{3}$" },
+              "end_time": { "type": "string", "description": "End time in HH:MM:SS,mmm format.", "pattern": "^\\d{2}:\\d{2}:\\d{2},\\d{3}$" },
+              "text": { "type": "string", "description": "The transcribed Hebrew text for the segment." }
+            },
+            "required": ["id", "start_time", "end_time", "text"]
+          }
+        };
+
+        // --- UI & Event Listeners ---
+        function checkCanStart() {
+            startButton.disabled = !(apiKeyInput.value.trim() && audioFile);
+        }
+
+        apiKeyInput.addEventListener('input', checkCanStart);
+
+        function handleAudioFile(file) {
+            if (file && file.type.startsWith('audio/')) {
+                audioFile = file;
+                audioFileName.textContent = `קובץ: ${file.name}`;
+                checkCanStart();
+            } else {
+                logMessage('נא לבחור קובץ שמע תקין.', 'error');
+                audioFile = null;
+                audioFileName.textContent = '';
+                checkCanStart();
+            }
+        }
+        
+        audioFileInput.addEventListener('change', e => handleAudioFile(e.target.files[0]));
+        ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => { document.body.addEventListener(eventName, e => { e.preventDefault(); e.stopPropagation(); }); });
+        audioDropZone.addEventListener('dragover', () => audioDropZone.classList.add('drag-over'), false);
+        audioDropZone.addEventListener('dragleave', () => audioDropZone.classList.remove('drag-over'), false);
+        audioDropZone.addEventListener('drop', e => { audioDropZone.classList.remove('drag-over'); handleAudioFile(e.dataTransfer.files[0]); });
+        
+        startButton.addEventListener('click', () => {
+            setupSection.style.display = 'none';
+            progressSection.style.display = 'block';
+            resultsSection.style.display = 'none';
+            logConsole.innerHTML = '';
+            runTranscriptionProcess();
+        });
+        
+        downloadSrtButton.addEventListener('click', () => {
+            const blob = new Blob([finalSrtContent], { type: 'text/plain;charset=utf-8' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `${audioFile.name.replace(/\.[^/.]+$/, "")}.srt`;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+        });
+
+        // --- Logging ---
+        function logMessage(message, type = 'info') {
+            const entry = document.createElement('div');
+            entry.className = `log-entry log-${type}`;
+            entry.textContent = `[${new Date().toLocaleTimeString()}] ${message}`;
+            logConsole.appendChild(entry);
+            logConsole.scrollTop = logConsole.scrollHeight;
+        }
+
+        // --- Helper Functions ---
+        function secondsToTimeString(seconds, useComma = false) {
+            if (isNaN(seconds) || seconds < 0) seconds = 0;
+            const h = Math.floor(seconds / 3600).toString().padStart(2, '0');
+            const m = Math.floor((seconds % 3600) / 60).toString().padStart(2, '0');
+            const s = Math.floor(seconds % 60).toString().padStart(2, '0');
+            const ms = Math.round((seconds - Math.floor(seconds)) * 1000).toString().padStart(3, '0');
+            return `${h}:${m}:${s}${useComma ? ',' : '.'}${ms}`;
+        }
+        
+        function timeStringToSeconds(timeStr) {
+            if (!timeStr || typeof timeStr !== 'string') return 0;
+            let normalizedTime = timeStr.replace(',', '.');
+            const parts = normalizedTime.split(':');
+            let seconds = 0;
+            if (parts.length === 3) {
+                seconds = parseFloat(parts[0]) * 3600 + parseFloat(parts[1]) * 60 + parseFloat(parts[2]);
+            } else if (parts.length === 2) {
+                seconds = parseFloat(parts[0]) * 60 + parseFloat(parts[1]);
+            } else if (parts.length === 1) {
+                seconds = parseFloat(parts[0]);
+            }
+            return isNaN(seconds) ? 0 : seconds;
+        };
+
+
+        // --- Audio Processing ---
+        const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        
+        async function getAudioChunks(file) {
+            logMessage('קורא ומפענח את קובץ השמע...', 'step');
+            const arrayBuffer = await file.arrayBuffer();
+            const mainBuffer = await audioCtx.decodeAudioData(arrayBuffer);
+            
+            const MAX_CHUNK_SECONDS = 10 * 60; // 10 minutes
+            const MIN_SILENCE_S = 0.5; // 500ms
+            const SILENCE_THRESHOLD = 0.005;
+
+            const chunks = [];
+            let currentOffset = 0;
+
+            logMessage(`מנתח את השמע לאיתור נקודות חיתוך שקטות (אורך מלא: ${Math.round(mainBuffer.duration / 60)} דקות).`, 'info');
+
+            while (currentOffset < mainBuffer.duration) {
+                let chunkEnd = Math.min(currentOffset + MAX_CHUNK_SECONDS, mainBuffer.duration);
+                
+                // If it's not the last chunk, try to find a smart split point
+                if (chunkEnd < mainBuffer.duration) {
+                    const searchStart = Math.max(currentOffset, chunkEnd - 30); // Search in the last 30s of the chunk
+                    let splitPoint = -1;
+
+                    // Simplified silence detection
+                    const pcmData = mainBuffer.getChannelData(0);
+                    const sampleRate = mainBuffer.sampleRate;
+                    for (let i = Math.floor(searchStart * sampleRate); i < Math.floor(chunkEnd * sampleRate); i++) {
+                        let isSilent = true;
+                        for (let j = 0; j < MIN_SILENCE_S * sampleRate; j++) {
+                           if (Math.abs(pcmData[i+j]) > SILENCE_THRESHOLD) {
+                                isSilent = false;
+                                i += j; // Skip checked samples
+                                break;
+                           }
+                        }
+                        if (isSilent) {
+                            splitPoint = (i / sampleRate) + (MIN_SILENCE_S / 2);
+                            break;
+                        }
+                    }
+                    
+                    if (splitPoint > currentOffset + 60) { // Ensure chunk is at least 1 min long
+                        chunkEnd = splitPoint;
+                        logMessage(`נמצאה נקודת חיתוך חכמה ב-${secondsToTimeString(chunkEnd).split('.')[0]}`, 'info');
+                    } else {
+                        logMessage(`לא נמצאה נקודת חיתוך. חותך ב-${secondsToTimeString(chunkEnd).split('.')[0]}`, 'info');
+                    }
+                }
+                
+                const chunkDuration = chunkEnd - currentOffset;
+                const chunkBuffer = audioCtx.createBuffer(mainBuffer.numberOfChannels, Math.ceil(chunkDuration * mainBuffer.sampleRate), mainBuffer.sampleRate);
+
+                for (let i = 0; i < mainBuffer.numberOfChannels; i++) {
+                    const channelData = mainBuffer.getChannelData(i).subarray(
+                        Math.floor(currentOffset * mainBuffer.sampleRate),
+                        Math.floor(chunkEnd * mainBuffer.sampleRate)
+                    );
+                    chunkBuffer.copyToChannel(channelData, i);
+                }
+
+                chunks.push({
+                    startTime: currentOffset,
+                    buffer: chunkBuffer
+                });
+                currentOffset = chunkEnd;
+            }
+
+            logMessage(`השמע חולק ל-${chunks.length} מקטעים.`, 'success');
+            return chunks;
+        }
+
+        function bufferToWav(buffer) {
+            // This function converts an AudioBuffer to a WAV file (Blob)
+            // It's a standard implementation found online
+            const numOfChan = buffer.numberOfChannels,
+                  length = buffer.length * numOfChan * 2 + 44,
+                  bufferArr = new ArrayBuffer(length),
+                  view = new DataView(bufferArr),
+                  channels = [],
+                  sampleRate = buffer.sampleRate;
+            let offset = 0, pos = 0;
+
+            function setUint16(data) {
+                view.setUint16(pos, data, true);
+                pos += 2;
+            }
+            function setUint32(data) {
+                view.setUint32(pos, data, true);
+                pos += 4;
+            }
+
+            setUint32(0x46464952); // "RIFF"
+            setUint32(length - 8); // file length - 8
+            setUint32(0x45564157); // "WAVE"
+            setUint32(0x20746d66); // "fmt " chunk
+            setUint32(16); // length of fmt data
+            setUint16(1); // PCM - integer samples
+            setUint16(numOfChan);
+            setUint32(sampleRate);
+            setUint32(sampleRate * 2 * numOfChan); // byte rate
+            setUint16(numOfChan * 2); // block align
+            setUint16(16); // bits per sample
+            setUint32(0x61746164); // "data" chunk
+            setUint32(length - pos - 4); // data length
+
+            for (let i = 0; i < buffer.numberOfChannels; i++) {
+                channels.push(buffer.getChannelData(i));
+            }
+            
+            let interleaved = new Int16Array(buffer.length * numOfChan);
+            let index = 0;
+            for(let i = 0; i < buffer.length; i++) {
+                for(let c = 0; c < numOfChan; c++) {
+                    let sample = Math.max(-1, Math.min(1, channels[c][i]));
+                    interleaved[index++] = sample < 0 ? sample * 32768 : sample * 32767;
+                }
+            }
+            
+            let dataView = new DataView(interleaved.buffer);
+            for(let i = 0; i < interleaved.length; i++){
+                view.setInt16(pos, dataView.getInt16(i * 2, true), true);
+                pos += 2;
+            }
+
+            return new Blob([view], { type: 'audio/wav' });
+        }
+
+
+        // --- Gemini API Interaction ---
+        async function uploadFileToGemini(chunkBlob, apiKey) {
+            const UPLOAD_URL = 'https://generativelanguage.googleapis.com/upload/v1beta/files';
+            
+            // 1. Start resumable upload
+            const startResponse = await fetch(UPLOAD_URL, {
+                method: 'POST',
+                headers: {
+                    'x-goog-api-key': apiKey,
+                    'X-Goog-Upload-Protocol': 'resumable',
+                    'X-Goog-Upload-Command': 'start',
+                    'X-Goog-Upload-Header-Content-Length': chunkBlob.size,
+                    'X-Goog-Upload-Header-Content-Type': chunkBlob.type,
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({'file': {'display_name': `chunk-${Date.now()}`}})
+            });
+            
+            if (!startResponse.ok) {
+                throw new Error(`שגיאה בהתחלת העלאה: ${startResponse.statusText}`);
+            }
+            const uploadUrl = startResponse.headers.get('x-goog-upload-url');
+
+            // 2. Upload file bytes
+            const uploadResponse = await fetch(uploadUrl, {
+                method: 'POST',
+                headers: {
+                    'Content-Length': chunkBlob.size,
+                    'X-Goog-Upload-Command': 'upload, finalize'
+                },
+                body: chunkBlob
+            });
+
+            if (!uploadResponse.ok) {
+                throw new Error(`שגיאה בהעלאת הקובץ: ${uploadResponse.statusText}`);
+            }
+            const fileInfo = await uploadResponse.json();
+            return fileInfo.file;
+        }
+
+        async function generateContent(fileUri, mimeType, startTime, apiKey) {
+            const API_URL = `https://generativelanguage.googleapis.com/v1beta/models/${GEMINI_MODEL}:generateContent?key=${apiKey}`;
+
+            const prompt = `Please transcribe the following audio segment. This audio starts at ${secondsToTimeString(startTime, true)}.`;
+
+            const requestBody = {
+                "system_instruction": { "parts": [{ "text": SYSTEM_PROMPT }] },
+                "contents": [{
+                    "parts":[
+                      {"text": prompt},
+                      {"file_data":{"mime_type": mimeType, "file_uri": fileUri}}
+                    ]
+                }],
+                "tool_config": {
+                    "function_calling_config": {
+                      "mode": "ANY",
+                      "allowed_function_names": ["transcribe"]
+                    }
+                },
+                "generation_config": {
+                    "response_mime_type": "application/json"
+                }
+            };
+            
+            const response = await fetch(API_URL, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(requestBody)
+            });
+
+            if (!response.ok) {
+                const errorBody = await response.text();
+                throw new Error(`שגיאה בקריאה ל-Gemini: ${response.statusText}. פרטים: ${errorBody}`);
+            }
+            
+            const data = await response.json();
+            const textContent = data?.candidates?.[0]?.content?.parts?.[0]?.text;
+            if (!textContent) {
+                console.error("Full Gemini Response:", data);
+                throw new Error("לא התקבלה תשובת טקסט תקינה מ-Gemini.");
+            }
+            
+            try {
+                // The API might return a JSON string, which needs to be parsed again.
+                return JSON.parse(textContent);
+            } catch (e) {
+                console.error("Failed to parse Gemini's text response as JSON:", textContent);
+                throw new Error("Gemini החזיר תשובה שאינה בפורמט JSON תקין.");
+            }
+        }
+        
+        
+        // --- Main Process ---
+        async function runTranscriptionProcess() {
+            try {
+                const apiKey = apiKeyInput.value.trim();
+                const chunks = await getAudioChunks(audioFile);
+                let allSubtitles = [];
+
+                for (let i = 0; i < chunks.length; i++) {
+                    const chunk = chunks[i];
+                    logMessage(`מעבד מקטע ${i + 1} מתוך ${chunks.length} (מתחיל ב-${secondsToTimeString(chunk.startTime).split('.')[0]})`, 'step');
+
+                    // 1. Convert chunk buffer to WAV blob
+                    const chunkBlob = bufferToWav(chunk.buffer);
+                    logMessage(`המרת מקטע ${i + 1} לפורמט WAV...`, 'info');
+
+                    // 2. Upload to Gemini
+                    logMessage(`מעלה את מקטע ${i + 1} ל-Gemini...`, 'info');
+                    const uploadedFile = await uploadFileToGemini(chunkBlob, apiKey);
+                    logMessage(`מקטע ${i + 1} הועלה בהצלחה. URI: ${uploadedFile.uri}`, 'success');
+
+                    // 3. Transcribe with Gemini
+                    logMessage(`שולח בקשת תמלול עבור מקטע ${i + 1}...`, 'info');
+                    const transcriptionResult = await generateContent(uploadedFile.uri, 'audio/wav', chunk.startTime, apiKey);
+                    
+                    if (!Array.isArray(transcriptionResult)) {
+                         throw new Error(`תגובת התמלול ממקטע ${i + 1} אינה מערך.`);
+                    }
+                    
+                    logMessage(`התקבל תמלול עבור מקטע ${i + 1}.`, 'success');
+                    allSubtitles.push(...transcriptionResult);
+                }
+
+                logMessage('כל המקטעים עובדו. ממזג ומסדר את הכתוביות...', 'step');
+                
+                // Sort all subtitles by start time
+                allSubtitles.sort((a, b) => timeStringToSeconds(a.start_time) - timeStringToSeconds(b.start_time));
+                
+                // Generate final SRT content
+                finalSrtContent = allSubtitles.map((sub, index) => {
+                    // Gemini might return with periods, SRT needs commas
+                    const start = sub.start_time.replace('.', ',');
+                    const end = sub.end_time.replace('.', ',');
+                    return `${index + 1}\n${start} --> ${end}\n${sub.text.trim()}`;
+                }).join('\n\n');
+
+                logMessage('התמלול הושלם בהצלחה!', 'success');
+                progressSection.style.display = 'none';
+                resultsSection.style.display = 'block';
+
+            } catch (error) {
+                console.error(error);
+                logMessage(`אירעה שגיאה קריטית: ${error.message}`, 'error');
+                logMessage('התהליך נעצר. אנא בדוק את מפתח ה-API, את חיבור האינטרנט ונסה שנית.', 'info');
+            }
+        }
+    });
+    </script>
+</body>
+</html>
