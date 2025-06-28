@@ -268,13 +268,27 @@
         
         const timeStringToSeconds = (timeStr) => {
             if (!timeStr || typeof timeStr !== 'string') return 0;
-            const parts = timeStr.replace(',', '.').split(':');
-            let seconds = 0;
-            if (parts.length === 3) {
-                 seconds = parseFloat(parts[0]) * 3600 + parseFloat(parts[1]) * 60 + parseFloat(parts[2]);
-            } else if (parts.length === 2) {
-                seconds = parseFloat(parts[0]) * 60 + parseFloat(parts[1]);
+
+            // Normalize different formats to use '.' as the final separator
+            let normalizedTime = timeStr.replace(',', '.');
+            const colonCount = (normalizedTime.match(/:/g) || []).length;
+
+            // Handles HH:MM:SS:ms or MM:SS:ms (colon as ms separator)
+            if ((colonCount === 3) || (colonCount === 2 && !normalizedTime.includes('.'))) {
+                 const lastColonIndex = normalizedTime.lastIndexOf(':');
+                 normalizedTime = normalizedTime.substring(0, lastColonIndex) + '.' + normalizedTime.substring(lastColonIndex + 1);
             }
+
+            const parts = normalizedTime.split(':');
+            let seconds = 0;
+            if (parts.length === 3) { // HH:MM:SS.ms
+                 seconds = parseFloat(parts[0]) * 3600 + parseFloat(parts[1]) * 60 + parseFloat(parts[2]);
+            } else if (parts.length === 2) { // MM:SS.ms
+                seconds = parseFloat(parts[0]) * 60 + parseFloat(parts[1]);
+            } else if (parts.length === 1) { // S.ms
+                seconds = parseFloat(parts[0]);
+            }
+            
             return isNaN(seconds) ? 0 : seconds;
         };
 
