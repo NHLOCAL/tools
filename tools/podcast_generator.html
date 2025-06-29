@@ -4,6 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>מחולל פודקאסטים AI</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🎙️</text></svg>">
 
     <!-- Google Fonts & Material Symbols (Copied from subtitle_creator.html) -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -19,6 +20,9 @@
             --md-sys-color-primary-container: #EADDFF;
             --md-sys-color-on-primary-container: #21005D;
             --md-sys-color-secondary: #625B71;
+            --md-sys-color-on-secondary: #FFFFFF;
+            --md-sys-color-secondary-container: #E8DEF8;
+            --md-sys-color-on-secondary-container: #1D192B;
             --md-sys-color-error: #ba1a1a;
             --md-sys-color-background: #f8fcfd;
             --md-sys-color-surface: #f8fcfd;
@@ -38,17 +42,19 @@
         h1 { font-size: 2.5rem; display: flex; align-items: center; justify-content: center; gap: 1rem; }
         h2 { font-size: 1.5rem; margin-bottom: 1.5rem; border-bottom: 2px solid var(--md-sys-color-primary-container); padding-bottom: 0.5rem; display: flex; align-items: center; gap: 0.5rem; }
         .material-symbols-outlined { font-size: inherit; vertical-align: middle; }
-        .btn { display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem; padding: 12px 28px; font-family: 'Assistant', sans-serif; font-size: 1.1rem; font-weight: 600; border-radius: 99px; border: none; cursor: pointer; transition: all 0.2s ease-in-out; text-decoration: none; width: auto; /* override from original file */ }
+        .btn { display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem; padding: 12px 28px; font-family: 'Assistant', sans-serif; font-size: 1.1rem; font-weight: 600; border-radius: 99px; border: none; cursor: pointer; transition: all 0.2s ease-in-out; text-decoration: none; width: auto; }
         .btn:disabled { opacity: 0.5; cursor: not-allowed; background-color: var(--md-sys-color-outline); color: var(--md-sys-color-surface); }
         .btn-primary { background-color: var(--md-sys-color-primary); color: var(--md-sys-color-on-primary); }
         .btn-primary:hover:not(:disabled) { background-color: #503f7e; box-shadow: 0 4px 8px rgba(0,0,0,0.15); }
+        .btn-secondary { background-color: var(--md-sys-color-secondary-container); color: var(--md-sys-color-on-secondary-container); font-size: 1rem; padding: 10px 24px; }
+        .btn-secondary:hover:not(:disabled) { background-color: #d1c7e2; }
         .input-group { margin-bottom: 1.5rem; }
         .input-group label { display: block; margin-bottom: 0.5rem; font-weight: 600; color: var(--md-sys-color-outline); }
         .input-field { width: 100%; padding: 12px 16px; border: 1px solid var(--md-sys-color-outline); border-radius: var(--border-radius-small); font-family: 'Assistant', sans-serif; font-size: 1rem; background-color: var(--md-sys-color-surface); }
         .input-field:focus { outline: 2px solid var(--md-sys-color-primary); }
         textarea.input-field { min-height: 250px; resize: vertical; }
-        .button-group { text-align: center; margin-top: 2rem; }
-        #status { font-size: 1rem; color: var(--md-sys-color-secondary); text-align: center; margin-top: 1.5rem; min-height: 1.6em; }
+        .button-group { text-align: center; margin-top: 2rem; display: flex; justify-content: center; gap: 1rem; flex-wrap: wrap; }
+        .status { font-size: 1rem; color: var(--md-sys-color-secondary); text-align: center; margin-top: 1.5rem; min-height: 1.6em; }
         audio { width: 100%; margin: 1.5rem 0; }
         #downloadLink { pointer-events: none; opacity: 0.5; }
         #downloadLink:not([style*="pointer-events: none"]) { pointer-events: auto; opacity: 1; }
@@ -93,7 +99,7 @@
                     <span class="material-symbols-outlined">edit_note</span> צור תסריט
                 </button>
             </div>
-            <div id="status-script"></div>
+            <div id="status-script" class="status"></div>
         </div>
 
         <div id="script-panel" class="card" style="display: none;">
@@ -102,12 +108,20 @@
                 <label for="scriptArea">תוכן התסריט</label>
                 <textarea id="scriptArea" class="input-field" rows="15"></textarea>
             </div>
+            <div class="button-group" style="margin-top: 1rem;">
+                 <button id="copyScriptBtn" class="btn btn-secondary">
+                    <span class="material-symbols-outlined">content_copy</span> העתק תסריט
+                </button>
+                <button id="downloadScriptBtn" class="btn btn-secondary">
+                    <span class="material-symbols-outlined">description</span> הורד כקובץ TXT
+                </button>
+            </div>
             <div class="button-group">
                 <button id="genAudioBtn" class="btn btn-primary">
                     <span class="material-symbols-outlined">graphic_eq</span> צור קובץ שמע
                 </button>
             </div>
-            <div id="status-audio"></div>
+            <div id="status-audio" class="status"></div>
         </div>
 
         <div id="audio-panel" class="card" style="display: none;">
@@ -130,6 +144,8 @@
         const durationInput = document.getElementById('durationInput');
         const speakersConfig = document.getElementById('speakersConfig');
         const genScriptBtn = document.getElementById('genScriptBtn');
+        const copyScriptBtn = document.getElementById('copyScriptBtn');
+        const downloadScriptBtn = document.getElementById('downloadScriptBtn');
         const genAudioBtn = document.getElementById('genAudioBtn');
         const scriptArea = document.getElementById('scriptArea');
         const audioPlayer = document.getElementById('audioPlayer');
@@ -142,9 +158,9 @@
         // --- Functions ---
         function updateStatus(message, type = 'script') {
             const el = type === 'script' ? statusScript : statusAudio;
-            // A shared status element might be better but this works for now
-            document.querySelectorAll('#status-script, #status-audio').forEach(e => e.innerHTML = '');
-            el.innerHTML = `<div class="status">${message}</div>`;
+            if (type === 'script') statusAudio.textContent = '';
+            if (type === 'audio') statusScript.textContent = '';
+            el.textContent = message;
         }
 
         function getApiKey() {
@@ -292,7 +308,7 @@ Their interaction is the heart of the podcast. They complement and challenge eac
                 const script = data.candidates?.[0]?.content?.parts?.[0]?.text || '';
                 scriptArea.value = script;
                 scriptPanel.style.display = 'block';
-                audioPanel.style.display = 'none'; // Hide audio panel if re-generating script
+                audioPanel.style.display = 'none';
                 updateStatus('התסריט מוכן. ניתן לערוך אותו וללחוץ על יצירת שמע.', 'script');
                 scriptPanel.scrollIntoView({ behavior: 'smooth' });
 
@@ -355,7 +371,7 @@ Their interaction is the heart of the podcast. They complement and challenge eac
           
             switch (speakersConfigChoice) {
                 case 'two_males':
-                speechConfig = { multiSpeakerVoiceConfig: { speakerVoiceConfigs: [ { speaker: "speaker1", voiceConfig: { prebuiltVoiceConfig: { voiceName: "Sadaltager" } } }, { speaker: "speaker2", voiceConfig: { prebuiltVoiceConfig: { voiceName: "Rasalgethi" } } } ] } };
+                speechConfig = { multiSpeakerVoiceConfig: { speakerVoiceConfigs: [ { speaker: "speaker1", voiceConfig: { prebuiltVoiceConfig: { voiceName: "Sadaltager" } } }, { speaker: "speaker2", voiceConfig: { prebuiltVoiceConfig: { voiceName: "Pulcherrima" } } } ] } };
                 break;
                 case 'two_females':
                 speechConfig = { multiSpeakerVoiceConfig: { speakerVoiceConfigs: [ { speaker: "speaker1", voiceConfig: { prebuiltVoiceConfig: { voiceName: "Kore" } } }, { speaker: "speaker2", voiceConfig: { prebuiltVoiceConfig: { voiceName: "Aoede" } } } ] } };
@@ -420,6 +436,38 @@ Their interaction is the heart of the podcast. They complement and challenge eac
                 genAudioBtn.disabled = false;
             }
         }
+        
+        // --- NEW: Event listeners for script management ---
+        copyScriptBtn.addEventListener('click', () => {
+            const scriptText = scriptArea.value;
+            if (!scriptText) return;
+
+            navigator.clipboard.writeText(scriptText).then(() => {
+                const originalText = copyScriptBtn.innerHTML;
+                copyScriptBtn.innerHTML = `<span class="material-symbols-outlined">done</span> הועתק!`;
+                setTimeout(() => {
+                    copyScriptBtn.innerHTML = originalText;
+                }, 2000);
+            }).catch(err => {
+                console.error('Failed to copy text: ', err);
+                alert('ההעתקה נכשלה.');
+            });
+        });
+
+        downloadScriptBtn.addEventListener('click', () => {
+            const scriptText = scriptArea.value;
+            if (!scriptText) return;
+
+            const blob = new Blob([scriptText], { type: 'text/plain;charset=utf-8' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'podcast_script.txt';
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+        });
 
         // --- Event Listeners ---
         genScriptBtn.addEventListener('click', generateScript);
