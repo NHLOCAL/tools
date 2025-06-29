@@ -1,162 +1,189 @@
 <!DOCTYPE html>
 <html lang="he" dir="rtl">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>מחולל פודקאסטים AI</title>
-  <style>
-    /* Material Design 3 & Fluent-inspired styling */
-    :root { --surface: #F3F2F1; --on-surface: #323130; --primary: #6750A4; --primary-container: #EADDFF; --on-primary-container: #21005D; --secondary: #625B71; --secondary-container: #E8DEF8; --on-secondary-container: #1D192B; --radius: 16px; --padding: 16px; --shadow: 0 4px 16px rgba(0,0,0,0.1); font-family: 'Segoe UI', Roboto, sans-serif; }
-    * { box-sizing: border-box; }
-    body {
-      margin: 0;
-      padding: var(--padding);
-      background: var(--surface);
-      color: var(--on-surface);
-      max-width: 720px;
-      margin-left: auto;
-      margin-right: auto;
-    }
-    @media (max-width: 800px) {
-      body {
-        max-width: 100vw;
-        padding: 8px;
-      }
-      .card, details {
-        padding: 10px;
-        border-radius: 10px;
-      }
-      input, textarea, select, button {
-        font-size: 0.98rem;
-        padding: 10px;
-      }
-      a#downloadLink {
-        font-size: 0.98rem;
-        padding: 10px 12px;
-      }
-    }
-    .card { background: white; border-radius: var(--radius); box-shadow: var(--shadow); padding: var(--padding); margin-bottom: var(--padding); }
-    h1 { margin-top: 0; font-size: 1.5rem; }
-    label { display: block; margin-bottom: 8px; font-weight: 500; }
-    input, textarea, select, button { width: 100%; padding: 12px; margin-bottom: 12px; border: none; border-radius: calc(var(--radius)/2); background: var(--primary-container); color: var(--on-primary-container); font-size: 1rem; }
-    input:focus, textarea:focus, select:focus { outline: 2px solid var(--primary); }
-    button { cursor: pointer; background: var(--primary); color: white; font-weight: 600; transition: background 0.3s; }
-    button:hover { background: var(--on-primary-container); }
-    button:disabled {
-      background: #d1cfe2;
-      color: #888;
-      cursor: not-allowed;
-      opacity: 0.7;
-      box-shadow: none;
-      border: 1px solid #ccc;
-    }
-    details { background: var(--secondary-container); border-radius: var(--radius); padding: var(--padding); margin-bottom: var(--padding); }
-    summary { font-weight: 600; cursor: pointer; }
-    audio { width: 100%; margin-top: 8px; }
-    #status { font-size: 0.9rem; color: var(--secondary); }
-    a#downloadLink {
-      display: inline-block;
-      margin-top: 12px;
-      padding: 12px 24px;
-      background: var(--primary);
-      color: #fff;
-      border-radius: calc(var(--radius)/2);
-      text-decoration: none;
-      font-weight: 600;
-      font-size: 1rem;
-      box-shadow: var(--shadow);
-      transition: background 0.3s, color 0.3s, box-shadow 0.3s;
-      cursor: pointer;
-    }
-    a#downloadLink:hover, a#downloadLink:focus {
-      background: var(--on-primary-container);
-      color: #fff;
-      box-shadow: 0 2px 8px rgba(103,80,164,0.15);
-      outline: none;
-    }
-  </style>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>מחולל פודקאסטים AI</title>
+
+    <!-- Google Fonts & Material Symbols (Copied from subtitle_creator.html) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Assistant:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
+
+    <style>
+        /* Styles copied and adapted from subtitle_creator.html */
+        :root {
+            --md-sys-color-primary: #6750A4; /* Purple for podcast generator */
+            --md-sys-color-on-primary: #ffffff;
+            --md-sys-color-primary-container: #EADDFF;
+            --md-sys-color-on-primary-container: #21005D;
+            --md-sys-color-secondary: #625B71;
+            --md-sys-color-error: #ba1a1a;
+            --md-sys-color-background: #f8fcfd;
+            --md-sys-color-surface: #f8fcfd;
+            --md-sys-color-surface-variant: #E7E0EC;
+            --md-sys-color-outline: #79747E;
+            --md-sys-color-surface-container-low: #F7F2FA;
+            --border-radius: 16px;
+            --border-radius-small: 8px;
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        html { scroll-behavior: smooth; }
+        body { font-family: 'Assistant', sans-serif; background-color: var(--md-sys-color-background); color: var(--md-sys-color-on-background); line-height: 1.6; }
+        .container { max-width: 800px; margin: 0 auto; padding: 2rem 1.5rem; }
+        .card { background-color: var(--md-sys-color-surface-container-low); border-radius: var(--border-radius); padding: 2rem; border: 1px solid var(--md-sys-color-surface-variant); box-shadow: 0 2px 8px rgba(0,0,0,0.05); margin-bottom: 2rem; }
+        header { padding-bottom: 1rem; text-align: center; }
+        h1, h2, h3 { font-weight: 700; color: var(--md-sys-color-primary); }
+        h1 { font-size: 2.5rem; display: flex; align-items: center; justify-content: center; gap: 1rem; }
+        h2 { font-size: 1.5rem; margin-bottom: 1.5rem; border-bottom: 2px solid var(--md-sys-color-primary-container); padding-bottom: 0.5rem; display: flex; align-items: center; gap: 0.5rem; }
+        .material-symbols-outlined { font-size: inherit; vertical-align: middle; }
+        .btn { display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem; padding: 12px 28px; font-family: 'Assistant', sans-serif; font-size: 1.1rem; font-weight: 600; border-radius: 99px; border: none; cursor: pointer; transition: all 0.2s ease-in-out; text-decoration: none; width: auto; /* override from original file */ }
+        .btn:disabled { opacity: 0.5; cursor: not-allowed; background-color: var(--md-sys-color-outline); color: var(--md-sys-color-surface); }
+        .btn-primary { background-color: var(--md-sys-color-primary); color: var(--md-sys-color-on-primary); }
+        .btn-primary:hover:not(:disabled) { background-color: #503f7e; box-shadow: 0 4px 8px rgba(0,0,0,0.15); }
+        .input-group { margin-bottom: 1.5rem; }
+        .input-group label { display: block; margin-bottom: 0.5rem; font-weight: 600; color: var(--md-sys-color-outline); }
+        .input-field { width: 100%; padding: 12px 16px; border: 1px solid var(--md-sys-color-outline); border-radius: var(--border-radius-small); font-family: 'Assistant', sans-serif; font-size: 1rem; background-color: var(--md-sys-color-surface); }
+        .input-field:focus { outline: 2px solid var(--md-sys-color-primary); }
+        textarea.input-field { min-height: 250px; resize: vertical; }
+        .button-group { text-align: center; margin-top: 2rem; }
+        #status { font-size: 1rem; color: var(--md-sys-color-secondary); text-align: center; margin-top: 1.5rem; min-height: 1.6em; }
+        audio { width: 100%; margin: 1.5rem 0; }
+        #downloadLink { pointer-events: none; opacity: 0.5; }
+        #downloadLink:not([style*="pointer-events: none"]) { pointer-events: auto; opacity: 1; }
+    </style>
 </head>
 <body>
-  <div class="card">
-    <h1>מחולל פודקאסטים AI</h1>
-    <label for="apiKeyInput">מפתח API (או הגדר משתנה סביבה GEMINI_API_KEY בדפדפן)</label>
-    <input id="apiKeyInput" type="password" placeholder="הכנס מפתח או השאר ריק אם הוגדר משתנה סביבה" />
-    
-    <label for="topicInput">נושא הפודקאסט</label>
-    <input id="topicInput" type="text" placeholder="הכנס את הנושא שלך" />
+<div class="container">
+    <header>
+        <h1><span class="material-symbols-outlined" style="font-size: 2.8rem;">podcasts</span> מחולל פודקאסטים AI</h1>
+    </header>
 
-    <label for="durationInput">אורך רצוי (דקות)</label>
-    <input id="durationInput" type="number" value="7" min="1" max="20" />
+    <main>
+        <div id="setup-panel" class="card">
+            <h2><span class="material-symbols-outlined">tune</span>שלב 1: הגדרות הפודקאסט</h2>
+            
+            <div class="input-group">
+                <label for="apiKeyInput">Gemini API Key</label>
+                <input id="apiKeyInput" type="password" class="input-field" placeholder="הדבק כאן את מפתח ה-API שלך" />
+            </div>
+            
+            <div class="input-group">
+                <label for="topicInput">נושא הפודקאסט</label>
+                <input id="topicInput" type="text" class="input-field" placeholder="למשל: 'האם בינה מלאכותית יכולה להיות יצירתית?'" />
+            </div>
 
-    <label for="speakersConfig">תצורת דוברים</label>
-    <select id="speakersConfig">
-      <option value="male_female" selected>גבר ואישה</option>
-      <option value="two_males">שני גברים</option>
-      <option value="two_females">שתי נשים</option>
-    </select>
-    
-    <button id="genScriptBtn">צור תסריט</button>
-    <div id="status"></div>
-  </div>
+            <div class="input-group">
+                <label for="durationInput">אורך רצוי (דקות)</label>
+                <input id="durationInput" type="number" class="input-field" value="7" min="1" max="20" />
+            </div>
 
-  <details id="scriptPanel">
-    <summary>תסריט הפודקאסט</summary>
-    <textarea id="scriptArea" rows="15"></textarea>
-  </details>
+            <div class="input-group">
+                <label for="speakersConfig">תצורת דוברים</label>
+                <select id="speakersConfig" class="input-field">
+                    <option value="male_female" selected>גבר ואישה</option>
+                    <option value="two_males">שני גברים</option>
+                    <option value="two_females">שתי נשים</option>
+                </select>
+            </div>
+            
+            <div class="button-group">
+                <button id="genScriptBtn" class="btn btn-primary">
+                    <span class="material-symbols-outlined">edit_note</span> צור תסריט
+                </button>
+            </div>
+            <div id="status-script"></div>
+        </div>
 
-  <div class="card">
-    <button id="genAudioBtn">צור שמע (WAV)</button>
-    <audio id="audioPlayer" controls></audio>
-    <a id="downloadLink" download="podcast.wav" style="pointer-events: none; opacity: 0.5;">הורד קובץ WAV</a>
-  </div>
+        <div id="script-panel" class="card" style="display: none;">
+            <h2><span class="material-symbols-outlined">article</span>שלב 2: עריכת התסריט</h2>
+            <div class="input-group">
+                <label for="scriptArea">תוכן התסריט</label>
+                <textarea id="scriptArea" class="input-field" rows="15"></textarea>
+            </div>
+            <div class="button-group">
+                <button id="genAudioBtn" class="btn btn-primary">
+                    <span class="material-symbols-outlined">graphic_eq</span> צור קובץ שמע
+                </button>
+            </div>
+            <div id="status-audio"></div>
+        </div>
 
-  <script>
-    function getApiKey() {
-      // 1. מהשדה הידני
-      const manualKey = document.getElementById('apiKeyInput').value.trim();
-      if (manualKey) return manualKey;
-      // 2. window (אם הוזרק ע"י סקריפט)
-      if (window.GEMINI_API_KEY && typeof window.GEMINI_API_KEY === 'string' && window.GEMINI_API_KEY.length > 0) {
-        return window.GEMINI_API_KEY;
-      }
-      // 3. localStorage (אם נשמר שם)
-      if (localStorage.getItem('GEMINI_API_KEY')) {
-        return localStorage.getItem('GEMINI_API_KEY');
-      }
-      // 4. שדה חבוי (אם הוספת כזה)
-      const envInput = document.getElementById('envApiKey');
-      if (envInput && envInput.value) {
-        return envInput.value;
-      }
-      return '';
-    }
+        <div id="audio-panel" class="card" style="display: none;">
+            <h2><span class="material-symbols-outlined">download_done</span>שלב 3: האזנה והורדה</h2>
+            <audio id="audioPlayer" controls></audio>
+            <div class="button-group">
+                <a id="downloadLink" download="podcast.wav" class="btn btn-primary">
+                    <span class="material-symbols-outlined">download</span> הורד קובץ WAV
+                </a>
+            </div>
+        </div>
+    </main>
+</div>
 
-    // שמירת מפתח ל-localStorage אוטומטית אם הוזן ידנית
-    document.getElementById('apiKeyInput').addEventListener('change', function(e) {
-      if (e.target.value.trim()) {
-        localStorage.setItem('GEMINI_API_KEY', e.target.value.trim());
-      }
-    });
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        // --- Element Selection ---
+        const apiKeyInput = document.getElementById('apiKeyInput');
+        const topicInput = document.getElementById('topicInput');
+        const durationInput = document.getElementById('durationInput');
+        const speakersConfig = document.getElementById('speakersConfig');
+        const genScriptBtn = document.getElementById('genScriptBtn');
+        const genAudioBtn = document.getElementById('genAudioBtn');
+        const scriptArea = document.getElementById('scriptArea');
+        const audioPlayer = document.getElementById('audioPlayer');
+        const downloadLink = document.getElementById('downloadLink');
+        const scriptPanel = document.getElementById('script-panel');
+        const audioPanel = document.getElementById('audio-panel');
+        const statusScript = document.getElementById('status-script');
+        const statusAudio = document.getElementById('status-audio');
 
-    function updateStatus(msg) {
-      document.getElementById('status').textContent = msg;
-    }
-
-    DataView.prototype.setString = function(offset, str) {
-        for (let i = 0; i < str.length; i++) {
-            this.setUint8(offset + i, str.charCodeAt(i));
+        // --- Functions ---
+        function updateStatus(message, type = 'script') {
+            const el = type === 'script' ? statusScript : statusAudio;
+            // A shared status element might be better but this works for now
+            document.querySelectorAll('#status-script, #status-audio').forEach(e => e.innerHTML = '');
+            el.innerHTML = `<div class="status">${message}</div>`;
         }
-    };
 
-    function buildSystemPrompt(duration, speakersConfig) {
-      const baseIntro = `You are an AI specializing in writing podcast scripts. Your task is to create a dialogue that feels like a lively, engaging, and humorous **intellectual sparring match**. The conversation must be dynamic, fast-paced, and above all, thought-provoking.
+        function getApiKey() {
+            const manualKey = apiKeyInput.value.trim();
+            if (manualKey) return manualKey;
+            if (window.GEMINI_API_KEY) return window.GEMINI_API_KEY;
+            return localStorage.getItem('GEMINI_API_KEY') || '';
+        }
+
+        // --- Local Storage for API Key ---
+        const storedApiKey = localStorage.getItem('GEMINI_API_KEY');
+        if (storedApiKey) {
+            apiKeyInput.value = storedApiKey;
+        }
+
+        apiKeyInput.addEventListener('input', () => {
+            if (apiKeyInput.value.trim()) {
+                localStorage.setItem('GEMINI_API_KEY', apiKeyInput.value.trim());
+            } else {
+                localStorage.removeItem('GEMINI_API_KEY');
+            }
+        });
+        
+        // --- API & Core Logic (No changes to API calls structure) ---
+        DataView.prototype.setString = function(offset, str) {
+            for (let i = 0; i < str.length; i++) {
+                this.setUint8(offset + i, str.charCodeAt(i));
+            }
+        };
+
+        function buildSystemPrompt(duration, speakersConfigValue) {
+            const baseIntro = `You are an AI specializing in writing podcast scripts. Your task is to create a dialogue that feels like a lively, engaging, and humorous **intellectual sparring match**. The conversation must be dynamic, fast-paced, and above all, thought-provoking.
 
 The desired podcast length is approximately ${duration} minutes.
 
 #### **General Conversation Style:**
 The guiding style is one of **sharp and amused cynicism**. The speakers don't aim to belittle or dismiss; they use biting wit as a tool to expose absurdities, deconstruct conventions, and examine ideas from unexpected angles. The dialogue should be intelligent yet accessible; critical, yet driven by genuine curiosity. The goal is to make the listener smile, but more importantly, to make them think.`;
 
-      const outputStructureTemplate = `
+            const outputStructureTemplate = `
 #### **Exact Output Structure:**
 
 1.  **English Directive:**
@@ -173,292 +200,231 @@ The guiding style is one of **sharp and amused cynicism**. The speakers don't ai
     *   Speaker names will appear in English: [SPEAKER_TAGS].
     *   **Ensure grammatically correct gender agreement throughout the dialogue** (masculine/feminine forms) to maintain natural and fluent Hebrew.
     *   The entire text will be in **Hebrew, without Nikkud (vocalization).**`;
-      
-      let characterProfiles = '';
-      let speakerTags = '';
-      let exampleDirective = '';
+          
+            let characterProfiles = '';
+            let speakerTags = '';
+            let exampleDirective = '';
 
-      switch (speakersConfig) {
-        case 'two_males':
-          characterProfiles = `
+            switch (speakersConfigValue) {
+                case 'two_males':
+                characterProfiles = `
 #### **Character Profiles:**
 Their interaction is the heart of the podcast. They complement and challenge each other.
 
 *   **speaker1:** He possesses a **captivating intellectual presence and a lively, fascinating speaking style**. He uses sharp cynicism and provocative arguments to deconstruct ideas, captivating the listener.
 *   **speaker2:** He is a natural storyteller with a calm, resonant voice. He often grounds the abstract arguments of speaker1 with historical anecdotes, real-world examples, and a touch of philosophical melancholy.`;
-          speakerTags = '`speaker1:`, `speaker2:`';
-          exampleDirective = 'speaker1 should adopt a thoughtfully provocative tone, while speaker2 counters with calm, story-driven insights';
-          break;
+                speakerTags = '`speaker1:`, `speaker2:`';
+                exampleDirective = 'speaker1 should adopt a thoughtfully provocative tone, while speaker2 counters with calm, story-driven insights';
+                break;
 
-        case 'two_females':
-          characterProfiles = `
+                case 'two_females':
+                characterProfiles = `
 #### **Character Profiles:**
 Their interaction is the heart of the podcast. They complement and challenge each other.
 
 *   **speaker1:** She possesses a **quicker, more energetic wit**. She acts as a pragmatic foil, bringing discussions back to the human element with playful irony.
 *   **speaker2:** She has a more deliberate, thoughtful delivery. She enjoys exploring the philosophical and societal implications of the topic, expanding the conversation with 'what if' scenarios and dry humor.`;
-          speakerTags = '`speaker1:`, `speaker2:`';
-          exampleDirective = 'speaker1 should adopt a rapid-fire, incisive style, while speaker2 responds with thoughtful, philosophical expansions';
-          break;
+                speakerTags = '`speaker1:`, `speaker2:`';
+                exampleDirective = 'speaker1 should adopt a rapid-fire, incisive style, while speaker2 responds with thoughtful, philosophical expansions';
+                break;
 
-        case 'male_female':
-        default:
-          characterProfiles = `
+                case 'male_female':
+                default:
+                characterProfiles = `
 #### **Character Profiles:**
 Their interaction is the heart of the podcast. They complement and challenge each other.
 
 *   **man:** He possesses a **captivating intellectual presence and a lively, fascinating speaking style**. His approach is analytical, but he presents it with engaging energy and personal charm. He uses sharp cynicism and provocative arguments to deconstruct ideas.
 *   **girl:** She possesses a **quicker, more energetic wit**. She often acts as a pragmatic foil to his statements, bringing the discussion back down to earth with playful irony.`;
-          speakerTags = '`man:`, `girl:`';
-          exampleDirective = 'man should adopt a thoughtfully provocative tone, while girl counters with rapid-fire, incisive questions';
-          break;
-      }
-
-      const outputStructure = outputStructureTemplate
-        .replace('[SPEAKER_TAGS]', speakerTags)
-        .replace('[EXAMPLE_DIRECTIVE]', exampleDirective);
-
-      return `${baseIntro}\n${characterProfiles}\n${outputStructure}`;
-    }
-
-
-    async function generateScript() {
-      updateStatus('יוצר תסריט...');
-      const genScriptBtn = document.getElementById('genScriptBtn');
-      genScriptBtn.disabled = true;
-
-      const topic = document.getElementById('topicInput').value.trim();
-      const duration = document.getElementById('durationInput').value;
-      const speakersConfig = document.getElementById('speakersConfig').value;
-
-      if (!topic) {
-        alert('יש להזין נושא.');
-        updateStatus('');
-        return;
-      }
-      const key = getApiKey();
-      if (!key) {
-        alert('מפתח API חסר. יש להזין אותו בשדה המיועד או להגדיר את המשתנה window.GEMINI_API_KEY בדפדפן.');
-        updateStatus('');
-        return;
-      }
-      
-      const systemPrompt = buildSystemPrompt(duration, speakersConfig);
-
-      const model = 'gemini-2.5-flash';
-      const url = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent`;
-
-      const body = {
-        systemInstruction: { parts: [{ text: systemPrompt }] },
-        contents: [{ parts: [{ text: `Topic: ${topic}` }] }]
-      };
-
-      try {
-        const res = await fetch(`${url}?key=${encodeURIComponent(key)}`, {
-          method: 'POST',
-          headers: {'Content-Type': 'application/json'},
-          body: JSON.stringify(body)
-        });
-        if (!res.ok) {
-            const errorData = await res.json();
-            throw new Error(`שגיאת API: ${errorData.error.message}`);
-        }
-        const data = await res.json();
-        const script = data.candidates?.[0]?.content?.parts?.[0]?.text || '';
-        document.getElementById('scriptArea').value = script;
-        document.getElementById('scriptPanel').open = true;
-        updateStatus('התסריט מוכן');
-      } catch (error) {
-        updateStatus(`שגיאה ביצירת התסריט: ${error.message}`);
-        console.error(error);
-      } finally {
-        genScriptBtn.disabled = false;
-      }
-    }
-
-    function createWavBlob(pcmData) {
-        const numChannels = 1;
-        const sampleRate = 24000;
-        const bitsPerSample = 16;
-        const dataSize = pcmData.length;
-        const buffer = new ArrayBuffer(44 + dataSize);
-        const view = new DataView(buffer);
-
-        view.setString(0, 'RIFF');
-        view.setUint32(4, 36 + dataSize, true);
-        view.setString(8, 'WAVE');
-        view.setString(12, 'fmt ');
-        view.setUint32(16, 16, true);
-        view.setUint16(20, 1, true);
-        view.setUint16(22, numChannels, true);
-        view.setUint32(24, sampleRate, true);
-        view.setUint32(28, sampleRate * numChannels * (bitsPerSample / 8), true);
-        view.setUint16(32, numChannels * (bitsPerSample / 8), true);
-        view.setUint16(34, bitsPerSample, true);
-        view.setString(36, 'data');
-        view.setUint32(40, dataSize, true);
-        new Uint8Array(buffer, 44).set(pcmData);
-
-        return new Blob([buffer], { type: 'audio/wav' });
-    }
-
-    function setDownloadLinkEnabled(enabled) {
-      const link = document.getElementById('downloadLink');
-      if (enabled) {
-        link.style.pointerEvents = '';
-        link.style.opacity = '';
-        link.setAttribute('aria-disabled', 'false');
-        link.tabIndex = 0;
-      } else {
-        link.style.pointerEvents = 'none';
-        link.style.opacity = '0.5';
-        link.setAttribute('aria-disabled', 'true');
-        link.tabIndex = -1;
-        link.removeAttribute('href');
-      }
-    }
-    setDownloadLinkEnabled(false);
-
-    async function generateAudio() {
-      updateStatus('יוצר שמע...');
-      const genAudioBtn = document.getElementById('genAudioBtn');
-      genAudioBtn.disabled = true;
-      setDownloadLinkEnabled(false);
-
-      const script = document.getElementById('scriptArea').value.trim();
-      if (!script) {
-        alert('התסריט ריק');
-        updateStatus('');
-        return;
-      }
-      const key = getApiKey();
-      if (!key) {
-        alert('מפתח API חסר');
-        updateStatus('');
-        return;
-      }
-      
-      const speakersConfigChoice = document.getElementById('speakersConfig').value;
-      let speechConfig;
-      
-      // *** START OF UPDATED CODE BLOCK ***
-      // This block now builds the speechConfig object according to the new documentation.
-      // The main object is 'multiSpeakerVoiceConfig' containing an array 'speakerVoiceConfigs'.
-      switch (speakersConfigChoice) {
-        case 'two_males':
-          speechConfig = {
-            multiSpeakerVoiceConfig: {
-              speakerVoiceConfigs: [
-                {
-                  speaker: "speaker1",
-                  voiceConfig: { prebuiltVoiceConfig: { voiceName: "Sadaltager" } }
-                },
-                {
-                  speaker: "speaker2",
-                  voiceConfig: { prebuiltVoiceConfig: { voiceName: "Alnilam" } }
-                }
-              ]
+                speakerTags = '`man:`, `girl:`';
+                exampleDirective = 'man should adopt a thoughtfully provocative tone, while girl counters with rapid-fire, incisive questions';
+                break;
             }
-          };
-          break;
-        case 'two_females':
-          speechConfig = {
-            multiSpeakerVoiceConfig: {
-              speakerVoiceConfigs: [
-                {
-                  speaker: "speaker1",
-                  voiceConfig: { prebuiltVoiceConfig: { voiceName: "Kore" } }
-                },
-                {
-                  speaker: "speaker2",
-                  voiceConfig: { prebuiltVoiceConfig: { voiceName: "Aoede" } }
-                }
-              ]
-            }
-          };
-          break;
-        case 'male_female':
-        default:
-          speechConfig = {
-            multiSpeakerVoiceConfig: {
-              speakerVoiceConfigs: [
-                {
-                  speaker: "man",
-                  voiceConfig: { prebuiltVoiceConfig: { voiceName: "Sadaltager" } }
-                },
-                {
-                  speaker: "girl",
-                  voiceConfig: { prebuiltVoiceConfig: { voiceName: "Kore" } }
-                }
-              ]
-            }
-          };
-          break;
-      }
-      // *** END OF UPDATED CODE BLOCK ***
-      
-      const model = 'gemini-2.5-flash-preview-tts'; 
-      const url = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent`;
 
-      const body = {
-        "contents": [{
-          "parts": [{ "text": script }] 
-        }],
-        "generationConfig": {
-          "responseModalities": ["AUDIO"],
-          // The correctly structured speechConfig object is placed here
-          "speechConfig": speechConfig
-        }
-      };
+            const outputStructure = outputStructureTemplate
+                .replace('[SPEAKER_TAGS]', speakerTags)
+                .replace('[EXAMPLE_DIRECTIVE]', exampleDirective);
 
-      try {
-        const res = await fetch(`${url}?key=${encodeURIComponent(key)}`, {
-            method: 'POST', headers: {'Content-Type': 'application/json'}, body: JSON.stringify(body)
-        });
-        if (!res.ok) {
-            const errorData = await res.json();
-            const details = errorData.error?.message || 'לא התקבל פירוט';
-            throw new Error(`שגיאת API: ${details}`);
+            return `${baseIntro}\n${characterProfiles}\n${outputStructure}`;
         }
-        const data = await res.json();
+
+        async function generateScript() {
+            updateStatus('יוצר תסריט...', 'script');
+            genScriptBtn.disabled = true;
+
+            const topic = topicInput.value.trim();
+            const duration = durationInput.value;
+            const speakersConfigValue = speakersConfig.value;
+
+            if (!topic) {
+                alert('יש להזין נושא.');
+                updateStatus('');
+                genScriptBtn.disabled = false;
+                return;
+            }
+            const key = getApiKey();
+            if (!key) {
+                alert('מפתח API חסר. יש להזין אותו בשדה המיועד.');
+                updateStatus('');
+                genScriptBtn.disabled = false;
+                return;
+            }
+          
+            const systemPrompt = buildSystemPrompt(duration, speakersConfigValue);
+            const model = 'gemini-2.5-flash';
+            const url = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent`;
+            const body = {
+                systemInstruction: { parts: [{ text: systemPrompt }] },
+                contents: [{ parts: [{ text: `Topic: ${topic}` }] }]
+            };
+
+            try {
+                const res = await fetch(`${url}?key=${encodeURIComponent(key)}`, {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify(body)
+                });
+                if (!res.ok) {
+                    const errorData = await res.json();
+                    throw new Error(`שגיאת API: ${errorData.error.message}`);
+                }
+                const data = await res.json();
+                const script = data.candidates?.[0]?.content?.parts?.[0]?.text || '';
+                scriptArea.value = script;
+                scriptPanel.style.display = 'block';
+                audioPanel.style.display = 'none'; // Hide audio panel if re-generating script
+                updateStatus('התסריט מוכן. ניתן לערוך אותו וללחוץ על יצירת שמע.', 'script');
+                scriptPanel.scrollIntoView({ behavior: 'smooth' });
+
+            } catch (error) {
+                updateStatus(`שגיאה ביצירת התסריט: ${error.message}`, 'script');
+                console.error(error);
+            } finally {
+                genScriptBtn.disabled = false;
+            }
+        }
+
+        function createWavBlob(pcmData) {
+            const numChannels = 1;
+            const sampleRate = 24000;
+            const bitsPerSample = 16;
+            const dataSize = pcmData.length;
+            const buffer = new ArrayBuffer(44 + dataSize);
+            const view = new DataView(buffer);
+
+            view.setString(0, 'RIFF');
+            view.setUint32(4, 36 + dataSize, true);
+            view.setString(8, 'WAVE');
+            view.setString(12, 'fmt ');
+            view.setUint32(16, 16, true);
+            view.setUint16(20, 1, true);
+            view.setUint16(22, numChannels, true);
+            view.setUint32(24, sampleRate, true);
+            view.setUint32(28, sampleRate * numChannels * (bitsPerSample / 8), true);
+            view.setUint16(32, numChannels * (bitsPerSample / 8), true);
+            view.setUint16(34, bitsPerSample, true);
+            view.setString(36, 'data');
+            view.setUint32(40, dataSize, true);
+            new Uint8Array(buffer, 44).set(pcmData);
+
+            return new Blob([buffer], { type: 'audio/wav' });
+        }
         
-        const audioPart = data.candidates?.[0]?.content?.parts?.find(p => p.inlineData);
+        async function generateAudio() {
+            updateStatus('יוצר שמע, נא להמתין...', 'audio');
+            genAudioBtn.disabled = true;
+            audioPanel.style.display = 'none';
 
-        if (!audioPart) {
-            const textResponse = data.candidates?.[0]?.content?.parts?.[0]?.text || "לא התקבל מידע שמע מה-API.";
-            throw new Error(`ה-API לא החזיר אודיו. ייתכן שהתסריט אינו תקין. תגובת המודל: ${textResponse}`);
+            const script = scriptArea.value.trim();
+            if (!script) {
+                alert('התסריט ריק.');
+                updateStatus('', 'audio');
+                genAudioBtn.disabled = false;
+                return;
+            }
+            const key = getApiKey();
+            if (!key) {
+                alert('מפתח API חסר');
+                updateStatus('', 'audio');
+                genAudioBtn.disabled = false;
+                return;
+            }
+          
+            const speakersConfigChoice = speakersConfig.value;
+            let speechConfig;
+          
+            switch (speakersConfigChoice) {
+                case 'two_males':
+                speechConfig = { multiSpeakerVoiceConfig: { speakerVoiceConfigs: [ { speaker: "speaker1", voiceConfig: { prebuiltVoiceConfig: { voiceName: "Sadaltager" } } }, { speaker: "speaker2", voiceConfig: { prebuiltVoiceConfig: { voiceName: "Rasalgethi" } } } ] } };
+                break;
+                case 'two_females':
+                speechConfig = { multiSpeakerVoiceConfig: { speakerVoiceConfigs: [ { speaker: "speaker1", voiceConfig: { prebuiltVoiceConfig: { voiceName: "Kore" } } }, { speaker: "speaker2", voiceConfig: { prebuiltVoiceConfig: { voiceName: "Aoede" } } } ] } };
+                break;
+                case 'male_female':
+                default:
+                speechConfig = { multiSpeakerVoiceConfig: { speakerVoiceConfigs: [ { speaker: "man", voiceConfig: { prebuiltVoiceConfig: { voiceName: "Sadaltager" } } }, { speaker: "girl", voiceConfig: { prebuiltVoiceConfig: { voiceName: "Kore" } } } ] } };
+                break;
+            }
+          
+            const model = 'gemini-2.5-flash-preview-tts'; 
+            const url = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent`;
+
+            const body = {
+                "contents": [{"parts": [{ "text": script }] }],
+                "generationConfig": { "responseModalities": ["AUDIO"], "speechConfig": speechConfig }
+            };
+
+            try {
+                const res = await fetch(`${url}?key=${encodeURIComponent(key)}`, {
+                    method: 'POST', headers: {'Content-Type': 'application/json'}, body: JSON.stringify(body)
+                });
+                if (!res.ok) {
+                    const errorData = await res.json();
+                    const details = errorData.error?.message || 'לא התקבל פירוט';
+                    throw new Error(`שגיאת API: ${details}`);
+                }
+                const data = await res.json();
+                
+                const audioPart = data.candidates?.[0]?.content?.parts?.find(p => p.inlineData);
+
+                if (!audioPart) {
+                    const textResponse = data.candidates?.[0]?.content?.parts?.[0]?.text || "לא התקבל מידע שמע מה-API.";
+                    throw new Error(`ה-API לא החזיר אודיו. ייתכן שהתסריט אינו תקין. תגובת המודל: ${textResponse}`);
+                }
+
+                const b64 = audioPart.inlineData.data;
+                const pcmBytes = Uint8Array.from(atob(b64), c => c.charCodeAt(0));
+                const wavBlob = createWavBlob(pcmBytes);
+                const urlObj = URL.createObjectURL(wavBlob);
+
+                audioPlayer.src = urlObj;
+                
+                const topic = topicInput.value.trim();
+                const dateStr = new Date().toISOString().slice(0,10).replace(/-/g, '');
+                const safeTopic = topic.replace(/[^\w\u0590-\u05FF\- ]+/g, '').replace(/\s+/g, '_').slice(0,40) || 'podcast';
+                const filename = `${safeTopic}_${dateStr}.wav`;
+                
+                downloadLink.href = urlObj;
+                downloadLink.setAttribute('download', filename);
+                
+                audioPanel.style.display = 'block';
+                downloadLink.removeAttribute('style');
+                
+                updateStatus('השמע מוכן!', 'audio');
+                audioPanel.scrollIntoView({ behavior: 'smooth' });
+
+            } catch(error) {
+                updateStatus(`שגיאה ביצירת השמע: ${error.message}`, 'audio');
+                console.error(error);
+            } finally {
+                genAudioBtn.disabled = false;
+            }
         }
 
-        const b64 = audioPart.inlineData.data;
-        const pcmBytes = Uint8Array.from(atob(b64), c => c.charCodeAt(0));
-        const wavBlob = createWavBlob(pcmBytes);
-        const urlObj = URL.createObjectURL(wavBlob);
-
-        const player = document.getElementById('audioPlayer');
-        player.src = urlObj;
-        player.play();
-        // Set download filename: topic + date
-        const topic = document.getElementById('topicInput').value.trim();
-        const dateStr = new Date().toISOString().slice(0,10).replace(/-/g, '');
-        // Sanitize topic for filename (remove forbidden chars)
-        const safeTopic = topic.replace(/[^\w\u0590-\u05FF\- ]+/g, '').replace(/\s+/g, '_').slice(0,40) || 'podcast';
-        const filename = `${safeTopic}_${dateStr}.wav`;
-        const downloadLink = document.getElementById('downloadLink');
-        downloadLink.href = urlObj;
-        downloadLink.setAttribute('download', filename);
-        setDownloadLinkEnabled(true);
-        updateStatus('השמע מוכן');
-      } catch(error) {
-        setDownloadLinkEnabled(false);
-        updateStatus(`שגיאה ביצירת השמע: ${error.message}`);
-        console.error(error);
-      } finally {
-        genAudioBtn.disabled = false;
-      }
-    }
-
-    document.getElementById('genScriptBtn').onclick = generateScript;
-    document.getElementById('genAudioBtn').onclick = generateAudio;
-  </script>
+        // --- Event Listeners ---
+        genScriptBtn.addEventListener('click', generateScript);
+        genAudioBtn.addEventListener('click', generateAudio);
+    });
+</script>
 </body>
 </html>
