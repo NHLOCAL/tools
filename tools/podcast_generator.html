@@ -458,11 +458,17 @@ Their interaction is the heart of the podcast. They complement and challenge eac
             const scriptText = scriptArea.value;
             if (!scriptText) return;
 
+            // יצירת שם קובץ דינמי, בדומה לקובץ ה-WAV
+            const topic = topicInput.value.trim();
+            const dateStr = new Date().toISOString().slice(0,10).replace(/-/g, '');
+            const safeTopic = topic.replace(/[^\w\u0590-\u05FF\- ]+/g, '').replace(/\s+/g, '_').slice(0,40) || 'podcast';
+            const filename = `${safeTopic}_${dateStr}_script.txt`;
+
             const blob = new Blob([scriptText], { type: 'text/plain;charset=utf-8' });
             const url = URL.createObjectURL(blob);
             const a = document.createElement('a');
             a.href = url;
-            a.download = 'podcast_script.txt';
+            a.download = filename;
             document.body.appendChild(a);
             a.click();
             document.body.removeChild(a);
