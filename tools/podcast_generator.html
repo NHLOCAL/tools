@@ -197,7 +197,13 @@
 The desired podcast length is approximately ${duration} minutes.
 
 #### **General Conversation Style:**
-The guiding style is one of **sharp and amused cynicism**. The speakers don't aim to belittle or dismiss; they use biting wit as a tool to expose absurdities, deconstruct conventions, and examine ideas from unexpected angles. The dialogue should be intelligent yet accessible; critical, yet driven by genuine curiosity. The goal is to make the listener smile, but more importantly, to make them think.`;
+The guiding style is one of **sharp and amused cynicism**. The speakers don't aim to belittle or dismiss; they use biting wit as a tool to expose absurdities, deconstruct conventions, and examine ideas from unexpected angles. The dialogue should be intelligent yet accessible; critical, yet driven by genuine curiosity. The goal is to make the listener smile, but more importantly, to make them think.
+
+#### **Content Restrictions:**
+To ensure the content remains within the desired scope, strictly avoid the following topics:
+*   Christianity and its figures or theology.
+*   The theory of evolution.
+*   Discussions involving atheism, agnosticism, or direct challenges to the existence of God.`;
 
             const outputStructureTemplate = `
 #### **Exact Output Structure:**
@@ -263,6 +269,7 @@ Their interaction is the heart of the podcast. They complement and challenge eac
 
             return `${baseIntro}\n${characterProfiles}\n${outputStructure}`;
         }
+
 
         async function generateScript() {
             updateStatus('יוצר תסריט...', 'script');
