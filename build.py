@@ -1,5 +1,6 @@
 # build.py
 import re
+import os
 from markdown2 import Markdown
 
 # --- הגדרות ---
@@ -23,9 +24,12 @@ TOOL_ITEM_TEMPLATE = """
         <a href="{path}">> הפעל</a>
         <a href="https://raw.githubusercontent.com/{user}/{repo}/main/{path}" 
            onclick="event.preventDefault(); forceDownload(this.href, '{filename}');">> הורד</a>
+{resources_button}
     </div>
 </div>
 """
+
+RESOURCES_BUTTON_TEMPLATE = '        <a href="https://github.com/{user}/{repo}/tree/main/resources/{tool_name}">> משאבים</a>'
 
 def generate_tools_html(lines):
     """מקבל רשימת שורות ומייצר את ה-HTML עבור הכלים."""
@@ -35,13 +39,26 @@ def generate_tools_html(lines):
         if match:
             name, path, description = [s.strip() for s in match.groups()]
             filename = path.split('/')[-1]
+            tool_name = filename.replace('.html', '')
+            
+            # בדיקה אם קיימת תיקיית משאבים
+            resources_path = os.path.join('resources', tool_name)
+            resources_button_html = ""
+            if os.path.isdir(resources_path):
+                resources_button_html = RESOURCES_BUTTON_TEMPLATE.format(
+                    user=GITHUB_USERNAME,
+                    repo=GITHUB_REPO_NAME,
+                    tool_name=tool_name
+                )
+
             html_output.append(TOOL_ITEM_TEMPLATE.format(
                 name=name,
                 description=description,
                 path=path,
                 filename=filename,
                 user=GITHUB_USERNAME,
-                repo=GITHUB_REPO_NAME
+                repo=GITHUB_REPO_NAME,
+                resources_button=resources_button_html
             ))
     return "\n".join(html_output)
 
