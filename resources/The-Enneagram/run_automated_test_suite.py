@@ -12,7 +12,7 @@ from rich.table import Table
 from enneagram_validator import calculate_enneagram_scores, validate_simulation
 
 # --- Configuration ---
-MODEL_NAME = "gemini-2.5-pro"
+MODEL_NAME = "gemini-2.5-flash"
 SYSTEM_PROMPT_FILE = "system_prompt.txt"
 TEST_SUITE = [
     "ענה על המבחן בתור טיפוס 1w9 מאוזן",
@@ -34,7 +34,17 @@ TEST_SUITE = [
     "ענה על המבחן בתור טיפוס 9w8 מאוזן",
     "ענה על המבחן בתור טיפוס 9w1 במצב צמיחה", # 9 ב-growth הולך ל-3, אז 9w1 בצמיחה יהיה עם קווי 1+3 בריאים
     "ענה על המבחן בתור טיפוס 6 טהור (ללא כנף בולטת) במצב מאוזן", # בדיקה של טיפוס ללא הטיית כנף
-    "ענה על המבחן בתור טיפוס 3 טהור (ללא כנף בולטת) במצב לחץ" # בדיקה נוספת של טיפוס ללא כנף ובמצב לחץ
+    "ענה על המבחן בתור טיפוס 3 טהור (ללא כנף בולטת) במצב לחץ", # בדיקה נוספת של טיפוס ללא כנף ובמצב לחץ
+    "ענה על המבחן בתור טיפוס 1w9 במצב לחץ",
+    "ענה על המבחן בתור טיפוס 2w3 במצב צמיחה",
+    "ענה על המבחן בתור טיפוס 3w2 במצב לחץ",
+    "ענה על המבחן בתור טיפוס 4w5 במצב צמיחה",
+    "ענה על המבחן בתור טיפוס 5w4 במצב לחץ",
+    "ענה על המבחן בתור טיפוס 6w7 במצב צמיחה",
+    "ענה על המבחן בתור טיפוס 7w6 במצב לחץ",
+    "ענה על המבחן בתור טיפוס 8w9 במצב צמיחה",
+    "ענה על המבחן בתור טיפוס 9w1 במצב לחץ",
+    "ענה על המבחן בתור טיפוס 5 טהור (ללא כנף בולטת) במצב מאוזן"
 ]
 
 console = Console()
@@ -141,7 +151,10 @@ def main():
 
     # Optionally save markdown report
     md_report = display_markdown_report(results)
-    filename = f"enneagram_report_{datetime.now():%Y%m%d_%H%M%S}.md"
+    # Create reports directory if it doesn't exist
+    if not os.path.exists('reports'):
+        os.makedirs('reports')
+    filename = f"reports/enneagram_report_{datetime.now():%Y%m%d_%H%M%S}.md"
     with open(filename, 'w', encoding='utf-8') as f:
         f.write(md_report)
     console.print(f"\n[green]Markdown report saved to {filename}[/]")
