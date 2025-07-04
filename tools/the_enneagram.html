@@ -1,0 +1,542 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>מבחן אישיות אניאגרמה</title>
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cdefs%3E%3Cstyle%3E.cls-1%7Bfill:none;stroke:%232B4162;stroke-linecap:round;stroke-linejoin:round;stroke-width:4px;%7D%3C/style%3E%3C/defs%3E%3Ccircle class='cls-1' cx='50' cy='50' r='45'/%3E%3Cpolygon class='cls-1' points='50 5 92.87 32.5 77.5 87.5 22.5 87.5 7.13 32.5 50 5'/%3E%3Cpolygon class='cls-1' points='50 5 22.5 87.5 92.87 32.5 7.13 32.5 77.5 87.5 50 5'/%3E%3C/svg%3E">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Assistant:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            /* New Serene & Modern Color Palette */
+            --md-sys-color-primary: #2B4162; /* Slate Blue */
+            --md-sys-color-on-primary: #FFFFFF;
+            --md-sys-color-primary-container: #D7E2FF;
+            --md-sys-color-on-primary-container: #001944;
+            --md-sys-color-secondary: #595E71; /* Cool Gray */
+            --md-sys-color-on-secondary: #FFFFFF;
+            --md-sys-color-secondary-container: #DDE2F9;
+            --md-sys-color-on-secondary-container: #161B2C;
+            --md-sys-color-background: #FEFBFF; /* Almost White */
+            --md-sys-color-on-background: #1B1B1F;
+            --md-sys-color-surface: #FEFBFF;
+            --md-sys-color-on-surface: #1B1B1F;
+            --md-sys-color-surface-variant: #E3E1EC; /* Light Gray Container */
+            --md-sys-color-on-surface-variant: #46464F;
+            --md-sys-color-outline: #767680;
+            --md-sys-color-shadow: #000000;
+        }
+
+        *, *::before, *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Assistant', sans-serif;
+            background-color: var(--md-sys-color-background);
+            color: var(--md-sys-color-on-background);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 1.5rem;
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 720px;
+            background-color: var(--md-sys-color-surface-variant);
+            border-radius: 28px;
+            padding: clamp(1.5rem, 5vw, 3rem);
+            box-shadow: 0 8px 24px rgba(var(--md-sys-color-shadow), 0.08);
+            transition: all 0.3s ease-in-out;
+        }
+
+        .screen { display: none; }
+        .screen.active { display: block; }
+        
+        .header-icon {
+            width: 50px;
+            height: 50px;
+            margin: 0 auto 1rem auto;
+            color: var(--md-sys-color-primary);
+        }
+
+        #start-screen h1 {
+            font-size: 2.75rem;
+            font-weight: 700;
+            color: var(--md-sys-color-primary);
+            text-align: center;
+            margin-bottom: 1rem;
+        }
+        
+        #start-screen p {
+            font-size: 1.15rem;
+            text-align: center;
+            color: var(--md-sys-color-on-surface-variant);
+            max-width: 550px;
+            margin: 0 auto 2.5rem auto;
+        }
+
+        #progress-bar-container {
+            width: 100%;
+            height: 8px;
+            background-color: var(--md-sys-color-secondary-container);
+            border-radius: 4px;
+            margin-bottom: 2rem;
+            overflow: hidden;
+        }
+
+        #progress-bar {
+            width: 0;
+            height: 100%;
+            background-color: var(--md-sys-color-primary);
+            transition: width 0.4s ease;
+        }
+
+        #question-counter {
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--md-sys-color-outline);
+            margin-bottom: 0.5rem;
+            text-align: center;
+        }
+
+        #question-text {
+            font-size: 1.7rem;
+            font-weight: 600;
+            color: var(--md-sys-color-on-background);
+            margin-bottom: 2.5rem;
+            min-height: 100px;
+            text-align: center;
+        }
+        
+        .answers-container {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+            margin-bottom: 2.5rem;
+        }
+
+        .answer-label {
+            display: block;
+            padding: 1rem;
+            background-color: var(--md-sys-color-surface);
+            border: 2px solid var(--md-sys-color-outline);
+            border-radius: 16px;
+            text-align: center;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease-in-out;
+            color: var(--md-sys-color-secondary);
+        }
+        
+        .answer-label:hover {
+            border-color: var(--md-sys-color-primary);
+            background-color: var(--md-sys-color-primary-container);
+        }
+
+        .answer-label:has(input:checked) {
+            background-color: var(--md-sys-color-primary);
+            color: var(--md-sys-color-on-primary);
+            border-color: var(--md-sys-color-primary);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+
+        .visually-hidden {
+            position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border-width: 0;
+        }
+        
+        .quiz-controls {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .error-message {
+            color: var(--md-sys-color-primary);
+            font-weight: 600;
+            display: none;
+        }
+
+        #results-screen h2 {
+            text-align: center; font-size: 2.2rem; font-weight: 700; color: var(--md-sys-color-primary); margin-bottom: 0.5rem;
+        }
+
+        #result-title {
+            text-align: center; font-size: 1.6rem; font-weight: 600; color: var(--md-sys-color-secondary); margin-bottom: 2.5rem;
+        }
+
+        .result-card, .wing-info-card {
+            background: var(--md-sys-color-surface);
+            border-radius: 16px;
+            padding: 1.5rem 2rem;
+            margin-bottom: 1.5rem;
+            border: 1px solid var(--md-sys-color-secondary-container);
+        }
+
+        .result-card h3, .wing-info-card h3 {
+            color: var(--md-sys-color-primary); margin-bottom: 0.75rem; font-size: 1.3rem;
+        }
+        
+        .result-card p, .wing-info-card p {
+            margin-bottom: 1rem; color: var(--md-sys-color-on-surface-variant);
+        }
+        .result-card p:last-child, .wing-info-card p:last-child { margin-bottom: 0; }
+        
+        .btn {
+            background-color: var(--md-sys-color-primary);
+            color: var(--md-sys-color-on-primary);
+            border: none;
+            border-radius: 99px;
+            padding: 0.85rem 2.25rem;
+            font-size: 1.1rem;
+            font-weight: 700;
+            font-family: 'Assistant', sans-serif;
+            cursor: pointer;
+            transition: all 0.2s ease-in-out;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .btn:hover {
+            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+            filter: brightness(1.05);
+        }
+
+        .btn:active {
+            transform: scale(0.98);
+        }
+
+        .btn-secondary {
+            background-color: transparent;
+            color: var(--md-sys-color-primary);
+            border: 2px solid var(--md-sys-color-primary);
+        }
+        .btn-secondary:hover {
+            background-color: var(--md-sys-color-primary-container);
+            filter: brightness(1);
+        }
+
+        .btn:disabled {
+            background-color: var(--md-sys-color-outline);
+            color: var(--md-sys-color-surface-variant);
+            cursor: not-allowed;
+            filter: brightness(1);
+            box-shadow: none;
+            border-color: var(--md-sys-color-outline);
+        }
+        
+        .loader {
+            border: 5px solid var(--md-sys-color-secondary-container);
+            border-top: 5px solid var(--md-sys-color-primary);
+            border-radius: 50%;
+            width: 50px; height: 50px;
+            animation: spin 1s linear infinite;
+            margin: 3rem auto;
+        }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <!-- Start Screen -->
+        <div id="start-screen" class="screen active">
+             <svg class="header-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><style>.cls-1{fill:none;stroke:currentColor;stroke-linecap:round;stroke-linejoin:round;stroke-width:4px;}</style></defs><circle class="cls-1" cx="50" cy="50" r="45"/><polygon class="cls-1" points="50 5 92.87 32.5 77.5 87.5 22.5 87.5 7.13 32.5 50 5"/><polygon class="cls-1" points="50 5 22.5 87.5 92.87 32.5 7.13 32.5 77.5 87.5 50 5"/></svg>
+            <h1>מבחן אישיות אניאגרמה</h1>
+            <p>
+                ברוך הבא! המבחן הבא יעזור לך לגלות מהו טיפוס האישיות הדומיננטי שלך ומהי ה"כנף" המשפיעה עליו. ענה בכנות, וזכור - אין תשובות נכונות, רק מסע לגילוי עצמי.
+            </p>
+            <button id="start-btn" class="btn">יוצאים לדרך</button>
+        </div>
+
+        <!-- Quiz Screen -->
+        <div id="quiz-screen" class="screen">
+            <div id="progress-bar-container">
+                <div id="progress-bar"></div>
+            </div>
+            <p id="question-counter"></p>
+            <p id="question-text"></p>
+            
+            <form id="answers-form">
+                <div class="answers-container" id="answers-container"></div>
+            </form>
+
+            <div class="quiz-controls">
+                <button id="prev-btn" class="btn btn-secondary">השאלה הקודמת</button>
+                <span id="error-msg" class="error-message">אנא בחר תשובה</span>
+                <button id="next-btn" class="btn">השאלה הבאה</button>
+            </div>
+        </div>
+
+        <!-- Results Screen -->
+        <div id="results-screen" class="screen">
+            <div id="loader" class="loader"></div>
+            <div id="result-content" style="display: none;">
+                <h2>התוצאה שלך היא...</h2>
+                <p id="result-title"></p>
+                <div class="result-card">
+                    <h3>מה זה אומר?</h3>
+                    <p id="result-description"></p>
+                    <h3>נקודות חוזק עיקריות:</h3>
+                    <p id="result-strengths"></p>
+                    <h3>אתגר ומסלול צמיחה:</h3>
+                    <p id="result-growth"></p>
+                </div>
+                <div id="wing-info-card" class="wing-info-card" style="display: none;">
+                     <h3>הכנף הדומיננטית שלך: <span id="wing-title"></span></h3>
+                     <p id="wing-description"></p>
+                </div>
+                <div style="text-align: center; margin-top: 2rem;">
+                    <button id="restart-btn" class="btn">עשה את המבחן שוב</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const questions = [
+            "יש לי חוש חזק לטוב ורע, ואני שואף לעשות תמיד את הדבר ה'נכון'.",
+            "אני חש אחריות פנימית לתקן את מה שלא בסדר בעצמי, באחרים ובעולם.",
+            "יש לי מבקר פנימי נוקשה שדוחף אותי ללא הרף להשתפר ולעמוד בסטנדרטים גבוהים.",
+            "סדר, ארגון ונהלים ברורים חיוניים לי כדי לתפקד ביעילות ולהרגיש רגוע.",
+            "אני מרגיש תרעומת ומתח כשאחרים פועלים בחוסר אחריות או לא עומדים בהתחייבויות שלהם.",
+            "אני מרגיש הכי בעל ערך כשאני עוזר לאנשים ודואג לצרכים שלהם.",
+            "אני מתקשה להכיר בצרכים שלי, אך באופן אינטואיטיבי יודע מה אחרים צריכים.",
+            "חשוב לי מאוד להרגיש נאהב ונחוץ, ולעיתים אני חושש מדחייה אם לא אעניק מעצמי.",
+            "אני גאה ביכולת שלי ליצור קשרים חמים ולהיות שם עבור אחרים, וקשה לי כשלא מעריכים זאת.",
+            "לעיתים קרובות אני נותן עצות לאחרים, מתוך אמונה שאני יודע מה טוב עבורם.",
+            "הצלחה והישגים הם מדד מרכזי לערך העצמי שלי; חשוב לי להיראות מוצלח.",
+            "אני יודע להתאים את עצמי ולהציג את התדמית הנכונה כדי להשיג את המטרות שלי.",
+            "הפחד הכי גדול שלי הוא להיות חסר ערך, ולכן אני תמיד שואף להיות הטוב ביותר במה שאני עושה.",
+            "אני אדם פרגמטי ויעיל מאוד, ומתמקד במשימות שיקדמו אותי למטרה.",
+            "קשה לי להאט, לנוח או פשוט \"להיות\". אני מרגיש צורך להיות פרודוקטיבי כל הזמן.",
+            "אני מרגיש באופן עמוק שאני שונה מאנשים אחרים, ומחפש משמעות וזהות ייחודית.",
+            "אני נמשך ליופי, למלנכוליה ולאותנטיות, וחש אי נוחות עם שטחיות ובינוניות.",
+            "הרגשות שלי עזים ומורכבים, ואני נוטה להתעמק בהם כדי להבין מי אני.",
+            "לעיתים קרובות אני מרגיש שמשהו מהותי חסר בחיי או בי, בהשוואה למה שיש לאחרים.",
+            "כשרגשותיי גואים, אני נוטה להתרחק מאחרים כדי לעבד אותם לבד.",
+            "אני אדם פרטי שזקוק למרחב אישי כדי לחשוב, ללמוד ולהטעין אנרגיה.",
+            "אני מרגיש בטוח ומוכשר יותר כשיש לי ידע מקיף ומעמיק בתחומים שמעניינים אותי.",
+            "אני חושש שהעולם החיצוני ירוקן את המשאבים שלי, ולכן אני נוטה לצמצם את צרכיי ולהתבונן מהצד.",
+            "אני נוטה לנתח דברים בצורה לוגית ומרוחקת, ולפעמים מתקשה להתחבר לרגשות שלי או של אחרים.",
+            "כדי לשמור על האנרגיה שלי, אני נוטה לחלק את חיי ל\"תאים\" נפרדים (עבודה, בית, תחביבים) ולא לערבב ביניהם.",
+            "ביטחון ויציבות חשובים לי מאוד, ומוחי סורק כל הזמן אחר סכנות ותרחישים אפשריים.",
+            "אני נאמן מאוד לאנשים ורעיונות שאני בוטח בהם, אך יכול להיות חשדן כלפי סמכות.",
+            "אני מחפש ודאות והכוונה חיצונית, אך בו זמנית מפקפק ותוהה האם אני יכול לסמוך על כך.",
+            "אני מתכונן לגרוע מכל כדי שלא להיות מופתע; אחרים עשויים לראות אותי כסקפטי או פסימי.",
+            "בתגובה לפחד, אני יכול להגיב בהימנעות וחיפוש תמיכה או בהתרסה והתמודדות ישירה.",
+            "אני אדם אופטימי שאוהב אפשרויות פתוחות, התנסויות חדשות וריגושים.",
+            "אני מרגיש לכוד על ידי שעמום ורגשות שליליים, ומנסה באופן פעיל להישאר בתנועה ובעשייה חיובית.",
+            "המוח שלי קופץ במהירות בין רעיונות ותוכניות לעתיד; קשה לי להישאר בכאן ועכשיו אם הוא כואב או משעמם.",
+			"יש לי נטייה \"למסגר מחדש\" חוויות שליליות ולהתמקד בצד החיובי שלהן.",
+			"הפחד לפספס חוויות מעניינות גורם לי לעיתים להתחייב ליותר מדי דברים בבת אחת.",
+			"אני אדם אסרטיבי וישיר שלוקח שליטה על המצב כדי להגן על עצמו ועל הצדק.",
+			"אני לא סובל שאומרים לי מה לעשות או מנסים לשלוט בי, חשוב לי להיות אדון לגורלי."
+            "אני מגן בחירוף נפש על החלשים ועל האנשים שחשובים לי, ויש לי אנרגיה רבה להתמודד עם אתגרים.",
+            "אני נוטה לראות את העולם בשחור-לבן, \"הכל או כלום\", ומתקשה עם אזורים אפורים.",
+            "אני מאמין שהאמת מתגלה דרך עימות ישיר, ואני לא חושש מקונפליקט כדי להבהיר דברים.",
+            "הדבר החשוב לי ביותר הוא שלווה פנימית והרמוניה חיצונית, ואני עושה מאמצים גדולים להימנע מקונפליקטים.",
+            "יש לי יכולת לראות את כל נקודות המבט, ולעיתים קרובות אני מתמזג עם הרצונות של אחרים ושוכח את שלי.",
+            "אני נוטה לדחות משימות לא נעימות ולהימנע מהתמודדות ישירה, מתוך רצון לשמור על תחושת נוחות ושלווה.",
+            "כדי לשמור על שלום, אני נוטה להסכים עם אחרים כלפי חוץ, גם אם אני לא מסכים בפנים.",
+            "כשאני מרגיש לחץ או מתח, אני \"מנתק\" את עצמי באמצעות פעולות שגרתיות ומרגיעות (כמו צפייה בטלוויזיה, משחקים או אכילה)"
+        ];
+        const answerOptions = [{ text: "בכלל לא מתאר אותי", value: 1 }, { text: "במידה מועטה", value: 2 }, { text: "לפעמים נכון", value: 3 }, { text: "במידה רבה", value: 4 }, { text: "מתאר אותי לחלוטין", value: 5 }];
+        const questionsMapping = [1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 4, 4, 4, 4, 4, 5, 5, 5, 5, 5, 6, 6, 6, 6, 6, 7, 7, 7, 7, 7, 8, 8, 8, 8, 8, 9, 9, 9, 9, 9];
+        const typeData = {
+            1: { title: "טיפוס 1: המתקן", description: "אתה אדם עם מצפון חזק, שאיפה למצוינות ורצון עמוק לעשות את הדבר הנכון. המצפן הפנימי שלך מכוון תמיד לשיפור עצמי, שיפור הסביבה והבאת סדר וצדק לעולם. אתה רואה את הפוטנציאל למושלמות בכל דבר.", strengths: "אחראי, מוסרי, יסודי, בעל סטנדרטים גבוהים, אמין ומסור למטרה.", growth: "האתגר שלך הוא ללמוד לקבל את חוסר המושלמות שבחיים ובאנשים (כולל בעצמך). הדרך לצמיחה היא דרך פיתוח סלחנות, קבלה עצמית וגילוי השלווה והיופי שב'טוב מספיק'." },
+            2: { title: "טיפוס 2: המעניק", description: "אתה אדם חם, נדיב ואמפתי, שמוצא את הערך הגדול ביותר שלו בעזרה לזולת. יש לך יכולת מופלאה להרגיש את הצרכים של אחרים ולהיענות להם. הקשרים הבינאישיים הם לב ליבו של עולמך, ואתה שואף להרגיש נאהב ונחוץ.", strengths: "אכפתי, תומך, נדיב, מלא אהבה, יודע ליצור קשרים עמוקים.", growth: "האתגר שלך הוא להכיר גם בצרכים שלך, וללמוד לתת לעצמך באותה המידה שאתה נותן לאחרים. הצמיחה מגיעה מהבנה שאתה ראוי לאהבה גם בלי 'להרוויח' אותה, ומהצבת גבולות בריאים." },
+            3: { title: "טיפוס 3: הביצועיסט", description: "אתה אדם אנרגטי, שאפתן וממוקד מטרה, המונע על ידי הרצון להצליח ולהיות מוערך. יש לך יכולת מדהימה להציב יעדים ולהשיג אותם, ואתה יודע איך להציג את עצמך באור חיובי ומרשים. הצלחה היא שם המשחק עבורך.", strengths: "יעיל, בעל מוטיבציה, בטוח בעצמו, יודע להסתגל, מעורר השראה.", growth: "האתגר שלך הוא להתחבר לזהות האמיתית שלך, מעבר להישגים ולתדמית. הצמיחה טמונה בגילוי הערך הפנימי שלך, שלא תלוי בהצלחה חיצונית, ובפיתוח אותנטיות וכנות רגשית." },
+            4: { title: "טיפוס 4: האינדיבידואליסט", description: "אתה אדם רגיש, יצירתי ובעל עולם פנימי עשיר, המחפש משמעות וזהות ייחודית. אתה מרגיש שונה מאחרים וחווה את החיים בעוצמה רגשית גדולה. יופי, אותנטיות ועומק הם ערכים עליונים עבורך.", strengths: "יצירתי, בעל מודעות עצמית, רגיש, אקספרסיבי, רואה את היופי הייחודי בדברים.", growth: "האתגר שלך הוא למצוא איזון רגשי ולהרגיש מחובר לאחרים, גם מתוך הייחודיות שלך. הצמיחה מגיעה מהבנה שאתה חלק מהשלם, ומלמידה להעריך את השמחות הפשוטות של היום-יום, לא רק את רגעי השיא הדרמטיים." },
+            5: { title: "טיפוס 5: הצופה", description: "אתה אדם סקרן, אנליטי ובעל תפיסה חדה, ששואף להבין את העולם לעומקו. הידע וההבנה הם המשאבים החשובים ביותר שלך, ואתה זקוק למרחב פרטי כדי לחשוב, ללמוד ולהטעין מצברים. אתה מעדיף להתבונן מהצד לפני שאתה פועל.", strengths: "אינטליגנטי, בעל תפיסה, אובייקטיבי, עצמאי, מומחה בתחומו.", growth: "האתגר שלך הוא לצאת מהראש ולהתחבר לגוף ולעולם המעשה. הצמיחה מגיעה משיתוף הידע שלך עם אחרים, מלקיחת סיכונים רגשיים ומגילוי שהמעורבות בעולם לא מרוקנת אותך, אלא יכולה גם להעשיר אותך." },
+            6: { title: "טיפוס 6: הנאמן", description: "אתה אדם אחראי, מחויב ודואג, המחפש ביטחון ויציבות בעולם לא ודאי. המוח שלך מוכשר בזיהוי סכנות ובעיות פוטנציאליות, מה שהופך אותך למתכנן זהיר. נאמנות לאנשים, רעיונות וקהילות היא ערך עליון עבורך.", strengths: "נאמן, אחראי, מחויב, אמיץ, חושב קדימה ומוכן לכל תרחיש.", growth: "האתגר שלך הוא לפתח אמון בעצמך ובשיפוט הפנימי שלך, ולהפחית את התלות באישור או הנחיה חיצונית. הצמיחה טמונה בלמידה לחיות עם חוסר ודאות, ובגילוי האומץ והחוסן שכבר קיימים בתוכך." },
+            7: { title: "טיפוס 7: ההרפתקן", description: "אתה אדם אופטימי, ספונטני ורב-גוני, שאוהב התנסויות חדשות, ריגושים ואפשרויות פתוחות. אתה נמנע מכאב ושעמום על ידי שמירה על תנועה מתמדת ותכנון הרפתקאות עתידיות. החיים עבורך הם מגרש משחקים מלא בהזדמנויות.", strengths: "אופטימי, נלהב, סקרן, מהיר מחשבה, מלא אנרגיה ושמחת חיים.", growth: "האתגר שלך הוא ללמוד להישאר בכאן ועכשיו, גם כשהוא פחות מרגש או אפילו כואב. הצמיחה מגיעה מהתחייבות והתמדה, מהעמקה בתחום אחד ומהבנה שאושר אמיתי ועמוק נמצא גם בשלווה ובקבלה של כל קשת הרגשות." },
+            8: { title: "טיפוס 8: המוביל", description: "אתה אדם אסרטיבי, החלטי ובעל נוכחות, שלוקח שליטה על חייו וסביבתו. חשוב לך להגן על עצמך, על הצדק ועל החלשים. אתה לא חושש מעימותים ומשתמש בכוח ובאנרגיה שלך כדי להזיז דברים ולהשפיע על העולם.", strengths: "מנהיג טבעי, החלטי, מגן, ישיר, בעל חוסן נפשי גבוה.", growth: "האתגר שלך הוא ללמוד להיפתח לפגיעות, להקשיב לאחרים ולאפשר גם להם להוביל. הצמיחה מגיעה מהבנה שכוח אמיתי כולל גם רכות, אמפתיה ושיתוף פעולה, ומהכרה בכך שפגיעות היא שער לאינטימיות ולקשר עמוק." },
+            9: { title: "טיפוס 9: משכין השלום", description: "אתה אדם רגוע, נעים ומקבל, השואף לשלום פנימי ולהרמוניה חיצונית. יש לך יכולת נדירה לראות את כל צדדי המתרס, לגשר בין אנשים ולהרגיע את הסביבה. אתה נמנע מקונפליקטים ושומר על תחושת נוחות ושלווה.", strengths: "מגשר, סבלני, תומך, יודע להכיל, רואה את הטוב באנשים.", growth: "האתגר שלך הוא להתחבר לרצונות, לדעות ולכעסים שלך, ולתת להם מקום וביטוי. הצמיחה מגיעה מהבנה שהקול שלך חשוב, ושעימות בריא יכול להוביל להרמוניה אמיתית יותר. 'להתעורר' לעצמך ולפעול למען מה שחשוב לך באמת." }
+        };
+        const wingData = {
+            "1w9": { title: "1w9: האידיאליסט", description: "כנף 9 מוסיפה לטיפוס 1 שאיפה לשלווה וראייה רחבה יותר. אתה פחות שיפוטי ויותר רגוע מטיפוס 1 טיפוסי, ונוטה להתמקד ב'תמונה הגדולה' של איך העולם יכול להיות מקום טוב והרמוני יותר." },
+            "1w2": { title: "1w2: הסנגור", description: "כנף 2 הופכת את טיפוס 1 לחם ואנושי יותר. הדחף שלך לתקן מתמקד יותר בעזרה לאנשים באופן אישי ובדאגה לרווחתם. אתה שואף להיות לא רק 'נכון' אלא גם 'טוב' ומועיל לאחרים." },
+            "2w1": { title: "2w1: המשרת", description: "כנף 1 מוסיפה לטיפוס 2 מימד של אחריות ומוסריות. הנתינה שלך מונחית על ידי תחושת חובה עמוקה, ואתה שואף לעזור לאחרים בדרך ה'נכונה' והראויה ביותר." },
+            "2w3": { title: "2w3: המארח", description: "כנף 3 הופכת את טיפוס 2 לחברותי, כריזמטי ושאפתן יותר. אתה נהנה להיות במרכז תשומת הלב ומשתמש בקסם האישי שלך כדי ליצור קשרים ולעזור לאחרים להצליח." },
+            "3w2": { title: "3w2: הכוכב", description: "כנף 2 מוסיפה לטיפוס 3 רצון עז להיות אהוב ונערץ. ההצלחה שלך חשובה לך לא רק בשביל היוקרה, אלא גם כי היא הדרך שלך לזכות בחיבה ובהערכה מהסביבה." },
+            "3w4": { title: "3w4: המומחה", description: "כנף 4 מעניקה לטיפוס 3 עומק ורצון להיות ייחודי. אתה לא רוצה רק להצליח, אלא להצליח בדרך מקורית ואותנטית שמבטאת את הזהות האישית שלך." },
+            "4w3": { title: "4w3: האריסטוקרט", description: "כנף 3 מוסיפה לטיפוס 4 שאפתנות ורצון להשפיע. אתה רוצה שהיצירתיות והייחודיות שלך יקבלו הכרה חיצונית, ושואף להציג את עצמך ואת עבודתך בצורה מרשימה ואלגנטית." },
+            "4w5": { title: "4w5: הבוהמיין", description: "כנף 5 מעניקה לטיפוס 4 מימד אינטלקטואלי והתבוננותי. אתה נוטה להתעמק בעולמות הפנימיים שלך, לחקור רעיונות לא שגרתיים ולחפש משמעות דרך ידע והבנה." },
+            "5w4": { title: "5w4: האייקון", description: "כנף 4 מוסיפה לטיפוס 5 צד יצירתי ואינטואיטיבי. הידע שאתה צובר אינו רק טכני, אלא משמש אותך לחקור רעיונות מקוריים וליצור משהו חדש וייחודי בעולם." },
+            "5w6": { title: "5w6: פותר הבעיות", description: "כנף 6 הופכת את טיפוס 5 למעשי ופרגמטי יותר. הידע שלך מכוון לפתרון בעיות, לניתוח מערכות וליצירת ביטחון דרך הבנה ותכנון זהיר." },
+            "6w5": { title: "6w5: המגן", description: "כנף 5 מוסיפה לטיפוס 6 צד אנליטי וחקירתי. אתה לא רק מחפש ביטחון, אלא גם מנסה להבין לעומק את המערכות והסכנות, ומעדיף לסמוך על ידע ועובדות." },
+            "6w7": { title: "6w7: החבר", description: "כנף 7 מעניקה לטיפוס 6 אופטימיות וצד קליל יותר. אתה מתמודד עם חרדות וספקות על ידי חיפוש אחר חוויות מהנות ויצירת קשרים חברתיים חזקים ותומכים." },
+            "7w6": { title: "7w6: הבדרן", description: "כנף 6 מוסיפה לטיפוס 7 צורך בביטחון ובשייכות. לצד הרצון להרפתקאות, חשוב לך שתהיה לך רשת תמיכה של חברים נאמנים וסביבה יציבה לחזור אליה." },
+            "7w8": { title: "7w8: הריאליסט", description: "כנף 8 מעניקה לטיפוס 7 אסרטיביות וכוח רצון. אתה לא רק חולם על תוכניות, אלא גם יודע לקחת שליטה, להזיז דברים ולהשיג את מה שאתה רוצה בעולם המעשי." },
+            "8w7": { title: "8w7: העצמאי", description: "כנף 7 מוסיפה לטיפוס 8 צד הרפתקני ורצון לחופש. אתה רוצה להיות בשליטה לא רק כדי להגן על עצמך, אלא גם כדי להבטיח שתוכל לחיות את החיים במלואם, ללא הגבלות." },
+            "8w9": { title: "8w9: הדוב", description: "כנף 9 מעניקה לטיפוס 8 גישה רגועה וסבלנית יותר. אתה יודע מתי להפעיל כוח ומתי להמתין בשקט, והמנהיגות שלך יכולה להיות מגוננת ומרגיעה כמו שהיא אסרטיבית." },
+            "9w8": { title: "9w8: המגשר", description: "כנף 8 מוסיפה לטיפוס 9 כוח פנימי ואסרטיביות. למרות שאתה שואף לשלום, אתה לא תהסס לעמוד על שלך ועל של אחרים כשצריך, ותוכל להפוך למגשר יעיל ובעל נוכחות." },
+            "9w1": { title: "9w1: החולם", description: "כנף 1 מעניקה לטיפוס 9 תחושת שליחות ורצון לעשות את הדבר הנכון. השאיפה שלך להרמוניה אינה פאסיבית, אלא מונעת על ידי רצון פעיל ליצור עולם צודק, מסודר ושלו יותר." },
+        };
+
+        const startBtn = document.getElementById('start-btn');
+        const nextBtn = document.getElementById('next-btn');
+        const prevBtn = document.getElementById('prev-btn');
+        const restartBtn = document.getElementById('restart-btn');
+        const startScreen = document.getElementById('start-screen');
+        const quizScreen = document.getElementById('quiz-screen');
+        const resultsScreen = document.getElementById('results-screen');
+        const questionText = document.getElementById('question-text');
+        const questionCounter = document.getElementById('question-counter');
+        const progressBar = document.getElementById('progress-bar');
+        const errorMsg = document.getElementById('error-msg');
+        const answersContainer = document.getElementById('answers-container');
+        const answersForm = document.getElementById('answers-form');
+
+        let currentQuestionIndex = 0;
+        let userAnswers = Array(questions.length).fill(null);
+
+        function startQuiz() {
+            currentQuestionIndex = 0;
+            userAnswers.fill(null);
+            startScreen.classList.remove('active');
+            resultsScreen.classList.remove('active');
+            quizScreen.classList.add('active');
+            showQuestion();
+        }
+
+        function showQuestion() {
+            errorMsg.style.display = 'none';
+            answersForm.reset();
+            
+            questionText.textContent = questions[currentQuestionIndex];
+            questionCounter.textContent = `שאלה ${currentQuestionIndex + 1} מתוך ${questions.length}`;
+            
+            const progress = ((currentQuestionIndex) / questions.length) * 100;
+            progressBar.style.width = `${progress}%`;
+
+            renderAnswerOptions();
+            
+            if (userAnswers[currentQuestionIndex] !== null) {
+                const selectedRadio = document.querySelector(`input[name="answer"][value="${userAnswers[currentQuestionIndex]}"]`);
+                if (selectedRadio) selectedRadio.checked = true;
+            }
+
+            prevBtn.disabled = currentQuestionIndex === 0;
+            nextBtn.textContent = (currentQuestionIndex === questions.length - 1) ? 'סיים וצפה בתוצאות' : 'השאלה הבאה';
+        }
+        
+        function renderAnswerOptions() {
+            answersContainer.innerHTML = '';
+            answerOptions.forEach((option) => {
+                const label = document.createElement('label');
+                label.className = 'answer-label';
+                label.innerHTML = `<input type="radio" name="answer" value="${option.value}" class="visually-hidden"><span>${option.text}</span>`;
+                answersContainer.appendChild(label);
+            });
+        }
+        
+        function handleNext() {
+            const selectedAnswer = document.querySelector('input[name="answer"]:checked');
+            if (!selectedAnswer) {
+                errorMsg.style.display = 'inline';
+                return;
+            }
+            const value = parseInt(selectedAnswer.value);
+            userAnswers[currentQuestionIndex] = value;
+
+            currentQuestionIndex++;
+            if (currentQuestionIndex < questions.length) {
+                showQuestion();
+            } else {
+                progressBar.style.width = '100%';
+                showResults();
+            }
+        }
+
+        function handlePrev() {
+            if (currentQuestionIndex > 0) {
+                currentQuestionIndex--;
+                showQuestion();
+            }
+        }
+        
+        function calculateAllScores() {
+            const scores = Array(9).fill(0);
+            userAnswers.forEach((answerValue, index) => {
+                if (answerValue !== null) {
+                    const typeIndex = questionsMapping[index] - 1;
+                    scores[typeIndex] += answerValue;
+                }
+            });
+            return scores;
+        }
+
+        function showResults() {
+            quizScreen.classList.remove('active');
+            resultsScreen.classList.add('active');
+            document.getElementById('wing-info-card').style.display = 'none';
+
+            const loader = document.getElementById('loader');
+            const resultContent = document.getElementById('result-content');
+            loader.style.display = 'block';
+            resultContent.style.display = 'none';
+
+            setTimeout(() => {
+                loader.style.display = 'none';
+                resultContent.style.display = 'block';
+                
+                const finalScores = calculateAllScores();
+                const maxScore = Math.max(...finalScores);
+                const resultType = finalScores.indexOf(maxScore) + 1;
+                
+                displayResultData(resultType);
+                calculateAndDisplayWing(resultType, finalScores);
+            }, 1500);
+        }
+        
+        function displayResultData(type) {
+            const data = typeData[type];
+            document.getElementById('result-title').textContent = data.title;
+            document.getElementById('result-description').textContent = data.description;
+            document.getElementById('result-strengths').textContent = data.strengths;
+            document.getElementById('result-growth').textContent = data.growth;
+        }
+
+        function calculateAndDisplayWing(primaryType, scores) {
+            const wing1 = (primaryType === 1) ? 9 : primaryType - 1;
+            const wing2 = (primaryType === 9) ? 1 : primaryType + 1;
+            
+            const score1 = scores[wing1 - 1];
+            const score2 = scores[wing2 - 1];
+            
+            if (Math.abs(score1 - score2) > 1) { // Only show a wing if there's a clear winner
+                const dominantWing = score1 > score2 ? wing1 : wing2;
+                const wingKey = `${primaryType}w${dominantWing}`;
+                const data = wingData[wingKey];
+                
+                if (data) {
+                    document.getElementById('wing-title').textContent = data.title;
+                    document.getElementById('wing-description').textContent = data.description;
+                    document.getElementById('wing-info-card').style.display = 'block';
+                }
+            }
+        }
+
+        startBtn.addEventListener('click', startQuiz);
+        nextBtn.addEventListener('click', handleNext);
+        prevBtn.addEventListener('click', handlePrev);
+        restartBtn.addEventListener('click', startQuiz);
+
+    </script>
+</body>
+</html>
