@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>מבחן אישיות אניאגרמה</title>
+    <style>
+        /* --- Material Design 3 Inspired Palette & Variables --- */
+        :root {
+            --md-sys-color-primary: #6750A4;
+            --md-sys-color-on-primary: #FFFFFF;
+            --md-sys-color-primary-container: #EADDFF;
+            --md-sys-color-on-primary-container: #21005D;
+            --md-sys-color-secondary: #625B71;
+            --md-sys-color-on-secondary: #FFFFFF;
+            --md-sys-color-secondary-container: #E8DEF8;
+            --md-sys-color-on-secondary-container: #1D192B;
+            --md-sys-color-tertiary: #7D5260;
+            --md-sys-color-on-tertiary: #FFFFFF;
+            --md-sys-color-tertiary-container: #FFD8E4;
+            --md-sys-color-on-tertiary-container: #31111D;
+            --md-sys-color-error: #B3261E;
+            --md-sys-color-error-container: #F9DEDC;
+            --md-sys-color-on-error-container: #410E0B;
+            --md-sys-color-background: #FFFBFE;
+            --md-sys-color-on-background: #1C1B1F;
+            --md-sys-color-surface: #FFFBFE;
+            --md-sys-color-on-surface: #1C1B1F;
+            --md-sys-color-surface-variant: #E7E0EC;
+            --md-sys-color-on-surface-variant: #49454F;
+            --md-sys-color-outline: #79747E;
+            --md-sys-color-shadow: #000000;
+            --md-sys-color-surface-tint-layer: rgba(103, 80, 164, 0.08); /* Primary color with opacity */
+
+            --font-family: 'Heebo', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            --border-radius-large: 16px;
+            --border-radius-medium: 12px;
+            --border-radius-small: 8px;
+        }
+
+        /* --- General Styling --- */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            font-size: 16px;
+        }
+
+        body {
+            font-family: var(--font-family);
+            background-color: var(--md-sys-color-background);
+            color: var(--md-sys-color-on-background);
+            display: grid;
+            place-items: center;
+            min-height: 100vh;
+            padding: 1rem;
+            line-height: 1.6;
+        }
+        
+        @font-face {
+            font-family: 'Heebo';
+            src: url('https://fonts.gstatic.com/s/heebo/v22/NGSpv5_NC0k9P_v6Z_btbFsl.woff2') format('woff2');
+            font-weight: 400;
+        }
+        @font-face {
+            font-family: 'Heebo';
+            src: url('https://fonts.gstatic.com/s/heebo/v22/NGSrv5_NC0k9P_v6Z_btbGEAYp_o0w.woff2') format('woff2');
+            font-weight: 700;
+        }
+
+
+        /* --- Main Card Container --- */
+        .enneagram-card {
+            background-color: var(--md-sys-color-surface);
+            border-radius: var(--border-radius-large);
+            padding: 2rem;
+            width: 100%;
+            max-width: 600px;
+            box-shadow: 0 4px 8px 3px rgba(var(--md-sys-color-shadow), 0.15), 0 1px 3px rgba(var(--md-sys-color-shadow), 0.3);
+            border: 1px solid var(--md-sys-color-surface-variant);
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        /* --- Typography --- */
+        h1 {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--md-sys-color-primary);
+            text-align: center;
+        }
+        
+        h2 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--md-sys-color-on-surface);
+            margin-bottom: 0.5rem;
+        }
+        
+        h3 {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--md-sys-color-secondary);
+        }
+
+        p {
+            color: var(--md-sys-color-on-surface-variant);
+            text-align: center;
+        }
+        
+        .intro-text {
+            text-align: right;
+            margin-bottom: 1rem;
+        }
+
+        /* --- Buttons --- */
+        .button {
+            display: inline-block;
+            padding: 0.75rem 1.5rem;
+            font-size: 1rem;
+            font-weight: 700;
+            border-radius: var(--border-radius-large);
+            border: none;
+            cursor: pointer;
+            text-align: center;
+            transition: background-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+            align-self: center;
+        }
+
+        .button-primary {
+            background-color: var(--md-sys-color-primary);
+            color: var(--md-sys-color-on-primary);
+        }
+        .button-primary:hover {
+            background-color: #5C4193; /* Darker primary */
+            box-shadow: 0 2px 4px rgba(var(--md-sys-color-shadow), 0.2);
+        }
+        
+        .button-secondary {
+             background-color: var(--md-sys-color-secondary-container);
+            color: var(--md-sys-color-on-secondary-container);
+        }
+        .button-secondary:hover {
+            background-color: #D4C9E4; /* Darker secondary container */
+        }
+
+
+        /* --- Question Screen --- */
+        #question-container {
+            width: 100%;
+        }
+
+        .progress-bar-container {
+            width: 100%;
+            background-color: var(--md-sys-color-surface-variant);
+            border-radius: var(--border-radius-small);
+            overflow: hidden;
+            height: 12px;
+            margin-bottom: 1.5rem;
+        }
+
+        .progress-bar {
+            width: 0;
+            height: 100%;
+            background-color: var(--md-sys-color-primary);
+            transition: width 0.3s ease-in-out;
+        }
+
+        #question-text {
+            font-size: 1.25rem;
+            color: var(--md-sys-color-on-surface);
+            margin-bottom: 1.5rem;
+            font-weight: 500;
+            text-align: right;
+            min-height: 80px;
+        }
+
+        .answer-options {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+
+        .answer-options label {
+            display: block;
+            padding: 1rem;
+            background-color: var(--md-sys-color-surface);
+            border: 2px solid var(--md-sys-color-outline);
+            border-radius: var(--border-radius-medium);
+            cursor: pointer;
+            transition: all 0.2s ease-in-out;
+            text-align: right;
+        }
+
+        .answer-options label:hover {
+            background-color: var(--md-sys-color-primary-container);
+            border-color: var(--md-sys-color-primary);
+        }
+
+        .answer-options input[type="radio"] {
+            display: none;
+        }
+
+        .answer-options input[type="radio"]:checked + label {
+            background-color: var(--md-sys-color-primary-container);
+            border-color: var(--md-sys-color-primary);
+            color: var(--md-sys-color-on-primary-container);
+            font-weight: 700;
+        }
+
+        /* --- Results Screen --- */
+        #results-screen .intro-text {
+             text-align: right;
+        }
+        
+        .result-section {
+            padding: 1.5rem;
+            border-radius: var(--border-radius-medium);
+            margin-bottom: 1rem;
+        }
+        
+        .primary-result {
+            background-color: var(--md-sys-color-primary-container);
+            border: 2px solid var(--md-sys-color-primary);
+        }
+        .primary-result h2, .primary-result h3 {
+             color: var(--md-sys-color-on-primary-container);
+        }
+        .primary-result p {
+            color: var(--md-sys-color-on-primary-container);
+            text-align: right;
+        }
+        
+        .secondary-results h2 {
+            text-align: right;
+            margin-bottom: 1rem;
+        }
+        
+        .secondary-result-item {
+            background-color: var(--md-sys-color-secondary-container);
+            padding: 1rem;
+            border-radius: var(--border-radius-medium);
+            margin-bottom: 0.75rem;
+        }
+         .secondary-result-item h3 {
+             color: var(--md-sys-color-on-secondary-container);
+        }
+        .secondary-result-item p {
+            color: var(--md-sys-color-on-secondary-container);
+            text-align: right;
+        }
+        
+        .disclaimer {
+            font-size: 0.875rem;
+            color: var(--md-sys-color-on-surface-variant);
+            background-color: var(--md-sys-color-surface-variant);
+            padding: 1rem;
+            border-radius: var(--border-radius-medium);
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+
+    <main class="enneagram-card">
+
+        <!-- Start Screen -->
+        <div id="start-screen">
+            <h1>מבחן אישיות: האניאגרמה</h1>
+            <p>גלו את הטיפוס המניע אתכם ואת הדרך שלכם לצמיחה אישית.</p>
+            <div class="intro-text">
+                <p>שלום! המבחן הקצר שלפניכם כולל 30 שאלות, שנועדו לעזור לכם לזהות את טיפוס האישיות הדומיננטי שלכם לפי מודל האניאגרמה.</p>
+                <p>ענו על כל שאלה בכנות ובהתאם למה שמרגיש לכם הכי נכון בדרך כלל, לא רק במצבים ספציפיים. אין תשובות נכונות או לא נכונות.</p>
+                <p>התהליך כולו לוקח בערך 5-7 דקות.</p>
+                <p>מוכנים להתחיל במסע? 😊</p>
+            </div>
+            <button id="start-btn" class="button button-primary">בואו נתחיל!</button>
+        </div>
+
+        <!-- Question Screen -->
+        <div id="question-screen" class="hidden">
+            <div class="progress-bar-container">
+                <div id="progress-bar" class="progress-bar"></div>
+            </div>
+            <div id="question-container">
+                <p id="question-text"></p>
+                <div id="answer-options" class="answer-options">
+                    <!-- Options will be generated by JS -->
+                </div>
+            </div>
+        </div>
+        
+        <!-- Results Screen -->
+        <div id="results-screen" class="hidden">
+            <h1>תוצאות המבחן שלך</h1>
+            <p class="intro-text">להלן ניתוח של התשובות שלך. זכרו, זוהי נקודת התחלה למסע של מודעות עצמית, לא תווית חד משמעית.</p>
+            
+            <div id="primary-result-container" class="result-section primary-result">
+                <!-- Primary result will be injected here -->
+            </div>
+
+            <div id="secondary-results-container" class="secondary-results">
+                 <h2>טיפוסים נוספים שמשפיעים עליך</h2>
+                 <div id="secondary-items">
+                    <!-- Secondary results will be injected here -->
+                 </div>
+            </div>
+
+            <p class="disclaimer">
+                <strong>חשוב לזכור:</strong> האניאגרמה היא כלי דינמי למודעות וצמיחה. רוב האנשים מושפעים ממספר טיפוסים, אך לרוב יש אחד דומיננטי. השתמשו במידע זה כדי לחקור, ללמוד ולהבין את עצמכם טוב יותר.
+            </p>
+            
+            <button onclick="location.reload()" class="button button-secondary">בצע את המבחן שוב</button>
+
+        </div>
+
+    </main>
+
+    <script>
+        const questions = [
+            // Type 1: The Reformer
+            { text: "חשוב לי מאוד לעשות דברים 'כמו שצריך', ויש לי חוש חזק לטוב ורע.", type: 1 },
+            { text: "אני מרגיש/ה לעיתים קרובות אחריות לתקן טעויות וליצור סדר סביבי.", type: 1 },
+            { text: "יש לי מבקר פנימי חזק שדוחף אותי להשתפר כל הזמן.", type: 1 },
+            // Type 2: The Helper
+            { text: "אני מרגיש/ה הכי טוב עם עצמי כשאני עוזר/ת לאנשים ודואג/ת לצרכים שלהם.", type: 2 },
+            { text: "קשה לי לבקש עזרה, אבל אני תמיד הראשון/ה להציע אותה לאחרים.", type: 2 },
+            { text: "חשוב לי מאוד להרגיש נאהב/ת ונחוץ/ה בחייהם של אחרים.", type: 2 },
+            // Type 3: The Achiever
+            { text: "הצלחה והישגים הם דברים שמאוד מניעים אותי; חשוב לי להיראות מוצלח/ת בעיני אחרים.", type: 3 },
+            { text: "אני יודע/ת להתאים את עצמי למצבים שונים כדי להשיג את המטרות שלי.", type: 3 },
+            { text: "אני נוטה להיות ממוקד/ת במשימות ושומר/ת על תדמית חיובית ומצליחה.", type: 3 },
+            { text: "לפעמים אני חושש/ת שאנשים יעריכו אותי רק בזכות מה שאני משיג/ה.", type: 3 },
+            // Type 4: The Individualist
+            { text: "אני מרגיש/ה לעיתים קרובות שאני שונה מאנשים אחרים, ומחפש/ת אחר משמעות וזהות ייחודית.", type: 4 },
+            { text: "רגשות עמוקים ויצירתיות הם חלק מרכזי בחיים שלי.", type: 4 },
+            { text: "אני נמשך/ת ליופי, למקורי ולאותנטי, וסולד/ת משטחיות.", type: 4 },
+            // Type 5: The Investigator
+            { text: "אני אדם פרטי שזקוק לזמן לבד כדי לחשוב ולהטעין מצברים.", type: 5 },
+            { text: "אני אוהב/ת לצבור ידע ולהבין לעומק איך דברים עובדים.", type: 5 },
+            { text: "לפעמים אני מעדיף/ה להתבונן מהצד מאשר להשתתף באופן פעיל.", type: 5 },
+            { text: "אני מרגיש/ה בטוח/ה יותר כשיש לי את כל המידע הנדרש לפני שאני פועל/ת.", type: 5 },
+            // Type 6: The Loyalist
+            { text: "ביטחון ויציבות מאוד חשובים לי, ואני נוטה לחשוב על התרחישים הגרועים ביותר.", type: 6 },
+            { text: "אני נאמן/ה מאוד לאנשים ולקבוצות שאני סומך/ת עליהם.", type: 6 },
+            { text: "אני נוטה לפקפק בסמכות, אך בו זמנית מחפש/ת הדרכה וביטחון.", type: 6 },
+            // Type 7: The Enthusiast
+            { text: "אני אדם אופטימי שאוהב התנסויות חדשות, ריגושים ואפשרויות מגוונות.", type: 7 },
+            { text: "קשה לי להתמודד עם שעמום או רגשות שליליים, ואני מנסה להישאר עסוק/ה וחיובי/ת.", type:7 },
+            { text: "אני נוטה להתחיל פרויקטים רבים בהתלהבות, אך לעיתים מתקשה לסיים אותם.", type: 7 },
+            // Type 8: The Challenger
+            { text: "אני אדם אסרטיבי וישיר, ולא מהסס/ת לקחת שליטה על המצב.", type: 8 },
+            { text: "חשוב לי להגן על עצמי ועל האנשים שקרובים אליי, ואני נלחם/ת נגד חוסר צדק.", type: 8 },
+            { text: "אני לא אוהב/ת שאומרים לי מה לעשות או מנסים לשלוט בי.", type: 8 },
+            // Type 9: The Peacemaker
+            { text: "הדבר שהכי חשוב לי הוא שלווה והרמוניה, ואני משתדל/ת להימנע מקונפליקטים.", type: 9 },
+            { text: "אני יודע/ת לראות את כל נקודות המבט ויכול/ה בקלות להזדהות עם אחרים.", type: 9 },
+            { text: "לפעמים אני מתקשה לדעת מה אני באמת רוצה, ונוטה 'לזרום' עם הרצונות של אחרים.", type: 9 },
+            { text: "אני אדם רגוע וסבלני, ולרוב אנשים מרגישים בנוח בחברתי.", type: 9 },
+        ];
+        
+        const typeInfo = {
+            1: { name: "המתקן / הפרפקציוניסט", description: "אתה אדם בעל מצפון, חוש צדק מפותח ושאיפה לעשות את הדבר הנכון. יש לך סטנדרטים גבוהים לעצמך ולאחרים. הכוח שלך טמון ביושרה, באחריות ובמסירות שלך להפוך את העולם למקום טוב יותר. אתה מאורגן, שיטתי ואמין." },
+            2: { name: "המעניק / העוזר", description: "אתה אדם חם, נדיב ואכפתי, שמוצא סיפוק עצום בעזרה לזולת. יש לך יכולת מדהימה להרגיש את הצרכים והרגשות של אחרים. הכוח שלך הוא האמפתיה, טוב הלב והיכולת שלך ליצור קשרים עמוקים ומשמעותיים. אתה החבר שכולם רוצים שיהיה להם." },
+            3: { name: "הביצועיסט / המצליחן", description: "אתה אדם שאפתן, אנרגטי וממוקד מטרה, עם יכולת להצטיין ולהוביל. אתה יודע להציב יעדים ולהשיג אותם, ומעורר השראה באחרים. הכוח שלך הוא הביטחון העצמי, היעילות והיכולת שלך להסתגל ולהצליח בכל מסגרת." },
+            4: { name: "האינדיבידואליסט / הרומנטיקן", description: "אתה אדם יצירתי, רגיש ובעל עומק רגשי, המחפש אחר משמעות וזהות ייחודית. יש לך יכולת לראות את היופי והמיוחד בדברים שאחרים מפספסים. הכוח שלך הוא האותנטיות, האינטואיציה והיכולת שלך לבטא את עולמך הפנימי העשיר." },
+            5: { name: "הצופה / החוקר", description: "אתה אדם סקרן, אנליטי ובעל תפיסה חדה, ששואף להבין את העולם לעומק. יש לך יכולת נדירה להתרכז, ללמוד ולהפוך למומחה בתחומים שמעניינים אותך. הכוח שלך הוא הידע, האובייקטיביות והיכולת שלך לחשוב בצורה צלולה ובלתי תלויה." },
+            6: { name: "הנאמן / הספקן", description: "אתה אדם אחראי, מחויב ונאמן, שניתן לסמוך עליו בכל מצב. יש לך יכולת לצפות בעיות מראש ולהתכונן אליהן. הכוח שלך הוא האומץ, המסירות והיכולת שלך ליצור קהילה בטוחה ותומכת עבור האנשים החשובים לך." },
+            7: { name: "ההרפתקן / הנלהב", description: "אתה אדם אופטימי, ספונטני ומלא שמחת חיים, שתמיד מחפש אחר חוויות חדשות ומרגשות. יש לך יכולת לראות את הצד החיובי בכל מצב ולהפיץ אנרגיה טובה סביבך. הכוח שלך הוא ההתלהבות, הגמישות והיכולת שלך לחשוב מהר וליצור רעיונות חדשניים." },
+            8: { name: "המוביל / המגן", description: "אתה אדם חזק, אסרטיבי ובעל נוכחות, שלא מפחד לקחת פיקוד ולהגן על מה שחשוב לו. יש לך תשוקה לצדק ויכולת להניע אנשים לפעולה. הכוח שלך הוא הביטחון, העוצמה הפנימית והיכולת שלך להוביל ולהגן על החלשים." },
+            9: { name: "המשכין שלום / המגשר", description: "אתה אדם נעים, תומך ומקבל, בעל יכולת נדירה ליצור הרמוניה ושלום סביבך. אתה יודע להקשיב, להבין את כל הצדדים ולגשר על פערים. הכוח שלך הוא היציבות, הסבלנות והיכולת שלך להרגיע אחרים וליצור סביבה נעימה ומכילה." }
+        };
+        
+        const answerOptionsConfig = [
+            { text: "בכלל לא מתאר אותי", value: 1 },
+            { text: "במידה מועטה", value: 2 },
+            { text: "לפעמים כן, לפעמים לא", value: 3 },
+            { text: "במידה רבה", value: 4 },
+            { text: "מתאר אותי באופן מדויק", value: 5 }
+        ];
+
+        let currentQuestionIndex = 0;
+        let scores = { 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0 };
+
+        const startBtn = document.getElementById('start-btn');
+        const startScreen = document.getElementById('start-screen');
+        const questionScreen = document.getElementById('question-screen');
+        const resultsScreen = document.getElementById('results-screen');
+        const progressBar = document.getElementById('progress-bar');
+        const questionText = document.getElementById('question-text');
+        const answerOptionsContainer = document.getElementById('answer-options');
+        
+        // Shuffle questions for a better experience
+        function shuffle(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+        }
+
+        startBtn.addEventListener('click', () => {
+            shuffle(questions);
+            startScreen.classList.add('hidden');
+            questionScreen.classList.remove('hidden');
+            displayQuestion();
+        });
+
+        function displayQuestion() {
+            if (currentQuestionIndex < questions.length) {
+                const currentQuestion = questions[currentQuestionIndex];
+                
+                // Update progress bar
+                const progress = ((currentQuestionIndex) / questions.length) * 100;
+                progressBar.style.width = `${progress}%`;
+                
+                // Update question text
+                questionText.textContent = `שאלה ${currentQuestionIndex + 1} מתוך ${questions.length}: ${currentQuestion.text}`;
+
+                // Generate answer options
+                answerOptionsContainer.innerHTML = '';
+                answerOptionsConfig.forEach(option => {
+                    const optionId = `option-${option.value}`;
+                    const radioInput = document.createElement('input');
+                    radioInput.type = 'radio';
+                    radioInput.name = 'answer';
+                    radioInput.id = optionId;
+                    radioInput.value = option.value;
+                    radioInput.addEventListener('change', handleAnswerSelection);
+
+                    const label = document.createElement('label');
+                    label.htmlFor = optionId;
+                    label.textContent = option.text;
+
+                    answerOptionsContainer.appendChild(radioInput);
+                    answerOptionsContainer.appendChild(label);
+                });
+            } else {
+                showResults();
+            }
+        }
+        
+        function handleAnswerSelection(event) {
+            const selectedValue = parseInt(event.target.value);
+            const questionType = questions[currentQuestionIndex].type;
+            scores[questionType] += selectedValue;
+
+            currentQuestionIndex++;
+            
+            // Add a small delay for a smoother transition
+            setTimeout(() => {
+                displayQuestion();
+            }, 300);
+        }
+
+        function showResults() {
+            // Final progress bar update
+            progressBar.style.width = '100%';
+            
+            questionScreen.classList.add('hidden');
+            resultsScreen.classList.remove('hidden');
+
+            const sortedScores = Object.entries(scores)
+                .map(([type, score]) => ({ type: parseInt(type), score }))
+                .sort((a, b) => b.score - a.score);
+
+            const primaryType = sortedScores[0];
+            const secondaryTypes = [sortedScores[1], sortedScores[2]];
+
+            // Display primary result
+            const primaryResultContainer = document.getElementById('primary-result-container');
+            primaryResultContainer.innerHTML = `
+                <h2>הטיפוס הדומיננטי שלך הוא כנראה...</h2>
+                <h3>טיפוס ${primaryType.type}: ${typeInfo[primaryType.type].name}</h3>
+                <p>${typeInfo[primaryType.type].description}</p>
+            `;
+
+            // Display secondary results
+            const secondaryItemsContainer = document.getElementById('secondary-items');
+            secondaryItemsContainer.innerHTML = '';
+            secondaryTypes.forEach(st => {
+                 secondaryItemsContainer.innerHTML += `
+                    <div class="secondary-result-item">
+                        <h3>טיפוס ${st.type}: ${typeInfo[st.type].name}</h3>
+                        <p>${typeInfo[st.type].description.split('. ')[0]}.</p> <!-- Show first sentence -->
+                    </div>
+                 `;
+            });
+        }
+    </script>
+
+</body>
+</html>
