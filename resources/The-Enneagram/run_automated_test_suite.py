@@ -15,36 +15,36 @@ from enneagram_validator import calculate_enneagram_scores, validate_simulation
 MODEL_NAME = "gemini-2.5-flash"
 SYSTEM_PROMPT_FILE = "system_prompt.txt"
 TEST_SUITE = [
-    "ענה על המבחן בתור טיפוס 1w9 מאוזן",
-    "ענה על המבחן בתור טיפוס 1w2 במצב צמיחה", # 1 ב-growth הולך ל-7, אז 1w2 בצמיחה יהיה עם קווי 2+7 בריאים
-    "ענה על המבחן בתור טיפוס 2w1 מאוזן",
-    "ענה על המבחן בתור טיפוס 2w3 במצב לחץ", # 2 ב-stress הולך ל-8, אז 2w3 בלחץ יהיה עם קווי 3+8 לא בריאים
-    "ענה על המבחן בתור טיפוס 3w2 מאוזן",
-    "ענה על המבחן בתור טיפוס 3w4 במצב צמיחה", # 3 ב-growth הולך ל-6, אז 3w4 בצמיחה יהיה עם קווי 4+6 בריאים
-    "ענה על המבחן בתור טיפוס 4w3 מאוזן",
-    "ענה על המבחן בתור טיפוס 4w5 במצב לחץ", # 4 ב-stress הולך ל-2, אז 4w5 בלחץ יהיה עם קווי 5+2 לא בריאים
-    "ענה על המבחן בתור טיפוס 5w4 מאוזן",
-    "ענה על המבחן בתור טיפוס 5w6 במצב צמיחה", # 5 ב-growth הולך ל-8, אז 5w6 בצמיחה יהיה עם קווי 6+8 בריאים
-    "ענה על המבחן בתור טיפוס 6w5 מאוזן",
-    "ענה על המבחן בתור טיפוס 6w7 במצב לחץ", # 6 ב-stress הולך ל-3, אז 6w7 בלחץ יהיה עם קווי 7+3 לא בריאים
-    "ענה על המבחן בתור טיפוס 7w6 מאוזן",
-    "ענה על המבחן בתור טיפוס 7w8 במצב צמיחה", # 7 ב-growth הולך ל-5, אז 7w8 בצמיחה יהיה עם קווי 8+5 בריאים
-    "ענה על המבחן בתור טיפוס 8w7 מאוזן",
-    "ענה על המבחן בתור טיפוס 8w9 במצב לחץ", # 8 ב-stress הולך ל-5, אז 8w9 בלחץ יהיה עם קווי 9+5 לא בריאים
-    "ענה על המבחן בתור טיפוס 9w8 מאוזן",
-    "ענה על המבחן בתור טיפוס 9w1 במצב צמיחה", # 9 ב-growth הולך ל-3, אז 9w1 בצמיחה יהיה עם קווי 1+3 בריאים
-    "ענה על המבחן בתור טיפוס 6 טהור (ללא כנף בולטת) במצב מאוזן", # בדיקה של טיפוס ללא הטיית כנף
-    "ענה על המבחן בתור טיפוס 3 טהור (ללא כנף בולטת) במצב לחץ", # בדיקה נוספת של טיפוס ללא כנף ובמצב לחץ
-    "ענה על המבחן בתור טיפוס 1w9 במצב לחץ",
-    "ענה על המבחן בתור טיפוס 2w3 במצב צמיחה",
-    "ענה על המבחן בתור טיפוס 3w2 במצב לחץ",
-    "ענה על המבחן בתור טיפוס 4w5 במצב צמיחה",
-    "ענה על המבחן בתור טיפוס 5w4 במצב לחץ",
-    "ענה על המבחן בתור טיפוס 6w7 במצב צמיחה",
-    "ענה על המבחן בתור טיפוס 7w6 במצב לחץ",
-    "ענה על המבחן בתור טיפוס 8w9 במצב צמיחה",
-    "ענה על המבחן בתור טיפוס 9w1 במצב לחץ",
-    "ענה על המבחן בתור טיפוס 5 טהור (ללא כנף בולטת) במצב מאוזן"
+    "Answer the test as a balanced 1w9 type",
+    "Answer the test as a 1w2 type in growth state",
+    "Answer the test as a balanced 2w1 type",
+    "Answer the test as a 2w3 type in stress state",
+    "Answer the test as a balanced 3w2 type",
+    "Answer the test as a 3w4 type in growth state",
+    "Answer the test as a balanced 4w3 type",
+    "Answer the test as a 4w5 type in stress state",
+    "Answer the test as a balanced 5w4 type",
+    "Answer the test as a 5w6 type in growth state",
+    "Answer the test as a balanced 6w5 type",
+    "Answer the test as a 6w7 type in stress state",
+    "Answer the test as a balanced 7w6 type",
+    "Answer the test as a 7w8 type in growth state",
+    "Answer the test as a balanced 8w7 type",
+    "Answer the test as a 8w9 type in stress state",
+    "Answer the test as a balanced 9w8 type",
+    "Answer the test as a 9w1 type in growth state",
+    "Answer the test as a pure Type 6 (no dominant wing) in a balanced state",
+    "Answer the test as a pure Type 3 (no dominant wing) in a stress state",
+    "Answer the test as a 1w9 type in stress state",
+    "Answer the test as a 2w3 type in growth state",
+    "Answer the test as a 3w2 type in stress state",
+    "Answer the test as a 4w5 type in growth state",
+    "Answer the test as a 5w4 type in stress state",
+    "Answer the test as a 6w7 type in growth state",
+    "Answer the test as a 7w6 type in stress state",
+    "Answer the test as a 8w9 type in growth state",
+    "Answer the test as a 9w1 type in stress state",
+    "Answer the test as a pure Type 5 (no dominant wing) in a balanced state"
 ]
 
 console = Console()
