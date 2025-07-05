@@ -14,10 +14,20 @@ TOOL_PATTERN = re.compile(r"^\*\s*\[(.*?)\]\((.*?)\)\s*-\s*(.*)$")
 
 # תבנית HTML עבור כל פריט כלי
 TOOL_ITEM_TEMPLATE = """
-<div class="tool-item">
-    <div class="tool-info">
-        <h3>{name}</h3>
-        <p>{description}</p>
+<div class="tool-item" id="{tool_id}">
+    <div class="tool-main-content">
+        <a href="#{tool_id}" class="link-icon" onclick="copyDirectLink(this, event)" title="העתק קישור ישיר">
+            <span class="icon-link">
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.72"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.72-1.72"></path></svg>
+            </span>
+            <span class="icon-check">
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+            </span>
+        </a>
+        <div class="tool-info">
+            <h3>{name}</h3>
+            <p>{description}</p>
+        </div>
     </div>
     <div class="tool-actions">
         <a href="{path}">> הפעל</a>
@@ -35,13 +45,17 @@ def generate_tools_html(lines):
         if match:
             name, path, description = [s.strip() for s in match.groups()]
             filename = path.split('/')[-1]
+            # הגדרת מזהה ייחודי לפי שם הקובץ ללא סיומת
+            tool_id = filename.rsplit('.', 1)[0] if '.' in filename else filename
+            
             html_output.append(TOOL_ITEM_TEMPLATE.format(
                 name=name,
                 description=description,
                 path=path,
                 filename=filename,
                 user=GITHUB_USERNAME,
-                repo=GITHUB_REPO_NAME
+                repo=GITHUB_REPO_NAME,
+                tool_id=tool_id
             ))
     return "\n".join(html_output)
 
