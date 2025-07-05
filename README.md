@@ -19,6 +19,6 @@
 
 ### רישיון וקישורים
 
-נוצר על ידי **NH Local**. הפרויקט מורשה תחת [רישיון MIT](LICENSE).
+נוצר על ידי **NH Local**. הפרויקט מורשה תחת [רישיון MIT](https://raw.githubusercontent.com/NHLOCAL/tools/main/LICENSE).
 
-[אתר הפרויקטים הראשי](https://nhlocal.github.io) | [בלוג](https://blog.ze-kal.top) | צור קשר: <a id="contact-link">טוען...</a>
+[קוד מקור ב-GitHub](https://github.com/NHLOCAL/tools) | [אתר הפרויקטים הראשי](https://nhlocal.github.io) | [בלוג](https://blog.ze-kal.top) | צור קשר: <a id="contact-link">טוען...</a>
