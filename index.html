@@ -8,6 +8,9 @@
     <link rel="icon" type="image/png" href="favicon.png">
     
     <style>
+        html {
+            scroll-behavior: smooth;
+        }
         :root {
             /* ערכת נושא בהירה (ברירת מחדל) */
             --bg-color: #ffffff;
@@ -17,6 +20,7 @@
             --button-bg: #f0f0f0;
             --button-border: #e0e0e0;
             --button-hover-bg: #e0e0e0;
+            --highlight-bg: #fdfde3;
         }
 
         body.dark-mode {
@@ -28,6 +32,7 @@
             --button-bg: #333;
             --button-border: #444;
             --button-hover-bg: #444;
+            --highlight-bg: #4d4d33;
         }
 
         body {
@@ -86,6 +91,13 @@
             gap: 20px;
             padding: 1.2em 0;
             border-bottom: 1px solid var(--border-color);
+            transition: background-color 0.4s ease-in-out;
+        }
+        .tool-main-content {
+            display: flex;
+            align-items: center;
+            gap: 15px; /* רווח בין האייקון לטקסט */
+            flex: 1;
         }
         .tool-info { flex: 1; min-width: 250px; }
         .tool-info h3 { margin: 0 0 0.2em 0; font-size: 1.1em; color: var(--text-color); } /* צבע טקסט רגיל לכותרת הכלי */
@@ -105,6 +117,50 @@
             transition: background-color 0.2s;
         }
         .tool-actions a:hover { background-color: var(--button-hover-bg); }
+
+        .link-icon {
+            position: relative;
+            display: inline-block;
+            width: 18px; /* גודל האייקון */
+            height: 18px;
+            line-height: 0;
+            background: none !important;
+            border: none !important;
+            padding: 0 !important;
+            text-decoration: none;
+            color: var(--text-color);
+            opacity: 0.4;
+            transition: opacity 0.2s;
+            cursor: pointer;
+        }
+        .link-icon:hover {
+            opacity: 1;
+        }
+        .link-icon svg {
+            vertical-align: middle;
+            width: 100%;
+            height: 100%;
+        }
+        .link-icon .icon-link,
+        .link-icon .icon-check {
+            position: absolute;
+            top: 0;
+            left: 0;
+            transition: opacity 0.2s ease-in-out, transform 0.2s ease-in-out;
+        }
+        .link-icon .icon-check {
+            opacity: 0;
+            transform: scale(0.8);
+            color: var(--accent-color);
+        }
+        .link-icon.copied .icon-link {
+            opacity: 0;
+            transform: scale(0.8);
+        }
+        .link-icon.copied .icon-check {
+            opacity: 1;
+            transform: scale(1);
+        }
 
         main h1 {
             display: flex;
@@ -136,11 +192,20 @@
 <p>אוסף כלים שימושיים וקלי משקל, כל אחד בקובץ HTML יחיד. נוצרו כדי לפתור בעיות קטנות במהירות, ישירות מהדפדפן.</p>
 
 <h2>הכלים</h2>
-
-<div class="tool-item">
-    <div class="tool-info">
-        <h3>מחולל פודקאסטים</h3>
-        <p>כלי פשוט ליצירת פודקאסטים כולל תסריט ותוכן באמצעות ג'מיני.</p>
+<div class="tool-item" id="podcast_generator">
+    <div class="tool-main-content">
+        <a href="#podcast_generator" class="link-icon" onclick="copyDirectLink(this, event)" title="העתק קישור ישיר">
+            <span class="icon-link">
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.72"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.72-1.72"></path></svg>
+            </span>
+            <span class="icon-check">
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+            </span>
+        </a>
+        <div class="tool-info">
+            <h3>מחולל פודקאסטים</h3>
+            <p>כלי פשוט ליצירת פודקאסטים כולל תסריט ותוכן באמצעות ג'מיני.</p>
+        </div>
     </div>
     <div class="tool-actions">
         <a href="tools/podcast_generator.html">> הפעל</a>
@@ -150,17 +215,49 @@
     </div>
 </div>
 
-
-<div class="tool-item">
-    <div class="tool-info">
-        <h3>עורך כתוביות</h3>
-        <p>כלי מתקדם לעריכה וסנכרון של קבצי כתוביות (SRT, JSON) מול קובץ וידאו או שמע. מאפשר תיקונים, הוספה ומחיקה של שורות, הזזת תזמונים ועוד, והכל בממשק אחד נוח.</p>
+<div class="tool-item" id="subtitle_editor">
+    <div class="tool-main-content">
+        <a href="#subtitle_editor" class="link-icon" onclick="copyDirectLink(this, event)" title="העתק קישור ישיר">
+            <span class="icon-link">
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.72"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.72-1.72"></path></svg>
+            </span>
+            <span class="icon-check">
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+            </span>
+        </a>
+        <div class="tool-info">
+            <h3>עורך כתוביות</h3>
+            <p>כלי מתקדם לעריכה וסנכרון של קבצי כתוביות (SRT, JSON) מול קובץ וידאו או שמע. מאפשר תיקונים, הוספה ומחיקה של שורות, הזזת תזמונים ועוד, והכל בממשק אחד נוח.</p>
+        </div>
     </div>
     <div class="tool-actions">
         <a href="tools/subtitle_editor.html">> הפעל</a>
         <a href="https://raw.githubusercontent.com/nhlocal/tools/main/tools/subtitle_editor.html" 
            onclick="event.preventDefault(); forceDownload(this.href, 'subtitle_editor.html');">> הורד</a>
 
+    </div>
+</div>
+
+<div class="tool-item" id="the_enneagram">
+    <div class="tool-main-content">
+        <a href="#the_enneagram" class="link-icon" onclick="copyDirectLink(this, event)" title="העתק קישור ישיר">
+            <span class="icon-link">
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.72"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.72-1.72"></path></svg>
+            </span>
+            <span class="icon-check">
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+            </span>
+        </a>
+        <div class="tool-info">
+            <h3>מבחן אישיות אניאגרמה</h3>
+            <p>כלי לבדיקת אישיות מבוסס האניאגרמה - שיטה עתיקה המחלקת את העולם ל-9 טיפוסים מרכזיים.</p>
+        </div>
+    </div>
+    <div class="tool-actions">
+        <a href="tools/the_enneagram.html">> הפעל</a>
+        <a href="https://raw.githubusercontent.com/nhlocal/tools/main/tools/the_enneagram.html" 
+           onclick="event.preventDefault(); forceDownload(this.href, 'the_enneagram.html');">> הורד</a>
+        <a href="https://github.com/nhlocal/tools/tree/main/resources/the_enneagram">> משאבים</a>
     </div>
 </div>
 
@@ -201,38 +298,45 @@
             localStorage.setItem('theme', theme);
         };
 
-        // --- התיקון נמצא כאן ---
         async function forceDownload(url, filename) {
             try {
                 const response = await fetch(url);
                 if (!response.ok) throw new Error(`Network response was not ok: ${response.statusText}`);
                 const blob = await response.blob();
-                
                 const link = document.createElement('a');
                 link.href = URL.createObjectURL(blob);
                 link.download = filename;
-                
                 document.body.appendChild(link);
                 link.click();
                 document.body.removeChild(link);
-                
                 URL.revokeObjectURL(link.href);
             } catch (error) {
-                // רק רישום ל-console, ללא הודעת alert למשתמש
                 console.error(`Download failed for ${filename}:`, error);
             }
         }
-        // --- סוף התיקון ---
+
+        function copyDirectLink(linkElement, event) {
+            event.preventDefault();
+            const fullUrl = new URL(linkElement.href, window.location.href).href;
+            
+            navigator.clipboard.writeText(fullUrl).then(() => {
+                if (linkElement.classList.contains('copied')) return;
+
+                linkElement.classList.add('copied');
+                setTimeout(() => {
+                    linkElement.classList.remove('copied');
+                }, 1500);
+            }).catch(err => {
+                console.error('Failed to copy link:', err);
+            });
+        }
 
         function createDynamicMailLink() {
             const emailAddress = 'nh.local11@gmail.com';
             const subject = encodeURIComponent('פנייה מאתר ארגז הכלים');
             const contactLink = document.getElementById('contact-link');
-
             if (!contactLink) return;
-
             const isWindows = navigator.userAgent.toLowerCase().includes('win');
-            
             if (isWindows) {
                 contactLink.href = `https://mail.google.com/mail/?view=cm&fs=1&to=${emailAddress}&su=${subject}`;
                 contactLink.target = '_blank';
@@ -240,8 +344,26 @@
             } else {
                 contactLink.href = `mailto:${emailAddress}?subject=${subject}`;
             }
-            
             contactLink.textContent = emailAddress;
+        }
+
+        function scrollToElementFromHash() {
+            if (window.location.hash) {
+                try {
+                    const element = document.querySelector(window.location.hash);
+                    if (element) {
+                        setTimeout(() => {
+                            element.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                            element.style.backgroundColor = 'var(--highlight-bg)';
+                            setTimeout(() => {
+                                element.style.backgroundColor = '';
+                            }, 2500);
+                        }, 100);
+                    }
+                } catch (e) {
+                    console.error("Could not scroll to element:", e);
+                }
+            }
         }
 
         themeToggle.addEventListener('click', () => {
@@ -253,10 +375,8 @@
             const savedTheme = localStorage.getItem('theme') || 
                                (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
             applyTheme(savedTheme);
-
             createDynamicMailLink();
 
-            // הוספת favicon ליד h1 אם קיים
             const mainH1 = document.querySelector('main h1');
             if (mainH1 && !mainH1.querySelector('.favicon-title')) {
                 const faviconImg = document.createElement('img');
@@ -266,7 +386,10 @@
                 faviconImg.setAttribute('aria-hidden', 'true');
                 mainH1.insertBefore(faviconImg, mainH1.firstChild);
             }
+            scrollToElementFromHash();
         });
+
+        window.addEventListener('hashchange', scrollToElementFromHash, false);
     </script>
 </body>
 </html>
