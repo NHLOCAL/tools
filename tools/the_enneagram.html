@@ -85,6 +85,49 @@
             margin: 0 auto 2.5rem auto;
         }
 
+        .info-details {
+            background-color: var(--md-sys-color-surface);
+            border-radius: 16px;
+            margin: 1.5rem auto 2rem;
+            max-width: 600px;
+            border: 1px solid var(--md-sys-color-secondary-container);
+        }
+
+        .info-summary {
+            padding: 1rem 1.5rem;
+            font-weight: 600;
+            cursor: pointer;
+            outline: none;
+            color: var(--md-sys-color-primary);
+            list-style: none; /* For Safari */
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .info-summary::-webkit-details-marker { display: none; } /* For Chrome */
+
+        .info-summary::after {
+            content: '+';
+            font-size: 1.8rem;
+            font-weight: 300;
+            transition: transform 0.2s ease-in-out;
+        }
+
+        .info-details[open] > .info-summary::after {
+            transform: rotate(45deg);
+        }
+
+        .info-content {
+            padding: 0 1.5rem 1.5rem;
+            color: var(--md-sys-color-on-surface-variant);
+        }
+        .info-content p {
+            margin-bottom: 1rem;
+            text-align: right;
+        }
+        .info-content p:last-child { margin-bottom: 0; }
+
+
         #progress-bar-container {
             width: 100%;
             height: 8px;
@@ -256,6 +299,14 @@
         <div id="start-screen" class="screen active">
              <svg class="header-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><style>.cls-1{fill:none;stroke:currentColor;stroke-linecap:round;stroke-linejoin:round;stroke-width:4px;}</style></defs><circle class="cls-1" cx="50" cy="50" r="45"/><polygon class="cls-1" points="50 5 92.87 32.5 77.5 87.5 22.5 87.5 7.13 32.5 50 5"/><polygon class="cls-1" points="50 5 22.5 87.5 92.87 32.5 7.13 32.5 77.5 87.5 50 5"/></svg>
             <h1>מבחן אישיות אניאגרמה</h1>
+            <details class="info-details">
+                <summary class="info-summary">מה זה אניאגרמה?</summary>
+                <div class="info-content">
+                    <p>האניאגרמה הוא מודל עתיק לתיאור תשעה טיפוסי אישיות מרכזיים. מקורו אינו ידוע בוודאות, אך הוא שוכלל והפך פופולרי במאה ה-20. המודל לא נועד לתייג אנשים, אלא לשמש כמפה למודעות עצמית, המאפשרת לנו להבין את המניעים העמוקים שלנו, את החוזקות, האתגרים ונתיבי ההתפתחות האפשריים.</p>
+                    <p>כל אחד מתשעת הטיפוסים מייצג תפיסת עולם ייחודית ודפוסים רגשיים ומחשבתיים שמעצבים את התנהגותו. בנוסף לטיפוס הראשי, לכל אדם יש "כנף" - אחד משני הטיפוסים הסמוכים לו על מעגל האניאגרמה, שמוסיפה גוון ורבדים נוספים לאישיותו.</p>
+                    <p>המבחן הזה הוא נקודת התחלה למסע של גילוי. התוצאות יכולות להאיר לכם פינות נסתרות בנפש ולתת כלים לצמיחה אישית.</p>
+                </div>
+            </details>
             <p>
                 ברוך הבא! המבחן הבא יעזור לך לגלות מהו טיפוס האישיות הדומיננטי שלך ומהי ה"כנף" המשפיעה עליו. ענה בכנות, וזכור - אין תשובות נכונות, רק מסע לגילוי עצמי.
             </p>
