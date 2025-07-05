@@ -1,0 +1,629 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>עורך כתוביות - JSON/SRT ל-SRT</title>
+
+    <!-- Google Fonts & Material Symbols -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Assistant:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
+
+    <style>
+        :root {
+            --md-sys-color-primary: #6750A4;
+            --md-sys-color-on-primary: #FFFFFF;
+            --md-sys-color-primary-container: #EADDFF;
+            --md-sys-color-on-primary-container: #21005D;
+            --md-sys-color-secondary: #625B71;
+            --md-sys-color-on-secondary-container: #1D192B;
+            --md-sys-color-error: #B3261E;
+            --md-sys-color-on-error-container: #FFFFFF;
+            --md-sys-color-error-container: #F9DEDC;
+            --md-sys-color-background: #FFFBFE;
+            --md-sys-color-on-background: #1C1B1F;
+            --md-sys-color-surface: #FFFBFE;
+            --md-sys-color-surface-variant: #E7E0EC;
+            --md-sys-color-outline: #79747E;
+            --md-sys-color-surface-container-low: #F7F2FA;
+            --border-radius: 16px;
+            --border-radius-small: 8px;
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        html { scroll-behavior: smooth; }
+        body { font-family: 'Assistant', sans-serif; background-color: var(--md-sys-color-background); color: var(--md-sys-color-on-background); line-height: 1.6; }
+        .container { max-width: 1400px; margin: 0 auto; padding: 0 1.5rem; }
+        .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; padding-top: 2rem; }
+        .card { background-color: var(--md-sys-color-surface-container-low); border-radius: var(--border-radius); padding: 2rem; border: 1px solid var(--md-sys-color-surface-variant); box-shadow: 0 2px 8px rgba(0,0,0,0.05); display: flex; flex-direction: column; }
+        header { padding-top: 1.5rem; }
+        h1, h2, h3 { font-weight: 700; color: var(--md-sys-color-primary); }
+        h1 { font-size: 2.5rem; display: flex; align-items: center; gap: 1rem; }
+        h2 { font-size: 1.5rem; margin-bottom: 1rem; border-bottom: 2px solid var(--md-sys-color-primary-container); padding-bottom: 0.5rem; }
+        h3 { font-size: 1.25rem; margin-bottom: 1rem; color: var(--md-sys-color-secondary); }
+        .material-symbols-outlined { font-size: inherit; vertical-align: middle; }
+        .btn { display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem; padding: 10px 24px; font-family: 'Assistant', sans-serif; font-size: 1rem; font-weight: 600; border-radius: 99px; border: none; cursor: pointer; transition: all 0.2s ease-in-out; text-decoration: none; }
+        .btn:disabled { opacity: 0.6; cursor: not-allowed; }
+        .btn-primary { background-color: var(--md-sys-color-primary); color: var(--md-sys-color-on-primary); }
+        .btn-primary:hover:not(:disabled) { background-color: #5a3f92; box-shadow: 0 4px 8px rgba(0,0,0,0.15); }
+        .btn-secondary { background-color: var(--md-sys-color-secondary-container); color: var(--md-sys-color-on-secondary-container); }
+        .btn-secondary:hover:not(:disabled) { background-color: #d8d0e7; }
+        .input-group { margin-bottom: 1.5rem; }
+        .input-group label { display: block; margin-bottom: 0.5rem; font-weight: 600; color: var(--md-sys-color-on-surface-variant); }
+        textarea#transcript-text-input { width: 100%; min-height: 200px; padding: 1rem; border: 1px solid var(--md-sys-color-outline); border-radius: var(--border-radius-small); font-family: monospace; direction: ltr; text-align: left; background-color: var(--md-sys-color-surface); font-size: 0.9rem; resize: vertical; }
+        .file-input-wrapper { border: 2px dashed var(--md-sys-color-outline); border-radius: var(--border-radius); padding: 2rem; text-align: center; cursor: pointer; transition: all 0.2s; flex-grow: 1; display: flex; flex-direction: column; justify-content: center; }
+        .file-input-wrapper:hover, .file-input-wrapper.drag-over { background-color: var(--md-sys-color-primary-container); border-color: var(--md-sys-color-primary); }
+        .file-input-wrapper .material-symbols-outlined { font-size: 3rem; color: var(--md-sys-color-primary); }
+        .file-input-wrapper input[type="file"] { display: none; }
+        .file-name { margin-top: 1rem; font-weight: 600; color: var(--md-sys-color-secondary); }
+        #editor-section { display: none; }
+        .editor-controls { display: flex; gap: 1rem; align-items: center; padding: 1.5rem 0; position: sticky; top: 0; background-color: var(--md-sys-color-background); z-index: 10; border-bottom: 1px solid var(--md-sys-color-surface-variant); }
+        #editor-grid { display: grid; grid-template-columns: 40% 1fr; gap: 2rem; align-items: start; padding-top: 2rem; }
+        
+        #media-player-container { position: sticky; top: 110px; align-self: start; max-height: calc(100vh - 120px); overflow-y: auto; padding-right: 8px;}
+        #media-player-wrapper { position: relative; }
+        #media-player { width: 100%; border-radius: var(--border-radius-small); background-color: black; cursor: pointer; display: block; }
+        #audio-poster { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background-color: black; color: white; display: none; justify-content: center; align-items: center; text-align: center; font-size: 1.2rem; font-weight: 600; padding: 1rem; border-radius: var(--border-radius-small); }
+        #audio-poster.visible { display: flex; }
+        .custom-controls { direction: ltr; background-color: var(--md-sys-color-surface-container-low); border-radius: var(--border-radius); padding: 0.75rem 1rem; margin-top: 1rem; border: 1px solid var(--md-sys-color-surface-variant); }
+        .progress-container { display: flex; align-items: center; gap: 1rem; }
+        .progress-container .time-display { font-family: monospace; font-size: 0.9rem; color: var(--md-sys-color-secondary); }
+        .progress-bar { flex-grow: 1; }
+        .bottom-controls { display: flex; align-items: center; justify-content: space-between; margin-top: 0.5rem; }
+        .control-btn { background: none; border: none; cursor: pointer; color: var(--md-sys-color-on-surface-variant); padding: 0.5rem; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; }
+        .control-btn:hover { background-color: rgba(0,0,0,0.1); }
+        .control-btn .material-symbols-outlined { font-size: 2.25rem; display: block; }
+        .volume-container, .speed-container { display: flex; align-items: center; gap: 0.5rem; }
+        .volume-container .material-symbols-outlined, .speed-container .material-symbols-outlined { font-size: 1.5rem; }
+        .speed-container #playback-speed { font-family: monospace; font-weight: 600; font-size: 1rem; color: var(--md-sys-color-secondary); min-width: 4ch; text-align: center;}
+        input[type=range] { -webkit-appearance: none; width: 100%; background: transparent; cursor: pointer; }
+        input[type=range]:focus { outline: none; }
+        input[type=range]::-webkit-slider-runnable-track { width: 100%; height: 6px; background: var(--md-sys-color-surface-variant); border-radius: 3px; }
+        input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; height: 16px; width: 16px; border-radius: 50%; background: var(--md-sys-color-primary); margin-top: -5px; }
+        
+        #subtitle-tools-card { direction: rtl; margin-top: 1.5rem; background-color: var(--md-sys-color-surface-container-low); border-radius: var(--border-radius); padding: 1.5rem; border: 1px solid var(--md-sys-color-surface-variant); }
+        .tool-group { margin-bottom: 1.5rem; }
+        .tool-group:last-child { margin-bottom: 0; }
+        .tool-group h4 { font-weight: 600; color: var(--md-sys-color-on-secondary-container); margin-bottom: 0.75rem; display: flex; align-items: center; gap: 0.5rem; }
+        .tool-group .input-row { display: flex; gap: 0.75rem; align-items: center; }
+        .tool-group input[type="text"], .tool-group input[type="number"] { flex-grow: 1; padding: 8px 12px; border: 1px solid var(--md-sys-color-outline); border-radius: var(--border-radius-small); font-family: 'Assistant', sans-serif; font-size: 1rem; }
+        .tool-group .btn-small { padding: 8px 16px; font-size: 0.9rem; }
+
+        .subtitle-item { position: relative; background-color: var(--md-sys-color-surface); border: 1px solid var(--md-sys-color-surface-variant); border-radius: var(--border-radius-small); padding: 1rem; margin-bottom: 2rem; cursor: pointer; transition: all 0.3s ease-in-out; display: grid; grid-template-columns: 1fr auto; gap: 0.75rem 1rem; align-items: start;}
+        .subtitle-item:hover { border-color: var(--md-sys-color-primary); box-shadow: 0 2px 6px rgba(0,0,0,0.08); }
+        .subtitle-item.active { background-color: var(--md-sys-color-primary-container); border-color: var(--md-sys-color-primary); transform: scale(1.02); }
+        .subtitle-item-main { grid-column: 1 / 2; display: flex; flex-direction: column; gap: 0.75rem;}
+        .subtitle-item-actions { grid-column: 2 / 3; }
+        .subtitle-item .time-inputs { display: flex; gap: 0.5rem; align-items: center; direction: ltr; }
+        .subtitle-item .time-input { width: 120px; padding: 4px 8px; border: 1px solid var(--md-sys-color-outline); border-radius: 4px; font-family: monospace; font-size: 0.9rem; direction: ltr; text-align: left; }
+        .subtitle-item .text-input { width: 100%; padding: 8px; border: 1px solid var(--md-sys-color-outline); border-radius: 4px; font-family: 'Assistant', sans-serif; font-size: 1rem; resize: vertical; min-height: 40px; direction: rtl; }
+        .delete-sub-btn { background-color: transparent; border: none; cursor: pointer; color: var(--md-sys-color-secondary); padding: 4px; border-radius: 50%; }
+        .delete-sub-btn:hover { background-color: var(--md-sys-color-error-container); color: var(--md-sys-color-error); }
+        
+        .add-sub-gap { position: relative; height: 2rem; display: flex; align-items: center; justify-content: center; }
+        .add-sub-gap-inner { display: flex; align-items: center; width: 100%; cursor: pointer; opacity: 0; transition: opacity 0.2s ease-in-out; }
+        #subtitle-list-container:hover .add-sub-gap-inner { opacity: 1; }
+        .add-sub-gap-inner .line { flex-grow: 1; height: 1px; background: var(--md-sys-color-outline); }
+        .add-sub-gap-inner button { background-color: var(--md-sys-color-surface); border: 1px solid var(--md-sys-color-outline); color: var(--md-sys-color-primary); width: 28px; height: 28px; border-radius: 50%; padding: 0; margin: 0 0.5rem; display: flex; align-items: center; justify-content: center; }
+        .add-sub-gap-inner button:hover { background-color: var(--md-sys-color-primary-container); }
+        
+        #notification { position: fixed; bottom: -100px; left: 50%; transform: translateX(-50%); background-color: var(--md-sys-color-on-background); color: var(--md-sys-color-background); padding: 12px 24px; border-radius: 99px; box-shadow: 0 4px 12px rgba(0,0,0,0.2); opacity: 0; visibility: hidden; transition: all 0.4s ease-in-out; z-index: 1000; }
+        #notification.show { opacity: 1; visibility: visible; bottom: 40px; }
+        #notification.error { background-color: var(--md-sys-color-error); color: var(--md-sys-color-on-error-container); }
+        
+        @media (max-width: 900px) {
+            #editor-grid { grid-template-columns: 1fr; }
+            #media-player-container { position: relative; top: auto; max-height: none; overflow-y: visible; padding-right: 0;}
+        }
+        @media (max-width: 768px) {
+            .container { padding: 0 1rem; }
+            .grid-2 { grid-template-columns: 1fr; }
+            h1 { font-size: 2rem; }
+            .card { padding: 1.5rem; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header><h1><span class="material-symbols-outlined" style="font-size: 2.8rem;">subtitles</span> עורך כתוביות חכם</h1></header>
+        <main>
+            <section id="input-section">
+                <div class="grid-2">
+                    <div class="card">
+                        <h2>שלב 1: הוספת תמלול</h2>
+                        <div class="input-group">
+                            <label for="transcript-file-input">א. העלאת קובץ (JSON, SRT, TXT)</label>
+                            <label for="transcript-file-input" class="file-input-wrapper" id="transcript-drop-zone"><span class="material-symbols-outlined">upload_file</span><p>לחץ לבחירת קובץ או גרור לכאן</p><div id="transcript-file-name" class="file-name"></div></label>
+                            <input type="file" id="transcript-file-input" accept=".json,application/json,.srt,text/plain">
+                        </div>
+                        <div class="input-group">
+                             <label for="transcript-text-input">ב. או הדבקת טקסט (JSON / SRT)</label>
+                            <textarea id="transcript-text-input" placeholder='ניתן להדביק תוכן בפורמט SRT או JSON.&#10;לדוגמה SRT:&#10;1&#10;00:00:01,234 --> 00:00:05,678&#10;טקסט כתובית...&#10;&#10;לדוגמה JSON:&#10;[{"start_time":"00:00:01.234","end_time":"00:00:05.678","text":"..."}]'></textarea>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <h2>שלב 2: הוספת מדיה</h2>
+                        <div class="input-group" style="flex-grow: 1; display: flex; flex-direction: column;">
+                            <label for="media-file-input">העלאת קובץ שמע או וידאו</label>
+                            <label for="media-file-input" class="file-input-wrapper" id="media-drop-zone"><span class="material-symbols-outlined">movie</span><p>לחץ לבחירת קובץ או גרור לכאן</p><div id="media-file-name" class="file-name"></div></label>
+                            <input type="file" id="media-file-input" accept="audio/*,video/*">
+                        </div>
+                         <div style="text-align: center; margin-top: 2rem;">
+                            <button id="process-button" class="btn btn-primary" style="padding: 16px 32px; font-size: 1.2rem;" disabled><span class="material-symbols-outlined">edit_note</span> צור וערוך כתוביות</button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <section id="editor-section">
+                 <div class="editor-controls">
+                     <button id="back-to-input-btn" class="btn btn-secondary"><span class="material-symbols-outlined">arrow_back</span> חזרה</button>
+                     <button id="download-srt-button" class="btn btn-primary"><span class="material-symbols-outlined">download</span> הורד קובץ SRT</button>
+                     <h2 style="margin: 0; border: none; padding: 0;">עריכת כתוביות</h2>
+                 </div>
+                <div id="editor-grid">
+                    <div id="media-player-container">
+                        <div id="media-player-wrapper">
+                            <video id="media-player"></video>
+                            <div id="audio-poster"></div>
+                        </div>
+                        <div class="custom-controls">
+                            <div class="progress-container">
+                                <span class="time-display" id="current-time">00:00</span>
+                                <input type="range" id="progress-bar" class="progress-bar" value="0" min="0" max="100" step="0.1">
+                                <span class="time-display" id="duration">00:00</span>
+                            </div>
+                            <div class="bottom-controls">
+                                 <div class="speed-container">
+                                    <button class="control-btn" id="decrease-speed-btn" title="האט מהירות"><span class="material-symbols-outlined">remove</span></button>
+                                    <span id="playback-speed">1x</span>
+                                    <button class="control-btn" id="increase-speed-btn" title="הגבר מהירות"><span class="material-symbols-outlined">add</span></button>
+                                </div>
+                                <button class="control-btn" id="play-pause-btn"><span class="material-symbols-outlined">play_arrow</span></button>
+                                <div class="volume-container">
+                                    <button class="control-btn" id="volume-btn"><span class="material-symbols-outlined">volume_up</span></button>
+                                    <input type="range" id="volume-bar" min="0" max="1" step="0.01" value="1">
+                                </div>
+                            </div>
+                        </div>
+                        <div id="subtitle-tools-card">
+                            <h3>כלים לעריכה גורפת</h3>
+                            <div class="tool-group">
+                                <h4><span class="material-symbols-outlined">find_replace</span> חיפוש והחלפה</h4>
+                                <div class="input-row" style="margin-bottom: 0.5rem;">
+                                    <input type="text" id="find-input" placeholder="חפש טקסט...">
+                                    <input type="text" id="replace-input" placeholder="החלף ב...">
+                                </div>
+                                <button id="replace-all-btn" class="btn btn-secondary btn-small" style="width: 100%;">החלף הכל</button>
+                            </div>
+                            <div class="tool-group">
+                                <h4><span class="material-symbols-outlined">schedule</span> הזזת תזמונים (Offset)</h4>
+                                <div class="input-row">
+                                    <input type="number" id="offset-input" step="0.1" value="0" placeholder="שניות (למשל 1.5 או -2)">
+                                    <button id="apply-offset-btn" class="btn btn-secondary btn-small">החל הזזה</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="subtitle-list-container">
+                        <h3>רשימת כתוביות</h3>
+                        <div id="subtitle-list"></div>
+                    </div>
+                </div>
+            </section>
+        </main>
+        <div id="notification"></div>
+    </div>
+
+    <script>
+    document.addEventListener('DOMContentLoaded', () => {
+        // --- Element selection ---
+        const transcriptFileInput = document.getElementById('transcript-file-input'),
+            transcriptDropZone = document.getElementById('transcript-drop-zone'),
+            transcriptTextInput = document.getElementById('transcript-text-input'),
+            mediaFileInput = document.getElementById('media-file-input'),
+            mediaDropZone = document.getElementById('media-drop-zone'),
+            transcriptFileName = document.getElementById('transcript-file-name'),
+            mediaFileName = document.getElementById('media-file-name'),
+            processButton = document.getElementById('process-button'),
+            backToInputBtn = document.getElementById('back-to-input-btn'),
+            downloadSrtButton = document.getElementById('download-srt-button'),
+            inputSection = document.getElementById('input-section'),
+            editorSection = document.getElementById('editor-section'),
+            notification = document.getElementById('notification'),
+            mediaPlayer = document.getElementById('media-player'),
+            audioPoster = document.getElementById('audio-poster'),
+            playPauseBtn = document.getElementById('play-pause-btn'),
+            playPauseIcon = playPauseBtn.querySelector('span'),
+            progressBar = document.getElementById('progress-bar'),
+            currentTimeEl = document.getElementById('current-time'),
+            durationEl = document.getElementById('duration'),
+            volumeBtn = document.getElementById('volume-btn'),
+            volumeIcon = volumeBtn.querySelector('span'),
+            volumeBar = document.getElementById('volume-bar'),
+            subtitleListContainer = document.getElementById('subtitle-list-container'),
+            subtitleList = document.getElementById('subtitle-list'),
+            decreaseSpeedBtn = document.getElementById('decrease-speed-btn'),
+            increaseSpeedBtn = document.getElementById('increase-speed-btn'),
+            playbackSpeedEl = document.getElementById('playback-speed'),
+            findInput = document.getElementById('find-input'),
+            replaceInput = document.getElementById('replace-input'),
+            replaceAllBtn = document.getElementById('replace-all-btn'),
+            offsetInput = document.getElementById('offset-input'),
+            applyOffsetBtn = document.getElementById('apply-offset-btn');
+
+        // --- State management ---
+        let state = { subtitles: [], mediaURL: null, transcriptContent: null, mediaFile: null, activeSubtitleId: null, wasPlayingBeforeEdit: false };
+        let typingTimeout = null;
+        
+        // --- Helper functions ---
+        const showNotification = (message, type = 'info', duration = 3000) => {
+            notification.textContent = message;
+            notification.className = 'show';
+            if (type === 'error') notification.classList.add('error');
+            setTimeout(() => { notification.className = ''; }, duration);
+        };
+
+        const checkInputs = () => { processButton.disabled = !(state.transcriptContent && state.mediaURL); };
+        
+        const timeStringToSeconds = (timeStr) => {
+            if (!timeStr || typeof timeStr !== 'string') return 0;
+
+            // Normalize different formats to use '.' as the final separator
+            let normalizedTime = timeStr.replace(',', '.');
+            const colonCount = (normalizedTime.match(/:/g) || []).length;
+
+            // Handles HH:MM:SS:ms or MM:SS:ms (colon as ms separator)
+            if ((colonCount === 3) || (colonCount === 2 && !normalizedTime.includes('.'))) {
+                 const lastColonIndex = normalizedTime.lastIndexOf(':');
+                 normalizedTime = normalizedTime.substring(0, lastColonIndex) + '.' + normalizedTime.substring(lastColonIndex + 1);
+            }
+
+            const parts = normalizedTime.split(':');
+            let seconds = 0;
+            if (parts.length === 3) { // HH:MM:SS.ms
+                 seconds = parseFloat(parts[0]) * 3600 + parseFloat(parts[1]) * 60 + parseFloat(parts[2]);
+            } else if (parts.length === 2) { // MM:SS.ms
+                seconds = parseFloat(parts[0]) * 60 + parseFloat(parts[1]);
+            } else if (parts.length === 1) { // S.ms
+                seconds = parseFloat(parts[0]);
+            }
+            
+            return isNaN(seconds) ? 0 : seconds;
+        };
+
+        const secondsToTimeString = (seconds, useComma = false) => {
+            if (isNaN(seconds) || seconds < 0) seconds = 0;
+            const h = Math.floor(seconds / 3600).toString().padStart(2, '0'),
+                m = Math.floor((seconds % 3600) / 60).toString().padStart(2, '0'),
+                s = Math.floor(seconds % 60).toString().padStart(2, '0'),
+                ms = Math.round((seconds - Math.floor(seconds)) * 1000).toString().padStart(3, '0');
+            return `${h}:${m}:${s}${useComma ? ',' : '.'}${ms}`;
+        };
+
+        const formatTimeForDisplay = (time) => {
+            if (isNaN(time)) return "00:00";
+            const totalSeconds = Math.floor(time);
+            const h = Math.floor(totalSeconds / 3600);
+            const m = Math.floor((totalSeconds % 3600) / 60).toString().padStart(2, '0');
+            const s = (totalSeconds % 60).toString().padStart(2, '0');
+            return h > 0 ? `${h}:${m}:${s}` : `${m}:${s}`;
+        };
+
+        const parseSrt = (srtContent) => {
+            const blocks = srtContent.trim().replace(/\r/g, '').split(/\n\n/);
+            return blocks.map((block, index) => {
+                const lines = block.split('\n');
+                if (lines.length < 2) return null;
+                const timeLineIndex = lines.findIndex(l => l.includes('-->'));
+                if (timeLineIndex === -1) return null;
+                const [start_time, end_time] = lines[timeLineIndex].split('-->').map(s => s.trim().replace(',', '.'));
+                const text = lines.slice(timeLineIndex + 1).join('\n');
+                return { id: Date.now() + index, start_time, end_time, text };
+            }).filter(Boolean);
+        };
+        
+        // --- File handling ---
+        const handleTranscriptFile = (file) => {
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = (e) => {
+                    state.transcriptContent = e.target.result;
+                    transcriptFileName.textContent = `קובץ: ${file.name}`;
+                    transcriptTextInput.value = '';
+                    checkInputs();
+                };
+                reader.onerror = () => showNotification('שגיאה בקריאת הקובץ.', 'error');
+                reader.readAsText(file);
+            } else { showNotification('יש לבחור קובץ תמלול.', 'error'); }
+        };
+        
+        const handleMediaFile = (file) => {
+             if (file && (file.type.startsWith('audio/') || file.type.startsWith('video/'))) {
+                if (state.mediaURL) URL.revokeObjectURL(state.mediaURL);
+                state.mediaFile = file;
+                state.mediaURL = URL.createObjectURL(file);
+                mediaFileName.textContent = `קובץ: ${file.name}`;
+                checkInputs();
+            } else { showNotification('יש לבחור קובץ שמע או וידאו.', 'error'); }
+        };
+
+        transcriptFileInput.addEventListener('change', (e) => handleTranscriptFile(e.target.files[0]));
+        mediaFileInput.addEventListener('change', (e) => handleMediaFile(e.target.files[0]));
+        transcriptTextInput.addEventListener('input', () => {
+            state.transcriptContent = transcriptTextInput.value.trim().length > 0 ? transcriptTextInput.value : null;
+            if(state.transcriptContent) { transcriptFileInput.value = ''; transcriptFileName.textContent = ''; }
+            checkInputs();
+        });
+        
+        ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => { document.body.addEventListener(eventName, e => { e.preventDefault(); e.stopPropagation(); }); });
+        [transcriptDropZone, mediaDropZone].forEach(zone => {
+            zone.addEventListener('dragover', () => zone.classList.add('drag-over'), false);
+            zone.addEventListener('dragleave', () => zone.classList.remove('drag-over'), false);
+        });
+        transcriptDropZone.addEventListener('drop', e => { transcriptDropZone.classList.remove('drag-over'); handleTranscriptFile(e.dataTransfer.files[0]); });
+        mediaDropZone.addEventListener('drop', e => { mediaDropZone.classList.remove('drag-over'); handleMediaFile(e.dataTransfer.files[0]); });
+
+        // --- Core app logic ---
+        processButton.addEventListener('click', () => {
+            let parsedData;
+            try { 
+                parsedData = JSON.parse(state.transcriptContent);
+                if (!Array.isArray(parsedData)) throw new Error();
+            } catch (jsonError) {
+                try { 
+                    parsedData = parseSrt(state.transcriptContent);
+                    if (parsedData.length === 0 && state.transcriptContent.trim() !== '') throw new Error();
+                } catch (srtError) {
+                    showNotification('שגיאה בפענוח הקובץ. ודא שהוא בפורמט JSON או SRT תקין.', 'error');
+                    return;
+                }
+            }
+            state.subtitles = parsedData.map((item, index) => ({ ...item, id: item.id || Date.now() + index }));
+            renderUI();
+        });
+        
+        backToInputBtn.addEventListener('click', () => {
+            editorSection.style.display = 'none';
+            inputSection.style.display = 'block';
+            mediaPlayer.pause();
+        });
+
+        const renderUI = () => {
+            inputSection.style.display = 'none';
+            editorSection.style.display = 'block';
+            mediaPlayer.src = state.mediaURL;
+            if (state.mediaFile.type.startsWith('audio/')) {
+                audioPoster.textContent = state.mediaFile.name;
+                audioPoster.classList.add('visible');
+            } else {
+                audioPoster.classList.remove('visible');
+            }
+            renderSubtitleList();
+        };
+
+        const renderSubtitleList = () => {
+            subtitleList.innerHTML = '';
+            state.subtitles.sort((a,b) => timeStringToSeconds(a.start_time) - timeStringToSeconds(b.start_time));
+            
+            // Add "add" button at the very top
+            subtitleList.insertAdjacentHTML('beforeend', createAddSubGapHTML('before_first'));
+
+            state.subtitles.forEach(sub => {
+                const displayStartTime = secondsToTimeString(timeStringToSeconds(sub.start_time)),
+                      displayEndTime = secondsToTimeString(timeStringToSeconds(sub.end_time));
+                const itemHTML = `
+                    <div class="subtitle-item" data-id="${sub.id}">
+                        <div class="subtitle-item-main">
+                            <div class="time-inputs">
+                                <input type="text" class="time-input start-time" value="${displayStartTime}">
+                                <span>&rarr;</span>
+                                <input type="text" class="time-input end-time" value="${displayEndTime}">
+                            </div>
+                            <textarea class="text-input">${sub.text}</textarea>
+                        </div>
+                        <div class="subtitle-item-actions">
+                            <button class="delete-sub-btn" title="מחק כתובית"><span class="material-symbols-outlined">delete</span></button>
+                        </div>
+                    </div>`;
+                subtitleList.insertAdjacentHTML('beforeend', itemHTML);
+                subtitleList.insertAdjacentHTML('beforeend', createAddSubGapHTML(sub.id));
+            });
+            updateActiveSubtitle();
+        }
+
+        const createAddSubGapHTML = (afterId) => `
+            <div class="add-sub-gap" data-after-id="${afterId}">
+                <div class="add-sub-gap-inner">
+                    <div class="line"></div>
+                    <button title="הוסף כתובית כאן"><span class="material-symbols-outlined">add</span></button>
+                    <div class="line"></div>
+                </div>
+            </div>`;
+        
+        // --- Media Player Controls ---
+        const togglePlay = () => mediaPlayer.paused ? mediaPlayer.play() : mediaPlayer.pause();
+        playPauseBtn.addEventListener('click', togglePlay);
+        mediaPlayer.addEventListener('click', togglePlay);
+        audioPoster.addEventListener('click', togglePlay);
+        mediaPlayer.addEventListener('play', () => playPauseIcon.textContent = 'pause');
+        mediaPlayer.addEventListener('pause', () => playPauseIcon.textContent = 'play_arrow');
+        mediaPlayer.addEventListener('loadedmetadata', () => durationEl.textContent = formatTimeForDisplay(mediaPlayer.duration));
+        
+        const updateActiveSubtitle = () => {
+            const currentSub = state.subtitles.find(s => mediaPlayer.currentTime >= timeStringToSeconds(s.start_time) && mediaPlayer.currentTime < timeStringToSeconds(s.end_time));
+            if (currentSub?.id !== state.activeSubtitleId) {
+                subtitleList.querySelector(`.subtitle-item.active`)?.classList.remove('active');
+                const newActiveEl = subtitleList.querySelector(`[data-id="${currentSub?.id}"]`);
+                if(newActiveEl) { 
+                    newActiveEl.classList.add('active');
+                    if (!document.querySelector('.subtitle-item:hover, .add-sub-gap:hover')) {
+                       newActiveEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                    }
+                }
+                state.activeSubtitleId = currentSub?.id;
+            }
+        };
+
+        mediaPlayer.addEventListener('timeupdate', () => {
+            progressBar.value = mediaPlayer.duration ? (mediaPlayer.currentTime / mediaPlayer.duration) * 100 : 0;
+            currentTimeEl.textContent = formatTimeForDisplay(mediaPlayer.currentTime);
+            updateActiveSubtitle();
+        });
+
+        progressBar.addEventListener('input', () => mediaPlayer.currentTime = (progressBar.value / 100) * mediaPlayer.duration);
+        volumeBar.addEventListener('input', (e) => { mediaPlayer.volume = e.target.value; mediaPlayer.muted = e.target.value == 0; });
+        mediaPlayer.addEventListener('volumechange', () => {
+            volumeBar.value = mediaPlayer.muted ? 0 : mediaPlayer.volume;
+            if (mediaPlayer.muted || mediaPlayer.volume === 0) volumeIcon.textContent = 'volume_off';
+            else if (mediaPlayer.volume < 0.5) volumeIcon.textContent = 'volume_down';
+            else volumeIcon.textContent = 'volume_up';
+        });
+        volumeBtn.addEventListener('click', () => mediaPlayer.muted = !mediaPlayer.muted);
+        
+        const updatePlaybackSpeed = (change) => {
+            let newRate = Math.round((mediaPlayer.playbackRate + change) * 100) / 100;
+            if (newRate >= 0.25 && newRate <= 4) {
+                mediaPlayer.playbackRate = newRate;
+                playbackSpeedEl.textContent = `${newRate.toFixed(2).replace(/\.00$|0$/, '')}x`;
+            }
+        };
+        increaseSpeedBtn.addEventListener('click', () => updatePlaybackSpeed(0.25));
+        decreaseSpeedBtn.addEventListener('click', () => updatePlaybackSpeed(-0.25));
+
+        // --- Event Delegation for Subtitle List ---
+        subtitleListContainer.addEventListener('click', e => {
+            const target = e.target;
+            // --- Delete subtitle ---
+            const deleteBtn = target.closest('.delete-sub-btn');
+            if (deleteBtn) {
+                const subItem = deleteBtn.closest('.subtitle-item');
+                const subId = subItem.dataset.id;
+                state.subtitles = state.subtitles.filter(s => s.id != subId);
+                renderSubtitleList();
+                showNotification("הכתובית נמחקה.");
+                return;
+            }
+            
+            // --- Add subtitle in a gap ---
+            const addGap = target.closest('.add-sub-gap');
+            if (addGap) {
+                const afterId = addGap.dataset.afterId;
+                let newSub, insertIndex;
+
+                if (afterId === 'before_first') {
+                    const firstSubStartTime = state.subtitles.length > 0 ? timeStringToSeconds(state.subtitles[0].start_time) : 2;
+                    newSub = { id: Date.now(), start_time: "00:00:00.000", end_time: secondsToTimeString(Math.max(0.1, firstSubStartTime - 0.1)), text: "טקסט חדש..." };
+                    insertIndex = 0;
+                } else {
+                    const prevSubIndex = state.subtitles.findIndex(s => s.id == afterId);
+                    const prevSub = state.subtitles[prevSubIndex];
+                    const nextSub = state.subtitles[prevSubIndex + 1];
+                    const startTime = timeStringToSeconds(prevSub.end_time) + 0.001;
+                    const endTime = nextSub ? timeStringToSeconds(nextSub.start_time) - 0.001 : startTime + 2;
+                    if (endTime <= startTime) return showNotification("אין מספיק מקום בין הכתוביות.", "error");
+                    newSub = { id: Date.now(), start_time: secondsToTimeString(startTime), end_time: secondsToTimeString(endTime), text: "טקסט חדש..." };
+                    insertIndex = prevSubIndex + 1;
+                }
+                
+                state.subtitles.splice(insertIndex, 0, newSub);
+                renderSubtitleList();
+                subtitleList.querySelector(`[data-id="${newSub.id}"] .text-input`)?.focus();
+                showNotification("כתובית חדשה נוספה.");
+                return;
+            }
+
+            // --- Jump to subtitle time ---
+             const subItem = target.closest('.subtitle-item');
+             if(subItem && !target.closest('input, textarea, button')) {
+                mediaPlayer.currentTime = timeStringToSeconds(subItem.querySelector('.start-time').value);
+                mediaPlayer.play();
+             }
+        });
+
+        subtitleListContainer.addEventListener('input', e => {
+             const target = e.target;
+             const subItem = target.closest('.subtitle-item');
+             if (!subItem) return;
+
+             // --- Update state from input fields ---
+             const subId = subItem.dataset.id;
+             const sub = state.subtitles.find(s => s.id == subId);
+             if (target.classList.contains('start-time')) sub.start_time = target.value;
+             if (target.classList.contains('end-time')) sub.end_time = target.value;
+             if (target.classList.contains('text-input')) sub.text = target.value;
+
+             // --- Smart pause/play on typing ---
+             if (!mediaPlayer.paused) {
+                state.wasPlayingBeforeEdit = true;
+                mediaPlayer.pause();
+             }
+             clearTimeout(typingTimeout);
+             typingTimeout = setTimeout(() => {
+                if(state.wasPlayingBeforeEdit) {
+                    mediaPlayer.play();
+                    state.wasPlayingBeforeEdit = false;
+                }
+             }, 1500);
+        });
+
+        // --- Bulk Edit Tools ---
+        replaceAllBtn.addEventListener('click', () => {
+            const findText = findInput.value;
+            const replaceText = replaceInput.value;
+            if (!findText) return showNotification('יש להזין טקסט לחיפוש.', 'error');
+            let replacementsCount = 0;
+            state.subtitles.forEach(sub => {
+                const originalText = sub.text;
+                const newText = sub.text.replaceAll(findText, replaceText);
+                if (newText !== originalText) {
+                    sub.text = newText;
+                    replacementsCount++;
+                }
+            });
+            if (replacementsCount > 0) {
+                renderSubtitleList();
+                showNotification(`הוחלפו ${replacementsCount} מופעים.`);
+            } else {
+                showNotification('הטקסט לחיפוש לא נמצא.', 'info');
+            }
+        });
+
+        applyOffsetBtn.addEventListener('click', () => {
+            const offset = parseFloat(offsetInput.value);
+            if (isNaN(offset)) return showNotification('ערך הזזה לא תקין.', 'error');
+            state.subtitles.forEach(sub => {
+                sub.start_time = secondsToTimeString(Math.max(0, timeStringToSeconds(sub.start_time) + offset));
+                sub.end_time = secondsToTimeString(Math.max(0, timeStringToSeconds(sub.end_time) + offset));
+            });
+            renderSubtitleList();
+            showNotification(`התזמונים הוזזו ב-${offset} שניות.`);
+        });
+        
+        // --- SRT Generation ---
+        const generateSrtContent = () => {
+            const sortedSubs = [...state.subtitles].sort((a,b) => timeStringToSeconds(a.start_time) - timeStringToSeconds(b.start_time));
+            return sortedSubs.map((sub, index) => {
+                const start = secondsToTimeString(timeStringToSeconds(sub.start_time), true);
+                const end = secondsToTimeString(timeStringToSeconds(sub.end_time), true);
+                return `${index + 1}\n${start} --> ${end}\n${sub.text.trim()}\n`;
+            }).join('\n');
+        };
+        
+        downloadSrtButton.addEventListener('click', () => {
+            const srtContent = generateSrtContent();
+            if (!srtContent) return showNotification('אין כתוביות להורדה.', 'error');
+            const blob = new Blob([srtContent], { type: 'text/plain;charset=utf-8' });
+            const a = document.createElement('a');
+            a.href = URL.createObjectURL(blob);
+            a.download = `${(state.mediaFile.name || 'subtitles').replace(/\.[^/.]+$/, "")}.srt`;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(a.href);
+            showNotification('קובץ SRT נוצר והורד בהצלחה!');
+        });
+    });
+    </script>
+</body>
+</html>

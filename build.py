@@ -1,5 +1,6 @@
 # build.py
 import re
+import os
 from markdown2 import Markdown
 
 # --- הגדרות ---
@@ -12,7 +13,7 @@ GITHUB_REPO_NAME = 'tools'
 # ביטוי רגולרי למציאת פריטי רשימה בפורמט: * [Name](path) - Description
 TOOL_PATTERN = re.compile(r"^\*\s*\[(.*?)\]\((.*?)\)\s*-\s*(.*)$")
 
-# תבנית HTML עבור כל פריט כלי
+# תבנית HTML עבור כל פריט כלי - משלבת את הקישור הישיר ואת כפתור המשאבים
 TOOL_ITEM_TEMPLATE = """
 <div class="tool-item" id="{tool_id}">
     <div class="tool-main-content">
@@ -33,9 +34,12 @@ TOOL_ITEM_TEMPLATE = """
         <a href="{path}">> הפעל</a>
         <a href="https://raw.githubusercontent.com/{user}/{repo}/main/{path}" 
            onclick="event.preventDefault(); forceDownload(this.href, '{filename}');">> הורד</a>
+{resources_button}
     </div>
 </div>
 """
+
+RESOURCES_BUTTON_TEMPLATE = '        <a href="https://github.com/{user}/{repo}/tree/main/resources/{tool_name}">> משאבים</a>'
 
 def generate_tools_html(lines):
     """מקבל רשימת שורות ומייצר את ה-HTML עבור הכלים."""
@@ -45,8 +49,20 @@ def generate_tools_html(lines):
         if match:
             name, path, description = [s.strip() for s in match.groups()]
             filename = path.split('/')[-1]
+            
             # הגדרת מזהה ייחודי לפי שם הקובץ ללא סיומת
             tool_id = filename.rsplit('.', 1)[0] if '.' in filename else filename
+            
+            # בדיקה אם קיימת תיקיית משאבים
+            tool_name = tool_id # שם התיקייה זהה למזהה
+            resources_path = os.path.join('resources', tool_name)
+            resources_button_html = ""
+            if os.path.isdir(resources_path):
+                resources_button_html = RESOURCES_BUTTON_TEMPLATE.format(
+                    user=GITHUB_USERNAME,
+                    repo=GITHUB_REPO_NAME,
+                    tool_name=tool_name
+                )
             
             html_output.append(TOOL_ITEM_TEMPLATE.format(
                 name=name,
@@ -55,7 +71,8 @@ def generate_tools_html(lines):
                 filename=filename,
                 user=GITHUB_USERNAME,
                 repo=GITHUB_REPO_NAME,
-                tool_id=tool_id
+                tool_id=tool_id,
+                resources_button=resources_button_html
             ))
     return "\n".join(html_output)
 
