@@ -82,6 +82,12 @@
         input[type=range]:focus { outline: none; }
         input[type=range]::-webkit-slider-runnable-track { width: 100%; height: 6px; background: var(--md-sys-color-surface-variant); border-radius: 3px; }
         input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; height: 16px; width: 16px; border-radius: 50%; background: var(--md-sys-color-primary); margin-top: -5px; }
+
+        /* --- Dynamic Volume Slider Fill --- */
+        #volume-bar { --volume-progress: 100%; }
+        #volume-bar::-webkit-slider-runnable-track {
+            background: linear-gradient(to right, var(--md-sys-color-primary) 0%, var(--md-sys-color-primary) var(--volume-progress), var(--md-sys-color-surface-variant) var(--volume-progress), var(--md-sys-color-surface-variant) 100%);
+        }
         
         #subtitle-tools-card { direction: rtl; margin-top: 1.5rem; background-color: var(--md-sys-color-surface-container-low); border-radius: var(--border-radius); padding: 1.5rem; border: 1px solid var(--md-sys-color-surface-variant); }
         .tool-group { margin-bottom: 1.5rem; }
@@ -339,7 +345,8 @@
         
         // --- History & Autosave ---
         const updateHistoryButtons = () => {
-            undoBtn.disabled = historyStack.length === 0;
+            // Undo is disabled if there's only the initial state (or less) left.
+            undoBtn.disabled = historyStack.length <= 1;
             redoBtn.disabled = redoStack.length === 0;
         };
 
@@ -367,7 +374,7 @@
         };
 
         const undo = () => {
-            if (historyStack.length < 2) return; // Need at least one state to revert to
+            if (historyStack.length < 2) return; // Guard clause: Need at least one state to revert to
             redoStack.push(historyStack.pop());
             state.subtitles = JSON.parse(JSON.stringify(historyStack[historyStack.length - 1]));
             renderSubtitleList();
@@ -592,12 +599,17 @@
 
         progressBar.addEventListener('input', () => mediaPlayer.currentTime = (progressBar.value / 100) * mediaPlayer.duration);
         volumeBar.addEventListener('input', (e) => { mediaPlayer.volume = e.target.value; mediaPlayer.muted = e.target.value == 0; });
+        
         mediaPlayer.addEventListener('volumechange', () => {
-            volumeBar.value = mediaPlayer.muted ? 0 : mediaPlayer.volume;
-            if (mediaPlayer.muted || mediaPlayer.volume === 0) volumeIcon.textContent = 'volume_off';
-            else if (mediaPlayer.volume < 0.5) volumeIcon.textContent = 'volume_down';
+            const currentVolume = mediaPlayer.muted ? 0 : mediaPlayer.volume;
+            volumeBar.value = currentVolume;
+            volumeBar.style.setProperty('--volume-progress', `${currentVolume * 100}%`);
+
+            if (currentVolume === 0) volumeIcon.textContent = 'volume_off';
+            else if (currentVolume < 0.5) volumeIcon.textContent = 'volume_down';
             else volumeIcon.textContent = 'volume_up';
         });
+
         volumeBtn.addEventListener('click', () => mediaPlayer.muted = !mediaPlayer.muted);
         
         const updatePlaybackSpeed = (change) => {
@@ -788,7 +800,7 @@
             const blob = new Blob([srtContent], { type: 'text/plain;charset=utf-8' });
             const a = document.createElement('a');
             a.href = URL.createObjectURL(blob);
-            a.download = `${(state.mediaFile.name || 'subtitles').replace(/\.[^/.]+$/, "")}.srt`;
+            a.download = `${(state.mediaFile?.name || 'subtitles').replace(/\.[^/.]+$/, "")}.srt`;
             document.body.appendChild(a);
             a.click();
             document.body.removeChild(a);
