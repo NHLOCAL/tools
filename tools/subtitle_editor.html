@@ -107,7 +107,7 @@
         .subtitle-item-actions { grid-column: 2 / 3; }
         .subtitle-item .time-inputs { display: flex; gap: 0.5rem; align-items: center; direction: ltr; }
         .subtitle-item .time-input { width: 120px; padding: 4px 8px; border: 1px solid var(--md-sys-color-outline); border-radius: 4px; font-family: monospace; font-size: 0.9rem; direction: ltr; text-align: left; }
-        .subtitle-item .text-input { width: 100%; padding: 8px; border: 1px solid var(--md-sys-color-outline); border-radius: 4px; font-family: 'Assistant', sans-serif; font-size: 1rem; resize: vertical; min-height: 40px; direction: rtl; }
+        .subtitle-item .text-input { width: 100%; padding: 8px; border: 1px solid var(--md-sys-color-outline); border-radius: 4px; font-family: 'Assistant', sans-serif; font-size: 1rem; /*resize: vertical;*/ min-height: 40px; direction: rtl; overflow-y: hidden; } /* UPDATED: resize removed, overflow hidden */
         .delete-sub-btn { background-color: transparent; border: none; cursor: pointer; color: var(--md-sys-color-secondary); padding: 4px; border-radius: 50%; }
         .delete-sub-btn:hover { background-color: var(--md-sys-color-error-container); color: var(--md-sys-color-error); }
         
@@ -345,6 +345,16 @@
             return h > 0 ? `${h}:${m}:${s}` : `${m}:${s}`;
         };
         
+        // --- NEW: Auto-resize textarea ---
+        const autoResizeTextarea = (el) => {
+            // We use a timeout of 0 to ensure the browser has a chance to update the element's value
+            // before we calculate the scrollHeight.
+            setTimeout(() => {
+                el.style.height = 'auto'; // Temporarily shrink to get the correct scrollHeight
+                el.style.height = `${el.scrollHeight}px`; // Set the height to its content
+            }, 0);
+        };
+
         // --- History & Autosave ---
         const updateHistoryButtons = () => {
             // Undo is disabled if there's only the initial state (or less) left.
@@ -539,7 +549,10 @@
             state.subtitles.forEach(sub => {
                 const displayStartTime = secondsToTimeString(timeStringToSeconds(sub.start_time)),
                       displayEndTime = secondsToTimeString(timeStringToSeconds(sub.end_time));
-                const itemHTML = `
+                
+                // Create element from string to manipulate it before appending
+                const tempDiv = document.createElement('div');
+                tempDiv.innerHTML = `
                     <div class="subtitle-item" data-id="${sub.id}">
                         <div class="subtitle-item-main">
                             <div class="time-inputs">
@@ -553,7 +566,12 @@
                             <button class="delete-sub-btn" title="מחק כתובית"><span class="material-symbols-outlined">delete</span></button>
                         </div>
                     </div>`;
-                subtitleList.insertAdjacentHTML('beforeend', itemHTML);
+                const subItemElement = tempDiv.firstElementChild;
+                
+                // UPDATED: Set initial size for the textarea
+                autoResizeTextarea(subItemElement.querySelector('.text-input'));
+
+                subtitleList.appendChild(subItemElement);
                 subtitleList.insertAdjacentHTML('beforeend', createAddSubGapHTML(sub.id));
             });
             updateActiveSubtitle();
@@ -585,7 +603,8 @@
                 const newActiveEl = subtitleList.querySelector(`[data-id="${currentSub?.id}"]`);
                 if(newActiveEl) { 
                     newActiveEl.classList.add('active');
-                    if (!document.querySelector('.subtitle-item:hover, .add-sub-gap:hover, .subtitle-item.search-hit')) {
+                    // UPDATED: Improved scrolling condition
+                    if (!document.querySelector('.subtitle-item:hover, .add-sub-gap:hover, .subtitle-item.search-hit, .subtitle-item input:focus, .subtitle-item textarea:focus')) {
                        newActiveEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
                     }
                 }
@@ -662,15 +681,23 @@
                 state.subtitles.splice(insertIndex, 0, newSub);
                 recordHistory();
                 renderSubtitleList();
-                subtitleList.querySelector(`[data-id="${newSub.id}"] .text-input`)?.focus();
+                const newSubEl = subtitleList.querySelector(`[data-id="${newSub.id}"]`);
+                if (newSubEl) {
+                    newSubEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                    newSubEl.querySelector('.text-input')?.focus();
+                }
                 showNotification("כתובית חדשה נוספה.");
                 return;
             }
 
              const subItem = target.closest('.subtitle-item');
              if(subItem && !target.closest('input, textarea, button')) {
+                // UPDATED: Scroll into view immediately on click
+                subItem.scrollIntoView({ behavior: 'smooth', block: 'center' });
                 mediaPlayer.currentTime = timeStringToSeconds(subItem.querySelector('.start-time').value);
-                mediaPlayer.play();
+                if (mediaPlayer.paused) {
+                    mediaPlayer.play();
+                }
              }
         });
 
@@ -683,7 +710,10 @@
              const sub = state.subtitles.find(s => s.id == subId);
              if (target.classList.contains('start-time')) sub.start_time = target.value;
              if (target.classList.contains('end-time')) sub.end_time = target.value;
-             if (target.classList.contains('text-input')) sub.text = target.value;
+             if (target.classList.contains('text-input')) {
+                sub.text = target.value;
+                autoResizeTextarea(target); // UPDATED: Resize on input
+             }
 
              if (!mediaPlayer.paused) {
                 state.wasPlayingBeforeEdit = true;
