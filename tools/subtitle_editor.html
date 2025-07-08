@@ -6,7 +6,6 @@
     <title>עורך כתוביות חכם</title>
     <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%236750A4'%3E%3Cpath d='M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zM4 12h4v2H4v-2zm10 6H4v-2h10v2zm6 0h-4v-2h4v2zm0-4H10v-2h10v2z'/%3E%3C/svg%3E">
 
-    <!-- Google Fonts & Material Symbols -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Assistant:wght@300;400;600;700&display=swap" rel="stylesheet">
@@ -92,10 +91,10 @@
         .tool-group { margin-bottom: 1.5rem; }
         .tool-group:last-child { margin-bottom: 0; }
         .tool-group h4 { font-weight: 600; color: var(--md-sys-color-on-secondary-container); margin-bottom: 0.75rem; display: flex; align-items: center; gap: 0.5rem; }
-        .tool-group .input-row { display: flex; gap: 0.75rem; align-items: center; }
+        .tool-group .input-row { display: flex; gap: 0.5rem; align-items: center; }
         .tool-group input[type="text"], .tool-group input[type="number"] { flex-grow: 1; padding: 8px 12px; border: 1px solid var(--md-sys-color-outline); border-radius: var(--border-radius-small); font-family: 'Assistant', sans-serif; font-size: 1rem; }
         .tool-group .btn-small { padding: 8px 16px; font-size: 0.9rem; }
-        #search-results-display { text-align: center; margin-top: 0.5rem; font-size: 0.9rem; color: var(--md-sys-color-secondary); min-height: 1.2em; direction: ltr; }
+        #search-results-display { color: var(--md-sys-color-secondary); font-size: 0.9rem; font-family: monospace; min-width: 6ch; text-align: center; direction: ltr; padding: 0 0.25rem; }
 
         .subtitle-item { position: relative; background-color: var(--md-sys-color-surface); border: 1px solid var(--md-sys-color-surface-variant); border-radius: var(--border-radius-small); padding: 1rem; margin-bottom: 2rem; cursor: pointer; transition: all 0.3s ease-in-out; display: grid; grid-template-columns: 1fr auto; gap: 0.75rem 1rem; align-items: start;}
         .subtitle-item:hover { border-color: var(--md-sys-color-primary); box-shadow: 0 2px 6px rgba(0,0,0,0.08); }
@@ -208,13 +207,13 @@
                             <h3>כלים לעריכה גורפת</h3>
                              <div class="tool-group">
                                 <h4><span class="material-symbols-outlined">find_replace</span> חיפוש והחלפה</h4>
-                                <div class="input-row" style="margin-bottom: 0.5rem;">
+                                <div class="input-row" style="margin-bottom: 0.75rem;">
                                     <input type="text" id="search-input" placeholder="חיפוש...">
+                                    <span id="search-results-display"></span>
                                     <button id="search-prev-btn" class="btn btn-secondary btn-small" disabled title="התוצאה הקודמת"><span class="material-symbols-outlined">arrow_upward</span></button>
                                     <button id="search-next-btn" class="btn btn-secondary btn-small" disabled title="התוצאה הבאה"><span class="material-symbols-outlined">arrow_downward</span></button>
                                 </div>
-                                <div id="search-results-display"></div>
-                                <div class="input-row" style="margin-top: 1rem; gap: 0.5rem;">
+                                <div class="input-row">
                                     <input type="text" id="replace-input" placeholder="החלפה ב...">
                                     <button id="replace-one-btn" class="btn btn-secondary btn-small" disabled>החלף</button>
                                     <button id="replace-all-btn" class="btn btn-secondary btn-small" disabled>החלף הכל</button>
@@ -717,19 +716,19 @@
             searchPrevBtn.disabled = true;
             searchNextBtn.disabled = true;
             replaceOneBtn.disabled = true;
-            replaceAllBtn.disabled = searchInput.value.trim() === '';
+            replaceAllBtn.disabled = true;
         };
 
         const performSearch = () => {
             const query = searchInput.value.trim().toLowerCase();
             document.querySelectorAll('.subtitle-item.search-hit').forEach(el => el.classList.remove('search-hit'));
             
-            replaceAllBtn.disabled = !query;
-
             if (!query) {
                 clearSearch();
                 return;
             }
+
+            replaceAllBtn.disabled = false;
             searchResults = state.subtitles.filter(sub => sub.text.toLowerCase().includes(query)).map(sub => sub.id);
             
             const hasResults = searchResults.length > 0;
@@ -742,7 +741,7 @@
                 navigateToSearchResult(currentSearchIndex);
             } else {
                 currentSearchIndex = -1;
-                searchResultsDisplay.textContent = 'לא נמצאו תוצאות';
+                searchResultsDisplay.textContent = '0';
             }
         };
         
@@ -777,8 +776,10 @@
             const sub = state.subtitles.find(s => s.id == subId);
             const subItemEl = subtitleList.querySelector(`[data-id="${subId}"]`);
             if (!sub || !subItemEl) return;
-
-            sub.text = sub.text.replace(new RegExp(findText.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&'), 'i'), replaceText);
+            
+            const findRegex = new RegExp(findText.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&'), 'i');
+            sub.text = sub.text.replace(findRegex, replaceText);
+            
             recordHistory();
 
             const textarea = subItemEl.querySelector('.text-input');
