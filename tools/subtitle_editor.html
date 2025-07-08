@@ -256,6 +256,7 @@
             processButton = document.getElementById('process-button'),
             backToInputBtn = document.getElementById('back-to-input-btn'),
             downloadSrtButton = document.getElementById('download-srt-button'),
+            downloadTxtButton = document.getElementById('download-txt-button'),
             inputSection = document.getElementById('input-section'),
             editorSection = document.getElementById('editor-section'),
             notification = document.getElementById('notification'),
@@ -784,7 +785,7 @@
             showNotification(`התזמונים הוזזו ב-${offset} שניות.`);
         });
         
-        // --- SRT Generation ---
+        // --- File Generation ---
         const generateSrtContent = () => {
             const sortedSubs = [...state.subtitles].sort((a,b) => timeStringToSeconds(a.start_time) - timeStringToSeconds(b.start_time));
             return sortedSubs.map((sub, index) => {
@@ -792,6 +793,32 @@
                 const end = secondsToTimeString(timeStringToSeconds(sub.end_time), true);
                 return `${index + 1}\n${start} --> ${end}\n${sub.text.trim()}\n`;
             }).join('\n');
+        };
+
+        const generatePlainTextContent = () => {
+            const sortedSubs = [...state.subtitles].sort((a,b) => timeStringToSeconds(a.start_time) - timeStringToSeconds(b.start_time));
+            if (sortedSubs.length === 0) return "";
+
+            let fullText = "";
+            for (let i = 0; i < sortedSubs.length; i++) {
+                const currentSub = sortedSubs[i];
+                let textToAdd = currentSub.text.trim();
+
+                if (i > 0) {
+                    const prevSub = sortedSubs[i - 1];
+                    const prevTextEndsSentence = /[.?!]$/.test(prevSub.text.trim());
+                    const gap = timeStringToSeconds(currentSub.start_time) - timeStringToSeconds(prevSub.end_time);
+
+                    if (gap > 2.0 || prevTextEndsSentence) {
+                        fullText += '\n\n' + textToAdd;
+                    } else {
+                        fullText += ' ' + textToAdd;
+                    }
+                } else {
+                    fullText += textToAdd;
+                }
+            }
+            return fullText;
         };
         
         downloadSrtButton.addEventListener('click', () => {
@@ -806,6 +833,21 @@
             document.body.removeChild(a);
             URL.revokeObjectURL(a.href);
             showNotification('קובץ SRT נוצר והורד בהצלחה!');
+        });
+
+        downloadTxtButton.addEventListener('click', () => {
+            const txtContent = generatePlainTextContent();
+            if (!txtContent) return showNotification('אין כתוביות להורדה.', 'error');
+            
+            const blob = new Blob([txtContent], { type: 'text/plain;charset=utf-8' });
+            const a = document.createElement('a');
+            a.href = URL.createObjectURL(blob);
+            a.download = `${(state.mediaFile?.name || 'subtitles').replace(/\.[^/.]+$/, "")}.txt`;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(a.href);
+            showNotification('קובץ טקסט נוצר והורד בהצלחה!');
         });
         
         // --- Initial Load ---
