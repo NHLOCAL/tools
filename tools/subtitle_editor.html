@@ -850,14 +850,19 @@
 
                 if (i > 0) {
                     const prevSub = sortedSubs[i - 1];
-                    const prevTextEndsStrongSentence = /[?!]$/.test(prevSub.text.trim());
+                    const prevText = prevSub.text.trim();
+                    const prevTextEndsWithPeriod = /\.$/.test(prevText);
+                    const prevTextEndsWithComma = /,$/.test(prevText);
+                    const prevTextEndsStrongSentence = /[?!]$/.test(prevText);
                     const gap = timeStringToSeconds(currentSub.start_time) - timeStringToSeconds(prevSub.end_time);
 
-                    if (gap > 2.0 || prevTextEndsStrongSentence) {
+                    if (!prevTextEndsWithPeriod && !prevTextEndsWithComma) {
+                        fullText += ' ' + textToAdd;
+                    } else if (gap > 1.5 || prevTextEndsStrongSentence) {
                         fullText += '\n\n' + textToAdd;
                     } else {
                         fullText += ' ' + textToAdd;
-                    }
+                    } 
                 } else {
                     fullText += textToAdd;
                 }
