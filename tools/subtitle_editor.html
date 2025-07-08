@@ -596,7 +596,10 @@
                 const newActiveEl = subtitleList.querySelector(`[data-id="${currentSub?.id}"]`);
                 if(newActiveEl) { 
                     newActiveEl.classList.add('active');
-                    if (!document.querySelector('.subtitle-item:hover, .add-sub-gap:hover, .subtitle-item.search-hit, .subtitle-item input:focus, .subtitle-item textarea:focus')) {
+                    
+                    const shouldBlockScroll = document.querySelector('.subtitle-item input:focus, .subtitle-item textarea:focus, .subtitle-item.search-hit:hover, .add-sub-gap:hover');
+
+                    if (!shouldBlockScroll) {
                        newActiveEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
                     }
                 }
@@ -684,6 +687,7 @@
 
              const subItem = target.closest('.subtitle-item');
              if(subItem && !target.closest('input, textarea, button')) {
+                // The explicit scroll on click gives immediate feedback to the user.
                 subItem.scrollIntoView({ behavior: 'smooth', block: 'center' });
                 mediaPlayer.currentTime = timeStringToSeconds(subItem.querySelector('.start-time').value);
                 if (mediaPlayer.paused) {
@@ -741,6 +745,7 @@
             if (searchResults.length > 0) {
                 currentSearchIndex = 0;
                 navigateToSearchResult(currentSearchIndex);
+                searchResultsDisplay.textContent = `1 / ${searchResults.length}`;
             } else {
                 currentSearchIndex = -1;
                 searchResultsDisplay.textContent = 'לא נמצאו תוצאות';
@@ -756,14 +761,11 @@
             document.querySelectorAll('.subtitle-item.search-hit').forEach(el => el.classList.remove('search-hit'));
             const targetId = searchResults[currentSearchIndex];
             const targetElement = subtitleList.querySelector(`[data-id="${targetId}"]`);
-            const targetSub = state.subtitles.find(sub => sub.id == targetId);
 
-            if (targetElement && targetSub) {
+            if (targetElement) {
                 targetElement.classList.add('search-hit');
                 targetElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
                 searchResultsDisplay.textContent = `${currentSearchIndex + 1} / ${searchResults.length}`;
-                // Jump the media player to the start of the found subtitle
-                mediaPlayer.currentTime = timeStringToSeconds(targetSub.start_time);
             }
         };
 
