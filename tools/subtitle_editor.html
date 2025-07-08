@@ -107,7 +107,7 @@
         .subtitle-item-actions { grid-column: 2 / 3; }
         .subtitle-item .time-inputs { display: flex; gap: 0.5rem; align-items: center; direction: ltr; }
         .subtitle-item .time-input { width: 120px; padding: 4px 8px; border: 1px solid var(--md-sys-color-outline); border-radius: 4px; font-family: monospace; font-size: 0.9rem; direction: ltr; text-align: left; }
-        .subtitle-item .text-input { width: 100%; padding: 8px; border: 1px solid var(--md-sys-color-outline); border-radius: 4px; font-family: 'Assistant', sans-serif; font-size: 1rem; /*resize: vertical;*/ min-height: 40px; direction: rtl; overflow-y: hidden; } /* UPDATED: resize removed, overflow hidden */
+        .subtitle-item .text-input { width: 100%; padding: 8px; border: 1px solid var(--md-sys-color-outline); border-radius: 4px; font-family: 'Assistant', sans-serif; font-size: 1rem; min-height: 40px; direction: rtl; overflow-y: hidden; }
         .delete-sub-btn { background-color: transparent; border: none; cursor: pointer; color: var(--md-sys-color-secondary); padding: 4px; border-radius: 50%; }
         .delete-sub-btn:hover { background-color: var(--md-sys-color-error-container); color: var(--md-sys-color-error); }
         
@@ -345,19 +345,15 @@
             return h > 0 ? `${h}:${m}:${s}` : `${m}:${s}`;
         };
         
-        // --- NEW: Auto-resize textarea ---
         const autoResizeTextarea = (el) => {
-            // We use a timeout of 0 to ensure the browser has a chance to update the element's value
-            // before we calculate the scrollHeight.
             setTimeout(() => {
-                el.style.height = 'auto'; // Temporarily shrink to get the correct scrollHeight
-                el.style.height = `${el.scrollHeight}px`; // Set the height to its content
+                el.style.height = 'auto';
+                el.style.height = `${el.scrollHeight}px`;
             }, 0);
         };
 
         // --- History & Autosave ---
         const updateHistoryButtons = () => {
-            // Undo is disabled if there's only the initial state (or less) left.
             undoBtn.disabled = historyStack.length <= 1;
             redoBtn.disabled = redoStack.length === 0;
         };
@@ -375,18 +371,17 @@
         };
 
         const recordHistory = (isInitial = false) => {
-            // On the very first action, push the "before" state
             if (historyStack.length === 0 && !isInitial) {
                  historyStack.push(JSON.parse(JSON.stringify(state.subtitles)));
             }
             historyStack.push(JSON.parse(JSON.stringify(state.subtitles)));
-            redoStack = []; // Clear redo stack on new action
+            redoStack = []; 
             updateHistoryButtons();
             saveToLocalStorage();
         };
 
         const undo = () => {
-            if (historyStack.length < 2) return; // Guard clause: Need at least one state to revert to
+            if (historyStack.length < 2) return;
             redoStack.push(historyStack.pop());
             state.subtitles = JSON.parse(JSON.stringify(historyStack[historyStack.length - 1]));
             renderSubtitleList();
@@ -517,7 +512,7 @@
         processButton.addEventListener('click', () => {
             historyStack = [];
             redoStack = [];
-            recordHistory(true); // Save initial state
+            recordHistory(true);
             renderUI();
         });
         
@@ -550,7 +545,6 @@
                 const displayStartTime = secondsToTimeString(timeStringToSeconds(sub.start_time)),
                       displayEndTime = secondsToTimeString(timeStringToSeconds(sub.end_time));
                 
-                // Create element from string to manipulate it before appending
                 const tempDiv = document.createElement('div');
                 tempDiv.innerHTML = `
                     <div class="subtitle-item" data-id="${sub.id}">
@@ -568,14 +562,13 @@
                     </div>`;
                 const subItemElement = tempDiv.firstElementChild;
                 
-                // UPDATED: Set initial size for the textarea
                 autoResizeTextarea(subItemElement.querySelector('.text-input'));
 
                 subtitleList.appendChild(subItemElement);
                 subtitleList.insertAdjacentHTML('beforeend', createAddSubGapHTML(sub.id));
             });
             updateActiveSubtitle();
-            performSearch(); // Re-apply search highlights if any
+            performSearch();
         }
 
         const createAddSubGapHTML = (afterId) => `
@@ -603,7 +596,6 @@
                 const newActiveEl = subtitleList.querySelector(`[data-id="${currentSub?.id}"]`);
                 if(newActiveEl) { 
                     newActiveEl.classList.add('active');
-                    // UPDATED: Improved scrolling condition
                     if (!document.querySelector('.subtitle-item:hover, .add-sub-gap:hover, .subtitle-item.search-hit, .subtitle-item input:focus, .subtitle-item textarea:focus')) {
                        newActiveEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
                     }
@@ -692,7 +684,6 @@
 
              const subItem = target.closest('.subtitle-item');
              if(subItem && !target.closest('input, textarea, button')) {
-                // UPDATED: Scroll into view immediately on click
                 subItem.scrollIntoView({ behavior: 'smooth', block: 'center' });
                 mediaPlayer.currentTime = timeStringToSeconds(subItem.querySelector('.start-time').value);
                 if (mediaPlayer.paused) {
@@ -712,7 +703,7 @@
              if (target.classList.contains('end-time')) sub.end_time = target.value;
              if (target.classList.contains('text-input')) {
                 sub.text = target.value;
-                autoResizeTextarea(target); // UPDATED: Resize on input
+                autoResizeTextarea(target);
              }
 
              if (!mediaPlayer.paused) {
@@ -721,7 +712,7 @@
              }
              clearTimeout(typingTimeout);
              typingTimeout = setTimeout(() => {
-                recordHistory(); // Record change after user stops typing
+                recordHistory();
                 if(state.wasPlayingBeforeEdit) {
                     mediaPlayer.play();
                     state.wasPlayingBeforeEdit = false;
@@ -837,10 +828,11 @@
 
                 if (i > 0) {
                     const prevSub = sortedSubs[i - 1];
-                    const prevTextEndsSentence = /[.?!]$/.test(prevSub.text.trim());
+                    // UPDATED: Removed '.' from the regex to prevent line break on period.
+                    const prevTextEndsStrongSentence = /[?!]$/.test(prevSub.text.trim());
                     const gap = timeStringToSeconds(currentSub.start_time) - timeStringToSeconds(prevSub.end_time);
 
-                    if (gap > 2.0 || prevTextEndsSentence) {
+                    if (gap > 2.0 || prevTextEndsStrongSentence) {
                         fullText += '\n\n' + textToAdd;
                     } else {
                         fullText += ' ' + textToAdd;
