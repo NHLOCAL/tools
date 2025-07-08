@@ -83,7 +83,6 @@
         input[type=range]::-webkit-slider-runnable-track { width: 100%; height: 6px; background: var(--md-sys-color-surface-variant); border-radius: 3px; }
         input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; height: 16px; width: 16px; border-radius: 50%; background: var(--md-sys-color-primary); margin-top: -5px; }
 
-        /* --- Dynamic Volume Slider Fill --- */
         #volume-bar { --volume-progress: 100%; }
         #volume-bar::-webkit-slider-runnable-track {
             background: linear-gradient(to right, var(--md-sys-color-primary) 0%, var(--md-sys-color-primary) var(--volume-progress), var(--md-sys-color-surface-variant) var(--volume-progress), var(--md-sys-color-surface-variant) 100%);
@@ -97,7 +96,6 @@
         .tool-group input[type="text"], .tool-group input[type="number"] { flex-grow: 1; padding: 8px 12px; border: 1px solid var(--md-sys-color-outline); border-radius: var(--border-radius-small); font-family: 'Assistant', sans-serif; font-size: 1rem; }
         .tool-group .btn-small { padding: 8px 16px; font-size: 0.9rem; }
         #search-results-display { text-align: center; margin-top: 0.5rem; font-size: 0.9rem; color: var(--md-sys-color-secondary); min-height: 1.2em; direction: ltr; }
-
 
         .subtitle-item { position: relative; background-color: var(--md-sys-color-surface); border: 1px solid var(--md-sys-color-surface-variant); border-radius: var(--border-radius-small); padding: 1rem; margin-bottom: 2rem; cursor: pointer; transition: all 0.3s ease-in-out; display: grid; grid-template-columns: 1fr auto; gap: 0.75rem 1rem; align-items: start;}
         .subtitle-item:hover { border-color: var(--md-sys-color-primary); box-shadow: 0 2px 6px rgba(0,0,0,0.08); }
@@ -209,21 +207,18 @@
                         <div id="subtitle-tools-card">
                             <h3>כלים לעריכה גורפת</h3>
                              <div class="tool-group">
-                                <h4><span class="material-symbols-outlined">search</span> חיפוש בכתוביות</h4>
-                                <div class="input-row">
-                                    <input type="text" id="search-input" placeholder="הקלד לחיפוש...">
+                                <h4><span class="material-symbols-outlined">find_replace</span> חיפוש והחלפה</h4>
+                                <div class="input-row" style="margin-bottom: 0.5rem;">
+                                    <input type="text" id="search-input" placeholder="חיפוש...">
                                     <button id="search-prev-btn" class="btn btn-secondary btn-small" disabled title="התוצאה הקודמת"><span class="material-symbols-outlined">arrow_upward</span></button>
                                     <button id="search-next-btn" class="btn btn-secondary btn-small" disabled title="התוצאה הבאה"><span class="material-symbols-outlined">arrow_downward</span></button>
                                 </div>
                                 <div id="search-results-display"></div>
-                            </div>
-                            <div class="tool-group">
-                                <h4><span class="material-symbols-outlined">find_replace</span> חיפוש והחלפה</h4>
-                                <div class="input-row" style="margin-bottom: 0.5rem;">
-                                    <input type="text" id="find-input" placeholder="חפש טקסט...">
-                                    <input type="text" id="replace-input" placeholder="החלף ב...">
+                                <div class="input-row" style="margin-top: 1rem; gap: 0.5rem;">
+                                    <input type="text" id="replace-input" placeholder="החלפה ב...">
+                                    <button id="replace-one-btn" class="btn btn-secondary btn-small" disabled>החלף</button>
+                                    <button id="replace-all-btn" class="btn btn-secondary btn-small" disabled>החלף הכל</button>
                                 </div>
-                                <button id="replace-all-btn" class="btn btn-secondary btn-small" style="width: 100%;">החלף הכל</button>
                             </div>
                             <div class="tool-group">
                                 <h4><span class="material-symbols-outlined">schedule</span> הזזת תזמונים (Offset)</h4>
@@ -246,7 +241,6 @@
 
     <script>
     document.addEventListener('DOMContentLoaded', () => {
-        // --- Element selection ---
         const transcriptFileInput = document.getElementById('transcript-file-input'),
             transcriptDropZone = document.getElementById('transcript-drop-zone'),
             transcriptTextInput = document.getElementById('transcript-text-input'),
@@ -276,9 +270,9 @@
             decreaseSpeedBtn = document.getElementById('decrease-speed-btn'),
             increaseSpeedBtn = document.getElementById('increase-speed-btn'),
             playbackSpeedEl = document.getElementById('playback-speed'),
-            findInput = document.getElementById('find-input'),
             replaceInput = document.getElementById('replace-input'),
             replaceAllBtn = document.getElementById('replace-all-btn'),
+            replaceOneBtn = document.getElementById('replace-one-btn'),
             offsetInput = document.getElementById('offset-input'),
             applyOffsetBtn = document.getElementById('apply-offset-btn'),
             undoBtn = document.getElementById('undo-btn'),
@@ -288,20 +282,15 @@
             searchNextBtn = document.getElementById('search-next-btn'),
             searchResultsDisplay = document.getElementById('search-results-display');
 
-
-        // --- State management ---
         let state = { subtitles: [], mediaURL: null, mediaFile: null, activeSubtitleId: null, wasPlayingBeforeEdit: false };
         let typingTimeout = null, parseTimeout = null, searchTimeout = null;
         
-        // History for Undo/Redo
         let historyStack = [];
         let redoStack = [];
         
-        // Search state
         let searchResults = [];
         let currentSearchIndex = -1;
 
-        // --- Helper functions ---
         const showNotification = (message, type = 'info', duration = 3000) => {
             notification.textContent = message;
             notification.className = 'show';
@@ -352,7 +341,6 @@
             }, 0);
         };
 
-        // --- History & Autosave ---
         const updateHistoryButtons = () => {
             undoBtn.disabled = historyStack.length <= 1;
             redoBtn.disabled = redoStack.length === 0;
@@ -385,6 +373,7 @@
             redoStack.push(historyStack.pop());
             state.subtitles = JSON.parse(JSON.stringify(historyStack[historyStack.length - 1]));
             renderSubtitleList();
+            performSearch();
             updateHistoryButtons();
             saveToLocalStorage();
             showNotification('פעולה בוטלה');
@@ -396,6 +385,7 @@
             historyStack.push(nextState);
             state.subtitles = JSON.parse(JSON.stringify(nextState));
             renderSubtitleList();
+            performSearch();
             updateHistoryButtons();
             saveToLocalStorage();
             showNotification('פעולה שוחזרה');
@@ -424,7 +414,6 @@
             }
         };
 
-        // --- Parsing ---
         const parseSrt = (srtContent) => {
             const blocks = srtContent.trim().replace(/\r/g, '').split(/\n\n+/);
             return blocks.map((block, index) => {
@@ -434,7 +423,7 @@
                 if (timeLineIndex === -1) return null;
                 const [start_time, end_time] = lines[timeLineIndex].split('-->').map(s => s.trim().replace(',', '.'));
                 const text = lines.slice(timeLineIndex + 1).join('\n').trim();
-                if (!text) return null; // Ignore empty subtitles
+                if (!text) return null;
                 return { id: Date.now() + index, start_time, end_time, text };
             }).filter(Boolean);
         };
@@ -456,7 +445,6 @@
             return parsedData.map((item, index) => ({ ...item, id: item.id || Date.now() + index }));
         };
         
-        // --- File handling ---
         const handleTranscriptFile = (file) => {
             if (file) {
                 const reader = new FileReader();
@@ -508,7 +496,6 @@
         transcriptDropZone.addEventListener('drop', e => { transcriptDropZone.classList.remove('drag-over'); handleTranscriptFile(e.dataTransfer.files[0]); });
         mediaDropZone.addEventListener('drop', e => { mediaDropZone.classList.remove('drag-over'); handleMediaFile(e.dataTransfer.files[0]); });
 
-        // --- Core app logic ---
         processButton.addEventListener('click', () => {
             historyStack = [];
             redoStack = [];
@@ -533,6 +520,7 @@
                 audioPoster.classList.remove('visible');
             }
             renderSubtitleList();
+            performSearch();
         };
 
         const renderSubtitleList = () => {
@@ -568,7 +556,6 @@
                 subtitleList.insertAdjacentHTML('beforeend', createAddSubGapHTML(sub.id));
             });
             updateActiveSubtitle();
-            performSearch();
         }
 
         const createAddSubGapHTML = (afterId) => `
@@ -580,7 +567,6 @@
                 </div>
             </div>`;
         
-        // --- Media Player Controls ---
         const togglePlay = () => mediaPlayer.paused ? mediaPlayer.play() : mediaPlayer.pause();
         playPauseBtn.addEventListener('click', togglePlay);
         mediaPlayer.addEventListener('click', togglePlay);
@@ -596,7 +582,6 @@
                 const newActiveEl = subtitleList.querySelector(`[data-id="${currentSub?.id}"]`);
                 if(newActiveEl) { 
                     newActiveEl.classList.add('active');
-                    
                     const shouldBlockScroll = document.querySelector('.subtitle-item input:focus, .subtitle-item textarea:focus, .subtitle-item.search-hit:hover, .add-sub-gap:hover');
 
                     if (!shouldBlockScroll) {
@@ -638,7 +623,6 @@
         increaseSpeedBtn.addEventListener('click', () => updatePlaybackSpeed(0.25));
         decreaseSpeedBtn.addEventListener('click', () => updatePlaybackSpeed(-0.25));
 
-        // --- Event Delegation for Subtitle List ---
         subtitleListContainer.addEventListener('click', e => {
             const target = e.target;
             const deleteBtn = target.closest('.delete-sub-btn');
@@ -648,6 +632,7 @@
                 state.subtitles = state.subtitles.filter(s => s.id != subId);
                 recordHistory();
                 renderSubtitleList();
+                performSearch();
                 showNotification("הכתובית נמחקה.");
                 return;
             }
@@ -676,6 +661,7 @@
                 state.subtitles.splice(insertIndex, 0, newSub);
                 recordHistory();
                 renderSubtitleList();
+                performSearch();
                 const newSubEl = subtitleList.querySelector(`[data-id="${newSub.id}"]`);
                 if (newSubEl) {
                     newSubEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
@@ -687,7 +673,6 @@
 
              const subItem = target.closest('.subtitle-item');
              if(subItem && !target.closest('input, textarea, button')) {
-                // The explicit scroll on click gives immediate feedback to the user.
                 subItem.scrollIntoView({ behavior: 'smooth', block: 'center' });
                 mediaPlayer.currentTime = timeStringToSeconds(subItem.querySelector('.start-time').value);
                 if (mediaPlayer.paused) {
@@ -724,7 +709,6 @@
              }, 1500);
         });
 
-        // --- Search Logic ---
         const clearSearch = () => {
             document.querySelectorAll('.subtitle-item.search-hit').forEach(el => el.classList.remove('search-hit'));
             searchResults = [];
@@ -732,26 +716,34 @@
             searchResultsDisplay.textContent = '';
             searchPrevBtn.disabled = true;
             searchNextBtn.disabled = true;
+            replaceOneBtn.disabled = true;
+            replaceAllBtn.disabled = searchInput.value.trim() === '';
         };
 
         const performSearch = () => {
-            const query = searchInput.value.trim();
+            const query = searchInput.value.trim().toLowerCase();
             document.querySelectorAll('.subtitle-item.search-hit').forEach(el => el.classList.remove('search-hit'));
+            
+            replaceAllBtn.disabled = !query;
+
             if (!query) {
                 clearSearch();
                 return;
             }
-            searchResults = state.subtitles.filter(sub => sub.text.toLowerCase().includes(query.toLowerCase())).map(sub => sub.id);
-            if (searchResults.length > 0) {
+            searchResults = state.subtitles.filter(sub => sub.text.toLowerCase().includes(query)).map(sub => sub.id);
+            
+            const hasResults = searchResults.length > 0;
+            searchPrevBtn.disabled = searchResults.length < 2;
+            searchNextBtn.disabled = searchResults.length < 2;
+            replaceOneBtn.disabled = !hasResults;
+
+            if (hasResults) {
                 currentSearchIndex = 0;
                 navigateToSearchResult(currentSearchIndex);
-                searchResultsDisplay.textContent = `1 / ${searchResults.length}`;
             } else {
                 currentSearchIndex = -1;
                 searchResultsDisplay.textContent = 'לא נמצאו תוצאות';
             }
-            searchPrevBtn.disabled = searchResults.length < 2;
-            searchNextBtn.disabled = searchResults.length < 2;
         };
         
         const navigateToSearchResult = (index) => {
@@ -776,23 +768,49 @@
         searchNextBtn.addEventListener('click', () => navigateToSearchResult(currentSearchIndex + 1));
         searchPrevBtn.addEventListener('click', () => navigateToSearchResult(currentSearchIndex - 1));
 
-        // --- Bulk Edit Tools ---
+        replaceOneBtn.addEventListener('click', () => {
+            const findText = searchInput.value;
+            const replaceText = replaceInput.value;
+            if (!findText || currentSearchIndex < 0 || searchResults.length === 0) return;
+
+            const subId = searchResults[currentSearchIndex];
+            const sub = state.subtitles.find(s => s.id == subId);
+            const subItemEl = subtitleList.querySelector(`[data-id="${subId}"]`);
+            if (!sub || !subItemEl) return;
+
+            sub.text = sub.text.replace(new RegExp(findText.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&'), 'i'), replaceText);
+            recordHistory();
+
+            const textarea = subItemEl.querySelector('.text-input');
+            textarea.value = sub.text;
+            autoResizeTextarea(textarea);
+            subItemEl.classList.remove('search-hit');
+
+            performSearch();
+        });
+
         replaceAllBtn.addEventListener('click', () => {
-            const findText = findInput.value;
+            const findText = searchInput.value;
             const replaceText = replaceInput.value;
             if (!findText) return showNotification('יש להזין טקסט לחיפוש.', 'error');
+            
+            const findRegex = new RegExp(findText.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&'), 'gi');
             let replacementsCount = 0;
+            
             state.subtitles.forEach(sub => {
-                const originalText = sub.text;
-                const newText = sub.text.replaceAll(findText, replaceText);
-                if (newText !== originalText) {
-                    sub.text = newText;
-                    replacementsCount++;
+                if (sub.text.toLowerCase().includes(findText.toLowerCase())) {
+                    const newText = sub.text.replace(findRegex, replaceText);
+                    if (newText !== sub.text) {
+                        sub.text = newText;
+                        replacementsCount++;
+                    }
                 }
             });
+
             if (replacementsCount > 0) {
                 recordHistory();
                 renderSubtitleList();
+                performSearch();
                 showNotification(`הוחלפו ${replacementsCount} מופעים.`);
             } else {
                 showNotification('הטקסט לחיפוש לא נמצא.', 'info');
@@ -811,7 +829,6 @@
             showNotification(`התזמונים הוזזו ב-${offset} שניות.`);
         });
         
-        // --- File Generation ---
         const generateSrtContent = () => {
             const sortedSubs = [...state.subtitles].sort((a,b) => timeStringToSeconds(a.start_time) - timeStringToSeconds(b.start_time));
             return sortedSubs.map((sub, index) => {
@@ -832,7 +849,6 @@
 
                 if (i > 0) {
                     const prevSub = sortedSubs[i - 1];
-                    // UPDATED: Removed '.' from the regex to prevent line break on period.
                     const prevTextEndsStrongSentence = /[?!]$/.test(prevSub.text.trim());
                     const gap = timeStringToSeconds(currentSub.start_time) - timeStringToSeconds(prevSub.end_time);
 
@@ -877,7 +893,6 @@
             showNotification('קובץ טקסט נוצר והורד בהצלחה!');
         });
         
-        // --- Initial Load ---
         loadFromLocalStorage();
     });
     </script>
