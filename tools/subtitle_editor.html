@@ -741,7 +741,6 @@
             if (searchResults.length > 0) {
                 currentSearchIndex = 0;
                 navigateToSearchResult(currentSearchIndex);
-                searchResultsDisplay.textContent = `1 / ${searchResults.length}`;
             } else {
                 currentSearchIndex = -1;
                 searchResultsDisplay.textContent = 'לא נמצאו תוצאות';
@@ -757,11 +756,14 @@
             document.querySelectorAll('.subtitle-item.search-hit').forEach(el => el.classList.remove('search-hit'));
             const targetId = searchResults[currentSearchIndex];
             const targetElement = subtitleList.querySelector(`[data-id="${targetId}"]`);
+            const targetSub = state.subtitles.find(sub => sub.id == targetId);
 
-            if (targetElement) {
+            if (targetElement && targetSub) {
                 targetElement.classList.add('search-hit');
                 targetElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
                 searchResultsDisplay.textContent = `${currentSearchIndex + 1} / ${searchResults.length}`;
+                // Jump the media player to the start of the found subtitle
+                mediaPlayer.currentTime = timeStringToSeconds(targetSub.start_time);
             }
         };
 
