@@ -52,7 +52,8 @@
         .input-group label { display: block; margin-bottom: 0.5rem; font-weight: 600; color: var(--md-sys-color-outline); }
         .input-field { width: 100%; padding: 12px 16px; border: 1px solid var(--md-sys-color-outline); border-radius: var(--border-radius-small); font-family: 'Assistant', sans-serif; font-size: 1rem; background-color: var(--md-sys-color-surface); }
         .input-field:focus { outline: 2px solid var(--md-sys-color-primary); }
-        textarea.input-field { min-height: 250px; resize: vertical; }
+        textarea.input-field { resize: vertical; overflow-y: hidden; }
+        #scriptArea { min-height: 250px; overflow-y: auto; }
         .button-group { text-align: center; margin-top: 2rem; display: flex; justify-content: center; gap: 1rem; flex-wrap: wrap; }
         .status { font-size: 1rem; color: var(--md-sys-color-secondary); text-align: center; margin-top: 1.5rem; min-height: 1.6em; }
         audio { width: 100%; margin: 1.5rem 0; }
@@ -77,7 +78,7 @@
             
             <div class="input-group">
                 <label for="topicInput">נושא הפודקאסט</label>
-                <input id="topicInput" type="text" class="input-field" placeholder="למשל: 'האם בינה מלאכותית יכולה להיות יצירתית?'" />
+                <textarea id="topicInput" class="input-field" placeholder="הזינו נושא, נקודות מרכזיות, וסגנון (למשל: בינה מלאכותית ויצירתיות, בסגנון הומוריסטי)" rows="1"></textarea>
             </div>
 
             <div class="input-group">
@@ -92,6 +93,20 @@
                     <option value="two_males">שני גברים</option>
                     <option value="two_females">שתי נשים</option>
                 </select>
+            </div>
+            
+            <div class="input-group">
+                <label for="modelSelection">בחר מודל ליצירת התסריט</label>
+                <select id="modelSelection" class="input-field">
+                    <option value="gemini-2.5-flash" selected>Gemini 2.5 Flash (מהיר וחסכוני)</option>
+                    <option value="gemini-2.5-pro">Gemini 2.5 Pro (מתקדם)</option>
+                    <option value="custom">אחר (הזנה ידנית)</option>
+                </select>
+            </div>
+
+            <div class="input-group" id="customModelGroup" style="display: none;">
+                <label for="customModelInput">שם המודל המותאם אישית</label>
+                <input id="customModelInput" type="text" class="input-field" placeholder="לדוגמה: gemini-1.5-pro-latest" />
             </div>
             
             <div class="button-group">
@@ -143,6 +158,9 @@
         const topicInput = document.getElementById('topicInput');
         const durationInput = document.getElementById('durationInput');
         const speakersConfig = document.getElementById('speakersConfig');
+        const modelSelection = document.getElementById('modelSelection');
+        const customModelGroup = document.getElementById('customModelGroup');
+        const customModelInput = document.getElementById('customModelInput');
         const genScriptBtn = document.getElementById('genScriptBtn');
         const copyScriptBtn = document.getElementById('copyScriptBtn');
         const downloadScriptBtn = document.getElementById('downloadScriptBtn');
@@ -183,7 +201,20 @@
                 localStorage.removeItem('GEMINI_API_KEY');
             }
         });
+
+        topicInput.addEventListener('input', () => {
+            topicInput.style.height = 'auto';
+            topicInput.style.height = (topicInput.scrollHeight) + 'px';
+        });
         
+        modelSelection.addEventListener('change', () => {
+            if (modelSelection.value === 'custom') {
+                customModelGroup.style.display = 'block';
+            } else {
+                customModelGroup.style.display = 'none';
+            }
+        });
+
         // --- API & Core Logic (No changes to API calls structure) ---
         DataView.prototype.setString = function(offset, str) {
             for (let i = 0; i < str.length; i++) {
@@ -292,9 +323,22 @@ Their interaction is the heart of the podcast. They complement and challenge eac
                 genScriptBtn.disabled = false;
                 return;
             }
+
+            let model;
+            const selectedModel = modelSelection.value;
+            if (selectedModel === 'custom') {
+                model = customModelInput.value.trim();
+                if (!model) {
+                    alert('יש להזין שם מודל מותאם אישית.');
+                    updateStatus('');
+                    genScriptBtn.disabled = false;
+                    return;
+                }
+            } else {
+                model = selectedModel;
+            }
           
             const systemPrompt = buildSystemPrompt(duration, speakersConfigValue);
-            const model = 'gemini-2.5-flash';
             const url = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent`;
             const body = {
                 systemInstruction: { parts: [{ text: systemPrompt }] },
