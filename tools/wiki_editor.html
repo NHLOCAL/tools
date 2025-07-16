@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>עורך ויקי</title>
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E📝%3C/text%3E%3C/svg%3E">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Assistant:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
+
+    <style>
+        :root {
+            --md-sys-color-primary: #006D3A; /* Green for Wiki */
+            --md-sys-color-on-primary: #FFFFFF;
+            --md-sys-color-primary-container: #9AF6B4;
+            --md-sys-color-on-primary-container: #00210D;
+            --md-sys-color-secondary: #4F6353;
+            --md-sys-color-on-secondary: #FFFFFF;
+            --md-sys-color-secondary-container: #D2E8D4;
+            --md-sys-color-on-secondary-container: #0D1F13;
+            --md-sys-color-error: #BA1A1A;
+            --md-sys-color-background: #FBFDF7;
+            --md-sys-color-surface: #FBFDF7;
+            --md-sys-color-surface-variant: #DDE5DA;
+            --md-sys-color-outline: #717971;
+            --md-sys-color-surface-container-low: #F5F7F1;
+            --border-radius: 16px;
+            --border-radius-small: 8px;
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        html { scroll-behavior: smooth; }
+        body {
+            font-family: 'Assistant', sans-serif;
+            background-color: var(--md-sys-color-background);
+            color: var(--md-sys-color-on-background);
+            line-height: 1.6;
+        }
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 2rem 1.5rem;
+        }
+        .card {
+            background-color: var(--md-sys-color-surface-container-low);
+            border-radius: var(--border-radius);
+            padding: 2rem;
+            border: 1px solid var(--md-sys-color-surface-variant);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+            margin-bottom: 2rem;
+        }
+        header {
+            padding-bottom: 1.5rem;
+            text-align: center;
+        }
+        h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--md-sys-color-primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 1rem;
+        }
+        .material-symbols-outlined {
+            font-size: inherit;
+            vertical-align: middle;
+        }
+        .button-group {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+            margin-bottom: 1.5rem;
+        }
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            padding: 12px 28px;
+            font-family: 'Assistant', sans-serif;
+            font-size: 1.1rem;
+            font-weight: 600;
+            border-radius: 99px;
+            border: none;
+            cursor: pointer;
+            transition: all 0.2s ease-in-out;
+            text-decoration: none;
+        }
+        .btn-primary {
+            background-color: var(--md-sys-color-primary);
+            color: var(--md-sys-color-on-primary);
+        }
+        .btn-primary:hover {
+            background-color: #00522A;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+        }
+        .btn-secondary {
+            background-color: var(--md-sys-color-secondary-container);
+            color: var(--md-sys-color-on-secondary-container);
+        }
+        .btn-secondary:hover {
+            background-color: #BCCDC2;
+        }
+        .editor-area, .preview-area {
+            width: 100%;
+            min-height: 60vh;
+            padding: 1.5rem;
+            border: 1px solid var(--md-sys-color-outline);
+            border-radius: var(--border-radius-small);
+            font-family: 'Assistant', sans-serif;
+            font-size: 1.1rem;
+            line-height: 1.7;
+            background-color: var(--md-sys-color-surface);
+            resize: vertical;
+        }
+        .editor-area:focus {
+            outline: 2px solid var(--md-sys-color-primary);
+        }
+        .preview-area {
+            /* This is the visual editor */
+        }
+        .editor-area {
+            /* This is the source editor */
+            display: none; /* Hidden by default */
+        }
+        .preview-area h1, .preview-area h2, .preview-area h3, .preview-area h4, .preview-area h5, .preview-area h6 {
+            color: var(--md-sys-color-primary);
+            margin-top: 1.5em;
+            margin-bottom: 0.75em;
+            border-bottom: 1px solid var(--md-sys-color-primary-container);
+            padding-bottom: 0.25em;
+        }
+        .preview-area h1 { font-size: 2em; }
+        .preview-area h2 { font-size: 1.75em; }
+        .preview-area h3 { font-size: 1.5em; }
+        .preview-area p { margin-bottom: 1em; }
+        .preview-area a { color: var(--md-sys-color-primary); text-decoration: none; }
+        .preview-area a:hover { text-decoration: underline; }
+        .preview-area ul, .preview-area ol { padding-right: 2rem; margin-bottom: 1em; }
+        .preview-area li { margin-bottom: 0.5em; }
+        .preview-area blockquote {
+            border-right: 4px solid var(--md-sys-color-primary-container);
+            padding-right: 1rem;
+            margin: 1em 0;
+            color: var(--md-sys-color-on-surface-variant);
+            font-style: italic;
+        }
+        .preview-area hr {
+            border: none;
+            border-top: 2px solid var(--md-sys-color-primary-container);
+            margin: 2em 0;
+        }
+        .preview-area code {
+            font-family: monospace;
+            background-color: var(--md-sys-color-surface-variant);
+            padding: 0.2em 0.4em;
+            border-radius: var(--border-radius-small);
+        }
+        .preview-area pre {
+            background-color: var(--md-sys-color-surface-variant);
+            padding: 1rem;
+            border-radius: var(--border-radius-small);
+            overflow-x: auto;
+            direction: ltr;
+            text-align: left;
+        }
+        .preview-area pre code {
+            background-color: transparent;
+            padding: 0;
+        }
+        .tab-group {
+            border-bottom: 1px solid var(--md-sys-color-outline);
+            margin-bottom: -1px; /* Overlap with card padding */
+            padding: 0 1rem;
+        }
+        .tab-btn {
+            padding: 0.75rem 1.5rem;
+            border: none;
+            background: none;
+            cursor: pointer;
+            font-family: 'Assistant', sans-serif;
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--md-sys-color-outline);
+            border-bottom: 3px solid transparent;
+            margin-bottom: -2px;
+        }
+        .tab-btn.active {
+            color: var(--md-sys-color-primary);
+            border-bottom-color: var(--md-sys-color-primary);
+        }
+        .toolbar {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            padding: 0.75rem;
+            background-color: var(--md-sys-color-surface-variant);
+            border-radius: var(--border-radius-small);
+            margin-bottom: 1rem;
+        }
+        .toolbar-btn {
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 0.75rem; /* Increased padding */
+            border-radius: 99px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--md-sys-color-on-secondary-container);
+            transition: background-color 0.2s ease-in-out;
+        }
+        .toolbar-btn .material-symbols-outlined {
+            font-size: 1.5rem; /* Increased icon size */
+        }
+        .toolbar-btn:hover {
+            background-color: var(--md-sys-color-secondary-container);
+        }
+        #file-input { display: none; }
+        #notification {
+            position: fixed; bottom: -100px; left: 50%; transform: translateX(-50%);
+            background-color: var(--md-sys-color-on-background); color: var(--md-sys-color-background);
+            padding: 12px 24px; border-radius: 99px; box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+            opacity: 0; visibility: hidden; transition: all 0.4s ease-in-out; z-index: 1000;
+        }
+        #notification.show { opacity: 1; visibility: visible; bottom: 40px; }
+    </style>
+</head>
+<body>
+<div class="container">
+    <header>
+        <h1><span class="material-symbols-outlined" style="font-size: 2.8rem;">edit_document</span> עורך ויקי</h1>
+    </header>
+
+    <main class="card">
+        <div class="button-group">
+            <button id="import-btn" class="btn btn-secondary"><span class="material-symbols-outlined">file_upload</span> ייבוא</button>
+            <button id="export-btn" class="btn btn-secondary"><span class="material-symbols-outlined">file_download</span> ייצוא</button>
+            <button id="copy-btn" class="btn btn-primary"><span class="material-symbols-outlined">content_copy</span> העתק קוד מקור</button>
+        </div>
+        <input type="file" id="file-input" accept=".txt, .md, .wiki, text/plain">
+        
+        <div class="tab-group">
+            <button id="visual-tab-btn" class="tab-btn active">עורך ויזואלי</button>
+            <button id="source-tab-btn" class="tab-btn">קוד מקור</button>
+        </div>
+        
+        <div id="toolbar" class="toolbar">
+            <button class="toolbar-btn" data-command="formatBlock" data-value="h2" title="כותרת 2"><span class="material-symbols-outlined">format_h2</span></button>
+            <button class="toolbar-btn" data-command="formatBlock" data-value="h3" title="כותרת 3"><span class="material-symbols-outlined">format_h3</span></button>
+            <button class="toolbar-btn" data-command="bold" title="הדגשה"><span class="material-symbols-outlined">format_bold</span></button>
+            <button class="toolbar-btn" data-command="italic" title="הטיה"><span class="material-symbols-outlined">format_italic</span></button>
+            <button class="toolbar-btn" data-command="createLink" title="קישור"><span class="material-symbols-outlined">link</span></button>
+            <button class="toolbar-btn" data-command="insertUnorderedList" title="רשימה"><span class="material-symbols-outlined">format_list_bulleted</span></button>
+            <button class="toolbar-btn" data-command="insertOrderedList" title="רשימה ממוספרת"><span class="material-symbols-outlined">format_list_numbered</span></button>
+            <button class="toolbar-btn" data-command="formatBlock" data-value="blockquote" title="ציטוט"><span class="material-symbols-outlined">format_quote</span></button>
+            <button class="toolbar-btn" data-command="insertHorizontalRule" title="קו אופקי"><span class="material-symbols-outlined">horizontal_rule</span></button>
+        </div>
+
+        <div id="wiki-visual-editor" class="preview-area" contenteditable="true"></div>
+        <textarea id="wiki-source-editor" class="editor-area" placeholder="התחל לכתוב כאן..." style="display: none;"></textarea>
+
+    </main>
+</div>
+
+<div id="notification"></div>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    const visualEditor = document.getElementById('wiki-visual-editor');
+    const sourceEditor = document.getElementById('wiki-source-editor');
+    const visualTabBtn = document.getElementById('visual-tab-btn');
+    const sourceTabBtn = document.getElementById('source-tab-btn');
+    const toolbar = document.getElementById('toolbar');
+    const importBtn = document.getElementById('import-btn');
+    const fileInput = document.getElementById('file-input');
+    const exportBtn = document.getElementById('export-btn');
+    const copyBtn = document.getElementById('copy-btn');
+    const notification = document.getElementById('notification');
+
+    let isSyncing = false;
+
+    // --- Converters ---
+    function wikiToHtml(wikiText) {
+        let html = `
+${wikiText}
+`;
+        html = html.replace(/\n/g, '\n\n');
+        html = html.replace(/^===(.+)===$/gm, '<h3>$1</h3>');
+        html = html.replace(/^==(.+)==$/gm, '<h2>$1</h2>');
+        html = html.replace(/'''(.+?)'''/g, '<strong>$1</strong>');
+        html = html.replace(/''(.+?)''/g, '<em>$1</em>');
+        html = html.replace(/\[\[(https?:\/\/[^\|\]]+)\|(.+?)\]\]/g, '<a href="$1" target="_blank">$2</a>');
+        html = html.replace(/\[\[(.+?)\]\]/g, '<a href="$1" target="_blank">$1</a>');
+        html = html.replace(/^\* (.+)/gm, '<ul><li>$1</li></ul>').replace(/<\/ul>\n<ul>/g, '');
+        html = html.replace(/^# (.+)/gm, '<ol><li>$1</li></ol>').replace(/<\/ol>\n<ol>/g, '');
+        html = html.replace(/^> (.+)/gm, '<blockquote>$1</blockquote>');
+        html = html.replace(/^----$/gm, '<hr>');
+        html = html.split('\n\n').map(p => p.trim() ? `<p>${p.trim()}</p>` : '').join('');
+        html = html.replace(/<p><ul>/g, '<ul>').replace(/<\/ul><\/p>/g, '<\/ul>');
+        html = html.replace(/<p><ol>/g, '<ol>').replace(/<\/ol><\/p>/g, '<\/ol>');
+        html = html.replace(/<p><blockquote>/g, '<blockquote>').replace(/<\/blockquote><\/p>/g, '<\/blockquote>');
+        html = html.replace(/<p><hr><\/p>/g, '<hr>');
+        return html.trim();
+    }
+
+    function htmlToWiki(html) {
+        let text = html.replace(/<br\s*\/?>/gi, '\n');
+        text = text.replace(/<\/p>/gi, '\n\n');
+        text = text.replace(/<h2.*?>(.*?)<\/h2>/gi, '== $1 ==\n\n');
+        text = text.replace(/<h3.*?>(.*?)<\/h3>/gi, '=== $1 ===\n\n');
+        text = text.replace(/<strong.*?>(.*?)<\/strong>/gi, "'''$1'''");
+        text = text.replace(/<em.*?>(.*?)<\/em>/gi, "''$1''");
+        text = text.replace(/<a href="(.*?)".*?>(.*?)<\/a>/gi, '[[$1|$2]]');
+        text = text.replace(/<li.*?>(.*?)<\/li>/gi, '* $1\n');
+        text = text.replace(/<hr.*?>/gi, '----\n\n');
+        text = text.replace(/<blockquote.*?>(.*?)<\/blockquote>/gi, '> $1\n\n');
+        text = text.replace(/<[^>]+>/g, ''); // Strip remaining tags
+        text = text.replace(/&nbsp;/g, ' ').replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&amp;/g, '&');
+        return text.replace(/\n{3,}/g, '\n\n').trim();
+    }
+
+    // --- Syncing Logic ---
+    function updateVisualFromSource() {
+        if (isSyncing) return;
+        isSyncing = true;
+        visualEditor.innerHTML = wikiToHtml(sourceEditor.value);
+        localStorage.setItem('wikiContent', sourceEditor.value);
+        isSyncing = false;
+    }
+
+    function updateSourceFromVisual() {
+        if (isSyncing) return;
+        isSyncing = true;
+        const wikiText = htmlToWiki(visualEditor.innerHTML);
+        sourceEditor.value = wikiText;
+        localStorage.setItem('wikiContent', wikiText);
+        isSyncing = false;
+    }
+
+    // --- Initial Load ---
+    const savedContent = localStorage.getItem('wikiContent') || '== ברוכים הבאים ==\n\nזהו עורך ויקי חדש. ניתן לערוך במצב ויזואלי או במצב קוד מקור.\n\n* התחל לכתוב!\n* השתמש בסרגל הכלים לעיצוב.\n* העבודה נשמרת אוטומטית.';
+    sourceEditor.value = savedContent;
+    updateVisualFromSource();
+
+    // Set initial view to be the visual editor
+    visualEditor.style.display = 'block';
+    sourceEditor.style.display = 'none';
+
+
+    // --- Event Listeners ---
+    sourceEditor.addEventListener('input', updateVisualFromSource);
+    visualEditor.addEventListener('input', updateSourceFromVisual);
+
+    // --- Tab Switching ---
+    visualTabBtn.addEventListener('click', () => {
+        // Update visual editor from source in case source was edited
+        updateVisualFromSource();
+        sourceEditor.style.display = 'none';
+        visualEditor.style.display = 'block';
+        toolbar.style.display = 'flex';
+        visualTabBtn.classList.add('active');
+        sourceTabBtn.classList.remove('active');
+    });
+
+    sourceTabBtn.addEventListener('click', () => {
+        // DO NOT sync from visual to source when switching, to prevent data loss.
+        // The source is the single source of truth.
+        visualEditor.style.display = 'none';
+        toolbar.style.display = 'none';
+        sourceEditor.style.display = 'block';
+        sourceTabBtn.classList.add('active');
+        visualTabBtn.classList.remove('active');
+    });
+
+    // --- Toolbar ---
+    toolbar.addEventListener('click', (e) => {
+        const button = e.target.closest('.toolbar-btn');
+        if (!button) return;
+
+        const command = button.dataset.command;
+        const value = button.dataset.value || null;
+
+        if (command === 'createLink') {
+            const url = prompt('הזן את כתובת הקישור:', 'https://');
+            if (url) {
+                document.execCommand(command, false, url);
+            }
+        } else {
+            document.execCommand(command, false, value);
+        }
+        visualEditor.focus();
+        // Trigger sync after command
+        updateSourceFromVisual();
+    });
+
+    // --- Import/Export/Copy ---
+    importBtn.addEventListener('click', () => fileInput.click());
+    fileInput.addEventListener('change', (event) => {
+        const file = event.target.files[0];
+        if (!file) return;
+        const reader = new FileReader();
+        reader.onload = (e) => {
+            sourceEditor.value = e.target.result;
+            updateVisualFromSource();
+            showNotification('הקובץ יובא בהצלחה!');
+        };
+        reader.onerror = () => showNotification('שגיאה בקריאת הקובץ.');
+        reader.readAsText(file);
+        fileInput.value = '';
+    });
+
+    exportBtn.addEventListener('click', () => {
+        const content = sourceEditor.value;
+        if (!content) return showNotification('אין תוכן לייצא.');
+        const blob = new Blob([content], { type: 'text/plain;charset=utf-8' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'wiki_content.txt';
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+        showNotification('הקובץ יוצא בהצלחה!');
+    });
+
+    copyBtn.addEventListener('click', () => {
+        const content = sourceEditor.value;
+        if (!content) return showNotification('אין תוכן להעתקה.');
+        navigator.clipboard.writeText(content).then(() => {
+            const originalText = copyBtn.innerHTML;
+            copyBtn.innerHTML = `<span class="material-symbols-outlined">done</span> הועתק!`;
+            setTimeout(() => { copyBtn.innerHTML = originalText; }, 2000);
+        }).catch(err => {
+            console.error('Failed to copy text: ', err);
+            showNotification('ההעתקה נכשלה.');
+        });
+    });
+
+    function showNotification(message) {
+        notification.textContent = message;
+        notification.classList.add('show');
+        setTimeout(() => { notification.classList.remove('show'); }, 3000);
+    }
+});
+</script>
+    <footer style="text-align: center; padding: 2rem 1rem 1.5rem; margin-top: 2rem; border-top: 1px solid var(--md-sys-color-surface-variant); color: var(--md-sys-color-outline); font-size: 0.9rem;">
+        <p style="margin-bottom: 0.5rem; display: flex; align-items: center; justify-content: center; gap: 0.5rem;">
+            <a href="https://github.com/NHLOCAL/" target="_blank" aria-label="GitHub Profile" style="color: var(--md-sys-color-on-secondary-container); text-decoration: none; line-height: 1; display: inline-flex; align-items: center;">
+                <svg xmlns="http://www.w3.org/2000/svg" width="1.2em" height="1.2em" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.835 2.809 1.305 3.493.998.108-.776.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+                </svg>
+            </a>
+            <span>
+                נוצר על ידי
+                <a href="https://nhlocal.github.io" target="_blank" style="color: var(--md-sys-color-primary); text-decoration: none; font-weight: 600;">NH Local</a>
+            </span>
+        </p>
+        <p>
+            <a href="https://tools.ze-kal.top" target="_blank" style="color: var(--md-sys-color-primary); text-decoration: none; font-weight: 600;">כלים נוספים</a>
+        </p>
+    </footer>
+</body>
+</html>
