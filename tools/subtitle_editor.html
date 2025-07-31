@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>עורך כתוביות חכם</title>
-    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%236750A4'%3E%3Cpath d='M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2zM4 12h4v2H4v-2zm10 6H4v-2h10v2zm6 0h-4v-2h4v2zm0-4H10v-2h10v2z'/%3E%3C/svg%3E">
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%236750A4'%3E%3Cpath d='M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zM4 12h4v2H4v-2zm10 6H4v-2h10v2zm6 0h-4v-2h4v2zm0-4H10v-2h10v2z'/%3E%3C/svg%3E">
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -385,7 +385,19 @@
             setTimeout(() => { el.style.height = 'auto'; el.style.height = `${el.scrollHeight}px`; }, 0);
         };
 
-        // --- History (Undo/Redo) ---
+        // --- Local Storage & History (Undo/Redo) ---
+        const saveToLocalStorage = () => {
+            if (state.subtitles && state.subtitles.length > 0) {
+                const dataToSave = {
+                    subtitles: state.subtitles,
+                    mediaFileName: state.mediaFile?.name || 'קובץ לא ידוע'
+                };
+                localStorage.setItem('subtitleEditorAutosave', JSON.stringify(dataToSave));
+            } else {
+                localStorage.removeItem('subtitleEditorAutosave');
+            }
+        };
+
         const updateHistoryButtons = () => {
             undoBtn.disabled = historyStack.length <= 1;
             redoBtn.disabled = redoStack.length === 0;
@@ -398,6 +410,7 @@
             historyStack.push(JSON.parse(JSON.stringify(state.subtitles)));
             redoStack = []; 
             updateHistoryButtons();
+            saveToLocalStorage();
         };
 
         const updateAndRefreshUI = (notificationMsg) => {
@@ -414,6 +427,7 @@
             renderCurrentView();
             performSearch();
             updateHistoryButtons();
+            saveToLocalStorage();
             showNotification('פעולה בוטלה');
         };
 
@@ -425,9 +439,29 @@
             renderCurrentView();
             performSearch();
             updateHistoryButtons();
+            saveToLocalStorage();
             showNotification('פעולה שוחזרה');
         };
         
+        const loadFromLocalStorage = () => {
+            const savedData = localStorage.getItem('subtitleEditorAutosave');
+            if (savedData) {
+                try {
+                    const parsedData = JSON.parse(savedData);
+                    if (parsedData.subtitles && parsedData.subtitles.length > 0) {
+                        state.subtitles = parsedData.subtitles;
+                        transcriptTextInput.value = JSON.stringify(parsedData.subtitles, null, 2);
+                        transcriptFileName.textContent = `שוחזר סשן עבור: ${parsedData.mediaFileName || 'קובץ לא ידוע'}`;
+                        showNotification('סשן קודם שוחזר. יש לבחור מחדש את קובץ המדיה.');
+                        checkInputs();
+                    }
+                } catch (e) {
+                    console.error("Failed to load from local storage", e);
+                    localStorage.removeItem('subtitleEditorAutosave');
+                }
+            }
+        };
+
         // --- Parsing and File Handling ---
         const parseSrt = (srtContent) => {
             const blocks = srtContent.trim().replace(/\r/g, '').split(/\n\n+/);
@@ -470,7 +504,7 @@
                         state.subtitles = parsed;
                         transcriptFileName.textContent = `קובץ: ${file.name}`;
                         transcriptTextInput.value = content;
-                        processButton.disabled = !(state.subtitles.length > 0 && state.mediaURL);
+                        checkInputs();
                     }
                 };
                 reader.onerror = () => showNotification('שגיאה בקריאת הקובץ.', 'error');
@@ -484,7 +518,7 @@
                 state.mediaFile = file;
                 state.mediaURL = URL.createObjectURL(file);
                 mediaFileName.textContent = `קובץ: ${file.name}`;
-                processButton.disabled = !(state.subtitles.length > 0 && state.mediaURL);
+                checkInputs();
             } else { showNotification('יש לבחור קובץ שמע או וידאו.', 'error'); }
         };
 
@@ -556,7 +590,7 @@
 
                 if (i > 0) {
                     const prevSub = sortedSubs[i - 1];
-                    const prevText = (prevSub.text || '').trim(); // FIX: Defensive check
+                    const prevText = (prevSub.text || '').trim();
                     const prevTextEndsWithPeriod = /\.$/.test(prevText);
                     const prevTextEndsWithComma = /,$/.test(prevText);
                     const prevTextEndsStrongSentence = /[?!]$/.test(prevText);
@@ -924,7 +958,7 @@
                 const currentSub = sortedSubs[i], textToAdd = (currentSub.text || '').trim();
                 if (i > 0) {
                     const prevSub = sortedSubs[i - 1];
-                    const prevText = (prevSub.text || '').trim(); // FIX: Defensive check
+                    const prevText = (prevSub.text || '').trim();
                     const prevTextEndsWithPeriod = /\.$/.test(prevText);
                     const prevTextEndsWithComma = /,$/.test(prevText);
                     const prevTextEndsStrongSentence = /[?!]$/.test(prevText);
@@ -952,6 +986,9 @@
 
         downloadSrtButton.addEventListener('click', () => downloadFile(generateSrtContent(), `${baseFilename()}.srt`, 'text/plain'));
         downloadTxtButton.addEventListener('click', () => downloadFile(generatePlainTextContent(), `${baseFilename()}.txt`, 'text/plain'));
+    
+        // Initialize by loading any saved session
+        loadFromLocalStorage();
     });
     </script>
     <footer style="text-align: center; padding: 2rem 1rem 1.5rem; margin-top: 2rem; border-top: 1px solid var(--md-sys-color-surface-variant); color: var(--md-sys-color-outline); font-size: 0.9rem;">
