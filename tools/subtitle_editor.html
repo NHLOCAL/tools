@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>עורך כתוביות חכם</title>
-    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%236750A4'%3E%3Cpath d='M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zM4 12h4v2H4v-2zm10 6H4v-2h10v2zm6 0h-4v-2h4v2zm0-4H10v-2h10v2z'/%3E%3C/svg%3E">
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%236750A4'%3E%3Cpath d='M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2zM4 12h4v2H4v-2zm10 6H4v-2h10v2zm6 0h-4v-2h4v2zm0-4H10v-2h10v2z'/%3E%3C/svg%3E">
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -531,7 +531,7 @@
                                 <span>→</span>
                                 <input type="text" class="time-input end-time" value="${displayEndTime}">
                             </div>
-                            <textarea class="text-input">${sub.text}</textarea>
+                            <textarea class="text-input">${sub.text || ''}</textarea>
                         </div>
                         <div class="subtitle-item-actions">
                             <button class="delete-sub-btn" title="מחק כתובית"><span class="material-symbols-outlined">delete</span></button>
@@ -552,11 +552,11 @@
             let html = "";
             for (let i = 0; i < sortedSubs.length; i++) {
                 const currentSub = sortedSubs[i];
-                let textToAdd = `<span data-id="${currentSub.id}">${currentSub.text.trim()}</span>`;
+                let textToAdd = `<span data-id="${currentSub.id}">${(currentSub.text || '').trim()}</span>`;
 
                 if (i > 0) {
                     const prevSub = sortedSubs[i - 1];
-                    const prevText = prevSub.text.trim();
+                    const prevText = (prevSub.text || '').trim(); // FIX: Defensive check
                     const prevTextEndsWithPeriod = /\.$/.test(prevText);
                     const prevTextEndsWithComma = /,$/.test(prevText);
                     const prevTextEndsStrongSentence = /[?!]$/.test(prevText);
@@ -795,6 +795,33 @@
             }, 1500);
         });
         
+        const handleTextViewEdit = (e) => {
+            const selection = window.getSelection();
+            if (!selection.rangeCount) return;
+
+            const range = selection.getRangeAt(0);
+            const container = range.commonAncestorContainer;
+
+            const isInsideSub = (container.nodeType === Node.ELEMENT_NODE)
+                ? container.closest('span[data-id]')
+                : container.parentElement.closest('span[data-id]');
+
+            if (!isInsideSub) {
+                e.preventDefault();
+                showNotification('ניתן לערוך רק את תוכן הכתובית עצמה.', 'error', 2000);
+            }
+        }
+        
+        interactiveTextView.addEventListener('keydown', e => {
+            // Allow navigation, selection, etc.
+            const allowedKeys = ['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'Home', 'End', 'PageUp', 'PageDown'];
+            if (allowedKeys.includes(e.key) || e.ctrlKey || e.metaKey) {
+                return;
+            }
+            handleTextViewEdit(e);
+        });
+        interactiveTextView.addEventListener('paste', handleTextViewEdit);
+        
         // --- Search and Replace ---
         const clearSearch = () => {
             document.querySelectorAll('.search-hit').forEach(el => el.classList.remove('search-hit'));
@@ -808,7 +835,9 @@
             if (!query) { clearSearch(); return; }
 
             replaceAllBtn.disabled = false;
-            searchResults = state.subtitles.filter(sub => sub.text.toLowerCase().includes(query)).map(sub => sub.id);
+            searchResults = state.subtitles
+                .filter(sub => (sub.text || '').toLowerCase().includes(query))
+                .map(sub => sub.id);
             
             searchResults.forEach(id => {
                 document.querySelector(`.subtitle-item[data-id="${id}"]`)?.classList.add('search-hit');
@@ -831,7 +860,11 @@
                 ? document.querySelector(`.subtitle-item[data-id="${targetId}"]`)
                 : document.querySelector(`#interactive-text-view span[data-id="${targetId}"]`);
             
-            if (targetElement) targetElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            if (targetElement) {
+                document.querySelectorAll('.search-hit.scrolled').forEach(el => el.classList.remove('scrolled'));
+                targetElement.classList.add('scrolled');
+                targetElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }
             searchResultsDisplay.textContent = `${currentSearchIndex + 1}/${searchResults.length}`;
         };
 
@@ -847,7 +880,7 @@
             const sub = state.subtitles.find(s => s.id == subId);
             if (!sub) return;
             const findRegex = new RegExp(findText.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&'), 'i');
-            sub.text = sub.text.replace(findRegex, replaceText);
+            sub.text = (sub.text || '').replace(findRegex, replaceText);
             updateAndRefreshUI();
         });
 
@@ -857,9 +890,10 @@
             const findRegex = new RegExp(findText.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&'), 'gi');
             let replacementsCount = 0;
             state.subtitles.forEach(sub => {
-                if (sub.text.toLowerCase().includes(findText.toLowerCase())) {
-                    const newText = sub.text.replace(findRegex, replaceText);
-                    if (newText !== sub.text) { sub.text = newText; replacementsCount++; }
+                const currentText = sub.text || '';
+                if (currentText.toLowerCase().includes(findText.toLowerCase())) {
+                    const newText = currentText.replace(findRegex, replaceText);
+                    if (newText !== currentText) { sub.text = newText; replacementsCount++; }
                 }
             });
             if (replacementsCount > 0) updateAndRefreshUI(`הוחלפו ${replacementsCount} מופעים.`);
@@ -879,7 +913,7 @@
         // --- Download Functions ---
         const generateSrtContent = () => {
             return [...state.subtitles].sort((a,b) => timeStringToSeconds(a.start_time) - timeStringToSeconds(b.start_time))
-                .map((sub, index) => `${index + 1}\n${secondsToTimeString(timeStringToSeconds(sub.start_time), true)} --> ${secondsToTimeString(timeStringToSeconds(sub.end_time), true)}\n${sub.text.trim()}\n`).join('\n');
+                .map((sub, index) => `${index + 1}\n${secondsToTimeString(timeStringToSeconds(sub.start_time), true)} --> ${secondsToTimeString(timeStringToSeconds(sub.end_time), true)}\n${(sub.text || '').trim()}\n`).join('\n');
         };
 
         const generatePlainTextContent = () => {
@@ -887,12 +921,14 @@
             if (sortedSubs.length === 0) return "";
             let fullText = "";
             for (let i = 0; i < sortedSubs.length; i++) {
-                const currentSub = sortedSubs[i], textToAdd = currentSub.text.trim();
+                const currentSub = sortedSubs[i], textToAdd = (currentSub.text || '').trim();
                 if (i > 0) {
-                    const prevSub = sortedSubs[i - 1], prevText = prevSub.text.trim(),
-                        prevTextEndsWithPeriod = /\.$/.test(prevText), prevTextEndsWithComma = /,$/.test(prevText),
-                        prevTextEndsStrongSentence = /[?!]$/.test(prevText),
-                        gap = timeStringToSeconds(currentSub.start_time) - timeStringToSeconds(prevSub.end_time);
+                    const prevSub = sortedSubs[i - 1];
+                    const prevText = (prevSub.text || '').trim(); // FIX: Defensive check
+                    const prevTextEndsWithPeriod = /\.$/.test(prevText);
+                    const prevTextEndsWithComma = /,$/.test(prevText);
+                    const prevTextEndsStrongSentence = /[?!]$/.test(prevText);
+                    const gap = timeStringToSeconds(currentSub.start_time) - timeStringToSeconds(prevSub.end_time);
                     if (!prevTextEndsWithPeriod && !prevTextEndsWithComma) fullText += ' ' + textToAdd;
                     else if (gap > 1.5 || prevTextEndsStrongSentence) fullText += '\n\n' + textToAdd;
                     else fullText += ' ' + textToAdd;
