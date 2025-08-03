@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>כמהים לבניינך</title>
+    
+    <!-- Favicon - סמל להבה לכרטיסייה -->
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 125'%3E%3Cpath fill='%23FFB300' d='M50,0C30,25 20,40 20,60c0,22.1,17.9,40,40,40s40-17.9,40-40C100,40 70,25 50,0z M50,90c-16.5,0-30-13.5-30-30 c0-15,8-27,20-40C45,25,50,30,50,30s5-5,10-10c12,13,20,25,20,40C80,76.5,66.5,90,50,90z'/%3E%3C/svg%3E">
+
+    <!-- Google Fonts - Frank Ruhl Libre -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Frank+Ruhl+Libre:wght@300;400;500;700&display=swap" rel="stylesheet">
+    
+    <!-- Animate.css Library (External CSS Library) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+
+    <style>
+        /* --- General Styling & Color Palette --- */
+        :root {
+            --bg-color: #1a0f02;
+            --text-color: #e0d8c7;
+            --highlight-color: #ffac33;
+            --highlight-glow: #e57c00;
+            --halo-color: rgba(229, 124, 0, 0.6);
+            --halo-core-color: rgba(255, 80, 0, 0.4);
+        }
+
+        html, body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            font-family: 'Frank Ruhl Libre', serif;
+            background-color: var(--bg-color);
+        }
+        
+        /* --- NEW: Fire Halo Effect --- */
+        .fire-halo {
+            position: fixed;
+            bottom: -10%;
+            left: -10%;
+            width: 120%;
+            height: 40%;
+            background: radial-gradient(ellipse at 50% 100%, 
+                var(--halo-color) 0%, 
+                var(--halo-core-color) 30%, 
+                transparent 70%);
+            filter: blur(20px);
+            z-index: 0;
+            animation: halo-pulse 8s infinite alternate ease-in-out;
+            pointer-events: none;
+        }
+
+        @keyframes halo-pulse {
+            from {
+                transform: scale(1);
+                opacity: 0.8;
+            }
+            to {
+                transform: scale(1.05, 1.1);
+                opacity: 1;
+            }
+        }
+
+        /* --- Animated Flames (Adjusted for Halo) --- */
+        .flame-container {
+            position: fixed;
+            bottom: -30px;
+            left: 0;
+            width: 100%;
+            height: 30%;
+            z-index: 1; /* Above the halo */
+            filter: blur(2px);
+            pointer-events: none;
+        }
+
+        .flame {
+            position: absolute;
+            bottom: 0;
+            width: 15px;
+            height: 150px;
+            background: linear-gradient(to top, var(--highlight-color), transparent);
+            border-radius: 50% 50% 0 0;
+            animation: flicker 3s infinite ease-in-out;
+            transform-origin: bottom;
+        }
+
+        @keyframes flicker {
+            0%   { transform: scaleY(1) skewX(0); opacity: 0.8; }
+            25%  { transform: scaleY(1.1) skewX(5deg); opacity: 1; }
+            50%  { transform: scaleY(0.9) skewX(-2deg); opacity: 0.9; }
+            75%  { transform: scaleY(1.05) skewX(2deg); opacity: 1; }
+            100% { transform: scaleY(1) skewX(0); opacity: 0.8; }
+        }
+
+        /* Create a dense, varied line of fire */
+        .flame:nth-child(1)  { left: 5%;   height: 100px; animation-duration: 2.5s; animation-delay: 0.5s; }
+        .flame:nth-child(2)  { left: 12%;  height: 140px; animation-duration: 3.2s; animation-delay: 0s;   }
+        .flame:nth-child(3)  { left: 20%;  height: 90px;  width: 20px; animation-duration: 2.8s; animation-delay: 1s;   }
+        .flame:nth-child(4)  { left: 28%;  height: 150px; animation-duration: 4s;   animation-delay: 0.2s; }
+        .flame:nth-child(5)  { left: 38%;  height: 110px; width: 12px; animation-duration: 2.9s; animation-delay: 0.8s; }
+        .flame:nth-child(6)  { left: 48%;  height: 130px; animation-duration: 3.5s; animation-delay: 0.4s; }
+        .flame:nth-child(7)  { left: 58%;  height: 100px; animation-duration: 2.7s; animation-delay: 0.1s; }
+        .flame:nth-child(8)  { left: 65%;  height: 145px; animation-duration: 3.8s; animation-delay: 0.6s; }
+        .flame:nth-child(9)  { left: 72%;  height: 80px;  width: 18px; animation-duration: 3s;   animation-delay: 1.2s; }
+        .flame:nth-child(10) { left: 80%;  height: 125px; animation-duration: 3.3s; animation-delay: 0.3s; }
+        .flame:nth-child(11) { left: 88%;  height: 115px; width: 14px; animation-duration: 2.6s; animation-delay: 0.9s; }
+        .flame:nth-child(12) { left: 95%;  height: 135px; animation-duration: 4.2s; animation-delay: 0.7s; }
+
+        /* --- Content Styling --- */
+        .container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            text-align: center;
+            color: var(--text-color);
+            padding: 20px;
+            position: relative;
+            z-index: 10;
+        }
+
+        .content { max-width: 800px; }
+        h1 {
+            font-size: 3.2rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+            text-shadow: 0 0 15px rgba(0, 0, 0, 0.7);
+        }
+        h2 {
+            font-size: 1.8rem;
+            font-weight: 300;
+            margin-bottom: 40px;
+            opacity: 0.9;
+        }
+        #destruction-counter { margin-bottom: 50px; }
+        .time-unit {
+            display: inline-block;
+            margin: 0 15px;
+            vertical-align: top;
+        }
+        .time-unit .number {
+            font-size: 6rem;
+            font-weight: 700;
+            color: var(--highlight-color);
+            text-shadow: 0 0 10px var(--highlight-glow), 0 0 20px var(--highlight-color);
+            display: block;
+            line-height: 1;
+        }
+        .time-unit .label {
+            font-size: 1.5rem;
+            font-weight: 400;
+            display: block;
+            margin-top: 10px;
+        }
+        #redemption-counter {
+            font-size: 1.2rem;
+            opacity: 0.8;
+            font-weight: 300;
+        }
+        #redemption-counter .number {
+            font-weight: 500;
+            color: var(--highlight-color);
+            font-size: 1.4rem;
+        }
+        footer {
+            margin-top: 50px;
+            font-size: 1.6rem;
+            font-style: italic;
+            font-weight: 400;
+            text-shadow: 0 0 8px rgba(255, 172, 51, 0.7);
+        }
+        
+        /* --- Animated Embers (Particles) --- */
+        .particles {
+            position: fixed; bottom: 0; left: 0;
+            width: 100%; height: 100%; z-index: 2; /* Above flames */
+        }
+        .particle {
+            position: absolute; bottom: -20px;
+            background-color: var(--highlight-color);
+            border-radius: 50%; opacity: 0;
+            animation: rise 10s infinite ease-in;
+            box-shadow: 0 0 8px var(--highlight-glow);
+        }
+        
+        @keyframes rise {
+            0% { transform: translateY(0) scale(1); opacity: 0.9; }
+            50% { opacity: 0.6; }
+            100% { transform: translateY(-100vh) scale(0.5); opacity: 0; }
+        }
+        
+        .particle:nth-child(1) { left: 10%; width: 4px; height: 4px; animation-duration: 15s; }
+        .particle:nth-child(2) { left: 20%; width: 2px; height: 2px; animation-duration: 9s; animation-delay: 1s; }
+        .particle:nth-child(3) { left: 30%; width: 5px; height: 5px; animation-duration: 12s; animation-delay: 2s; }
+        /* ... more particles ... */
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            h1 { font-size: 2.4rem; }
+            h2 { font-size: 1.4rem; }
+            .time-unit { margin: 0 8px; }
+            .time-unit .number { font-size: 3.8rem; }
+            .time-unit .label { font-size: 1rem; margin-top: 5px; }
+            #redemption-counter { font-size: 1rem; }
+            #redemption-counter .number { font-size: 1.1rem; }
+            footer { font-size: 1.3rem; }
+            .fire-halo { filter: blur(15px); }
+        }
+
+    </style>
+</head>
+<body>
+    
+    <!-- אפקט ההילה של האש, מאחורי הלהבות -->
+    <div class="fire-halo"></div>
+
+    <!-- אנימציית להבות -->
+    <div class="flame-container">
+        <div class="flame"></div> <div class="flame"></div> <div class="flame"></div> <div class="flame"></div>
+        <div class="flame"></div> <div class="flame"></div> <div class="flame"></div> <div class="flame"></div>
+        <div class="flame"></div> <div class="flame"></div> <div class="flame"></div> <div class="flame"></div>
+    </div>
+
+    <!-- אנימציית גיצים עולים -->
+    <div class="particles">
+        <div class="particle"></div><div class="particle"></div><div class="particle"></div>
+        <div class="particle"></div><div class="particle"></div><div class="particle"></div>
+        <div class="particle"></div><div class="particle"></div><div class="particle"></div>
+    </div>
+
+    <div class="container">
+        <div class="content">
+            <h1 class="animate__animated animate__fadeInDown animate__delay-1s">"עַל אֵלֶּה אֲנִי בוֹכִיָּה"</h1>
+            <h2 class="animate__animated animate__fadeInDown animate__delay-1s">זמן החורבן</h2>
+            
+            <div id="destruction-counter" class="animate__animated animate__fadeIn animate__delay-2s">
+                <span class="time-unit">
+                    <span id="years" class="number">0</span>
+                    <span class="label">שנים</span>
+                </span>
+                <span class="time-unit">
+                    <span id="months" class="number">0</span>
+                    <span class="label">חודשים</span>
+                </span>
+                <span class="time-unit">
+                    <span id="days" class="number">0</span>
+                    <span class="label">ימים</span>
+                </span>
+            </div>
+            
+            <div id="redemption-counter" class="animate__animated animate__fadeInUp animate__delay-3s">
+                נותרו <span id="remaining-years" class="number">0</span> שנים (לערך) להשלמת ששת אלפי שנות עולם
+            </div>
+            
+            <footer class="animate__animated animate__fadeInUp animate__delay-3s">
+                "...ותחזינה עינינו בשובך לציון ברחמים"
+            </footer>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const destructionDate = new Date('0070-08-04T00:00:00');
+            const endOf6000Year = 2239;
+            const yearsEl = document.getElementById('years');
+            const monthsEl = document.getElementById('months');
+            const daysEl = document.getElementById('days');
+            const remainingYearsEl = document.getElementById('remaining-years');
+            function updateCounters() {
+                const realNow = new Date();
+                const SUNSET_APPROX_HOUR = 19;
+                let effectiveNow = new Date(realNow);
+                if (realNow.getHours() >= SUNSET_APPROX_HOUR) {
+                    effectiveNow.setDate(realNow.getDate() + 1);
+                }
+                const diffInMs = effectiveNow.getTime() - destructionDate.getTime();
+                const totalDays = diffInMs / (1000 * 60 * 60 * 24);
+                const AVG_DAYS_IN_YEAR = 365.2425;
+                const AVG_DAYS_IN_MONTH = AVG_DAYS_IN_YEAR / 12;
+                const years = Math.floor(totalDays / AVG_DAYS_IN_YEAR);
+                const remainingDaysAfterYears = totalDays % AVG_DAYS_IN_YEAR;
+                const months = Math.floor(remainingDaysAfterYears / AVG_DAYS_IN_MONTH);
+                const days = Math.floor(remainingDaysAfterYears % AVG_DAYS_IN_MONTH);
+                yearsEl.textContent = years;
+                monthsEl.textContent = months;
+                daysEl.textContent = days;
+                const remainingYears = endOf6000Year - effectiveNow.getFullYear();
+                remainingYearsEl.textContent = remainingYears;
+            }
+            updateCounters();
+            setInterval(updateCounters, 1000);
+        });
+    </script>
+
+</body>
+</html>
