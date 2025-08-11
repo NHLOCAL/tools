@@ -15,11 +15,3 @@
 כל אחד מוזמן לשפר, להתאים אותם לצרכיו המדויקים, ולשתף בחזרה.
 
 **וויב קוד הוא העתיד של התכנות.**
-
----
-
-### רישיון וקישורים
-
-נוצר על ידי **NH Local**. הפרויקט מורשה תחת [רישיון MIT](https://raw.githubusercontent.com/NHLOCAL/tools/main/LICENSE).
-
-[קוד מקור ב-GitHub](https://github.com/NHLOCAL/tools) | [אתר הפרויקטים הראשי](https://nhlocal.github.io) | [בלוג](https://blog.ze-kal.top) | צור קשר: <a id="contact-link">טוען...</a>

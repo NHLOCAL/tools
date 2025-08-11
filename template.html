@@ -7,206 +7,228 @@
     <title>ארגז הכלים של NH Local</title>
     <link rel="icon" type="image/png" href="favicon.png">
     
+    <script src="https://unpkg.com/feather-icons"></script>
+    
     <style>
-        html {
-            scroll-behavior: smooth;
-        }
         :root {
-            /* ערכת נושא בהירה (ברירת מחדל) */
-            --bg-color: #ffffff;
-            --text-color: #212121;
-            --border-color: #e0e0e0;
-            --accent-color: #0078d4;
-            --button-bg: #f0f0f0;
-            --button-border: #e0e0e0;
-            --button-hover-bg: #e0e0e0;
-            --highlight-bg: #fdfde3;
+            /* Light Theme */
+            --bg-color: #f5f7fa;
+            --main-bg-color: #ffffff;
+            --text-color: #2d3748;
+            --secondary-text-color: #4a5568;
+            --primary-border-color: #e2e8f0;
+            --secondary-border-color: #edf2f7;
+            --accent-color: #4299e1;
+            --button-bg: #edf2f7;
+            --button-hover-bg: #e2e8f0;
+            --header-footer-bg: #ffffff;
+            --highlight-bg: #ebf8ff;
+            --icon-color: #4a5568;
+            --bg-grid-color: rgba(0, 0, 0, 0.04);
         }
 
         body.dark-mode {
-            /* ערכת נושא כהה */
-            --bg-color: #1e1e1e;
-            --text-color: #dcdcdc;
-            --border-color: #444;
-            --accent-color: #dcdcdc;
-            --button-bg: #333;
-            --button-border: #444;
-            --button-hover-bg: #444;
-            --highlight-bg: #4d4d33;
+            /* Dark Theme (High Contrast) */
+            --bg-color: #1a1a1a;
+            --main-bg-color: #242424;
+            --text-color: #e0e0e0;
+            --secondary-text-color: #b3b3b3;
+            --primary-border-color: #444444;
+            --secondary-border-color: #333333;
+            --accent-color: #6bb8ff;
+            --button-bg: #3a3a3a;
+            --button-hover-bg: #4f4f4f;
+            --header-footer-bg: #202020;
+            --highlight-bg: #3f3f3f;
+            --icon-color: #e0e0e0;
+            --bg-grid-color: rgba(255, 255, 255, 0.07);
         }
 
+        html { scroll-behavior: smooth; }
         body {
             font-family: 'Menlo', 'Consolas', 'Courier New', monospace;
             background-color: var(--bg-color);
             color: var(--text-color);
             margin: 0;
             padding: 20px;
-            transition: background-color 0.2s, color 0.2s;
+            transition: background-color 0.3s ease, color 0.3s ease;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            min-height: 100vh;
+            background-image:
+                linear-gradient(var(--bg-grid-color) 1px, transparent 1px),
+                linear-gradient(to right, var(--bg-grid-color) 1px, transparent 1px);
+            background-size: 25px 25px;
         }
         .container {
-            max-width: 900px;
-            margin: 0 auto;
+            max-width: 900px; width: 100%; margin: 0 auto;
+            border: 2px solid var(--primary-border-color);
+            background-color: var(--main-bg-color);
+            transition: border-color 0.3s ease, background-color 0.3s ease;
         }
+
+        .site-header { display: flex; justify-content: space-between; align-items: center; padding: 10px 20px; background-color: var(--header-footer-bg); border-bottom: 2px solid var(--primary-border-color); transition: background-color 0.3s ease, border-color 0.3s ease; }
+        .site-title { display: flex; align-items: center; gap: 10px; font-size: 1.1em; font-weight: bold; }
+        .site-title i { color: var(--accent-color); }
+        #theme-toggle { background: none; border: 1px solid transparent; color: var(--icon-color); padding: 6px 7px; border-radius: 0; cursor: pointer; line-height: 0; transition: all 0.2s ease; }
+        #theme-toggle:hover { background-color: var(--button-bg); border-color: var(--primary-border-color); color: var(--text-color); }
+        #theme-toggle .icon-moon { display: none; }
+        body.dark-mode #theme-toggle .icon-sun { display: none; }
+        body.dark-mode #theme-toggle .icon-moon { display: inline-block; }
+
+        main { padding: 10px 25px; }
+        main h1 { font-size: 1.8em; margin-bottom: 0.5em; padding-bottom: 0; display: flex; align-items: center; gap: 0.5em; color: var(--accent-color); }
+        main h1 .favicon-title { width: 1.2em; height: 1.2em; vertical-align: -0.15em; transition: filter 0.3s ease; }
+        body.dark-mode main h1 .favicon-title { filter: brightness(0.9) invert(1) grayscale(0.1) contrast(1.1); }
+        main h2 { font-size: 1.4em; margin-top: 2em; border-bottom: 1px dashed var(--secondary-border-color); padding-bottom: 0.5em; display: flex; align-items: center; gap: 0.7em; color: var(--accent-color); }
+        main h3 { font-size: 1.2em; margin-top: 1.5em; color: var(--text-color); }
+        main a { color: var(--accent-color); text-decoration: none; border-bottom: 1px dotted; }
+        main a:hover { border-bottom-style: solid; }
+        main p { max-width: 75ch; line-height: 1.7; }
+        main hr { border: none; border-top: 2px dashed var(--primary-border-color); margin: 2.5em 0; }
+        main ul { padding-right: 20px; list-style-type: '» '; }
+        main ul li { margin-bottom: 0.5em; padding-right: 10px; }
+        main strong, main b { font-weight: bold; }
+        main code { background-color: var(--button-bg); padding: 3px 6px; border: 1px solid var(--secondary-border-color); font-size: 0.9em; }
+
+        .tool-item { display: flex; align-items: stretch; justify-content: space-between; gap: 15px; padding: 1.2em 1em; border: 1px solid var(--secondary-border-color); margin-top: 1em; transition: all 0.3s ease; border-left: 4px solid var(--accent-color); }
+        .tool-item.highlighted { background-color: var(--highlight-bg); border-color: var(--accent-color); border-left-color: var(--accent-color); }
+        .tool-main-content { display: flex; align-items: center; gap: 15px; flex-grow: 1; }
+        .tool-info h3 { margin: 0 0 0.3em 0; font-size: 1.15em; color: var(--text-color); }
+        .tool-info p { margin: 0; font-size: 0.9em; line-height: 1.5; color: var(--secondary-text-color); }
         
-        .header-utils {
-            text-align: left; /* ממקם לשמאל בדף RTL */
-            margin-bottom: 20px;
-        }
-        #theme-toggle {
-            background-color: transparent;
-            border: 1px solid var(--border-color);
-            color: var(--text-color);
-            font-family: inherit; /* יורש את פונט ה-monospace */
-            font-size: 0.9em;
-            cursor: pointer;
-            padding: 8px 12px;
-            transition: background-color 0.2s;
-        }
-        #theme-toggle:hover {
-            background-color: var(--button-hover-bg);
-        }
-
-        /* עיצוב התוכן מה-README */
-        main h1, main h2, main h3 { color: var(--accent-color); }
-        main h2 { border-bottom: 1px solid var(--border-color); padding-bottom: 0.5em; margin-top: 2em; }
-        main h3 { font-size: 1.2em; margin-top: 1.5em; }
-        main a { color: var(--accent-color); text-decoration: underline; }
-        main p { max-width: 70ch; line-height: 1.6; }
-        main hr { border-color: var(--border-color); border-top: 1px solid var(--border-color); border-bottom: 0; margin: 2em 0;}
-        main ul { padding-right: 20px; } /* הזחה לימין עבור RTL */
-        main ul li { margin-bottom: 0.5em; }
-        main strong, main b { color: var(--text-color); }
-        main code {
-            background-color: var(--button-bg);
-            padding: 2px 5px;
-            border-radius: 4px;
-            font-size: 0.9em;
-        }
-
-        .tool-item {
+        .tool-actions, .footer-links { display: flex; gap: 8px; }
+        .tool-actions { flex-direction: column; flex-shrink: 0; justify-content: center; }
+        .footer-links { justify-content: center; flex-wrap: wrap; margin-bottom: 20px; }
+        
+        .tool-actions a, .footer-links a {
             display: flex;
             align-items: center;
-            justify-content: space-between;
-            flex-wrap: wrap;
-            gap: 20px;
-            padding: 1.2em 0;
-            border-bottom: 1px solid var(--border-color);
-            transition: background-color 0.4s ease-in-out;
-        }
-        .tool-main-content {
-            display: flex;
-            align-items: center;
-            gap: 15px; /* רווח בין האייקון לטקסט */
-            flex: 1;
-        }
-        .tool-info { flex: 1; min-width: 250px; }
-        .tool-info h3 { margin: 0 0 0.2em 0; font-size: 1.1em; color: var(--text-color); } /* צבע טקסט רגיל לכותרת הכלי */
-        .tool-info p { margin: 0; color: #888; font-size: 0.9em; max-width: none; }
-        body.dark-mode .tool-info p { color: #aaa; }
-
-        .tool-actions { display: flex; gap: 10px; flex-shrink: 0; }
-        .tool-actions a {
-            display: inline-block;
-            padding: 8px 14px;
-            border: 1px solid var(--button-border);
+            gap: 8px;
+            padding: 6px 12px;
+            border: 1px solid var(--primary-border-color);
             background-color: var(--button-bg);
             color: var(--text-color);
             text-decoration: none;
             font-size: 0.9em;
             white-space: nowrap;
-            transition: background-color 0.2s;
+            transition: all 0.15s ease-out;
+            border-radius: 0;
+            box-shadow: 2px 2px 0 var(--secondary-border-color);
         }
-        .tool-actions a:hover { background-color: var(--button-hover-bg); }
+        .footer-links a {
+            padding: 8px 15px;
+        }
+        .tool-actions a:hover, .footer-links a:hover {
+            background-color: var(--button-hover-bg);
+            border-color: var(--accent-color);
+            color: var(--accent-color);
+            transform: translate(-2px, -2px);
+            box-shadow: 4px 4px 0 var(--accent-color);
+        }
+        .tool-actions a:active, .footer-links a:active {
+            transform: translate(0, 0);
+            box-shadow: 1px 1px 0 var(--accent-color);
+            transition-duration: 0.05s;
+        }
+        .tool-actions a i, .footer-links a i { width: 16px; height: 16px; }
 
         .link-icon {
             position: relative;
-            display: inline-block;
-            width: 18px; /* גודל האייקון */
-            height: 18px;
-            line-height: 0;
-            background: none !important;
-            border: none !important;
-            padding: 0 !important;
-            text-decoration: none;
-            color: var(--text-color);
-            opacity: 0.4;
-            transition: opacity 0.2s;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 5px;
+            background: none;
+            border: 1px solid transparent;
+            color: var(--icon-color);
+            opacity: 0.6;
             cursor: pointer;
+            border-radius: 0;
+            align-self: center;
+            transition: all 0.2s ease;
         }
         .link-icon:hover {
             opacity: 1;
+            background-color: var(--button-bg);
+            border-color: var(--primary-border-color);
+            color: var(--text-color);
         }
-        .link-icon svg {
-            vertical-align: middle;
-            width: 100%;
-            height: 100%;
-        }
-        .link-icon .icon-link,
-        .link-icon .icon-check {
+        .link-icon::after {
+            content: "הועתק!";
             position: absolute;
-            top: 0;
-            left: 0;
-            transition: opacity 0.2s ease-in-out, transform 0.2s ease-in-out;
-        }
-        .link-icon .icon-check {
-            opacity: 0;
-            transform: scale(0.8);
-            color: var(--accent-color);
-        }
-        .link-icon.copied .icon-link {
-            opacity: 0;
-            transform: scale(0.8);
-        }
-        .link-icon.copied .icon-check {
-            opacity: 1;
-            transform: scale(1);
-        }
-
-        main h1 {
-            display: flex;
-            align-items: center;
-            gap: 0.5em;
-            font-size: 1.7em;
+            top: 50%;
+            right: 115%;
+            transform: translateY(-50%);
+            background: var(--accent-color);
+            color: var(--main-bg-color);
+            padding: 4px 8px;
+            font-size: 11px;
             font-weight: bold;
+            border-radius: 0;
+            white-space: nowrap;
+            opacity: 0;
+            transition: opacity 0.2s ease, right 0.2s ease;
+            pointer-events: none;
+            z-index: 10;
         }
-        main h1 .favicon-title {
-            width: 1.5em;
-            height: 1.5em;
-            vertical-align: middle;
-            transition: filter 0.2s;
+        .link-icon.copied, .link-icon.copied:hover {
+            opacity: 1;
+            color: var(--accent-color);
+            background-color: var(--button-bg);
+            border-color: var(--accent-color);
         }
-        body.dark-mode main h1 .favicon-title {
-            filter: brightness(0.8) invert(1) grayscale(0.2) contrast(1.2);
+        .link-icon.copied::after {
+            opacity: 1;
+            right: 125%;
         }
+        
+        .site-footer { padding: 20px; background-color: var(--header-footer-bg); border-top: 2px solid var(--primary-border-color); text-align: center; transition: background-color 0.3s ease, border-color 0.3s ease; }
+        .footer-credits p { margin: 5px 0; font-size: 0.85em; opacity: 0.7; line-height: 1.5; }
+        .footer-credits a { color: var(--text-color); opacity: 0.8; text-decoration: underline; border: none; }
+        body.dark-mode .footer-credits a { color: var(--accent-color); }
+
+        @media (max-width: 600px) { body { padding: 5px; } .container { border: none; } .site-header { padding: 10px 15px; } main { padding: 10px 15px; } .tool-item { flex-direction: column; align-items: flex-start; } .tool-actions { flex-direction: row; width: 100%; margin-top: 10px; } .tool-actions a { flex-grow: 1; justify-content: center; } }
     </style>
     <script src="https://nhlocal.github.io/general-settings.js"></script>
 </head>
 <body>
     <div class="container">
-        <header class="header-utils">
-            <button id="theme-toggle" title="שנה ערכת נושא"></button>
+        <header class="site-header">
+            <div class="site-title">
+                <i data-feather="terminal"></i>
+                <span>ארגז הכלים // NH Local</span>
+            </div>
+            <button id="theme-toggle" title="שנה ערכת נושא">
+                <i data-feather="sun" class="icon-sun"></i>
+                <i data-feather="moon" class="icon-moon"></i>
+            </button>
         </header>
+        
         <main id="content">
             {{ CONTENT }}
         </main>
+
+        <footer class="site-footer">
+            <div class="footer-links">
+                 <a href="https://github.com/{{ GITHUB_USERNAME }}/{{ GITHUB_REPO_NAME }}" target="_blank" rel="noopener noreferrer"><i data-feather="github"></i> קוד מקור</a>
+                 <a href="https://nhlocal.github.io" target="_blank" rel="noopener noreferrer"><i data-feather="archive"></i> פרויקטים</a>
+                 <a href="https://blog.ze-kal.top" target="_blank" rel="noopener noreferrer"><i data-feather="edit-3"></i> בלוג</a>
+                 <a id="contact-link" href="#"><i data-feather="mail"></i> צור קשר</a>
+            </div>
+            <div class="footer-credits">
+                <p>נוצר על ידי <strong>NH Local</strong>. מורשה תחת <a href="https://raw.githubusercontent.com/{{ GITHUB_USERNAME }}/{{ GITHUB_REPO_NAME }}/main/LICENSE" target="_blank" rel="noopener noreferrer">רישיון MIT</a>.</p>
+                <p>עיצוב בהשראת מסופים, פיקסל-ארט ומשחקי רטרו.</p>
+            </div>
+        </footer>
     </div>
 
     <script>
-        // --- ★★★ הגדרות שמוזרקות מהסקריפט ★★★ ---
-        const GITHUB_USERNAME = '{{ GITHUB_USERNAME }}';
-        const GITHUB_REPO_NAME = '{{ GITHUB_REPO_NAME }}';
-        // ---------------------------------------------
-
         const themeToggle = document.getElementById('theme-toggle');
 
         const applyTheme = (theme) => {
-            if (theme === 'dark') {
-                document.body.classList.add('dark-mode');
-                themeToggle.textContent = '[מצב בהיר]';
-            } else {
-                document.body.classList.remove('dark-mode');
-                themeToggle.textContent = '[מצב כהה]';
-            }
+            document.body.classList.toggle('dark-mode', theme === 'dark');
             localStorage.setItem('theme', theme);
         };
 
@@ -229,15 +251,15 @@
 
         function copyDirectLink(linkElement, event) {
             event.preventDefault();
+            if (linkElement.classList.contains('copied')) return;
+
             const fullUrl = new URL(linkElement.href, window.location.href).href;
             
             navigator.clipboard.writeText(fullUrl).then(() => {
-                if (linkElement.classList.contains('copied')) return;
-
                 linkElement.classList.add('copied');
                 setTimeout(() => {
                     linkElement.classList.remove('copied');
-                }, 1500);
+                }, 2000);
             }).catch(err => {
                 console.error('Failed to copy link:', err);
             });
@@ -249,32 +271,28 @@
             const contactLink = document.getElementById('contact-link');
             if (!contactLink) return;
             const isWindows = navigator.userAgent.toLowerCase().includes('win');
+            contactLink.href = isWindows 
+                ? `https://mail.google.com/mail/?view=cm&fs=1&to=${emailAddress}&su=${subject}` 
+                : `mailto:${emailAddress}?subject=${subject}`;
             if (isWindows) {
-                contactLink.href = `https://mail.google.com/mail/?view=cm&fs=1&to=${emailAddress}&su=${subject}`;
                 contactLink.target = '_blank';
                 contactLink.rel = 'noopener noreferrer';
-            } else {
-                contactLink.href = `mailto:${emailAddress}?subject=${subject}`;
             }
-            contactLink.textContent = emailAddress;
         }
 
         function scrollToElementFromHash() {
+            document.querySelectorAll('.highlighted').forEach(el => el.classList.remove('highlighted'));
             if (window.location.hash) {
                 try {
                     const element = document.querySelector(window.location.hash);
                     if (element) {
                         setTimeout(() => {
                             element.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                            element.style.backgroundColor = 'var(--highlight-bg)';
-                            setTimeout(() => {
-                                element.style.backgroundColor = '';
-                            }, 2500);
+                            element.classList.add('highlighted');
+                            setTimeout(() => { element.classList.remove('highlighted'); }, 2500);
                         }, 100);
                     }
-                } catch (e) {
-                    console.error("Could not scroll to element:", e);
-                }
+                } catch (e) { console.error("Could not scroll to element:", e); }
             }
         }
 
@@ -288,16 +306,7 @@
                                (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
             applyTheme(savedTheme);
             createDynamicMailLink();
-
-            const mainH1 = document.querySelector('main h1');
-            if (mainH1 && !mainH1.querySelector('.favicon-title')) {
-                const faviconImg = document.createElement('img');
-                faviconImg.src = 'favicon.png';
-                faviconImg.alt = 'favicon';
-                faviconImg.className = 'favicon-title';
-                faviconImg.setAttribute('aria-hidden', 'true');
-                mainH1.insertBefore(faviconImg, mainH1.firstChild);
-            }
+            feather.replace();
             scrollToElementFromHash();
         });
 
