@@ -13,17 +13,13 @@ GITHUB_REPO_NAME = 'tools'
 # ביטוי רגולרי למציאת פריטי רשימה בפורמט: * [Name](path) - Description
 TOOL_PATTERN = re.compile(r"^\*\s*\[(.*?)\]\((.*?)\)\s*-\s*(.*)$")
 
-# תבנית HTML עבור כל פריט כלי - משלבת את הקישור הישיר ואת כפתור המשאבים
+# תבנית HTML חדשה עם אייקונים ועיצוב מעודכן
 TOOL_ITEM_TEMPLATE = """
 <div class="tool-item" id="{tool_id}">
     <div class="tool-main-content">
         <a href="#{tool_id}" class="link-icon" onclick="copyDirectLink(this, event)" title="העתק קישור ישיר">
-            <span class="icon-link">
-                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.72"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.72-1.72"></path></svg>
-            </span>
-            <span class="icon-check">
-                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
-            </span>
+            <i data-feather="link" class="icon-link"></i>
+            <i data-feather="check" class="icon-check"></i>
         </a>
         <div class="tool-info">
             <h3>{name}</h3>
@@ -31,15 +27,15 @@ TOOL_ITEM_TEMPLATE = """
         </div>
     </div>
     <div class="tool-actions">
-        <a href="{path}">> הפעל</a>
+        <a href="{path}"><i data-feather="play-circle"></i> הפעל</a>
         <a href="https://raw.githubusercontent.com/{user}/{repo}/main/{path}" 
-           onclick="event.preventDefault(); forceDownload(this.href, '{filename}');">> הורד</a>
+           onclick="event.preventDefault(); forceDownload(this.href, '{filename}');"><i data-feather="download"></i> הורד</a>
 {resources_button}
     </div>
 </div>
 """
 
-RESOURCES_BUTTON_TEMPLATE = '        <a href="https://github.com/{user}/{repo}/tree/main/resources/{tool_name}">> משאבים</a>'
+RESOURCES_BUTTON_TEMPLATE = '        <a href="https://github.com/{user}/{repo}/tree/main/resources/{tool_name}"><i data-feather="folder"></i> משאבים</a>'
 
 def generate_tools_html(lines):
     """מקבל רשימת שורות ומייצר את ה-HTML עבור הכלים."""
@@ -118,8 +114,8 @@ def main():
     tools_lines = [line for line in tools_section.strip().split('\n') if line.strip()]
     tools_html = generate_tools_html(tools_lines)
     
-    # חיבור כל חלקי ה-HTML יחד
-    final_content_html = f"{html_before}\n<h2>הכלים</h2>\n{tools_html}\n{html_after}"
+    # חיבור כל חלקי ה-HTML יחד, כולל אייקון לכותרת הכלים
+    final_content_html = f"{html_before}\n<h2><i data-feather='tool'></i> הכלים</h2>\n{tools_html}\n{html_after}"
 
     # טעינת התבנית והכנסת התוכן
     print(f"Reading template from {TEMPLATE_FILE}...")

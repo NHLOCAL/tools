@@ -7,201 +7,244 @@
     <title>ארגז הכלים של NH Local</title>
     <link rel="icon" type="image/png" href="favicon.png">
     
+    <!-- Feather Icons - for sharp, minimalist icons -->
+    <script src="https://unpkg.com/feather-icons"></script>
+    
     <style>
-        html {
-            scroll-behavior: smooth;
-        }
+        /* 
+         * Design inspiration: Tokyo Night color scheme, CLI interfaces, pixel art outlines.
+         * A friendly, unique, and minimalist UI with sharp, simple lines.
+        */
         :root {
-            /* ערכת נושא בהירה (ברירת מחדל) */
-            --bg-color: #ffffff;
-            --text-color: #212121;
-            --border-color: #e0e0e0;
-            --accent-color: #0078d4;
-            --button-bg: #f0f0f0;
-            --button-border: #e0e0e0;
-            --button-hover-bg: #e0e0e0;
-            --highlight-bg: #fdfde3;
+            /* Light Theme */
+            --bg-color: #f2f2f2;
+            --main-bg-color: #ffffff;
+            --text-color: #1a1b26;
+            --primary-border-color: #dcdcdc;
+            --secondary-border-color: #e0e0e0;
+            --accent-color-1: #005a9e; /* Blue for links & titles */
+            --accent-color-2: #007b5e; /* Green for highlights & icons */
+            --accent-color-3: #8a5a00; /* Orange/Brown for secondary titles */
+            --button-bg: #e9e9e9;
+            --button-hover-bg: #dcdcdc;
+            --header-footer-bg: #e9e9e9;
+            --highlight-bg: #fff59d;
+            --icon-color: #333;
         }
 
         body.dark-mode {
-            /* ערכת נושא כהה */
-            --bg-color: #1e1e1e;
-            --text-color: #dcdcdc;
-            --border-color: #444;
-            --accent-color: #dcdcdc;
-            --button-bg: #333;
-            --button-border: #444;
-            --button-hover-bg: #444;
-            --highlight-bg: #4d4d33;
+            /* Dark Theme (Tokyo Night inspired) */
+            --bg-color: #16161e;
+            --main-bg-color: #1a1b26;
+            --text-color: #c0caf5;
+            --primary-border-color: #414868;
+            --secondary-border-color: #2a2f41;
+            --accent-color-1: #7aa2f7; /* Blue */
+            --accent-color-2: #73daca; /* Teal */
+            --accent-color-3: #ff9e64; /* Orange */
+            --button-bg: #24283b;
+            --button-hover-bg: #414868;
+            --header-footer-bg: #1f2335;
+            --highlight-bg: #414868;
+            --icon-color: #c0caf5;
         }
 
+        /* General layout */
+        html { scroll-behavior: smooth; }
         body {
             font-family: 'Menlo', 'Consolas', 'Courier New', monospace;
             background-color: var(--bg-color);
             color: var(--text-color);
             margin: 0;
             padding: 20px;
-            transition: background-color 0.2s, color 0.2s;
+            transition: background-color 0.3s ease, color 0.3s ease;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            min-height: 100vh;
         }
         .container {
             max-width: 900px;
+            width: 100%;
             margin: 0 auto;
-        }
-        
-        .header-utils {
-            text-align: left; /* ממקם לשמאל בדף RTL */
-            margin-bottom: 20px;
-        }
-        #theme-toggle {
-            background-color: transparent;
-            border: 1px solid var(--border-color);
-            color: var(--text-color);
-            font-family: inherit; /* יורש את פונט ה-monospace */
-            font-size: 0.9em;
-            cursor: pointer;
-            padding: 8px 12px;
-            transition: background-color 0.2s;
-        }
-        #theme-toggle:hover {
-            background-color: var(--button-hover-bg);
+            border: 2px solid var(--primary-border-color);
+            background-color: var(--main-bg-color);
+            transition: border-color 0.3s ease, background-color 0.3s ease;
         }
 
-        /* עיצוב התוכן מה-README */
-        main h1, main h2, main h3 { color: var(--accent-color); }
-        main h2 { border-bottom: 1px solid var(--border-color); padding-bottom: 0.5em; margin-top: 2em; }
-        main h3 { font-size: 1.2em; margin-top: 1.5em; }
-        main a { color: var(--accent-color); text-decoration: underline; }
-        main p { max-width: 70ch; line-height: 1.6; }
-        main hr { border-color: var(--border-color); border-top: 1px solid var(--border-color); border-bottom: 0; margin: 2em 0;}
-        main ul { padding-right: 20px; } /* הזחה לימין עבור RTL */
-        main ul li { margin-bottom: 0.5em; }
-        main strong, main b { color: var(--text-color); }
-        main code {
-            background-color: var(--button-bg);
-            padding: 2px 5px;
-            border-radius: 4px;
-            font-size: 0.9em;
+        /* Header */
+        .site-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 20px;
+            background-color: var(--header-footer-bg);
+            border-bottom: 2px solid var(--primary-border-color);
+            transition: background-color 0.3s ease, border-color 0.3s ease;
         }
-
-        .tool-item {
+        .site-title {
             display: flex;
             align-items: center;
+            gap: 10px;
+            font-size: 1.1em;
+            font-weight: bold;
+        }
+        .site-title i { color: var(--accent-color-2); }
+
+        /* Theme Toggle */
+        #theme-toggle {
+            background: none;
+            border: 1px solid transparent;
+            border-radius: 4px;
+            cursor: pointer;
+            padding: 5px;
+            color: var(--icon-color);
+            line-height: 0;
+        }
+        #theme-toggle:hover { border-color: var(--primary-border-color); }
+        #theme-toggle .icon-moon { display: none; }
+        body.dark-mode #theme-toggle .icon-sun { display: none; }
+        body.dark-mode #theme-toggle .icon-moon { display: inline-block; }
+
+        /* Main Content from Markdown */
+        main { padding: 10px 25px; }
+        main h1, main h2, main h3 { color: var(--accent-color-1); border-bottom: none; }
+        main h1 { font-size: 1.8em; margin-bottom: 0.5em; padding-bottom: 0; }
+        main h2 {
+            font-size: 1.4em;
+            margin-top: 2em;
+            border-bottom: 1px dashed var(--secondary-border-color);
+            padding-bottom: 0.5em;
+            display: flex;
+            align-items: center;
+            gap: 0.7em;
+        }
+        main h3 { font-size: 1.2em; margin-top: 1.5em; color: var(--accent-color-3); }
+        main a { color: var(--accent-color-1); text-decoration: none; border-bottom: 1px dotted; }
+        main a:hover { border-bottom-style: solid; }
+        main p { max-width: 75ch; line-height: 1.7; }
+        main hr { border: none; border-top: 2px dashed var(--primary-border-color); margin: 2.5em 0; }
+        main ul { padding-right: 20px; list-style-type: '» '; }
+        main ul li { margin-bottom: 0.5em; padding-right: 10px; }
+        main strong, main b { font-weight: bold; }
+        main code {
+            background-color: var(--button-bg);
+            padding: 3px 6px;
+            border: 1px solid var(--secondary-border-color);
+            font-size: 0.9em;
+        }
+
+        /* Tool Item Styling */
+        .tool-item {
+            display: flex;
+            align-items: stretch;
             justify-content: space-between;
-            flex-wrap: wrap;
-            gap: 20px;
-            padding: 1.2em 0;
-            border-bottom: 1px solid var(--border-color);
-            transition: background-color 0.4s ease-in-out;
+            gap: 15px;
+            padding: 1.2em 1em;
+            border: 1px solid var(--secondary-border-color);
+            margin-top: 1em;
+            transition: background-color 0.3s ease, border-color 0.3s ease;
+            border-left: 4px solid var(--accent-color-2);
+        }
+        .tool-item.highlighted {
+            background-color: var(--highlight-bg);
+            border-color: var(--accent-color-1);
         }
         .tool-main-content {
             display: flex;
             align-items: center;
-            gap: 15px; /* רווח בין האייקון לטקסט */
-            flex: 1;
+            gap: 15px;
+            flex-grow: 1;
         }
-        .tool-info { flex: 1; min-width: 250px; }
-        .tool-info h3 { margin: 0 0 0.2em 0; font-size: 1.1em; color: var(--text-color); } /* צבע טקסט רגיל לכותרת הכלי */
-        .tool-info p { margin: 0; color: #888; font-size: 0.9em; max-width: none; }
-        body.dark-mode .tool-info p { color: #aaa; }
-
-        .tool-actions { display: flex; gap: 10px; flex-shrink: 0; }
+        .tool-info h3 { margin: 0 0 0.3em 0; font-size: 1.15em; color: var(--text-color); }
+        .tool-info p { margin: 0; font-size: 0.9em; line-height: 1.5; color: var(--text-color); opacity: 0.7; }
+        
+        .tool-actions {
+            display: flex; flex-direction: column; gap: 8px; flex-shrink: 0; justify-content: center;
+        }
         .tool-actions a {
-            display: inline-block;
-            padding: 8px 14px;
-            border: 1px solid var(--button-border);
-            background-color: var(--button-bg);
-            color: var(--text-color);
-            text-decoration: none;
-            font-size: 0.9em;
-            white-space: nowrap;
-            transition: background-color 0.2s;
+            display: flex; align-items: center; gap: 8px; padding: 6px 12px;
+            border: 1px solid var(--primary-border-color); background-color: var(--button-bg);
+            color: var(--text-color); text-decoration: none; font-size: 0.9em;
+            white-space: nowrap; transition: all 0.2s ease;
         }
-        .tool-actions a:hover { background-color: var(--button-hover-bg); }
+        .tool-actions a:hover {
+            background-color: var(--button-hover-bg); border-color: var(--accent-color-1); color: var(--accent-color-1);
+        }
+        .tool-actions a i { width: 16px; height: 16px; }
 
+        /* Direct Link Icon */
         .link-icon {
-            position: relative;
-            display: inline-block;
-            width: 18px; /* גודל האייקון */
-            height: 18px;
-            line-height: 0;
-            background: none !important;
-            border: none !important;
-            padding: 0 !important;
-            text-decoration: none;
-            color: var(--text-color);
-            opacity: 0.4;
-            transition: opacity 0.2s;
-            cursor: pointer;
+            position: relative; width: 20px; height: 20px; color: var(--icon-color);
+            opacity: 0.5; transition: opacity 0.2s; cursor: pointer;
+            align-self: flex-start; margin-top: 4px;
         }
-        .link-icon:hover {
-            opacity: 1;
-        }
-        .link-icon svg {
-            vertical-align: middle;
-            width: 100%;
-            height: 100%;
-        }
-        .link-icon .icon-link,
-        .link-icon .icon-check {
-            position: absolute;
-            top: 0;
-            left: 0;
-            transition: opacity 0.2s ease-in-out, transform 0.2s ease-in-out;
-        }
-        .link-icon .icon-check {
-            opacity: 0;
-            transform: scale(0.8);
-            color: var(--accent-color);
-        }
-        .link-icon.copied .icon-link {
-            opacity: 0;
-            transform: scale(0.8);
-        }
-        .link-icon.copied .icon-check {
-            opacity: 1;
-            transform: scale(1);
-        }
+        .link-icon:hover { opacity: 1; }
+        .link-icon i { position: absolute; top: 0; left: 0; transition: opacity 0.2s ease, transform 0.2s ease; }
+        .link-icon .icon-check { opacity: 0; transform: scale(0.8); color: var(--accent-color-2); }
+        .link-icon.copied .icon-link { opacity: 0; transform: scale(0.8); }
+        .link-icon.copied .icon-check { opacity: 1; transform: scale(1); }
 
-        main h1 {
-            display: flex;
-            align-items: center;
-            gap: 0.5em;
-            font-size: 1.7em;
-            font-weight: bold;
+        /* Footer */
+        .site-footer {
+            padding: 20px; background-color: var(--header-footer-bg);
+            border-top: 2px solid var(--primary-border-color); text-align: center;
+            transition: background-color 0.3s ease, border-color 0.3s ease;
         }
-        main h1 .favicon-title {
-            width: 1.5em;
-            height: 1.5em;
-            vertical-align: middle;
-            transition: filter 0.2s;
+        .footer-links {
+            display: flex; justify-content: center; gap: 15px; flex-wrap: wrap; margin-bottom: 20px;
         }
-        body.dark-mode main h1 .favicon-title {
-            filter: brightness(0.8) invert(1) grayscale(0.2) contrast(1.2);
+        .footer-links a {
+            display: flex; align-items: center; gap: 8px; padding: 8px 15px;
+            border: 1px solid var(--primary-border-color); background-color: var(--button-bg);
+            color: var(--text-color); text-decoration: none; transition: all 0.2s ease;
+        }
+        .footer-links a:hover {
+            background-color: var(--button-hover-bg); border-color: var(--accent-color-1); color: var(--accent-color-1);
+        }
+        .footer-links a i { width: 16px; height: 16px; }
+        .footer-credits p { margin: 5px 0; font-size: 0.85em; opacity: 0.7; line-height: 1.5; }
+        .footer-credits a { color: var(--text-color); opacity: 0.8; text-decoration: underline; border: none; }
+        body.dark-mode .footer-credits a { color: var(--accent-color-1); }
+
+        /* Responsive adjustments */
+        @media (max-width: 600px) {
+            body { padding: 5px; }
+            .container { border: none; }
+            .site-header { padding: 10px 15px; }
+            main { padding: 10px 15px; }
+            .tool-item { flex-direction: column; align-items: flex-start; }
+            .tool-actions { flex-direction: row; width: 100%; margin-top: 10px; }
+            .tool-actions a { flex-grow: 1; justify-content: center; }
         }
     </style>
     <script src="https://nhlocal.github.io/general-settings.js"></script>
 </head>
 <body>
     <div class="container">
-        <header class="header-utils">
-            <button id="theme-toggle" title="שנה ערכת נושא"></button>
+        <header class="site-header">
+            <div class="site-title">
+                <i data-feather="terminal"></i>
+                <span>ארגז הכלים // NH Local</span>
+            </div>
+            <button id="theme-toggle" title="שנה ערכת נושא">
+                <i data-feather="sun" class="icon-sun"></i>
+                <i data-feather="moon" class="icon-moon"></i>
+            </button>
         </header>
+        
         <main id="content">
             <h1>ארגז הכלים של NH Local</h1>
 
 <p>אוסף כלים שימושיים וקלי משקל, כל אחד בקובץ HTML יחיד. נוצרו כדי לפתור בעיות קטנות במהירות, ישירות מהדפדפן.</p>
 
-<h2>הכלים</h2>
+<h2><i data-feather='tool'></i> הכלים</h2>
 
 <div class="tool-item" id="podcast_generator">
     <div class="tool-main-content">
         <a href="#podcast_generator" class="link-icon" onclick="copyDirectLink(this, event)" title="העתק קישור ישיר">
-            <span class="icon-link">
-                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.72"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.72-1.72"></path></svg>
-            </span>
-            <span class="icon-check">
-                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
-            </span>
+            <i data-feather="link" class="icon-link"></i>
+            <i data-feather="check" class="icon-check"></i>
         </a>
         <div class="tool-info">
             <h3>מחולל פודקאסטים</h3>
@@ -209,9 +252,9 @@
         </div>
     </div>
     <div class="tool-actions">
-        <a href="tools/podcast_generator.html">> הפעל</a>
+        <a href="tools/podcast_generator.html"><i data-feather="play-circle"></i> הפעל</a>
         <a href="https://raw.githubusercontent.com/nhlocal/tools/main/tools/podcast_generator.html" 
-           onclick="event.preventDefault(); forceDownload(this.href, 'podcast_generator.html');">> הורד</a>
+           onclick="event.preventDefault(); forceDownload(this.href, 'podcast_generator.html');"><i data-feather="download"></i> הורד</a>
 
     </div>
 </div>
@@ -220,12 +263,8 @@
 <div class="tool-item" id="subtitle_editor">
     <div class="tool-main-content">
         <a href="#subtitle_editor" class="link-icon" onclick="copyDirectLink(this, event)" title="העתק קישור ישיר">
-            <span class="icon-link">
-                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.72"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.72-1.72"></path></svg>
-            </span>
-            <span class="icon-check">
-                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
-            </span>
+            <i data-feather="link" class="icon-link"></i>
+            <i data-feather="check" class="icon-check"></i>
         </a>
         <div class="tool-info">
             <h3>עורך כתוביות</h3>
@@ -233,9 +272,9 @@
         </div>
     </div>
     <div class="tool-actions">
-        <a href="tools/subtitle_editor.html">> הפעל</a>
+        <a href="tools/subtitle_editor.html"><i data-feather="play-circle"></i> הפעל</a>
         <a href="https://raw.githubusercontent.com/nhlocal/tools/main/tools/subtitle_editor.html" 
-           onclick="event.preventDefault(); forceDownload(this.href, 'subtitle_editor.html');">> הורד</a>
+           onclick="event.preventDefault(); forceDownload(this.href, 'subtitle_editor.html');"><i data-feather="download"></i> הורד</a>
 
     </div>
 </div>
@@ -244,12 +283,8 @@
 <div class="tool-item" id="hurban_clock">
     <div class="tool-main-content">
         <a href="#hurban_clock" class="link-icon" onclick="copyDirectLink(this, event)" title="העתק קישור ישיר">
-            <span class="icon-link">
-                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.72"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.72-1.72"></path></svg>
-            </span>
-            <span class="icon-check">
-                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
-            </span>
+            <i data-feather="link" class="icon-link"></i>
+            <i data-feather="check" class="icon-check"></i>
         </a>
         <div class="tool-info">
             <h3>שעון החורבן</h3>
@@ -257,9 +292,9 @@
         </div>
     </div>
     <div class="tool-actions">
-        <a href="tools/hurban_clock.html">> הפעל</a>
+        <a href="tools/hurban_clock.html"><i data-feather="play-circle"></i> הפעל</a>
         <a href="https://raw.githubusercontent.com/nhlocal/tools/main/tools/hurban_clock.html" 
-           onclick="event.preventDefault(); forceDownload(this.href, 'hurban_clock.html');">> הורד</a>
+           onclick="event.preventDefault(); forceDownload(this.href, 'hurban_clock.html');"><i data-feather="download"></i> הורד</a>
 
     </div>
 </div>
@@ -268,12 +303,8 @@
 <div class="tool-item" id="the_enneagram">
     <div class="tool-main-content">
         <a href="#the_enneagram" class="link-icon" onclick="copyDirectLink(this, event)" title="העתק קישור ישיר">
-            <span class="icon-link">
-                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.72"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.72-1.72"></path></svg>
-            </span>
-            <span class="icon-check">
-                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
-            </span>
+            <i data-feather="link" class="icon-link"></i>
+            <i data-feather="check" class="icon-check"></i>
         </a>
         <div class="tool-info">
             <h3>מבחן אישיות אניאגרמה</h3>
@@ -281,10 +312,10 @@
         </div>
     </div>
     <div class="tool-actions">
-        <a href="tools/the_enneagram.html">> הפעל</a>
+        <a href="tools/the_enneagram.html"><i data-feather="play-circle"></i> הפעל</a>
         <a href="https://raw.githubusercontent.com/nhlocal/tools/main/tools/the_enneagram.html" 
-           onclick="event.preventDefault(); forceDownload(this.href, 'the_enneagram.html');">> הורד</a>
-        <a href="https://github.com/nhlocal/tools/tree/main/resources/the_enneagram">> משאבים</a>
+           onclick="event.preventDefault(); forceDownload(this.href, 'the_enneagram.html');"><i data-feather="download"></i> הורד</a>
+        <a href="https://github.com/nhlocal/tools/tree/main/resources/the_enneagram"><i data-feather="folder"></i> משאבים</a>
     </div>
 </div>
 
@@ -295,32 +326,30 @@
 
 <p><strong>וויב קוד הוא העתיד של התכנות.</strong></p>
 
-<hr />
-
-<h3>רישיון וקישורים</h3>
-
-<p>נוצר על ידי <strong>NH Local</strong>. הפרויקט מורשה תחת <a href="https://raw.githubusercontent.com/NHLOCAL/tools/main/LICENSE">רישיון MIT</a>.</p>
-
-<p><a href="https://github.com/NHLOCAL/tools">קוד מקור ב-GitHub</a> | <a href="https://nhlocal.github.io">אתר הפרויקטים הראשי</a> | <a href="https://blog.ze-kal.top">בלוג</a> | צור קשר: <a id="contact-link">טוען...</a></p>
-
         </main>
+
+        <footer class="site-footer">
+            <div class="footer-links">
+                 <a href="https://github.com/nhlocal/tools" target="_blank" rel="noopener noreferrer"><i data-feather="github"></i> קוד מקור</a>
+                 <a href="https://nhlocal.github.io" target="_blank" rel="noopener noreferrer"><i data-feather="archive"></i> פרויקטים</a>
+                 <a href="https://blog.ze-kal.top" target="_blank" rel="noopener noreferrer"><i data-feather="edit-3"></i> בלוג</a>
+                 <a id="contact-link" href="#"><i data-feather="mail"></i> צור קשר</a>
+            </div>
+            <div class="footer-credits">
+                <p>נוצר על ידי <strong>NH Local</strong>. מורשה תחת <a href="https://raw.githubusercontent.com/nhlocal/tools/main/LICENSE" target="_blank" rel="noopener noreferrer">רישיון MIT</a>.</p>
+                <p>עיצוב בהשראת מסופים, פיקסל-ארט ומשחקי רטרו.</p>
+            </div>
+        </footer>
     </div>
 
     <script>
-        // --- ★★★ הגדרות שמוזרקות מהסקריפט ★★★ ---
-        const GITHUB_USERNAME = 'nhlocal';
-        const GITHUB_REPO_NAME = 'tools';
-        // ---------------------------------------------
-
         const themeToggle = document.getElementById('theme-toggle');
 
         const applyTheme = (theme) => {
             if (theme === 'dark') {
                 document.body.classList.add('dark-mode');
-                themeToggle.textContent = '[מצב בהיר]';
             } else {
                 document.body.classList.remove('dark-mode');
-                themeToggle.textContent = '[מצב כהה]';
             }
             localStorage.setItem('theme', theme);
         };
@@ -348,7 +377,6 @@
             
             navigator.clipboard.writeText(fullUrl).then(() => {
                 if (linkElement.classList.contains('copied')) return;
-
                 linkElement.classList.add('copied');
                 setTimeout(() => {
                     linkElement.classList.remove('copied');
@@ -371,25 +399,23 @@
             } else {
                 contactLink.href = `mailto:${emailAddress}?subject=${subject}`;
             }
-            contactLink.textContent = emailAddress;
         }
 
         function scrollToElementFromHash() {
+            document.querySelectorAll('.highlighted').forEach(el => el.classList.remove('highlighted'));
             if (window.location.hash) {
                 try {
                     const element = document.querySelector(window.location.hash);
                     if (element) {
                         setTimeout(() => {
                             element.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                            element.style.backgroundColor = 'var(--highlight-bg)';
+                            element.classList.add('highlighted');
                             setTimeout(() => {
-                                element.style.backgroundColor = '';
+                                element.classList.remove('highlighted');
                             }, 2500);
                         }, 100);
                     }
-                } catch (e) {
-                    console.error("Could not scroll to element:", e);
-                }
+                } catch (e) { console.error("Could not scroll to element:", e); }
             }
         }
 
@@ -403,16 +429,7 @@
                                (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
             applyTheme(savedTheme);
             createDynamicMailLink();
-
-            const mainH1 = document.querySelector('main h1');
-            if (mainH1 && !mainH1.querySelector('.favicon-title')) {
-                const faviconImg = document.createElement('img');
-                faviconImg.src = 'favicon.png';
-                faviconImg.alt = 'favicon';
-                faviconImg.className = 'favicon-title';
-                faviconImg.setAttribute('aria-hidden', 'true');
-                mainH1.insertBefore(faviconImg, mainH1.firstChild);
-            }
+            feather.replace(); // Initialize Feather Icons
             scrollToElementFromHash();
         });
 
