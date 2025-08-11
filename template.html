@@ -134,11 +134,55 @@
         }
         .tool-actions a i, .footer-links a i { width: 16px; height: 16px; }
 
-        .link-icon { position: relative; width: 20px; height: 20px; color: var(--icon-color); opacity: 0.5; transition: all 0.2s ease; cursor: pointer; align-self: flex-start; margin-top: 4px; }
-        .link-icon:hover { opacity: 1; transform: scale(1.1); }
-        .link-icon::after { content: "הועתק!"; position: absolute; top: 50%; right: 120%; transform: translateY(-50%); background: var(--accent-color); color: var(--main-bg-color); padding: 2px 8px; font-size: 10px; font-weight: bold; border-radius: 4px; white-space: nowrap; opacity: 0; transition: opacity 0.2s ease, right 0.2s ease; pointer-events: none; }
-        .link-icon.copied { color: var(--accent-color); opacity: 1; }
-        .link-icon.copied::after { opacity: 1; right: 140%; }
+        .link-icon {
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 5px;
+            background: none;
+            border: 1px solid transparent;
+            color: var(--icon-color);
+            opacity: 0.6;
+            cursor: pointer;
+            border-radius: 0;
+            align-self: center;
+            transition: all 0.2s ease;
+        }
+        .link-icon:hover {
+            opacity: 1;
+            background-color: var(--button-bg);
+            border-color: var(--primary-border-color);
+            color: var(--text-color);
+        }
+        .link-icon::after {
+            content: "הועתק!";
+            position: absolute;
+            top: 50%;
+            right: 115%;
+            transform: translateY(-50%);
+            background: var(--accent-color);
+            color: var(--main-bg-color);
+            padding: 4px 8px;
+            font-size: 11px;
+            font-weight: bold;
+            border-radius: 0;
+            white-space: nowrap;
+            opacity: 0;
+            transition: opacity 0.2s ease, right 0.2s ease;
+            pointer-events: none;
+            z-index: 10;
+        }
+        .link-icon.copied, .link-icon.copied:hover {
+            opacity: 1;
+            color: var(--accent-color);
+            background-color: var(--button-bg);
+            border-color: var(--accent-color);
+        }
+        .link-icon.copied::after {
+            opacity: 1;
+            right: 125%;
+        }
         
         .site-footer { padding: 20px; background-color: var(--header-footer-bg); border-top: 2px solid var(--primary-border-color); text-align: center; transition: background-color 0.3s ease, border-color 0.3s ease; }
         .footer-credits p { margin: 5px 0; font-size: 0.85em; opacity: 0.7; line-height: 1.5; }
