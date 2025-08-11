@@ -102,9 +102,36 @@
         .tool-actions { flex-direction: column; flex-shrink: 0; justify-content: center; }
         .footer-links { justify-content: center; flex-wrap: wrap; margin-bottom: 20px; }
         
-        .tool-actions a, .footer-links a { display: flex; align-items: center; gap: 8px; padding: 6px 12px; border: 1px solid var(--primary-border-color); background-color: var(--button-bg); color: var(--text-color); text-decoration: none; font-size: 0.9em; white-space: nowrap; transition: all 0.2s ease; }
-        .footer-links a { padding: 8px 15px; }
-        .tool-actions a:hover, .footer-links a:hover { background-color: var(--button-hover-bg); border-color: var(--accent-color); color: var(--accent-color); }
+        .tool-actions a, .footer-links a {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 6px 12px;
+            border: 1px solid var(--primary-border-color);
+            background-color: var(--button-bg);
+            color: var(--text-color);
+            text-decoration: none;
+            font-size: 0.9em;
+            white-space: nowrap;
+            transition: all 0.15s ease-out;
+            border-radius: 0;
+            box-shadow: 2px 2px 0 var(--secondary-border-color);
+        }
+        .footer-links a {
+            padding: 8px 15px;
+        }
+        .tool-actions a:hover, .footer-links a:hover {
+            background-color: var(--button-hover-bg);
+            border-color: var(--accent-color);
+            color: var(--accent-color);
+            transform: translate(-2px, -2px);
+            box-shadow: 4px 4px 0 var(--accent-color);
+        }
+        .tool-actions a:active, .footer-links a:active {
+            transform: translate(0, 0);
+            box-shadow: 1px 1px 0 var(--accent-color);
+            transition-duration: 0.05s;
+        }
         .tool-actions a i, .footer-links a i { width: 16px; height: 16px; }
 
         .link-icon { position: relative; width: 20px; height: 20px; color: var(--icon-color); opacity: 0.5; transition: all 0.2s ease; cursor: pointer; align-self: flex-start; margin-top: 4px; }
