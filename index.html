@@ -12,38 +12,40 @@
     <style>
         :root {
             /* Light Theme */
-            --bg-color: #f2f2f2;
+            --bg-color: #f5f7fa;
             --main-bg-color: #ffffff;
-            --text-color: #1a1b26;
-            --primary-border-color: #dcdcdc;
-            --secondary-border-color: #e0e0e0;
-            --accent-color-1: #005a9e;
-            --accent-color-2: #007b5e;
-            --accent-color-3: #8a5a00;
-            --button-bg: #e9e9e9;
-            --button-hover-bg: #dcdcdc;
-            --header-footer-bg: #e9e9e9;
-            --highlight-bg: #fff59d;
-            --icon-color: #333;
-            --bg-grid-color: rgba(0, 0, 0, 0.05);
+            --text-color: #2d3748;
+            --secondary-text-color: #4a5568;
+            --primary-border-color: #e2e8f0;
+            --secondary-border-color: #edf2f7;
+            --accent-color-1: #4299e1;
+            --accent-color-2: #48bb78;
+            --accent-color-3: #ed8936;
+            --button-bg: #edf2f7;
+            --button-hover-bg: #e2e8f0;
+            --header-footer-bg: #ffffff;
+            --highlight-bg: #ebf8ff;
+            --icon-color: #4a5568;
+            --bg-grid-color: rgba(0, 0, 0, 0.04);
         }
 
         body.dark-mode {
-            /* Dark Theme (Tokyo Night inspired) */
-            --bg-color: #16161e;
-            --main-bg-color: #1a1b26;
-            --text-color: #dcdcdc; /* Improved contrast */
-            --primary-border-color: #414868;
-            --secondary-border-color: #2a2f41;
-            --accent-color-1: #7aa2f7;
-            --accent-color-2: #73daca;
-            --accent-color-3: #ff9e64;
-            --button-bg: #24283b;
-            --button-hover-bg: #414868;
-            --header-footer-bg: #1f2335;
-            --highlight-bg: #414868;
-            --icon-color: #c0caf5;
-            --bg-grid-color: rgba(255, 255, 255, 0.04);
+            /* Dark Theme (High Contrast) */
+            --bg-color: #1a1a1a;
+            --main-bg-color: #242424;
+            --text-color: #e0e0e0;
+            --secondary-text-color: #b3b3b3;
+            --primary-border-color: #444444;
+            --secondary-border-color: #333333;
+            --accent-color-1: #6bb8ff;
+            --accent-color-2: #55d4a7;
+            --accent-color-3: #ffc971;
+            --button-bg: #3a3a3a;
+            --button-hover-bg: #4f4f4f;
+            --header-footer-bg: #202020;
+            --highlight-bg: #3f3f3f;
+            --icon-color: #e0e0e0;
+            --bg-grid-color: rgba(255, 255, 255, 0.07);
         }
 
         html { scroll-behavior: smooth; }
@@ -58,30 +60,22 @@
             justify-content: center;
             align-items: flex-start;
             min-height: 100vh;
-            /* Tetris-style grid background */
             background-image:
                 linear-gradient(var(--bg-grid-color) 1px, transparent 1px),
                 linear-gradient(to right, var(--bg-grid-color) 1px, transparent 1px);
             background-size: 25px 25px;
         }
         .container {
-            max-width: 900px;
-            width: 100%;
-            margin: 0 auto;
+            max-width: 900px; width: 100%; margin: 0 auto;
             border: 2px solid var(--primary-border-color);
             background-color: var(--main-bg-color);
             transition: border-color 0.3s ease, background-color 0.3s ease;
         }
 
-        .site-header {
-            display: flex; justify-content: space-between; align-items: center;
-            padding: 10px 20px; background-color: var(--header-footer-bg);
-            border-bottom: 2px solid var(--primary-border-color);
-            transition: background-color 0.3s ease, border-color 0.3s ease;
-        }
+        .site-header { display: flex; justify-content: space-between; align-items: center; padding: 10px 20px; background-color: var(--header-footer-bg); border-bottom: 2px solid var(--primary-border-color); transition: background-color 0.3s ease, border-color 0.3s ease; }
         .site-title { display: flex; align-items: center; gap: 10px; font-size: 1.1em; font-weight: bold; }
         .site-title i { color: var(--accent-color-2); }
-        #theme-toggle { background: none; border: 1px solid transparent; border-radius: 4px; cursor: pointer; padding: 5px; color: var(--icon-color); line-height: 0; }
+        #theme-toggle { background: none; border: 1px solid transparent; border-radius: 4px; cursor: pointer; padding: 5px; color: var(--icon-color); line-height: 0; transition: border-color 0.2s; }
         #theme-toggle:hover { border-color: var(--primary-border-color); }
         #theme-toggle .icon-moon { display: none; }
         body.dark-mode #theme-toggle .icon-sun { display: none; }
@@ -106,13 +100,16 @@
         .tool-item.highlighted { background-color: var(--highlight-bg); border-color: var(--accent-color-1); border-left-color: var(--accent-color-1); }
         .tool-main-content { display: flex; align-items: center; gap: 15px; flex-grow: 1; }
         .tool-info h3 { margin: 0 0 0.3em 0; font-size: 1.15em; color: var(--text-color); }
-        .tool-info p { margin: 0; font-size: 0.9em; line-height: 1.5; color: var(--text-color); opacity: 0.8; }
+        .tool-info p { margin: 0; font-size: 0.9em; line-height: 1.5; color: var(--secondary-text-color); }
         
-        .tool-actions { display: flex; flex-direction: column; gap: 8px; flex-shrink: 0; justify-content: center; }
-        .tool-actions a { display: flex; align-items: center; gap: 8px; padding: 6px 12px; border: 1px solid var(--primary-border-color); background-color: var(--button-bg); color: var(--text-color); text-decoration: none; font-size: 0.9em; white-space: nowrap; transition: all 0.2s ease; }
-        .tool-actions a:hover { background-color: var(--button-hover-bg); border-color: var(--accent-color-1); color: var(--accent-color-1); }
-        body.dark-mode .tool-actions a:hover { color: var(--accent-color-2); border-color: var(--accent-color-2); }
-        .tool-actions a i { width: 16px; height: 16px; }
+        .tool-actions, .footer-links { display: flex; gap: 8px; }
+        .tool-actions { flex-direction: column; flex-shrink: 0; justify-content: center; }
+        .footer-links { justify-content: center; flex-wrap: wrap; margin-bottom: 20px; }
+        
+        .tool-actions a, .footer-links a { display: flex; align-items: center; gap: 8px; padding: 6px 12px; border: 1px solid var(--primary-border-color); background-color: var(--button-bg); color: var(--text-color); text-decoration: none; font-size: 0.9em; white-space: nowrap; transition: all 0.2s ease; }
+        .footer-links a { padding: 8px 15px; }
+        .tool-actions a:hover, .footer-links a:hover { background-color: var(--button-hover-bg); border-color: var(--accent-color-1); color: var(--accent-color-1); }
+        .tool-actions a i, .footer-links a i { width: 16px; height: 16px; }
 
         .link-icon { position: relative; width: 20px; height: 20px; color: var(--icon-color); opacity: 0.5; transition: all 0.2s ease; cursor: pointer; align-self: flex-start; margin-top: 4px; }
         .link-icon:hover { opacity: 1; transform: scale(1.1); }
@@ -121,11 +118,6 @@
         .link-icon.copied::after { opacity: 1; right: 140%; }
         
         .site-footer { padding: 20px; background-color: var(--header-footer-bg); border-top: 2px solid var(--primary-border-color); text-align: center; transition: background-color 0.3s ease, border-color 0.3s ease; }
-        .footer-links { display: flex; justify-content: center; gap: 15px; flex-wrap: wrap; margin-bottom: 20px; }
-        .footer-links a { display: flex; align-items: center; gap: 8px; padding: 8px 15px; border: 1px solid var(--primary-border-color); background-color: var(--button-bg); color: var(--text-color); text-decoration: none; transition: all 0.2s ease; }
-        .footer-links a:hover { background-color: var(--button-hover-bg); border-color: var(--accent-color-1); color: var(--accent-color-1); }
-        body.dark-mode .footer-links a:hover { color: var(--accent-color-2); border-color: var(--accent-color-2); }
-        .footer-links a i { width: 16px; height: 16px; }
         .footer-credits p { margin: 5px 0; font-size: 0.85em; opacity: 0.7; line-height: 1.5; }
         .footer-credits a { color: var(--text-color); opacity: 0.8; text-decoration: underline; border: none; }
         body.dark-mode .footer-credits a { color: var(--accent-color-1); }
@@ -157,7 +149,7 @@
 <div class="tool-item" id="podcast_generator">
     <div class="tool-main-content">
         <a href="#podcast_generator" class="link-icon" onclick="copyDirectLink(this, event)" title="העתק קישור ישיר">
-            <i data-feather="hash"></i>
+            <i data-feather="link"></i>
         </a>
         <div class="tool-info">
             <h3>מחולל פודקאסטים</h3>
@@ -176,7 +168,7 @@
 <div class="tool-item" id="subtitle_editor">
     <div class="tool-main-content">
         <a href="#subtitle_editor" class="link-icon" onclick="copyDirectLink(this, event)" title="העתק קישור ישיר">
-            <i data-feather="hash"></i>
+            <i data-feather="link"></i>
         </a>
         <div class="tool-info">
             <h3>עורך כתוביות</h3>
@@ -195,7 +187,7 @@
 <div class="tool-item" id="hurban_clock">
     <div class="tool-main-content">
         <a href="#hurban_clock" class="link-icon" onclick="copyDirectLink(this, event)" title="העתק קישור ישיר">
-            <i data-feather="hash"></i>
+            <i data-feather="link"></i>
         </a>
         <div class="tool-info">
             <h3>שעון החורבן</h3>
@@ -214,7 +206,7 @@
 <div class="tool-item" id="the_enneagram">
     <div class="tool-main-content">
         <a href="#the_enneagram" class="link-icon" onclick="copyDirectLink(this, event)" title="העתק קישור ישיר">
-            <i data-feather="hash"></i>
+            <i data-feather="link"></i>
         </a>
         <div class="tool-info">
             <h3>מבחן אישיות אניאגרמה</h3>

@@ -13,12 +13,12 @@ GITHUB_REPO_NAME = 'tools'
 # ביטוי רגולרי למציאת פריטי רשימה בפורמט: * [Name](path) - Description
 TOOL_PATTERN = re.compile(r"^\*\s*\[(.*?)\]\((.*?)\)\s*-\s*(.*)$")
 
-# תבנית HTML מעודכנת עבור פריט, ללא סימן V
+# --- שינוי: סמל קישור במקום סולמית ---
 TOOL_ITEM_TEMPLATE = """
 <div class="tool-item" id="{tool_id}">
     <div class="tool-main-content">
         <a href="#{tool_id}" class="link-icon" onclick="copyDirectLink(this, event)" title="העתק קישור ישיר">
-            <i data-feather="hash"></i>
+            <i data-feather="link"></i>
         </a>
         <div class="tool-info">
             <h3>{name}</h3>
@@ -98,7 +98,6 @@ def main():
     markdown_converter = Markdown(extras=["fenced-code-blocks", "tables", "cuddled-lists"])
     html_before = markdown_converter.convert(before_tools.strip())
     
-    # --- הוספת ה-Favicon לכותרת הראשית ---
     html_before = re.sub(r'<h1>(.*?)</h1>', r'<h1><img src="favicon.png" alt="" class="favicon-title" aria-hidden="true" /> \1</h1>', html_before, 1)
 
     html_after = markdown_converter.convert(after_tools.strip())
