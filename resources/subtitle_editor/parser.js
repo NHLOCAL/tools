@@ -8,7 +8,8 @@
 export const timeStringToSeconds = (timeStr) => {
     if (!timeStr || typeof timeStr !== 'string') return 0;
     let normalizedTime = timeStr.replace(',', '.');
-    // Heuristic to handle frame-based timecodes like 00:00:01:15 by converting the last colon to a dot.
+    // Heuristic to handle frame-based or colon-separated ms timecodes 
+    // like 00:00:01:15 or 00:22:201 by converting the last colon to a dot.
     const colonCount = (normalizedTime.match(/:/g) || []).length;
     if (colonCount === 3 || (colonCount === 2 && !normalizedTime.includes('.'))) {
          const lastColonIndex = normalizedTime.lastIndexOf(':');
@@ -69,7 +70,8 @@ function parseVttOrSrt(content) {
 
 function parseSimpleTimestampFormat(content) {
     let subs = [];
-    const timestampRegex = /(\[(\d{1,2}:)?\d{2}:\d{2}[.,]\d{1,3}\])/;
+    // UPDATED: Added ':' to the character class to accept it as a millisecond separator
+    const timestampRegex = /(\[(\d{1,2}:)?\d{2}:\d{2}[.,:]\d{1,3}\])/;
     const parts = content.trim().split(timestampRegex);
     if (parts.length < 3) return null; 
 
@@ -139,7 +141,7 @@ export function parseTranscriptContent(content) {
         }
     }
     // 3. Try the simple [timestamp] format
-    else if (/^\[(\d{1,2}:)?\d{2}:\d{2}[.,]\d{1,3}\]/.test(trimmedContent)) {
+    else if (/^\[(\d{1,2}:)?\d{2}:\d{2}[.,:]\d{1,3}\]/.test(trimmedContent)) { // UPDATED: Also updated the initial test regex
         parsedData = parseSimpleTimestampFormat(trimmedContent);
          if (parsedData) {
             format = 'simple';
