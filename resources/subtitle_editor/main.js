@@ -48,7 +48,7 @@ document.addEventListener('DOMContentLoaded', () => {
         viewToggleTextBtn = document.getElementById('view-toggle-text');
 
     // --- State ---
-    let state = { subtitles: [], mediaURL: null, mediaFile: null, activeSubtitleId: null, wasPlayingBeforeEdit: false };
+    let state = { subtitles: [], sourceFormat: null, mediaURL: null, mediaFile: null, activeSubtitleId: null, wasPlayingBeforeEdit: false };
     let currentView = 'list'; // 'list' or 'text'
     let typingTimeout = null, parseTimeout = null, searchTimeout = null;
     let historyStack = [], redoStack = [];
@@ -80,6 +80,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (state.subtitles && state.subtitles.length > 0) {
             const dataToSave = {
                 subtitles: state.subtitles,
+                sourceFormat: state.sourceFormat,
                 mediaFileName: state.mediaFile?.name || 'קובץ לא ידוע'
             };
             localStorage.setItem('subtitleEditorAutosave', JSON.stringify(dataToSave));
@@ -94,11 +95,23 @@ document.addEventListener('DOMContentLoaded', () => {
     };
     
     const recordHistory = (isInitial = false) => {
+        // We now save the entire state object, including the format
+        const currentState = JSON.parse(JSON.stringify({ subtitles: state.subtitles, sourceFormat: state.sourceFormat }));
+        
         if (historyStack.length === 0 && !isInitial) {
-             historyStack.push(JSON.parse(JSON.stringify(state.subtitles)));
+             historyStack.push(currentState);
         }
-        historyStack.push(JSON.parse(JSON.stringify(state.subtitles)));
+        historyStack.push(currentState);
         redoStack = []; 
+        updateHistoryButtons();
+        saveToLocalStorage();
+    };
+    
+    const restoreStateFromHistory = (historyEntry) => {
+        state.subtitles = historyEntry.subtitles;
+        state.sourceFormat = historyEntry.sourceFormat;
+        renderCurrentView();
+        performSearch();
         updateHistoryButtons();
         saveToLocalStorage();
     };
@@ -113,11 +126,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const undo = () => {
         if (historyStack.length < 2) return;
         redoStack.push(historyStack.pop());
-        state.subtitles = JSON.parse(JSON.stringify(historyStack[historyStack.length - 1]));
-        renderCurrentView();
-        performSearch();
-        updateHistoryButtons();
-        saveToLocalStorage();
+        const prevState = historyStack[historyStack.length - 1];
+        restoreStateFromHistory(prevState);
         showNotification('פעולה בוטלה');
     };
 
@@ -125,11 +135,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (redoStack.length === 0) return;
         const nextState = redoStack.pop();
         historyStack.push(nextState);
-        state.subtitles = JSON.parse(JSON.stringify(nextState));
-        renderCurrentView();
-        performSearch();
-        updateHistoryButtons();
-        saveToLocalStorage();
+        restoreStateFromHistory(nextState);
         showNotification('פעולה שוחזרה');
     };
     
@@ -140,6 +146,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 const parsedData = JSON.parse(savedData);
                 if (parsedData.subtitles && parsedData.subtitles.length > 0) {
                     state.subtitles = parsedData.subtitles;
+                    state.sourceFormat = parsedData.sourceFormat || null;
                     transcriptTextInput.value = JSON.stringify(parsedData.subtitles, null, 2);
                     transcriptFileName.textContent = `שוחזר סשן עבור: ${parsedData.mediaFileName || 'קובץ לא ידוע'}`;
                     showNotification('סשן קודם שוחזר. יש לבחור מחדש את קובץ המדיה.');
@@ -154,9 +161,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // --- Parsing and File Handling ---
     const processTranscriptContent = (content) => {
-        const parsed = parseTranscriptContent(content);
-        if (parsed) {
-            state.subtitles = parsed;
+        const result = parseTranscriptContent(content);
+        if (result) {
+            state.subtitles = result.data;
+            state.sourceFormat = result.format;
             checkInputs();
             return true;
         }
@@ -215,7 +223,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const renderSubtitleList = () => {
         subtitleList.innerHTML = '';
         const sortedSubs = [...state.subtitles].sort((a,b) => timeStringToSeconds(a.start_time) - timeStringToSeconds(b.start_time));
-        state.subtitles = sortedSubs; // Keep state sorted
+        state.subtitles = sortedSubs; 
 
         subtitleList.insertAdjacentHTML('beforeend', createAddSubGapHTML('before_first'));
 
@@ -232,14 +240,17 @@ document.addEventListener('DOMContentLoaded', () => {
                             <span>→</span>
                             <input type="text" class="time-input end-time" value="${displayEndTime}">
                         </div>
-                        <textarea class="text-input">${sub.text || ''}</textarea>
+                        <textarea class="text-input"></textarea>
                     </div>
                     <div class="subtitle-item-actions">
                         <button class="delete-sub-btn" title="מחק כתובית"><span class="material-symbols-outlined">delete</span></button>
                     </div>
                 </div>`;
             const subItemElement = tempDiv.firstElementChild;
-            autoResizeTextarea(subItemElement.querySelector('.text-input'));
+            // Set text content to preserve newlines correctly in textarea
+            const textarea = subItemElement.querySelector('.text-input');
+            textarea.textContent = sub.text || '';
+            autoResizeTextarea(textarea);
             subtitleList.appendChild(subItemElement);
             subtitleList.insertAdjacentHTML('beforeend', createAddSubGapHTML(sub.id));
         });
@@ -248,30 +259,36 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const renderInteractiveText = () => {
         const sortedSubs = [...state.subtitles].sort((a,b) => timeStringToSeconds(a.start_time) - timeStringToSeconds(b.start_time));
-        state.subtitles = sortedSubs; // Keep state sorted
+        state.subtitles = sortedSubs;
         
         let html = "";
-        for (let i = 0; i < sortedSubs.length; i++) {
-            const currentSub = sortedSubs[i];
-            let textToAdd = `<span data-id="${currentSub.id}">${(currentSub.text || '').trim()}</span>`;
+        // If the source was the simple format, preserve its structure
+        if (state.sourceFormat === 'simple') {
+            html = sortedSubs.map(sub => `<span data-id="${sub.id}">${(sub.text || '').trim()}</span>`).join('<br><br>');
+        } else {
+            // Otherwise, use the "smart" joining logic
+            for (let i = 0; i < sortedSubs.length; i++) {
+                const currentSub = sortedSubs[i];
+                let textToAdd = `<span data-id="${currentSub.id}">${(currentSub.text || '').trim()}</span>`;
 
-            if (i > 0) {
-                const prevSub = sortedSubs[i - 1];
-                const prevText = (prevSub.text || '').trim();
-                const prevTextEndsWithPeriod = /\.$/.test(prevText);
-                const prevTextEndsWithComma = /,$/.test(prevText);
-                const prevTextEndsStrongSentence = /[?!]$/.test(prevText);
-                const gap = timeStringToSeconds(currentSub.start_time) - timeStringToSeconds(prevSub.end_time);
+                if (i > 0) {
+                    const prevSub = sortedSubs[i - 1];
+                    const prevText = (prevSub.text || '').trim();
+                    const prevTextEndsWithPeriod = /\.$/.test(prevText);
+                    const prevTextEndsWithComma = /,$/.test(prevText);
+                    const prevTextEndsStrongSentence = /[?!]$/.test(prevText);
+                    const gap = timeStringToSeconds(currentSub.start_time) - timeStringToSeconds(prevSub.end_time);
 
-                if (!prevTextEndsWithPeriod && !prevTextEndsWithComma) {
-                    html += ' ' + textToAdd;
-                } else if (gap > 1.5 || prevTextEndsStrongSentence) {
-                    html += '<br><br>' + textToAdd;
+                    if (!prevTextEndsWithPeriod && !prevTextEndsWithComma) {
+                        html += ' ' + textToAdd;
+                    } else if (gap > 1.5 || prevTextEndsStrongSentence) {
+                        html += '<br><br>' + textToAdd;
+                    } else {
+                        html += ' ' + textToAdd;
+                    } 
                 } else {
-                    html += ' ' + textToAdd;
-                } 
-            } else {
-                html += textToAdd;
+                    html += textToAdd;
+                }
             }
         }
         interactiveTextView.innerHTML = html;
@@ -512,7 +529,6 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     
     interactiveTextView.addEventListener('keydown', e => {
-        // Allow navigation, selection, etc.
         const allowedKeys = ['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'Home', 'End', 'PageUp', 'PageDown'];
         if (allowedKeys.includes(e.key) || e.ctrlKey || e.metaKey) {
             return;
@@ -618,6 +634,13 @@ document.addEventListener('DOMContentLoaded', () => {
     const generatePlainTextContent = () => {
         const sortedSubs = [...state.subtitles].sort((a,b) => timeStringToSeconds(a.start_time) - timeStringToSeconds(b.start_time));
         if (sortedSubs.length === 0) return "";
+        
+        // If the source was the simple format, preserve its structure for download
+        if (state.sourceFormat === 'simple') {
+            return sortedSubs.map(sub => (sub.text || '').trim()).join('\n\n');
+        }
+        
+        // Otherwise, use the "smart" joining logic
         let fullText = "";
         for (let i = 0; i < sortedSubs.length; i++) {
             const currentSub = sortedSubs[i], textToAdd = (currentSub.text || '').trim();
