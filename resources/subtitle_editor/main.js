@@ -90,12 +90,8 @@ document.addEventListener('DOMContentLoaded', () => {
         redoBtn.disabled = redoStack.length === 0;
     };
     
-    const recordHistory = (isInitial = false) => {
+    const recordHistory = () => {
         const currentState = JSON.parse(JSON.stringify({ subtitles: state.subtitles, sourceFormat: state.sourceFormat }));
-        
-        if (historyStack.length === 0 && !isInitial) {
-             historyStack.push(currentState);
-        }
         historyStack.push(currentState);
         redoStack = []; 
         updateHistoryButtons();
@@ -112,6 +108,7 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     const updateAndRefreshUI = (notificationMsg) => {
+        clearTimeout(typingTimeout);
         recordHistory();
         renderCurrentView();
         performSearch();
@@ -119,7 +116,8 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     const undo = () => {
-        if (historyStack.length < 2) return;
+        clearTimeout(typingTimeout);
+        if (historyStack.length <= 1) return;
         redoStack.push(historyStack.pop());
         const prevState = historyStack[historyStack.length - 1];
         restoreStateFromHistory(prevState);
@@ -127,6 +125,7 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     const redo = () => {
+        clearTimeout(typingTimeout);
         if (redoStack.length === 0) return;
         const nextState = redoStack.pop();
         historyStack.push(nextState);
@@ -355,7 +354,7 @@ document.addEventListener('DOMContentLoaded', () => {
     processButton.addEventListener('click', () => {
         historyStack = [];
         redoStack = [];
-        recordHistory(true);
+        recordHistory();
         renderUI();
     });
     
@@ -625,6 +624,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     replaceOneBtn.addEventListener('click', () => {
+        clearTimeout(typingTimeout);
         const findText = searchInput.value;
         const replaceText = replaceInput.value;
         if (!findText || currentSearchIndex < 0 || searchResults.length === 0) return;
