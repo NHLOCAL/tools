@@ -560,7 +560,13 @@ document.addEventListener('DOMContentLoaded', () => {
         const findRegex = new RegExp(query.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&'), 'gi');
         
         searchResults = [];
-        const elementsToSearch = document.querySelectorAll('#subtitle-list .text-input, #interactive-text-view span[data-id]');
+
+        let elementsToSearch;
+        if (currentView === 'list') {
+            elementsToSearch = document.querySelectorAll('#subtitle-list .text-input');
+        } else { // 'text' view
+            elementsToSearch = document.querySelectorAll('#interactive-text-view span[data-id]');
+        }
 
         elementsToSearch.forEach(element => {
             const subId = element.closest('[data-id]').dataset.id;
