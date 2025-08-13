@@ -85,7 +85,6 @@ input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; height: 16px
 .subtitle-item { position: relative; background-color: var(--md-sys-color-surface); border: 1px solid var(--md-sys-color-surface-variant); border-radius: var(--border-radius-small); padding: 1rem; margin-bottom: 0; cursor: pointer; transition: all 0.3s ease-in-out; display: grid; grid-template-columns: 1fr auto; gap: 0.75rem 1rem; align-items: start;}
 .subtitle-item:hover { border-color: var(--md-sys-color-primary); box-shadow: 0 2px 6px rgba(0,0,0,0.08); }
 .subtitle-item.active { background-color: var(--md-sys-color-primary-container); border-color: var(--md-sys-color-primary); transform: scale(1.02); }
-.subtitle-item.search-hit { outline: 2px solid var(--md-sys-color-secondary); outline-offset: 3px; }
 .subtitle-item-main { grid-column: 1 / 2; display: flex; flex-direction: column; gap: 0.75rem;}
 .subtitle-item-actions { grid-column: 2 / 3; }
 .subtitle-item .time-inputs { display: flex; gap: 0.5rem; align-items: center; direction: ltr; }
@@ -104,23 +103,22 @@ input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; height: 16px
 #interactive-text-view span[data-id] { cursor: pointer; transition: background-color 0.2s; border-radius: 4px; }
 #interactive-text-view span[data-id]:hover { background-color: #e0d8f0; }
 #interactive-text-view span[data-id].active { background-color: var(--md-sys-color-primary-container); color: var(--md-sys-color-on-primary-container); }
-#interactive-text-view span[data-id].search-hit { outline: 2px solid var(--md-sys-color-secondary); outline-offset: 2px; }
 #notification { position: fixed; bottom: -100px; left: 50%; transform: translateX(-50%); background-color: var(--md-sys-color-on-background); color: var(--md-sys-color-background); padding: 12px 24px; border-radius: 99px; box-shadow: 0 4px 12px rgba(0,0,0,0.2); opacity: 0; visibility: hidden; transition: all 0.4s ease-in-out; z-index: 1000; }
 #notification.show { opacity: 1; visibility: visible; bottom: 40px; }
 #notification.error { background-color: var(--md-sys-color-error); color: var(--md-sys-color-on-error-container); }
 
 /* Search and Highlight Styles */
+.subtitle-item.search-hit, #interactive-text-view span[data-id].search-hit {
+    outline: 2px solid var(--md-sys-color-secondary);
+    outline-offset: 2px;
+}
 mark.search-match {
     background-color: #fceb58;
     color: var(--md-sys-color-on-background);
     border-radius: 3px;
     padding: 0 2px;
 }
-.scrolled {
-    transition: box-shadow 0.3s;
-    box-shadow: 0 0 0 2px var(--md-sys-color-primary) inset;
-}
-.scrolled mark.search-match {
+mark.search-match.current-match {
     background-color: #ffb434;
     font-weight: 600;
 }

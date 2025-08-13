@@ -71,10 +71,6 @@ document.addEventListener('DOMContentLoaded', () => {
         return h > 0 ? `${h}:${m}:${s}` : `${m}:${s}`;
     };
     
-    const autoResizeTextarea = (el) => {
-        setTimeout(() => { el.style.height = 'auto'; el.style.height = `${el.scrollHeight}px`; }, 0);
-    };
-
     // --- Local Storage & History (Undo/Redo) ---
     const saveToLocalStorage = () => {
         if (state.subtitles && state.subtitles.length > 0) {
@@ -95,7 +91,6 @@ document.addEventListener('DOMContentLoaded', () => {
     };
     
     const recordHistory = (isInitial = false) => {
-        // We now save the entire state object, including the format
         const currentState = JSON.parse(JSON.stringify({ subtitles: state.subtitles, sourceFormat: state.sourceFormat }));
         
         if (historyStack.length === 0 && !isInitial) {
@@ -247,7 +242,6 @@ document.addEventListener('DOMContentLoaded', () => {
                     </div>
                 </div>`;
             const subItemElement = tempDiv.firstElementChild;
-            // Set text content to preserve newlines correctly
             const textInput = subItemElement.querySelector('.text-input');
             textInput.textContent = sub.text || '';
             subtitleList.appendChild(subItemElement);
@@ -261,11 +255,9 @@ document.addEventListener('DOMContentLoaded', () => {
         state.subtitles = sortedSubs;
         
         let html = "";
-        // If the source was the simple format, preserve its structure
         if (state.sourceFormat === 'simple') {
             html = sortedSubs.map(sub => `<span data-id="${sub.id}">${(sub.text || '').trim()}</span>`).join('<br><br>');
         } else {
-            // Otherwise, use the "smart" joining logic
             for (let i = 0; i < sortedSubs.length; i++) {
                 const currentSub = sortedSubs[i];
                 let textToAdd = `<span data-id="${currentSub.id}">${(currentSub.text || '').trim()}</span>`;
@@ -310,7 +302,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const currentSub = state.subtitles.find(s => mediaPlayer.currentTime >= timeStringToSeconds(s.start_time) && mediaPlayer.currentTime < timeStringToSeconds(s.end_time));
         if (currentSub?.id === state.activeSubtitleId) return;
 
-        const shouldBlockScroll = document.querySelector('.subtitle-item input:focus, .subtitle-item .text-input:focus, .subtitle-item.search-hit:hover, .add-sub-gap:hover, #interactive-text-view:focus');
+        const shouldBlockScroll = document.querySelector('.subtitle-item input:focus, .subtitle-item .text-input:focus, #interactive-text-view:focus');
         
         if (currentView === 'list') {
             document.querySelector(`.subtitle-item.active`)?.classList.remove('active');
@@ -465,7 +457,7 @@ document.addEventListener('DOMContentLoaded', () => {
             return;
         }
         const subItem = target.closest('.subtitle-item');
-        if(subItem && !target.closest('input, .text-input, button')) {
+        if(subItem && !target.closest('input, .text-input, button, mark')) {
             mediaPlayer.currentTime = timeStringToSeconds(subItem.querySelector('.start-time').value);
             if (mediaPlayer.paused) mediaPlayer.play();
         }
@@ -489,7 +481,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // --- Interactive Text View Logic ---
     interactiveTextView.addEventListener('click', e => {
         const span = e.target.closest('span[data-id]');
-        if (span) {
+        if (span && !e.target.closest('mark')) {
             const subId = span.dataset.id;
             const sub = state.subtitles.find(s => s.id == subId);
             if (sub) mediaPlayer.currentTime = timeStringToSeconds(sub.start_time);
@@ -546,7 +538,6 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
         document.querySelectorAll('.search-hit').forEach(el => el.classList.remove('search-hit'));
-        document.querySelectorAll('.scrolled').forEach(el => el.classList.remove('scrolled'));
         searchResults = []; currentSearchIndex = -1; searchResultsDisplay.textContent = '';
         searchPrevBtn.disabled = true; searchNextBtn.disabled = true; replaceOneBtn.disabled = true; replaceAllBtn.disabled = true;
     };
@@ -559,42 +550,55 @@ document.addEventListener('DOMContentLoaded', () => {
         replaceAllBtn.disabled = false;
         const findRegex = new RegExp(query.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&'), 'gi');
         
-        searchResults = state.subtitles
-            .filter(sub => (sub.text || '').match(findRegex))
-            .map(sub => sub.id);
-        
-        searchResults.forEach(id => {
-            const highlight = (element) => {
-                if (!element) return;
-                const newHtml = element.textContent.replace(findRegex, match => `<mark class="search-match">${match}</mark>`);
+        searchResults = [];
+        const elementsToSearch = document.querySelectorAll('#subtitle-list .text-input, #interactive-text-view span[data-id]');
+
+        elementsToSearch.forEach(element => {
+            const subId = element.closest('[data-id]').dataset.id;
+            const text = element.textContent;
+            if (text.match(findRegex)) {
+                const newHtml = text.replace(findRegex, match => `<mark class="search-match">${match}</mark>`);
                 element.innerHTML = newHtml;
                 (element.closest('.subtitle-item') || element).classList.add('search-hit');
-            };
-            highlight(document.querySelector(`.subtitle-item[data-id="${id}"] .text-input`));
-            highlight(document.querySelector(`#interactive-text-view span[data-id="${id}"]`));
+                
+                element.querySelectorAll('mark.search-match').forEach(markNode => {
+                    searchResults.push({
+                        subId: subId,
+                        element: element,
+                        domNode: markNode
+                    });
+                });
+            }
         });
         
         const hasResults = searchResults.length > 0;
         searchPrevBtn.disabled = !hasResults; searchNextBtn.disabled = !hasResults; replaceOneBtn.disabled = !hasResults;
 
-        if (hasResults) { currentSearchIndex = 0; navigateToSearchResult(0); } 
-        else { currentSearchIndex = -1; searchResultsDisplay.textContent = '0'; }
+        if (hasResults) { 
+            currentSearchIndex = 0; 
+            navigateToSearchResult(0); 
+        } else { 
+            currentSearchIndex = -1; 
+            searchResultsDisplay.textContent = '0/0'; 
+        }
     };
     
     const navigateToSearchResult = (index) => {
         if (searchResults.length === 0) return;
-        currentSearchIndex = (index + searchResults.length) % searchResults.length;
-        const targetId = searchResults[currentSearchIndex];
-        
-        const targetElement = (currentView === 'list') 
-            ? document.querySelector(`.subtitle-item[data-id="${targetId}"]`)
-            : document.querySelector(`#interactive-text-view span[data-id="${targetId}"]`);
-        
-        if (targetElement) {
-            document.querySelectorAll('.scrolled').forEach(el => el.classList.remove('scrolled'));
-            targetElement.classList.add('scrolled');
-            targetElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
+
+        if (currentSearchIndex > -1 && searchResults[currentSearchIndex]) {
+            searchResults[currentSearchIndex].domNode.classList.remove('current-match');
         }
+
+        currentSearchIndex = (index + searchResults.length) % searchResults.length;
+        const currentMatch = searchResults[currentSearchIndex];
+        
+        if (currentMatch) {
+            currentMatch.domNode.classList.add('current-match');
+            const container = currentMatch.element.closest('.subtitle-item') || currentMatch.element;
+            container.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+        
         searchResultsDisplay.textContent = `${currentSearchIndex + 1}/${searchResults.length}`;
     };
 
@@ -624,12 +628,28 @@ document.addEventListener('DOMContentLoaded', () => {
         const findText = searchInput.value;
         const replaceText = replaceInput.value;
         if (!findText || currentSearchIndex < 0 || searchResults.length === 0) return;
-        const subId = searchResults[currentSearchIndex];
-        const sub = state.subtitles.find(s => s.id == subId);
-        if (!sub) return;
-        const findRegex = new RegExp(findText.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&'), 'i');
-        sub.text = (sub.text || '').replace(findRegex, replaceText);
-        updateAndRefreshUI();
+        
+        const indexBeforeReplace = currentSearchIndex;
+        const currentMatch = searchResults[indexBeforeReplace];
+        if (!currentMatch) return;
+
+        const markNode = currentMatch.domNode;
+        markNode.parentNode.replaceChild(document.createTextNode(replaceText), markNode);
+        markNode.parentNode.normalize();
+
+        const sub = state.subtitles.find(s => s.id == currentMatch.subId);
+        if (sub) {
+            sub.text = currentMatch.element.textContent;
+        }
+        
+        recordHistory();
+        renderCurrentView();
+        performSearch();
+        
+        if (searchResults.length > 0) {
+            const newIndex = Math.min(indexBeforeReplace, searchResults.length - 1);
+            navigateToSearchResult(newIndex);
+        }
     });
 
     replaceAllBtn.addEventListener('click', () => {
@@ -668,12 +688,10 @@ document.addEventListener('DOMContentLoaded', () => {
         const sortedSubs = [...state.subtitles].sort((a,b) => timeStringToSeconds(a.start_time) - timeStringToSeconds(b.start_time));
         if (sortedSubs.length === 0) return "";
         
-        // If the source was the simple format, preserve its structure for download
         if (state.sourceFormat === 'simple') {
             return sortedSubs.map(sub => (sub.text || '').trim()).join('\n\n');
         }
         
-        // Otherwise, use the "smart" joining logic
         let fullText = "";
         for (let i = 0; i < sortedSubs.length; i++) {
             const currentSub = sortedSubs[i], textToAdd = (currentSub.text || '').trim();
@@ -708,6 +726,5 @@ document.addEventListener('DOMContentLoaded', () => {
     downloadSrtButton.addEventListener('click', () => downloadFile(generateSrtContent(), `${baseFilename()}.srt`, 'text/plain'));
     downloadTxtButton.addEventListener('click', () => downloadFile(generatePlainTextContent(), `${baseFilename()}.txt`, 'text/plain'));
     
-    // Initialize by loading any saved session
     loadFromLocalStorage();
 });
