@@ -240,17 +240,16 @@ document.addEventListener('DOMContentLoaded', () => {
                             <span>→</span>
                             <input type="text" class="time-input end-time" value="${displayEndTime}">
                         </div>
-                        <textarea class="text-input"></textarea>
+                        <div class="text-input" contenteditable="true" spellcheck="false"></div>
                     </div>
                     <div class="subtitle-item-actions">
                         <button class="delete-sub-btn" title="מחק כתובית"><span class="material-symbols-outlined">delete</span></button>
                     </div>
                 </div>`;
             const subItemElement = tempDiv.firstElementChild;
-            // Set text content to preserve newlines correctly in textarea
-            const textarea = subItemElement.querySelector('.text-input');
-            textarea.textContent = sub.text || '';
-            autoResizeTextarea(textarea);
+            // Set text content to preserve newlines correctly
+            const textInput = subItemElement.querySelector('.text-input');
+            textInput.textContent = sub.text || '';
             subtitleList.appendChild(subItemElement);
             subtitleList.insertAdjacentHTML('beforeend', createAddSubGapHTML(sub.id));
         });
@@ -311,7 +310,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const currentSub = state.subtitles.find(s => mediaPlayer.currentTime >= timeStringToSeconds(s.start_time) && mediaPlayer.currentTime < timeStringToSeconds(s.end_time));
         if (currentSub?.id === state.activeSubtitleId) return;
 
-        const shouldBlockScroll = document.querySelector('.subtitle-item input:focus, .subtitle-item textarea:focus, .subtitle-item.search-hit:hover, .add-sub-gap:hover, #interactive-text-view:focus');
+        const shouldBlockScroll = document.querySelector('.subtitle-item input:focus, .subtitle-item .text-input:focus, .subtitle-item.search-hit:hover, .add-sub-gap:hover, #interactive-text-view:focus');
         
         if (currentView === 'list') {
             document.querySelector(`.subtitle-item.active`)?.classList.remove('active');
@@ -466,7 +465,7 @@ document.addEventListener('DOMContentLoaded', () => {
             return;
         }
         const subItem = target.closest('.subtitle-item');
-        if(subItem && !target.closest('input, textarea, button')) {
+        if(subItem && !target.closest('input, .text-input, button')) {
             mediaPlayer.currentTime = timeStringToSeconds(subItem.querySelector('.start-time').value);
             if (mediaPlayer.paused) mediaPlayer.play();
         }
@@ -478,7 +477,7 @@ document.addEventListener('DOMContentLoaded', () => {
          const subId = subItem.dataset.id, sub = state.subtitles.find(s => s.id == subId);
          if (e.target.classList.contains('start-time')) sub.start_time = e.target.value;
          if (e.target.classList.contains('end-time')) sub.end_time = e.target.value;
-         if (e.target.classList.contains('text-input')) { sub.text = e.target.value; autoResizeTextarea(e.target); }
+         if (e.target.classList.contains('text-input')) { sub.text = e.target.textContent; }
          if (!mediaPlayer.paused) { state.wasPlayingBeforeEdit = true; mediaPlayer.pause(); }
          clearTimeout(typingTimeout);
          typingTimeout = setTimeout(() => {
@@ -539,24 +538,40 @@ document.addEventListener('DOMContentLoaded', () => {
     
     // --- Search and Replace ---
     const clearSearch = () => {
+        document.querySelectorAll('mark.search-match').forEach(mark => {
+            const parent = mark.parentNode;
+            if (parent) {
+                parent.replaceChild(document.createTextNode(mark.textContent), mark);
+                parent.normalize();
+            }
+        });
         document.querySelectorAll('.search-hit').forEach(el => el.classList.remove('search-hit'));
+        document.querySelectorAll('.scrolled').forEach(el => el.classList.remove('scrolled'));
         searchResults = []; currentSearchIndex = -1; searchResultsDisplay.textContent = '';
         searchPrevBtn.disabled = true; searchNextBtn.disabled = true; replaceOneBtn.disabled = true; replaceAllBtn.disabled = true;
     };
 
     const performSearch = () => {
-        document.querySelectorAll('.search-hit').forEach(el => el.classList.remove('search-hit'));
-        const query = searchInput.value.trim().toLowerCase();
-        if (!query) { clearSearch(); return; }
+        clearSearch();
+        const query = searchInput.value.trim();
+        if (!query) { return; }
 
         replaceAllBtn.disabled = false;
+        const findRegex = new RegExp(query.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&'), 'gi');
+        
         searchResults = state.subtitles
-            .filter(sub => (sub.text || '').toLowerCase().includes(query))
+            .filter(sub => (sub.text || '').match(findRegex))
             .map(sub => sub.id);
         
         searchResults.forEach(id => {
-            document.querySelector(`.subtitle-item[data-id="${id}"]`)?.classList.add('search-hit');
-            document.querySelector(`#interactive-text-view span[data-id="${id}"]`)?.classList.add('search-hit');
+            const highlight = (element) => {
+                if (!element) return;
+                const newHtml = element.textContent.replace(findRegex, match => `<mark class="search-match">${match}</mark>`);
+                element.innerHTML = newHtml;
+                (element.closest('.subtitle-item') || element).classList.add('search-hit');
+            };
+            highlight(document.querySelector(`.subtitle-item[data-id="${id}"] .text-input`));
+            highlight(document.querySelector(`#interactive-text-view span[data-id="${id}"]`));
         });
         
         const hasResults = searchResults.length > 0;
@@ -576,7 +591,7 @@ document.addEventListener('DOMContentLoaded', () => {
             : document.querySelector(`#interactive-text-view span[data-id="${targetId}"]`);
         
         if (targetElement) {
-            document.querySelectorAll('.search-hit.scrolled').forEach(el => el.classList.remove('scrolled'));
+            document.querySelectorAll('.scrolled').forEach(el => el.classList.remove('scrolled'));
             targetElement.classList.add('scrolled');
             targetElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
         }
@@ -586,6 +601,24 @@ document.addEventListener('DOMContentLoaded', () => {
     searchInput.addEventListener('input', () => { clearTimeout(searchTimeout); searchTimeout = setTimeout(performSearch, 300); });
     searchNextBtn.addEventListener('click', () => navigateToSearchResult(currentSearchIndex + 1));
     searchPrevBtn.addEventListener('click', () => navigateToSearchResult(currentSearchIndex - 1));
+
+    searchInput.addEventListener('keydown', e => {
+        if (e.key === 'Enter' && searchResults.length > 0) {
+            e.preventDefault();
+            if (e.shiftKey) {
+                searchPrevBtn.click();
+            } else {
+                searchNextBtn.click();
+            }
+        }
+    });
+
+    replaceInput.addEventListener('keydown', e => {
+        if (e.key === 'Enter') {
+            e.preventDefault();
+            replaceOneBtn.click();
+        }
+    });
 
     replaceOneBtn.addEventListener('click', () => {
         const findText = searchInput.value;
