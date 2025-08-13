@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>עורך הכתוביות</title>
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%236750A4'%3E%3Cpath d='M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zM4 12h4v2H4v-2zm10 6H4v-2h10v2zm6 0h-4v-2h4v2zm0-4H10v-2h10v2z'/%3E%3C/svg%3E">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Assistant:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
+
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <header><h1><span class="material-symbols-outlined" style="font-size: 2.8rem;">subtitles</span> עורך הכתוביות</h1></header>
+        <main>
+            <section id="input-section">
+                <div class="grid-2">
+                    <div class="card">
+                        <h2>שלב 1: הוספת תמלול</h2>
+                        <div class="input-group">
+                            <label for="transcript-file-input">א. העלאת קובץ (SRT, VTT, JSON, TXT)</label>
+                            <label for="transcript-file-input" class="file-input-wrapper" id="transcript-drop-zone"><span class="material-symbols-outlined">upload_file</span><p>לחץ לבחירת קובץ או גרור לכאן</p><div id="transcript-file-name" class="file-name"></div></label>
+                            <input type="file" id="transcript-file-input" accept=".json,application/json,.srt,.vtt,text/plain">
+                        </div>
+                        <div class="input-group">
+                             <label for="transcript-text-input">ב. או הדבקת טקסט (SRT / VTT / JSON / תמלול פשוט)</label>
+                            <textarea id="transcript-text-input" placeholder='ניתן להדביק תוכן בפורמטים שונים.
+פורמט SRT/VTT:
+1
+00:00:01,234 --> 00:00:05,678
+טקסט כתובית...
+
+פורמט JSON:
+[{"start_time":"00:00:01.234","end_time":"00:00:05.678","text":"..."}]
+
+פורמט תמלול פשוט:
+[00:00:10.540]
+טקסט של הכתובית הראשונה.
+יכול להכיל מספר שורות.
+'></textarea>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <h2>שלב 2: הוספת מדיה</h2>
+                        <div class="input-group" style="flex-grow: 1; display: flex; flex-direction: column;">
+                            <label for="media-file-input">העלאת קובץ שמע או וידאו</label>
+                            <label for="media-file-input" class="file-input-wrapper" id="media-drop-zone"><span class="material-symbols-outlined">movie</span><p>לחץ לבחירת קובץ או גרור לכאן</p><div id="media-file-name" class="file-name"></div></label>
+                            <input type="file" id="media-file-input" accept="audio/*,video/*">
+                        </div>
+                         <div style="text-align: center; margin-top: 2rem;">
+                            <button id="process-button" class="btn btn-primary" style="padding: 16px 32px; font-size: 1.2rem;" disabled><span class="material-symbols-outlined">edit_note</span> צור וערוך כתוביות</button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <section id="editor-section">
+                 <div class="editor-controls">
+                     <button id="back-to-input-btn" class="btn btn-secondary"><span class="material-symbols-outlined">arrow_back</span> חזרה</button>
+                     <button id="undo-btn" class="btn btn-secondary" disabled><span class="material-symbols-outlined">undo</span>בטל</button>
+                     <button id="redo-btn" class="btn btn-secondary" disabled><span class="material-symbols-outlined">redo</span>החזר</button>
+                     <button id="download-srt-button" class="btn btn-primary"><span class="material-symbols-outlined">download</span> הורד קובץ SRT</button>
+                     <button id="download-txt-button" class="btn btn-secondary"><span class="material-symbols-outlined">article</span> הורד כטקסט</button>
+                     <h3 style="margin: 0; border: none; padding: 0; color: var(--md-sys-color-secondary)">|</h3>
+                     <div class="view-toggle-group">
+                        <button id="view-toggle-list" class="view-toggle-btn active" title="תצוגת רשימה"><span class="material-symbols-outlined">list</span>תצוגת כתוביות</button>
+                        <button id="view-toggle-text" class="view-toggle-btn" title="תצוגת טקסט רציף"><span class="material-symbols-outlined">article</span>תצוגת טקסט</button>
+                     </div>
+                 </div>
+                <div id="editor-grid">
+                    <div id="media-player-container">
+                        <div id="media-player-wrapper">
+                            <video id="media-player"></video>
+                            <div id="audio-poster"></div>
+                        </div>
+                        <div class="custom-controls">
+                            <div class="progress-container">
+                                <span class="time-display" id="current-time">00:00</span>
+                                <input type="range" id="progress-bar" class="progress-bar" value="0" min="0" max="100" step="0.1">
+                                <span class="time-display" id="duration">00:00</span>
+                            </div>
+                            <div class="bottom-controls">
+                                 <div class="speed-container">
+                                    <button class="control-btn" id="decrease-speed-btn" title="האט מהירות"><span class="material-symbols-outlined">remove</span></button>
+                                    <span id="playback-speed">1x</span>
+                                    <button class="control-btn" id="increase-speed-btn" title="הגבר מהירות"><span class="material-symbols-outlined">add</span></button>
+                                </div>
+                                <button class="control-btn" id="play-pause-btn"><span class="material-symbols-outlined">play_arrow</span></button>
+                                <div class="volume-container">
+                                    <button class="control-btn" id="volume-btn"><span class="material-symbols-outlined">volume_up</span></button>
+                                    <input type="range" id="volume-bar" min="0" max="1" step="0.01" value="1">
+                                </div>
+                            </div>
+                        </div>
+                        <div id="subtitle-tools-card">
+                            <h3>כלים לעריכה גורפת</h3>
+                             <div class="tool-group">
+                                <h4><span class="material-symbols-outlined">find_replace</span> חיפוש והחלפה</h4>
+                                <div class="input-row" style="margin-bottom: 0.75rem;">
+                                    <input type="text" id="search-input" placeholder="חיפוש...">
+                                    <span id="search-results-display"></span>
+                                    <button id="search-prev-btn" class="btn btn-secondary btn-small" disabled title="התוצאה הקודמת"><span class="material-symbols-outlined">arrow_upward</span></button>
+                                    <button id="search-next-btn" class="btn btn-secondary btn-small" disabled title="התוצאה הבאה"><span class="material-symbols-outlined">arrow_downward</span></button>
+                                </div>
+                                <div class="input-row">
+                                    <input type="text" id="replace-input" placeholder="החלפה ב...">
+                                    <button id="replace-one-btn" class="btn btn-secondary btn-small" disabled>החלף</button>
+                                    <button id="replace-all-btn" class="btn btn-secondary btn-small" disabled>החלף הכל</button>
+                                </div>
+                            </div>
+                            <div class="tool-group">
+                                <h4><span class="material-symbols-outlined">schedule</span> הזזת תזמונים (Offset)</h4>
+                                <div class="input-row">
+                                    <input type="number" id="offset-input" step="0.1" value="0" placeholder="שניות (למשל 1.5 או -2)">
+                                    <button id="apply-offset-btn" class="btn btn-secondary btn-small">החל הזזה</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="subtitle-editor-main-panel">
+                        <div id="subtitle-list-container">
+                            <h3>רשימת כתוביות</h3>
+                            <div id="subtitle-list"></div>
+                        </div>
+                        <div id="interactive-text-container" style="display: none;">
+                            <h3>טקסט אינטראקטיבי</h3>
+                            <div id="interactive-text-view" contenteditable="true" spellcheck="false"></div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+        <div id="notification"></div>
+    </div>
+
+    <footer style="text-align: center; padding: 2rem 1rem 1.5rem; margin-top: 2rem; border-top: 1px solid var(--md-sys-color-surface-variant); color: var(--md-sys-color-outline); font-size: 0.9rem;">
+        <p style="margin-bottom: 0.5rem; display: flex; align-items: center; justify-content: center; gap: 0.5rem;">
+            <a href="https://github.com/NHLOCAL/" target="_blank" aria-label="GitHub Profile" style="color: var(--md-sys-color-on-secondary-container); text-decoration: none; line-height: 1; display: inline-flex; align-items: center;">
+                <svg xmlns="http://www.w3.org/2000/svg" width="1.2em" height="1.2em" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.835 2.809 1.305 3.493.998.108-.776.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+                </svg>
+            </a>
+            <span>
+                נוצר על ידי
+                <a href="https://nhlocal.github.io" target="_blank" style="color: var(--md-sys-color-primary); text-decoration: none; font-weight: 600;">NH Local</a>
+            </span>
+        </p>
+        <p>
+            <a href="https://tools.ze-kal.top" target="_blank" style="color: var(--md-sys-color-primary); text-decoration: none; font-weight: 600;">כלים נוספים</a>
+        </p>
+    </footer>
+    
+    <script type="module" src="main.js"></script>
+</body>
+</html>
