@@ -92,6 +92,16 @@ document.addEventListener('DOMContentLoaded', () => {
     
     const recordHistory = () => {
         const currentState = JSON.parse(JSON.stringify({ subtitles: state.subtitles, sourceFormat: state.sourceFormat }));
+        
+        // Prevent pushing the exact same state twice in a row
+        if (historyStack.length > 0) {
+            const lastStateJSON = JSON.stringify(historyStack[historyStack.length - 1].subtitles);
+            const currentStateJSON = JSON.stringify(currentState.subtitles);
+            if (lastStateJSON === currentStateJSON) {
+                return;
+            }
+        }
+
         historyStack.push(currentState);
         redoStack = []; 
         updateHistoryButtons();
@@ -653,15 +663,19 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     replaceAllBtn.addEventListener('click', () => {
+        clearTimeout(typingTimeout);
         const findText = searchInput.value; const replaceText = replaceInput.value;
         if (!findText) return showNotification('יש להזין טקסט לחיפוש.', 'error');
         const findRegex = new RegExp(findText.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&'), 'gi');
         let replacementsCount = 0;
         state.subtitles.forEach(sub => {
             const currentText = sub.text || '';
-            if (currentText.toLowerCase().includes(findText.toLowerCase())) {
+            if (currentText.match(findRegex)) {
                 const newText = currentText.replace(findRegex, replaceText);
-                if (newText !== currentText) { sub.text = newText; replacementsCount++; }
+                if (newText !== currentText) { 
+                    sub.text = newText; 
+                    replacementsCount++; 
+                }
             }
         });
         if (replacementsCount > 0) updateAndRefreshUI(`הוחלפו ${replacementsCount} מופעים.`);
