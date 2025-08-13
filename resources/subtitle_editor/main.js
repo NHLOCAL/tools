@@ -604,8 +604,17 @@ document.addEventListener('DOMContentLoaded', () => {
         
         if (currentMatch) {
             currentMatch.domNode.classList.add('current-match');
-            const container = currentMatch.element.closest('.subtitle-item') || currentMatch.element;
-            container.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            
+            let elementToScroll;
+            if (currentView === 'list') {
+                elementToScroll = currentMatch.element.closest('.subtitle-item');
+            } else {
+                elementToScroll = currentMatch.domNode;
+            }
+            
+            if (elementToScroll) {
+                elementToScroll.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }
         }
         
         searchResultsDisplay.textContent = `${currentSearchIndex + 1}/${searchResults.length}`;
