@@ -70,7 +70,6 @@ function parseVttOrSrt(content) {
 
 function parseSimpleTimestampFormat(content) {
     let subs = [];
-    // UPDATED: Added ':' to the character class to accept it as a millisecond separator
     const timestampRegex = /(\[(\d{1,2}:)?\d{2}:\d{2}[.,:]\d{1,3}\])/;
     const parts = content.trim().split(timestampRegex);
     if (parts.length < 3) return null; 
@@ -82,7 +81,6 @@ function parseSimpleTimestampFormat(content) {
             timeStr = '00:' + timeStr;
         }
         if (text) {
-            // Here, we preserve the text block exactly as it was, including all internal newlines.
             subs.push({ start_time: timeStr, text: text });
         }
     }
@@ -93,6 +91,9 @@ function parseSimpleTimestampFormat(content) {
             const nextStartTime = timeStringToSeconds(subs[i + 1].start_time);
             subs[i].end_time = secondsToTimeString(nextStartTime - 0.001);
         } else {
+            // For the last subtitle, we don't know the media duration here.
+            // We set a temporary duration; the main app logic will correct this
+            // once the media duration is known.
             const startTime = timeStringToSeconds(subs[i].start_time);
             subs[i].end_time = secondsToTimeString(startTime + 5);
         }
@@ -141,7 +142,7 @@ export function parseTranscriptContent(content) {
         }
     }
     // 3. Try the simple [timestamp] format
-    else if (/^\[(\d{1,2}:)?\d{2}:\d{2}[.,:]\d{1,3}\]/.test(trimmedContent)) { // UPDATED: Also updated the initial test regex
+    else if (/^\[(\d{1,2}:)?\d{2}:\d{2}[.,:]\d{1,3}\]/.test(trimmedContent)) {
         parsedData = parseSimpleTimestampFormat(trimmedContent);
          if (parsedData) {
             format = 'simple';
@@ -150,8 +151,16 @@ export function parseTranscriptContent(content) {
 
     // Return result if any format was successful
     if (parsedData && format) {
-        const dataWithIds = parsedData.map((item, index) => ({ ...item, id: item.id || Date.now() + index }));
-        return { data: dataWithIds, format: format };
+        // UPDATED: Standardize all time formats and add IDs in one go.
+        // This ensures the internal state of the application is always clean and consistent.
+        const finalData = parsedData.map((item, index) => ({
+            ...item,
+            id: item.id || Date.now() + index,
+            // The round-trip conversion standardizes the time string format
+            start_time: item.start_time ? secondsToTimeString(timeStringToSeconds(item.start_time)) : "00:00:00.000",
+            end_time: item.end_time ? secondsToTimeString(timeStringToSeconds(item.end_time)) : "00:00:00.000",
+        }));
+        return { data: finalData, format: format };
     }
 
     // 4. If no format matches, return null

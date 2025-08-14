@@ -165,10 +165,15 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // --- Parsing and File Handling ---
     const processTranscriptContent = (content) => {
-        const result = parseTranscriptContent(content);
+        const result = parseTranscriptContent(content); // This calls the function in parser.js
         if (result) {
             state.subtitles = result.data;
             state.sourceFormat = result.format;
+            // UPDATED: Always update the textarea with the clean, standardized JSON data.
+            // This ensures the displayed text and the internal state are always in sync.
+            if (transcriptTextInput.value !== JSON.stringify(result.data, null, 2)) {
+                transcriptTextInput.value = JSON.stringify(result.data, null, 2);
+            }
             checkInputs();
             return true;
         }
@@ -183,7 +188,10 @@ document.addEventListener('DOMContentLoaded', () => {
                 const content = e.target.result;
                 if (processTranscriptContent(content)) {
                     transcriptFileName.textContent = `קובץ: ${file.name}`;
-                    transcriptTextInput.value = content;
+                    // REMOVED: This line was the source of the bug. It populated the
+                    // textarea with the original, un-standardized content.
+                    // The 'processTranscriptContent' function now handles updating the textarea correctly.
+                    // transcriptTextInput.value = content; 
                 }
             };
             reader.onerror = () => showNotification('שגיאה בקריאת הקובץ.', 'error');
@@ -382,7 +390,32 @@ document.addEventListener('DOMContentLoaded', () => {
     audioPoster.addEventListener('click', togglePlay);
     mediaPlayer.addEventListener('play', () => playPauseIcon.textContent = 'pause');
     mediaPlayer.addEventListener('pause', () => playPauseIcon.textContent = 'play_arrow');
-    mediaPlayer.addEventListener('loadedmetadata', () => durationEl.textContent = formatTimeForDisplay(mediaPlayer.duration));
+    mediaPlayer.addEventListener('loadedmetadata', () => {
+        const duration = mediaPlayer.duration;
+        durationEl.textContent = formatTimeForDisplay(duration);
+
+        // If the source was a simple transcript, adjust the last subtitle's end time to the media duration.
+        if (state.sourceFormat === 'simple' && state.subtitles.length > 0 && duration > 0) {
+            const sortedSubs = [...state.subtitles].sort((a,b) => timeStringToSeconds(a.start_time) - timeStringToSeconds(b.start_time));
+            const lastSub = sortedSubs[sortedSubs.length - 1];
+            
+            if (lastSub) {
+                const subToUpdate = state.subtitles.find(s => s.id === lastSub.id);
+                if (subToUpdate) {
+                    subToUpdate.end_time = secondsToTimeString(duration);
+                    
+                    // Update the last history record to reflect this initialization change,
+                    // so it doesn't create an extra "undo" step.
+                    if (historyStack.length > 0) {
+                        historyStack[historyStack.length - 1].subtitles = JSON.parse(JSON.stringify(state.subtitles));
+                    }
+                    
+                    // The UI was already rendered, so re-render the list/text to show the new time.
+                    renderCurrentView();
+                }
+            }
+        }
+    });
     
     mediaPlayer.addEventListener('timeupdate', () => {
         progressBar.value = mediaPlayer.duration ? (mediaPlayer.currentTime / mediaPlayer.duration) * 100 : 0;
