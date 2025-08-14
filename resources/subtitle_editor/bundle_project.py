@@ -5,7 +5,8 @@ from collections import deque
 
 def bundle_project(source_dir, output_file):
     """
-    Bundles a web project (HTML, CSS, JS with modules) into a single HTML file.
+    Bundles a web project (HTML, CSS, and JS with modules) into a single,
+    self-contained HTML file. It handles nested directories and relative JS imports.
     """
     print(f"Starting bundling process for directory: '{source_dir}'")
     
@@ -26,9 +27,11 @@ def bundle_project(source_dir, output_file):
 
     # --- 2. Process and inline CSS files ---
     print("\n--- Processing CSS ---")
-    css_links = re.findall(r'<link\s+[^>]*?rel="stylesheet"[^>]*?href="([^"]+\.css)"[^>]*?>', html_content)
+    # Find all <link rel="stylesheet"> tags with local hrefs (ignores http, https, //)
+    css_links = re.findall(r'<link\s+[^>]*?rel="stylesheet"[^>]*?href="((?!https?://|//)[^"]+\.css)"[^>]*?>', html_content)
     
     for css_path in css_links:
+        # Resolve path relative to source_dir, not the HTML file's dir, for simplicity
         full_css_path = os.path.join(source_dir, css_path)
         if os.path.exists(full_css_path):
             print(f"Inlining CSS from: '{full_css_path}'")
@@ -36,31 +39,63 @@ def bundle_project(source_dir, output_file):
                 css_content = f.read()
             
             style_tag = f"<style>\n{css_content}\n</style>"
-            # Replace the original link tag with the inlined style
+            # Use a specific regex to replace only the correct link tag
             html_content = re.sub(r'<link\s+[^>]*?href="' + re.escape(css_path) + '"[^>]*?>', style_tag, html_content, count=1)
         else:
             print(f"Warning: CSS file not found: '{full_css_path}'")
 
-    # --- 3. Process and bundle JavaScript modules ---
+    # --- 3. Discover all JavaScript files recursively ---
     print("\n--- Processing JavaScript ---")
-    js_files = [f for f in os.listdir(source_dir) if f.endswith('.js')]
     
+    js_file_paths = {}
+    for root, _, files in os.walk(source_dir):
+        for file in files:
+            if file.endswith('.js'):
+                abs_path = os.path.join(root, file)
+                # Use normalized, forward-slash paths relative to source_dir as canonical keys
+                rel_path = os.path.relpath(abs_path, source_dir).replace('\\', '/')
+                js_file_paths[rel_path] = abs_path
+    
+    if not js_file_paths:
+        print("No JavaScript files found. Skipping JS bundling.")
+        with open(output_file, 'w', encoding='utf-8') as f:
+            f.write(html_content)
+        print(f"\n✅ Success! Project bundled (without JS) into: '{output_file}'")
+        return
+
+    # --- 4. Analyze JS dependencies ---
+    js_files = list(js_file_paths.keys())
     dependencies = {js_file: [] for js_file in js_files}
     js_contents = {}
-    import_regex = re.compile(r"import\s+.*?from\s+['\"](\./)?([^'\"]+\.js)['\"];?")
+    import_regex = re.compile(r"import\s+.*?from\s+['\"]([^'\"]+)['\"];?")
 
     print("Analyzing JS dependencies...")
-    for js_file in js_files:
-        path = os.path.join(source_dir, js_file)
-        with open(path, 'r', encoding='utf-8') as f:
+    for js_file_rel, js_file_abs in js_file_paths.items():
+        with open(js_file_abs, 'r', encoding='utf-8') as f:
             content = f.read()
-            js_contents[js_file] = content
+            js_contents[js_file_rel] = content
             imports = import_regex.findall(content)
-            for _, imported_file in imports:
-                print(f"'{js_file}' depends on '{imported_file}'")
-                dependencies[js_file].append(imported_file)
+            
+            current_file_dir = os.path.dirname(js_file_abs)
+            for imported_specifier in imports:
+                if not imported_specifier.startswith('.'):
+                    print(f"  (Skipping non-relative import: '{imported_specifier}' in '{js_file_rel}')")
+                    continue
+                
+                # Assume .js extension if missing, common in module imports
+                if not os.path.splitext(imported_specifier)[1]:
+                    imported_specifier += '.js'
 
-    # --- 4. Sort JS files based on dependencies (Topological Sort) ---
+                imported_file_abs = os.path.normpath(os.path.join(current_file_dir, imported_specifier))
+                imported_file_rel = os.path.relpath(imported_file_abs, source_dir).replace('\\', '/')
+
+                if imported_file_rel in js_files:
+                    print(f"  '{js_file_rel}' -> '{imported_file_rel}'")
+                    dependencies[js_file_rel].append(imported_file_rel)
+                else:
+                    print(f"Warning: Could not resolve import '{imported_specifier}' in '{js_file_rel}' to a known JS file.")
+
+    # --- 5. Sort JS files based on dependencies (Topological Sort) ---
     adj = {u: [] for u in js_files}
     in_degree = {u: 0 for u in js_files}
     for u, deps in dependencies.items():
@@ -80,53 +115,59 @@ def bundle_project(source_dir, output_file):
                 queue.append(v)
 
     if len(sorted_js) != len(js_files):
-        print("Error: Circular dependency detected in JS files. Aborting JS bundling.")
-        sorted_js = js_files # Fallback to original order
+        circular_deps = sorted([f for f, deg in in_degree.items() if deg > 0])
+        print(f"\nError: Circular dependency detected in JS files. Bundling may fail.")
+        print(f"Files involved in cycle: {circular_deps}")
+        sorted_js = js_files # Fallback to original, likely incorrect, order
     else:
         print("\nJS files processing order (dependencies first):")
         for f in sorted_js:
             print(f"- {f}")
             
-    # --- 5. Combine sorted JS files into one script ---
+    # --- 6. Combine sorted JS files into one script ---
     combined_js = []
+    import_removal_regex = re.compile(r"^\s*import\s+.*?from\s+['\"].*?['\"];?\s*$", flags=re.MULTILINE)
+
     for js_file in sorted_js:
         content = js_contents[js_file]
         
         # Remove import statements
-        content = import_regex.sub('', content)
+        content = import_removal_regex.sub('', content)
         
-        # Remove export statements
+        # Remove export statements using a simple but effective strategy for this project.
+        # It handles `export default ...` and `export const/function/class ...`
+        content = re.sub(r'^\s*export\s+default\s+', '', content, flags=re.MULTILINE)
         content = re.sub(r'^\s*export\s+', '', content, flags=re.MULTILINE)
         
         combined_js.append(f"// --- START OF {js_file} ---\n{content.strip()}\n// --- END OF {js_file} ---\n")
         
     final_js_script = "\n".join(combined_js)
     
-    # --- 6. Replace all script tags with the single bundled script ---
-    # First, remove all existing script tags pointing to local .js files
-    html_content = re.sub(r'<script\s+[^>]*?src="[^"]+\.js"[^>]*?>\s*</script>', '', html_content, flags=re.IGNORECASE)
+    # --- 7. Replace local script tags with the single bundled script ---
+    # Use a negative lookahead to avoid removing external scripts (http, https, //)
+    html_content = re.sub(r'<script\s+[^>]*?src="((?!https?://|//)[^"]+\.js)"[^>]*?>\s*</script>', '', html_content, flags=re.IGNORECASE)
     
-    # Then, inject the bundled script before the closing body tag
+    # Inject the bundled script before the closing body tag
     bundled_script_tag = f"<script>\n// Bundled by script\n{final_js_script}\n</script>"
     
-    # ================================================================= #
-    # === THE FIX IS HERE ===
-    # Use str.replace() for literal replacement instead of re.sub()
-    # to avoid "bad escape" errors from backslashes in the JS code.
-    html_content = html_content.replace('</body>', f'{bundled_script_tag}\n</body>', 1)
-    # ================================================================= #
+    if '</body>' in html_content:
+        # Use str.replace() for literal replacement to avoid issues with backslashes in JS code
+        html_content = html_content.replace('</body>', f'{bundled_script_tag}\n</body>', 1)
+    else:
+        # Fallback if no body tag is found
+        html_content += bundled_script_tag
 
-    # --- 7. Write the final output ---
+    # --- 8. Write the final output ---
     with open(output_file, 'w', encoding='utf-8') as f:
         f.write(html_content)
         
     print(f"\n✅ Success! Project bundled into a single file: '{output_file}'")
 
-
 def main():
     parser = argparse.ArgumentParser(
         description="A simple web project bundler. Combines HTML, CSS, and JS (with modules) into a single HTML file.",
-        formatter_class=argparse.RawTextHelpFormatter
+        formatter_class=argparse.RawTextHelpFormatter,
+        epilog="This tool performs a basic concatenation of JS modules after a topological sort.\nIt removes 'import' and 'export' statements, so it may not work for complex module patterns."
     )
     parser.add_argument(
         'source_dir',
