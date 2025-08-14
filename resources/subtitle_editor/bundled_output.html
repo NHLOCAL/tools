@@ -1,0 +1,1258 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>עורך הכתוביות</title>
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%236750A4'%3E%3Cpath d='M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zM4 12h4v2H4v-2zm10 6H4v-2h10v2zm6 0h-4v-2h4v2zm0-4H10v-2h10v2z'/%3E%3C/svg%3E">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Assistant:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
+
+    <style>
+:root {
+    --md-sys-color-primary: #6750A4;
+    --md-sys-color-on-primary: #FFFFFF;
+    --md-sys-color-primary-container: #EADDFF;
+    --md-sys-color-on-primary-container: #21005D;
+    --md-sys-color-secondary: #625B71;
+    --md-sys-color-on-secondary-container: #1D192B;
+    --md-sys-color-error: #B3261E;
+    --md-sys-color-on-error-container: #FFFFFF;
+    --md-sys-color-error-container: #F9DEDC;
+    --md-sys-color-background: #FFFBFE;
+    --md-sys-color-on-background: #1C1B1F;
+    --md-sys-color-surface: #FFFBFE;
+    --md-sys-color-surface-variant: #E7E0EC;
+    --md-sys-color-outline: #79747E;
+    --md-sys-color-surface-container-low: #F7F2FA;
+    --border-radius: 16px;
+    --border-radius-small: 8px;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body { font-family: 'Assistant', sans-serif; background-color: var(--md-sys-color-background); color: var(--md-sys-color-on-background); line-height: 1.6; }
+.container { max-width: 1400px; margin: 0 auto; padding: 0 1.5rem; }
+.grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; padding-top: 2rem; }
+.card { background-color: var(--md-sys-color-surface-container-low); border-radius: var(--border-radius); padding: 2rem; border: 1px solid var(--md-sys-color-surface-variant); box-shadow: 0 2px 8px rgba(0,0,0,0.05); display: flex; flex-direction: column; }
+header { padding-top: 1.5rem; }
+h1, h2, h3 { font-weight: 700; color: var(--md-sys-color-primary); }
+h1 { font-size: 2.5rem; display: flex; align-items: center; gap: 1rem; }
+h2 { font-size: 1.5rem; margin-bottom: 1rem; border-bottom: 2px solid var(--md-sys-color-primary-container); padding-bottom: 0.5rem; }
+h3 { font-size: 1.25rem; margin-bottom: 1rem; color: var(--md-sys-color-secondary); }
+.material-symbols-outlined { font-size: inherit; vertical-align: middle; }
+.btn { display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem; padding: 10px 24px; font-family: 'Assistant', sans-serif; font-size: 1rem; font-weight: 600; border-radius: 99px; border: none; cursor: pointer; transition: all 0.2s ease-in-out; text-decoration: none; }
+.btn:disabled { opacity: 0.6; cursor: not-allowed; }
+.btn-primary { background-color: var(--md-sys-color-primary); color: var(--md-sys-color-on-primary); }
+.btn-primary:hover:not(:disabled) { background-color: #5a3f92; box-shadow: 0 4px 8px rgba(0,0,0,0.15); }
+.btn-secondary { background-color: var(--md-sys-color-secondary-container); color: var(--md-sys-color-on-secondary-container); }
+.btn-secondary:hover:not(:disabled) { background-color: #d8d0e7; }
+.input-group { margin-bottom: 1.5rem; }
+.input-group label { display: block; margin-bottom: 0.5rem; font-weight: 600; color: var(--md-sys-color-on-surface-variant); }
+textarea#transcript-text-input { width: 100%; min-height: 200px; padding: 1rem; border: 1px solid var(--md-sys-color-outline); border-radius: var(--border-radius-small); font-family: monospace; direction: ltr; text-align: left; background-color: var(--md-sys-color-surface); font-size: 0.9rem; resize: vertical; }
+.file-input-wrapper { border: 2px dashed var(--md-sys-color-outline); border-radius: var(--border-radius); padding: 2rem; text-align: center; cursor: pointer; transition: all 0.2s; flex-grow: 1; display: flex; flex-direction: column; justify-content: center; }
+.file-input-wrapper:hover, .file-input-wrapper.drag-over { background-color: var(--md-sys-color-primary-container); border-color: var(--md-sys-color-primary); }
+.file-input-wrapper .material-symbols-outlined { font-size: 3rem; color: var(--md-sys-color-primary); }
+.file-input-wrapper input[type="file"] { display: none; }
+.file-name { margin-top: 1rem; font-weight: 600; color: var(--md-sys-color-secondary); }
+#editor-section { display: none; }
+.editor-controls { display: flex; flex-wrap: wrap; gap: 1rem; align-items: center; padding: 1.5rem 0; position: sticky; top: 0; background-color: var(--md-sys-color-background); z-index: 10; border-bottom: 1px solid var(--md-sys-color-surface-variant); }
+.view-toggle-group { display: inline-flex; border: 1px solid var(--md-sys-color-outline); border-radius: 99px; overflow: hidden; margin-left: auto; }
+.view-toggle-btn { padding: 8px 16px; background-color: transparent; color: var(--md-sys-color-outline); border: none; cursor: pointer; font-family: 'Assistant', sans-serif; font-weight: 600; font-size: 0.9rem; display: inline-flex; align-items: center; gap: 0.5rem; }
+.view-toggle-btn:not(:last-child) { border-left: 1px solid var(--md-sys-color-outline); }
+.view-toggle-btn.active { background-color: var(--md-sys-color-primary-container); color: var(--md-sys-color-primary); }
+#editor-grid { display: grid; grid-template-columns: 40% 1fr; gap: 2rem; align-items: start; padding-top: 2rem; }
+#media-player-container { position: sticky; top: 125px; align-self: start; max-height: calc(100vh - 135px); overflow-y: auto; padding-right: 8px;}
+#media-player-wrapper { position: relative; }
+#media-player { width: 100%; border-radius: var(--border-radius-small); background-color: black; cursor: pointer; display: block; }
+#audio-poster { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background-color: black; color: white; display: none; justify-content: center; align-items: center; text-align: center; font-size: 1.2rem; font-weight: 600; padding: 1rem; border-radius: var(--border-radius-small); }
+#audio-poster.visible { display: flex; }
+.custom-controls { direction: ltr; background-color: var(--md-sys-color-surface-container-low); border-radius: var(--border-radius); padding: 0.75rem 1rem; margin-top: 1rem; border: 1px solid var(--md-sys-color-surface-variant); }
+.progress-container { display: flex; align-items: center; gap: 1rem; }
+.progress-container .time-display { font-family: monospace; font-size: 0.9rem; color: var(--md-sys-color-secondary); }
+.progress-bar { flex-grow: 1; }
+.bottom-controls { display: flex; align-items: center; justify-content: space-between; margin-top: 0.5rem; }
+.control-btn { background: none; border: none; cursor: pointer; color: var(--md-sys-color-on-surface-variant); padding: 0.5rem; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; }
+.control-btn:hover { background-color: rgba(0,0,0,0.1); }
+.control-btn .material-symbols-outlined { font-size: 2.25rem; display: block; }
+.volume-container, .speed-container { display: flex; align-items: center; gap: 0.5rem; }
+.volume-container .material-symbols-outlined, .speed-container .material-symbols-outlined { font-size: 1.5rem; }
+.speed-container #playback-speed { font-family: monospace; font-weight: 600; font-size: 1rem; color: var(--md-sys-color-secondary); min-width: 4ch; text-align: center;}
+input[type=range] { -webkit-appearance: none; width: 100%; background: transparent; cursor: pointer; }
+input[type=range]:focus { outline: none; }
+input[type=range]::-webkit-slider-runnable-track { width: 100%; height: 6px; background: var(--md-sys-color-surface-variant); border-radius: 3px; }
+input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; height: 16px; width: 16px; border-radius: 50%; background: var(--md-sys-color-primary); margin-top: -5px; }
+#volume-bar { --volume-progress: 100%; }
+#volume-bar::-webkit-slider-runnable-track {
+    background: linear-gradient(to right, var(--md-sys-color-primary) 0%, var(--md-sys-color-primary) var(--volume-progress), var(--md-sys-color-surface-variant) var(--volume-progress), var(--md-sys-color-surface-variant) 100%);
+}
+#subtitle-tools-card { direction: rtl; margin-top: 1.5rem; background-color: var(--md-sys-color-surface-container-low); border-radius: var(--border-radius); padding: 1.5rem; border: 1px solid var(--md-sys-color-surface-variant); }
+.tool-group { margin-bottom: 1.5rem; }
+.tool-group:last-child { margin-bottom: 0; }
+.tool-group h4 { font-weight: 600; color: var(--md-sys-color-on-secondary-container); margin-bottom: 0.75rem; display: flex; align-items: center; gap: 0.5rem; }
+.tool-group .input-row { display: flex; gap: 0.5rem; align-items: center; }
+.tool-group input[type="text"], .tool-group input[type="number"] { flex-grow: 1; padding: 8px 12px; border: 1px solid var(--md-sys-color-outline); border-radius: var(--border-radius-small); font-family: 'Assistant', sans-serif; font-size: 1rem; }
+.tool-group .btn-small { padding: 8px 16px; font-size: 0.9rem; }
+#search-results-display { color: var(--md-sys-color-secondary); font-size: 0.9rem; font-family: monospace; min-width: 6ch; text-align: center; direction: ltr; padding: 0 0.25rem; }
+.subtitle-item { position: relative; background-color: var(--md-sys-color-surface); border: 1px solid var(--md-sys-color-surface-variant); border-radius: var(--border-radius-small); padding: 1rem; margin-bottom: 0; cursor: pointer; transition: all 0.3s ease-in-out; display: grid; grid-template-columns: 1fr auto; gap: 0.75rem 1rem; align-items: start;}
+.subtitle-item:hover { border-color: var(--md-sys-color-primary); box-shadow: 0 2px 6px rgba(0,0,0,0.08); }
+.subtitle-item.active { background-color: var(--md-sys-color-primary-container); border-color: var(--md-sys-color-primary); transform: scale(1.02); }
+.subtitle-item-main { grid-column: 1 / 2; display: flex; flex-direction: column; gap: 0.75rem;}
+.subtitle-item-actions { grid-column: 2 / 3; }
+.subtitle-item .time-inputs { display: flex; gap: 0.5rem; align-items: center; direction: ltr; }
+.subtitle-item .time-input { width: 120px; padding: 4px 8px; border: 1px solid var(--md-sys-color-outline); border-radius: 4px; font-family: monospace; font-size: 0.9rem; direction: ltr; text-align: left; }
+.subtitle-item .text-input { width: 100%; padding: 8px; border: 1px solid var(--md-sys-color-outline); border-radius: 4px; font-family: 'Assistant', sans-serif; font-size: 1rem; min-height: 40px; direction: rtl; white-space: pre-wrap; }
+.delete-sub-btn { background-color: transparent; border: none; cursor: pointer; color: var(--md-sys-color-secondary); padding: 4px; border-radius: 50%; }
+.delete-sub-btn:hover { background-color: var(--md-sys-color-error-container); color: var(--md-sys-color-error); }
+.add-sub-gap { position: relative; height: 2rem; display: flex; align-items: center; justify-content: center; }
+.add-sub-gap-inner { display: flex; align-items: center; width: 100%; opacity: 0; transition: opacity 0.2s ease-in-out; }
+#subtitle-list-container:hover .add-sub-gap-inner { opacity: 1; }
+.add-sub-gap-inner .line { flex-grow: 1; height: 1px; background: var(--md-sys-color-outline); }
+.add-sub-gap-inner button { background-color: var(--md-sys-color-surface); border: 1px solid var(--md-sys-color-outline); color: var(--md-sys-color-primary); width: 28px; height: 28px; border-radius: 50%; padding: 0; margin: 0 0.5rem; display: flex; align-items: center; justify-content: center; cursor: pointer; }
+.add-sub-gap-inner button:hover { background-color: var(--md-sys-color-primary-container); }
+#interactive-text-view { background-color: var(--md-sys-color-surface); border-radius: var(--border-radius-small); border: 1px solid var(--md-sys-color-outline); padding: 1.5rem; font-size: 1.1rem; line-height: 1.8; white-space: pre-wrap; min-height: 300px; }
+#interactive-text-view:focus { outline: 2px solid var(--md-sys-color-primary); }
+#interactive-text-view span[data-id] { cursor: pointer; transition: background-color 0.2s; border-radius: 4px; }
+#interactive-text-view span[data-id]:hover { background-color: #e0d8f0; }
+#interactive-text-view span[data-id].active { background-color: var(--md-sys-color-primary-container); color: var(--md-sys-color-on-primary-container); }
+#notification { position: fixed; bottom: -100px; left: 50%; transform: translateX(-50%); background-color: var(--md-sys-color-on-background); color: var(--md-sys-color-background); padding: 12px 24px; border-radius: 99px; box-shadow: 0 4px 12px rgba(0,0,0,0.2); opacity: 0; visibility: hidden; transition: all 0.4s ease-in-out; z-index: 1000; }
+#notification.show { opacity: 1; visibility: visible; bottom: 40px; }
+#notification.error { background-color: var(--md-sys-color-error); color: var(--md-sys-color-on-error-container); }
+
+/* Search and Highlight Styles */
+mark.search-match {
+    background-color: #fceb58;
+    color: var(--md-sys-color-on-background);
+    border-radius: 3px;
+    padding: 0 2px;
+}
+mark.search-match.current-match {
+    background-color: #ffb434;
+    font-weight: 600;
+}
+
+@media (max-width: 900px) {
+    #editor-grid { grid-template-columns: 1fr; }
+    #media-player-container { position: relative; top: auto; max-height: none; overflow-y: visible; padding-right: 0;}
+}
+@media (max-width: 768px) {
+    .container { padding: 0 1rem; }
+    .grid-2 { grid-template-columns: 1fr; }
+    h1 { font-size: 2rem; }
+    .card { padding: 1.5rem; }
+}
+</style>
+</head>
+<body>
+    <div class="container">
+        <header><h1><span class="material-symbols-outlined" style="font-size: 2.8rem;">subtitles</span> עורך הכתוביות</h1></header>
+        <main>
+            <section id="input-section">
+                <div class="grid-2">
+                    <div class="card">
+                        <h2>שלב 1: הוספת תמלול</h2>
+                        <div class="input-group">
+                            <label for="transcript-file-input">א. העלאת קובץ (SRT, VTT, JSON, TXT)</label>
+                            <label for="transcript-file-input" class="file-input-wrapper" id="transcript-drop-zone"><span class="material-symbols-outlined">upload_file</span><p>לחץ לבחירת קובץ או גרור לכאן</p><div id="transcript-file-name" class="file-name"></div></label>
+                            <input type="file" id="transcript-file-input" accept=".json,application/json,.srt,.vtt,text/plain">
+                        </div>
+                        <div class="input-group">
+                             <label for="transcript-text-input">ב. או הדבקת טקסט (SRT / VTT / JSON / תמלול פשוט)</label>
+                            <textarea id="transcript-text-input" placeholder='ניתן להדביק תוכן בפורמטים שונים.
+פורמט SRT/VTT:
+1
+00:00:01,234 --> 00:00:05,678
+טקסט כתובית...
+
+פורמט JSON:
+[{"start_time":"00:00:01.234","end_time":"00:00:05.678","text":"..."}]
+
+פורמט תמלול פשוט:
+[00:00:10.540]
+טקסט של הכתובית הראשונה.
+יכול להכיל מספר שורות.
+'></textarea>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <h2>שלב 2: הוספת מדיה</h2>
+                        <div class="input-group" style="flex-grow: 1; display: flex; flex-direction: column;">
+                            <label for="media-file-input">העלאת קובץ שמע או וידאו</label>
+                            <label for="media-file-input" class="file-input-wrapper" id="media-drop-zone"><span class="material-symbols-outlined">movie</span><p>לחץ לבחירת קובץ או גרור לכאן</p><div id="media-file-name" class="file-name"></div></label>
+                            <input type="file" id="media-file-input" accept="audio/*,video/*">
+                        </div>
+                         <div style="text-align: center; margin-top: 2rem;">
+                            <button id="process-button" class="btn btn-primary" style="padding: 16px 32px; font-size: 1.2rem;" disabled><span class="material-symbols-outlined">edit_note</span> צור וערוך כתוביות</button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <section id="editor-section">
+                 <div class="editor-controls">
+                     <button id="back-to-input-btn" class="btn btn-secondary"><span class="material-symbols-outlined">arrow_back</span> חזרה</button>
+                     <button id="undo-btn" class="btn btn-secondary" disabled><span class="material-symbols-outlined">undo</span>בטל</button>
+                     <button id="redo-btn" class="btn btn-secondary" disabled><span class="material-symbols-outlined">redo</span>החזר</button>
+                     <button id="download-srt-button" class="btn btn-primary"><span class="material-symbols-outlined">download</span> הורד קובץ SRT</button>
+                     <button id="download-txt-button" class="btn btn-secondary"><span class="material-symbols-outlined">article</span> הורד כטקסט</button>
+                     <h3 style="margin: 0; border: none; padding: 0; color: var(--md-sys-color-secondary)">|</h3>
+                     <div class="view-toggle-group">
+                        <button id="view-toggle-list" class="view-toggle-btn active" title="תצוגת רשימה"><span class="material-symbols-outlined">list</span>תצוגת כתוביות</button>
+                        <button id="view-toggle-text" class="view-toggle-btn" title="תצוגת טקסט רציף"><span class="material-symbols-outlined">article</span>תצוגת טקסט</button>
+                     </div>
+                 </div>
+                <div id="editor-grid">
+                    <div id="media-player-container">
+                        <div id="media-player-wrapper">
+                            <video id="media-player"></video>
+                            <div id="audio-poster"></div>
+                        </div>
+                        <div class="custom-controls">
+                            <div class="progress-container">
+                                <span class="time-display" id="current-time">00:00</span>
+                                <input type="range" id="progress-bar" class="progress-bar" value="0" min="0" max="100" step="0.1">
+                                <span class="time-display" id="duration">00:00</span>
+                            </div>
+                            <div class="bottom-controls">
+                                 <div class="speed-container">
+                                    <button class="control-btn" id="decrease-speed-btn" title="האט מהירות"><span class="material-symbols-outlined">remove</span></button>
+                                    <span id="playback-speed">1x</span>
+                                    <button class="control-btn" id="increase-speed-btn" title="הגבר מהירות"><span class="material-symbols-outlined">add</span></button>
+                                </div>
+                                <button class="control-btn" id="play-pause-btn"><span class="material-symbols-outlined">play_arrow</span></button>
+                                <div class="volume-container">
+                                    <button class="control-btn" id="volume-btn"><span class="material-symbols-outlined">volume_up</span></button>
+                                    <input type="range" id="volume-bar" min="0" max="1" step="0.01" value="1">
+                                </div>
+                            </div>
+                        </div>
+                        <div id="subtitle-tools-card">
+                            <h3>כלים לעריכה גורפת</h3>
+                             <div class="tool-group">
+                                <h4><span class="material-symbols-outlined">find_replace</span> חיפוש והחלפה</h4>
+                                <div class="input-row" style="margin-bottom: 0.75rem;">
+                                    <input type="text" id="search-input" placeholder="חיפוש...">
+                                    <span id="search-results-display"></span>
+                                    <button id="search-prev-btn" class="btn btn-secondary btn-small" disabled title="התוצאה הקודמת"><span class="material-symbols-outlined">arrow_upward</span></button>
+                                    <button id="search-next-btn" class="btn btn-secondary btn-small" disabled title="התוצאה הבאה"><span class="material-symbols-outlined">arrow_downward</span></button>
+                                </div>
+                                <div class="input-row">
+                                    <input type="text" id="replace-input" placeholder="החלפה ב...">
+                                    <button id="replace-one-btn" class="btn btn-secondary btn-small" disabled>החלף</button>
+                                    <button id="replace-all-btn" class="btn btn-secondary btn-small" disabled>החלף הכל</button>
+                                </div>
+                            </div>
+                            <div class="tool-group">
+                                <h4><span class="material-symbols-outlined">schedule</span> הזזת תזמונים (Offset)</h4>
+                                <div class="input-row">
+                                    <input type="number" id="offset-input" step="0.1" value="0" placeholder="שניות (למשל 1.5 או -2)">
+                                    <button id="apply-offset-btn" class="btn btn-secondary btn-small">החל הזזה</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="subtitle-editor-main-panel">
+                        <div id="subtitle-list-container">
+                            <h3>רשימת כתוביות</h3>
+                            <div id="subtitle-list"></div>
+                        </div>
+                        <div id="interactive-text-container" style="display: none;">
+                            <h3>טקסט אינטראקטיבי</h3>
+                            <div id="interactive-text-view" contenteditable="true" spellcheck="false"></div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+        <div id="notification"></div>
+    </div>
+
+    <footer style="text-align: center; padding: 2rem 1rem 1.5rem; margin-top: 2rem; border-top: 1px solid var(--md-sys-color-surface-variant); color: var(--md-sys-color-outline); font-size: 0.9rem;">
+        <p style="margin-bottom: 0.5rem; display: flex; align-items: center; justify-content: center; gap: 0.5rem;">
+            <a href="https://github.com/NHLOCAL/" target="_blank" aria-label="GitHub Profile" style="color: var(--md-sys-color-on-secondary-container); text-decoration: none; line-height: 1; display: inline-flex; align-items: center;">
+                <svg xmlns="http://www.w3.org/2000/svg" width="1.2em" height="1.2em" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.835 2.809 1.305 3.493.998.108-.776.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+                </svg>
+            </a>
+            <span>
+                נוצר על ידי
+                <a href="https://nhlocal.github.io" target="_blank" style="color: var(--md-sys-color-primary); text-decoration: none; font-weight: 600;">NH Local</a>
+            </span>
+        </p>
+        <p>
+            <a href="https://tools.ze-kal.top" target="_blank" style="color: var(--md-sys-color-primary); text-decoration: none; font-weight: 600;">כלים נוספים</a>
+        </p>
+    </footer>
+    
+    
+<script>
+// Bundled by script
+// --- START OF parser.js ---
+// --- Time Utility Functions ---
+
+/**
+ * Converts a time string (e.g., "00:01:05.123" or "00:01:05,123") to seconds.
+ * @param {string} timeStr The time string to convert.
+ * @returns {number} The time in seconds.
+ */
+const timeStringToSeconds = (timeStr) => {
+    if (!timeStr || typeof timeStr !== 'string') return 0;
+    let normalizedTime = timeStr.replace(',', '.');
+    // Heuristic to handle frame-based or colon-separated ms timecodes 
+    // like 00:00:01:15 or 00:22:201 by converting the last colon to a dot.
+    const colonCount = (normalizedTime.match(/:/g) || []).length;
+    if (colonCount === 3 || (colonCount === 2 && !normalizedTime.includes('.'))) {
+         const lastColonIndex = normalizedTime.lastIndexOf(':');
+         normalizedTime = normalizedTime.substring(0, lastColonIndex) + '.' + normalizedTime.substring(lastColonIndex + 1);
+    }
+    const parts = normalizedTime.split(':');
+    let seconds = 0;
+    if (parts.length === 3) { seconds = parseFloat(parts[0]) * 3600 + parseFloat(parts[1]) * 60 + parseFloat(parts[2]); }
+    else if (parts.length === 2) { seconds = parseFloat(parts[0]) * 60 + parseFloat(parts[1]); }
+    else if (parts.length === 1) { seconds = parseFloat(parts[0]); }
+    return isNaN(seconds) ? 0 : seconds;
+};
+
+/**
+ * Converts seconds to a time string (HH:MM:SS.ms).
+ * @param {number} seconds The time in seconds.
+ * @param {boolean} useComma Whether to use a comma instead of a dot for the millisecond separator.
+ * @returns {string} The formatted time string.
+ */
+const secondsToTimeString = (seconds, useComma = false) => {
+    if (isNaN(seconds) || seconds < 0) seconds = 0;
+    const h = Math.floor(seconds / 3600).toString().padStart(2, '0'),
+        m = Math.floor((seconds % 3600) / 60).toString().padStart(2, '0'),
+        s = Math.floor(seconds % 60).toString().padStart(2, '0'),
+        ms = Math.round((seconds - Math.floor(seconds)) * 1000).toString().padStart(3, '0');
+    return `${h}:${m}:${s}${useComma ? ',' : '.'}${ms}`;
+};
+
+
+// --- Format-Specific Parsers ---
+
+function parseVttOrSrt(content) {
+    const subs = [];
+    const cleanedContent = content
+        .trim()
+        .replace(/\r/g, '')
+        .replace(/^WEBVTT\s*\n/, '') 
+        .replace(/NOTE\s.*\n/g, ''); 
+
+    const blocks = cleanedContent.split(/\n\n+/);
+
+    for (const block of blocks) {
+        const lines = block.split('\n');
+        if (lines.length < 2) continue;
+        const timeLineIndex = lines.findIndex(l => l.includes('-->'));
+        if (timeLineIndex === -1) continue;
+        const timeLine = lines[timeLineIndex];
+        const [start_time, end_time] = timeLine.split('-->').map(s => s.trim());
+        const cleanStartTime = start_time.split(' ')[0];
+        const cleanEndTime = end_time.split(' ')[0];
+        const text = lines.slice(timeLineIndex + 1).join('\n').trim().replace(/<[^>]+>/g, '');
+        if (text) {
+            subs.push({ start_time: cleanStartTime, end_time: cleanEndTime, text });
+        }
+    }
+    return subs.length > 0 ? subs : null;
+}
+
+function parseSimpleTimestampFormat(content) {
+    let subs = [];
+    const timestampRegex = /(\[(\d{1,2}:)?\d{2}:\d{2}[.,:]\d{1,3}\])/;
+    const parts = content.trim().split(timestampRegex);
+    if (parts.length < 3) return null; 
+
+    for (let i = 1; i < parts.length; i += 3) {
+        let timeStr = parts[i].replace(/[\[\]]/g, '');
+        const text = parts[i + 2].trim();
+        if ((timeStr.match(/:/g) || []).length === 1) {
+            timeStr = '00:' + timeStr;
+        }
+        if (text) {
+            subs.push({ start_time: timeStr, text: text });
+        }
+    }
+
+    if (subs.length === 0) return null;
+    for (let i = 0; i < subs.length; i++) {
+        if (i < subs.length - 1) {
+            const nextStartTime = timeStringToSeconds(subs[i + 1].start_time);
+            subs[i].end_time = secondsToTimeString(nextStartTime - 0.001);
+        } else {
+            // For the last subtitle, we don't know the media duration here.
+            // We set a temporary duration; the main app logic will correct this
+            // once the media duration is known.
+            const startTime = timeStringToSeconds(subs[i].start_time);
+            subs[i].end_time = secondsToTimeString(startTime + 5);
+        }
+    }
+    return subs.length > 0 ? subs : null;
+}
+
+function parseJson(content) {
+    try {
+        const data = JSON.parse(content);
+        if (Array.isArray(data) && data.every(item => 'text' in item && ('start_time' in item || 'end_time' in item))) {
+            return data;
+        }
+        return null;
+    } catch (e) {
+        return null;
+    }
+}
+
+
+// --- Main Parser Function ---
+
+/**
+ * Intelligently parses subtitle content and returns the data along with the format type.
+ * @param {string} content The raw string content from a file or textarea.
+ * @returns {{data: Array<object>, format: string}|null} An object with data and format, or null if parsing fails.
+ */
+function parseTranscriptContent(content) {
+    if (!content || !content.trim()) {
+        return null;
+    }
+    const trimmedContent = content.trim();
+    let parsedData = null;
+    let format = null;
+
+    // 1. Try JSON
+    parsedData = parseJson(trimmedContent);
+    if (parsedData) {
+        format = 'json';
+    }
+    // 2. Try VTT/SRT
+    else if (trimmedContent.includes('-->')) {
+        parsedData = parseVttOrSrt(trimmedContent);
+        if (parsedData) {
+            format = 'srt';
+        }
+    }
+    // 3. Try the simple [timestamp] format
+    else if (/^\[(\d{1,2}:)?\d{2}:\d{2}[.,:]\d{1,3}\]/.test(trimmedContent)) {
+        parsedData = parseSimpleTimestampFormat(trimmedContent);
+         if (parsedData) {
+            format = 'simple';
+        }
+    }
+
+    // Return result if any format was successful
+    if (parsedData && format) {
+        // UPDATED: Standardize all time formats and add IDs in one go.
+        // This ensures the internal state of the application is always clean and consistent.
+        const finalData = parsedData.map((item, index) => ({
+            ...item,
+            id: item.id || Date.now() + index,
+            // The round-trip conversion standardizes the time string format
+            start_time: item.start_time ? secondsToTimeString(timeStringToSeconds(item.start_time)) : "00:00:00.000",
+            end_time: item.end_time ? secondsToTimeString(timeStringToSeconds(item.end_time)) : "00:00:00.000",
+        }));
+        return { data: finalData, format: format };
+    }
+
+    // 4. If no format matches, return null
+    console.warn("Could not determine subtitle format.");
+    return null;
+}
+// --- END OF parser.js ---
+
+// --- START OF main.js ---
+document.addEventListener('DOMContentLoaded', () => {
+    // --- DOM Elements ---
+    const transcriptFileInput = document.getElementById('transcript-file-input'),
+        transcriptDropZone = document.getElementById('transcript-drop-zone'),
+        transcriptTextInput = document.getElementById('transcript-text-input'),
+        mediaFileInput = document.getElementById('media-file-input'),
+        mediaDropZone = document.getElementById('media-drop-zone'),
+        transcriptFileName = document.getElementById('transcript-file-name'),
+        mediaFileName = document.getElementById('media-file-name'),
+        processButton = document.getElementById('process-button'),
+        backToInputBtn = document.getElementById('back-to-input-btn'),
+        downloadSrtButton = document.getElementById('download-srt-button'),
+        downloadTxtButton = document.getElementById('download-txt-button'),
+        inputSection = document.getElementById('input-section'),
+        editorSection = document.getElementById('editor-section'),
+        notification = document.getElementById('notification'),
+        mediaPlayer = document.getElementById('media-player'),
+        audioPoster = document.getElementById('audio-poster'),
+        playPauseBtn = document.getElementById('play-pause-btn'),
+        playPauseIcon = playPauseBtn.querySelector('span'),
+        progressBar = document.getElementById('progress-bar'),
+        currentTimeEl = document.getElementById('current-time'),
+        durationEl = document.getElementById('duration'),
+        volumeBtn = document.getElementById('volume-btn'),
+        volumeIcon = volumeBtn.querySelector('span'),
+        volumeBar = document.getElementById('volume-bar'),
+        subtitleListContainer = document.getElementById('subtitle-list-container'),
+        subtitleList = document.getElementById('subtitle-list'),
+        interactiveTextContainer = document.getElementById('interactive-text-container'),
+        interactiveTextView = document.getElementById('interactive-text-view'),
+        decreaseSpeedBtn = document.getElementById('decrease-speed-btn'),
+        increaseSpeedBtn = document.getElementById('increase-speed-btn'),
+        playbackSpeedEl = document.getElementById('playback-speed'),
+        replaceInput = document.getElementById('replace-input'),
+        replaceAllBtn = document.getElementById('replace-all-btn'),
+        replaceOneBtn = document.getElementById('replace-one-btn'),
+        offsetInput = document.getElementById('offset-input'),
+        applyOffsetBtn = document.getElementById('apply-offset-btn'),
+        undoBtn = document.getElementById('undo-btn'),
+        redoBtn = document.getElementById('redo-btn'),
+        searchInput = document.getElementById('search-input'),
+        searchPrevBtn = document.getElementById('search-prev-btn'),
+        searchNextBtn = document.getElementById('search-next-btn'),
+        searchResultsDisplay = document.getElementById('search-results-display'),
+        viewToggleListBtn = document.getElementById('view-toggle-list'),
+        viewToggleTextBtn = document.getElementById('view-toggle-text');
+
+    // --- State ---
+    let state = { subtitles: [], sourceFormat: null, mediaURL: null, mediaFile: null, activeSubtitleId: null, wasPlayingBeforeEdit: false };
+    let currentView = 'list'; // 'list' or 'text'
+    let typingTimeout = null, parseTimeout = null, searchTimeout = null;
+    let historyStack = [], redoStack = [];
+    let searchResults = [], currentSearchIndex = -1;
+
+    // --- Core Functions ---
+    const showNotification = (message, type = 'info', duration = 3000) => {
+        notification.textContent = message;
+        notification.className = 'show';
+        if (type === 'error') notification.classList.add('error');
+        setTimeout(() => { notification.className = ''; }, duration);
+    };
+    
+    const formatTimeForDisplay = (time) => {
+        if (isNaN(time)) return "00:00";
+        const totalSeconds = Math.floor(time);
+        const h = Math.floor(totalSeconds / 3600);
+        const m = Math.floor((totalSeconds % 3600) / 60).toString().padStart(2, '0');
+        const s = (totalSeconds % 60).toString().padStart(2, '0');
+        return h > 0 ? `${h}:${m}:${s}` : `${m}:${s}`;
+    };
+    
+    // --- Local Storage & History (Undo/Redo) ---
+    const saveToLocalStorage = () => {
+        if (state.subtitles && state.subtitles.length > 0) {
+            const dataToSave = {
+                subtitles: state.subtitles,
+                sourceFormat: state.sourceFormat,
+                mediaFileName: state.mediaFile?.name || 'קובץ לא ידוע'
+            };
+            localStorage.setItem('subtitleEditorAutosave', JSON.stringify(dataToSave));
+        } else {
+            localStorage.removeItem('subtitleEditorAutosave');
+        }
+    };
+
+    const updateHistoryButtons = () => {
+        undoBtn.disabled = historyStack.length <= 1;
+        redoBtn.disabled = redoStack.length === 0;
+    };
+    
+    const recordHistory = () => {
+        const currentState = JSON.parse(JSON.stringify({ subtitles: state.subtitles, sourceFormat: state.sourceFormat }));
+        
+        // Prevent pushing the exact same state twice in a row
+        if (historyStack.length > 0) {
+            const lastStateJSON = JSON.stringify(historyStack[historyStack.length - 1].subtitles);
+            const currentStateJSON = JSON.stringify(currentState.subtitles);
+            if (lastStateJSON === currentStateJSON) {
+                return;
+            }
+        }
+
+        historyStack.push(currentState);
+        redoStack = []; 
+        updateHistoryButtons();
+        saveToLocalStorage();
+    };
+    
+    const restoreStateFromHistory = (historyEntry) => {
+        state.subtitles = historyEntry.subtitles;
+        state.sourceFormat = historyEntry.sourceFormat;
+        renderCurrentView();
+        performSearch();
+        updateHistoryButtons();
+        saveToLocalStorage();
+    };
+
+    const updateAndRefreshUI = (notificationMsg) => {
+        clearTimeout(typingTimeout);
+        recordHistory();
+        renderCurrentView();
+        performSearch();
+        if (notificationMsg) showNotification(notificationMsg);
+    };
+
+    const undo = () => {
+        clearTimeout(typingTimeout);
+        if (historyStack.length <= 1) return;
+        redoStack.push(historyStack.pop());
+        const prevState = historyStack[historyStack.length - 1];
+        restoreStateFromHistory(prevState);
+        showNotification('פעולה בוטלה');
+    };
+
+    const redo = () => {
+        clearTimeout(typingTimeout);
+        if (redoStack.length === 0) return;
+        const nextState = redoStack.pop();
+        historyStack.push(nextState);
+        restoreStateFromHistory(nextState);
+        showNotification('פעולה שוחזרה');
+    };
+    
+    const loadFromLocalStorage = () => {
+        const savedData = localStorage.getItem('subtitleEditorAutosave');
+        if (savedData) {
+            try {
+                const parsedData = JSON.parse(savedData);
+                if (parsedData.subtitles && parsedData.subtitles.length > 0) {
+                    state.subtitles = parsedData.subtitles;
+                    state.sourceFormat = parsedData.sourceFormat || null;
+                    transcriptTextInput.value = JSON.stringify(parsedData.subtitles, null, 2);
+                    transcriptFileName.textContent = `שוחזר סשן עבור: ${parsedData.mediaFileName || 'קובץ לא ידוע'}`;
+                    showNotification('סשן קודם שוחזר. יש לבחור מחדש את קובץ המדיה.');
+                    checkInputs();
+                }
+            } catch (e) {
+                console.error("Failed to load from local storage", e);
+                localStorage.removeItem('subtitleEditorAutosave');
+            }
+        }
+    };
+
+    // --- Parsing and File Handling ---
+    const processTranscriptContent = (content) => {
+        const result = parseTranscriptContent(content); // This calls the function in parser.js
+        if (result) {
+            state.subtitles = result.data;
+            state.sourceFormat = result.format;
+            // UPDATED: Always update the textarea with the clean, standardized JSON data.
+            // This ensures the displayed text and the internal state are always in sync.
+            if (transcriptTextInput.value !== JSON.stringify(result.data, null, 2)) {
+                transcriptTextInput.value = JSON.stringify(result.data, null, 2);
+            }
+            checkInputs();
+            return true;
+        }
+        showNotification('שגיאה בפענוח הקובץ. ודא שהוא בפורמט נתמך (JSON, SRT, VTT, או תמלול פשוט).', 'error');
+        return false;
+    }
+
+    const handleTranscriptFile = (file) => {
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                const content = e.target.result;
+                if (processTranscriptContent(content)) {
+                    transcriptFileName.textContent = `קובץ: ${file.name}`;
+                    // REMOVED: This line was the source of the bug. It populated the
+                    // textarea with the original, un-standardized content.
+                    // The 'processTranscriptContent' function now handles updating the textarea correctly.
+                    // transcriptTextInput.value = content; 
+                }
+            };
+            reader.onerror = () => showNotification('שגיאה בקריאת הקובץ.', 'error');
+            reader.readAsText(file);
+        } else { showNotification('יש לבחור קובץ תמלול.', 'error'); }
+    };
+    
+    const handleMediaFile = (file) => {
+         if (file && (file.type.startsWith('audio/') || file.type.startsWith('video/'))) {
+            if (state.mediaURL) URL.revokeObjectURL(state.mediaURL);
+            state.mediaFile = file;
+            state.mediaURL = URL.createObjectURL(file);
+            mediaFileName.textContent = `קובץ: ${file.name}`;
+            checkInputs();
+        } else { showNotification('יש לבחור קובץ שמע או וידאו.', 'error'); }
+    };
+
+    // --- Rendering ---
+    const renderUI = () => {
+        inputSection.style.display = 'none';
+        editorSection.style.display = 'block';
+        mediaPlayer.src = state.mediaURL;
+        if (state.mediaFile.type.startsWith('audio/')) {
+            audioPoster.textContent = state.mediaFile.name;
+            audioPoster.classList.add('visible');
+        } else {
+            audioPoster.classList.remove('visible');
+        }
+        renderCurrentView();
+        performSearch();
+    };
+
+    const renderCurrentView = () => {
+        if (currentView === 'list') {
+            renderSubtitleList();
+        } else {
+            renderInteractiveText();
+        }
+    };
+
+    const renderSubtitleList = () => {
+        subtitleList.innerHTML = '';
+        const sortedSubs = [...state.subtitles].sort((a,b) => timeStringToSeconds(a.start_time) - timeStringToSeconds(b.start_time));
+        state.subtitles = sortedSubs; 
+
+        subtitleList.insertAdjacentHTML('beforeend', createAddSubGapHTML('before_first'));
+
+        state.subtitles.forEach(sub => {
+            const displayStartTime = secondsToTimeString(timeStringToSeconds(sub.start_time)),
+                  displayEndTime = secondsToTimeString(timeStringToSeconds(sub.end_time));
+            
+            const tempDiv = document.createElement('div');
+            tempDiv.innerHTML = `
+                <div class="subtitle-item" data-id="${sub.id}">
+                    <div class="subtitle-item-main">
+                        <div class="time-inputs">
+                            <input type="text" class="time-input start-time" value="${displayStartTime}">
+                            <span>→</span>
+                            <input type="text" class="time-input end-time" value="${displayEndTime}">
+                        </div>
+                        <div class="text-input" contenteditable="true" spellcheck="false"></div>
+                    </div>
+                    <div class="subtitle-item-actions">
+                        <button class="delete-sub-btn" title="מחק כתובית"><span class="material-symbols-outlined">delete</span></button>
+                    </div>
+                </div>`;
+            const subItemElement = tempDiv.firstElementChild;
+            const textInput = subItemElement.querySelector('.text-input');
+            textInput.textContent = sub.text || '';
+            subtitleList.appendChild(subItemElement);
+            subtitleList.insertAdjacentHTML('beforeend', createAddSubGapHTML(sub.id));
+        });
+        updateActiveSubtitle();
+    }
+
+    const renderInteractiveText = () => {
+        const sortedSubs = [...state.subtitles].sort((a,b) => timeStringToSeconds(a.start_time) - timeStringToSeconds(b.start_time));
+        state.subtitles = sortedSubs;
+        
+        let html = "";
+        if (state.sourceFormat === 'simple') {
+            html = sortedSubs.map(sub => `<span data-id="${sub.id}">${(sub.text || '').trim()}</span>`).join('<br><br>');
+        } else {
+            for (let i = 0; i < sortedSubs.length; i++) {
+                const currentSub = sortedSubs[i];
+                let textToAdd = `<span data-id="${currentSub.id}">${(currentSub.text || '').trim()}</span>`;
+
+                if (i > 0) {
+                    const prevSub = sortedSubs[i - 1];
+                    const prevText = (prevSub.text || '').trim();
+                    const prevTextEndsWithPeriod = /\.$/.test(prevText);
+                    const prevTextEndsWithComma = /,$/.test(prevText);
+                    const prevTextEndsStrongSentence = /[?!]$/.test(prevText);
+                    const gap = timeStringToSeconds(currentSub.start_time) - timeStringToSeconds(prevSub.end_time);
+
+                    if (!prevTextEndsWithPeriod && !prevTextEndsWithComma) {
+                        html += ' ' + textToAdd;
+                    } else if (gap > 1.5 || prevTextEndsStrongSentence) {
+                        html += '<br><br>' + textToAdd;
+                    } else {
+                        html += ' ' + textToAdd;
+                    } 
+                } else {
+                    html += textToAdd;
+                }
+            }
+        }
+        interactiveTextView.innerHTML = html;
+        updateActiveSubtitle();
+    };
+
+    const createAddSubGapHTML = (afterId) => `
+        <div class="add-sub-gap" data-after-id="${afterId}">
+            <div class="add-sub-gap-inner">
+                <div class="line"></div>
+                <button title="הוסף כתובית כאן"><span class="material-symbols-outlined">add</span></button>
+                <div class="line"></div>
+            </div>
+        </div>`;
+
+    // --- Player and Controls ---
+    const togglePlay = () => mediaPlayer.paused ? mediaPlayer.play() : mediaPlayer.pause();
+    
+    const updateActiveSubtitle = () => {
+        const currentSub = state.subtitles.find(s => mediaPlayer.currentTime >= timeStringToSeconds(s.start_time) && mediaPlayer.currentTime < timeStringToSeconds(s.end_time));
+        if (currentSub?.id === state.activeSubtitleId) return;
+
+        const shouldBlockScroll = document.querySelector('.subtitle-item input:focus, .subtitle-item .text-input:focus, #interactive-text-view:focus');
+        
+        if (currentView === 'list') {
+            document.querySelector(`.subtitle-item.active`)?.classList.remove('active');
+            const newActiveEl = document.querySelector(`.subtitle-item[data-id="${currentSub?.id}"]`);
+            if (newActiveEl) { 
+                newActiveEl.classList.add('active');
+                if (!shouldBlockScroll) newActiveEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }
+        } else { // 'text' view
+            document.querySelector(`#interactive-text-view span.active`)?.classList.remove('active');
+            const newActiveEl = document.querySelector(`#interactive-text-view span[data-id="${currentSub?.id}"]`);
+            if (newActiveEl) {
+                newActiveEl.classList.add('active');
+                if (!shouldBlockScroll) newActiveEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }
+        }
+        state.activeSubtitleId = currentSub?.id;
+    };
+    
+    const updatePlaybackSpeed = (change) => {
+        let newRate = Math.round((mediaPlayer.playbackRate + change) * 100) / 100;
+        if (newRate >= 0.25 && newRate <= 4) {
+            mediaPlayer.playbackRate = newRate;
+            playbackSpeedEl.textContent = `${newRate.toFixed(2).replace(/\.00$|0$/, '')}x`;
+        }
+    };
+
+    // --- Event Listeners ---
+    const checkInputs = () => { processButton.disabled = !(state.subtitles && state.subtitles.length > 0 && state.mediaURL); };
+    
+    transcriptFileInput.addEventListener('change', (e) => handleTranscriptFile(e.target.files[0]));
+    mediaFileInput.addEventListener('change', (e) => handleMediaFile(e.target.files[0]));
+    
+    transcriptTextInput.addEventListener('input', () => {
+        if (transcriptTextInput.value.trim().length > 0) { transcriptFileInput.value = ''; transcriptFileName.textContent = ''; }
+        clearTimeout(parseTimeout);
+        parseTimeout = setTimeout(() => {
+            processTranscriptContent(transcriptTextInput.value);
+        }, 500);
+    });
+    
+    ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => { document.body.addEventListener(eventName, e => { e.preventDefault(); e.stopPropagation(); }); });
+    [transcriptDropZone, mediaDropZone].forEach(zone => {
+        zone.addEventListener('dragover', () => zone.classList.add('drag-over'), false);
+        zone.addEventListener('dragleave', () => zone.classList.remove('drag-over'), false);
+    });
+    transcriptDropZone.addEventListener('drop', e => { transcriptDropZone.classList.remove('drag-over'); handleTranscriptFile(e.dataTransfer.files[0]); });
+    mediaDropZone.addEventListener('drop', e => { mediaDropZone.classList.remove('drag-over'); handleMediaFile(e.dataTransfer.files[0]); });
+
+    processButton.addEventListener('click', () => {
+        historyStack = [];
+        redoStack = [];
+        recordHistory();
+        renderUI();
+    });
+    
+    backToInputBtn.addEventListener('click', () => {
+        editorSection.style.display = 'none';
+        inputSection.style.display = 'block';
+        mediaPlayer.pause();
+    });
+    
+    undoBtn.addEventListener('click', undo);
+    redoBtn.addEventListener('click', redo);
+
+    playPauseBtn.addEventListener('click', togglePlay);
+    mediaPlayer.addEventListener('click', togglePlay);
+    audioPoster.addEventListener('click', togglePlay);
+    mediaPlayer.addEventListener('play', () => playPauseIcon.textContent = 'pause');
+    mediaPlayer.addEventListener('pause', () => playPauseIcon.textContent = 'play_arrow');
+    mediaPlayer.addEventListener('loadedmetadata', () => {
+        const duration = mediaPlayer.duration;
+        durationEl.textContent = formatTimeForDisplay(duration);
+
+        // If the source was a simple transcript, adjust the last subtitle's end time to the media duration.
+        if (state.sourceFormat === 'simple' && state.subtitles.length > 0 && duration > 0) {
+            const sortedSubs = [...state.subtitles].sort((a,b) => timeStringToSeconds(a.start_time) - timeStringToSeconds(b.start_time));
+            const lastSub = sortedSubs[sortedSubs.length - 1];
+            
+            if (lastSub) {
+                const subToUpdate = state.subtitles.find(s => s.id === lastSub.id);
+                if (subToUpdate) {
+                    subToUpdate.end_time = secondsToTimeString(duration);
+                    
+                    // Update the last history record to reflect this initialization change,
+                    // so it doesn't create an extra "undo" step.
+                    if (historyStack.length > 0) {
+                        historyStack[historyStack.length - 1].subtitles = JSON.parse(JSON.stringify(state.subtitles));
+                    }
+                    
+                    // The UI was already rendered, so re-render the list/text to show the new time.
+                    renderCurrentView();
+                }
+            }
+        }
+    });
+    
+    mediaPlayer.addEventListener('timeupdate', () => {
+        progressBar.value = mediaPlayer.duration ? (mediaPlayer.currentTime / mediaPlayer.duration) * 100 : 0;
+        currentTimeEl.textContent = formatTimeForDisplay(mediaPlayer.currentTime);
+        updateActiveSubtitle();
+    });
+
+    progressBar.addEventListener('input', () => mediaPlayer.currentTime = (progressBar.value / 100) * mediaPlayer.duration);
+    volumeBar.addEventListener('input', (e) => { mediaPlayer.volume = e.target.value; mediaPlayer.muted = e.target.value == 0; });
+    
+    mediaPlayer.addEventListener('volumechange', () => {
+        const currentVolume = mediaPlayer.muted ? 0 : mediaPlayer.volume;
+        volumeBar.value = currentVolume;
+        volumeBar.style.setProperty('--volume-progress', `${currentVolume * 100}%`);
+        if (currentVolume === 0) volumeIcon.textContent = 'volume_off';
+        else if (currentVolume < 0.5) volumeIcon.textContent = 'volume_down';
+        else volumeIcon.textContent = 'volume_up';
+    });
+
+    volumeBtn.addEventListener('click', () => mediaPlayer.muted = !mediaPlayer.muted);
+    increaseSpeedBtn.addEventListener('click', () => updatePlaybackSpeed(0.25));
+    decreaseSpeedBtn.addEventListener('click', () => updatePlaybackSpeed(-0.25));
+
+    // --- View Switching Logic ---
+    viewToggleListBtn.addEventListener('click', () => {
+        if (currentView === 'list') return;
+        currentView = 'list';
+        viewToggleListBtn.classList.add('active');
+        viewToggleTextBtn.classList.remove('active');
+        subtitleListContainer.style.display = 'block';
+        interactiveTextContainer.style.display = 'none';
+        renderCurrentView();
+        performSearch();
+    });
+
+    viewToggleTextBtn.addEventListener('click', () => {
+        if (currentView === 'text') return;
+        currentView = 'text';
+        viewToggleTextBtn.classList.add('active');
+        viewToggleListBtn.classList.remove('active');
+        subtitleListContainer.style.display = 'none';
+        interactiveTextContainer.style.display = 'block';
+        renderCurrentView();
+        performSearch();
+    });
+
+    // --- Subtitle Editing Logic (List View) ---
+    subtitleListContainer.addEventListener('click', e => {
+        const target = e.target;
+        if (target.closest('.delete-sub-btn')) {
+            const subId = target.closest('.subtitle-item').dataset.id;
+            state.subtitles = state.subtitles.filter(s => s.id != subId);
+            updateAndRefreshUI("הכתובית נמחקה.");
+            return;
+        }
+        if (target.closest('.add-sub-gap button')) {
+            const addGap = target.closest('.add-sub-gap');
+            const afterId = addGap.dataset.afterId;
+            let newSub, insertIndex;
+            if (afterId === 'before_first') {
+                const firstSubStartTime = state.subtitles.length > 0 ? timeStringToSeconds(state.subtitles[0].start_time) : 2;
+                newSub = { id: Date.now(), start_time: "00:00:00.000", end_time: secondsToTimeString(Math.max(0.1, firstSubStartTime - 0.1)), text: "טקסט חדש..." };
+                insertIndex = 0;
+            } else {
+                const prevSubIndex = state.subtitles.findIndex(s => s.id == afterId);
+                const prevSub = state.subtitles[prevSubIndex];
+                const nextSub = state.subtitles[prevSubIndex + 1];
+                const startTime = timeStringToSeconds(prevSub.end_time) + 0.001;
+                const endTime = nextSub ? timeStringToSeconds(nextSub.start_time) - 0.001 : startTime + 2;
+                if (endTime <= startTime) return showNotification("אין מספיק מקום בין הכתוביות.", "error");
+                newSub = { id: Date.now(), start_time: secondsToTimeString(startTime), end_time: secondsToTimeString(endTime), text: "טקסט חדש..." };
+                insertIndex = prevSubIndex + 1;
+            }
+            state.subtitles.splice(insertIndex, 0, newSub);
+            updateAndRefreshUI("כתובית חדשה נוספה.");
+            const newSubEl = document.querySelector(`.subtitle-item[data-id="${newSub.id}"]`);
+            if (newSubEl) {
+                newSubEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                newSubEl.querySelector('.text-input')?.focus();
+            }
+            return;
+        }
+        const subItem = target.closest('.subtitle-item');
+        if(subItem && !target.closest('input, .text-input, button, mark')) {
+            mediaPlayer.currentTime = timeStringToSeconds(subItem.querySelector('.start-time').value);
+            if (mediaPlayer.paused) mediaPlayer.play();
+        }
+    });
+    
+    subtitleListContainer.addEventListener('input', e => {
+         const subItem = e.target.closest('.subtitle-item');
+         if (!subItem) return;
+         const subId = subItem.dataset.id, sub = state.subtitles.find(s => s.id == subId);
+         if (e.target.classList.contains('start-time')) sub.start_time = e.target.value;
+         if (e.target.classList.contains('end-time')) sub.end_time = e.target.value;
+         if (e.target.classList.contains('text-input')) { sub.text = e.target.textContent; }
+         if (!mediaPlayer.paused) { state.wasPlayingBeforeEdit = true; mediaPlayer.pause(); }
+         clearTimeout(typingTimeout);
+         typingTimeout = setTimeout(() => {
+            recordHistory();
+            if(state.wasPlayingBeforeEdit) { mediaPlayer.play(); state.wasPlayingBeforeEdit = false; }
+         }, 1500);
+    });
+
+    // --- Interactive Text View Logic ---
+    interactiveTextView.addEventListener('click', e => {
+        const span = e.target.closest('span[data-id]');
+        if (span && !e.target.closest('mark')) {
+            const subId = span.dataset.id;
+            const sub = state.subtitles.find(s => s.id == subId);
+            if (sub) mediaPlayer.currentTime = timeStringToSeconds(sub.start_time);
+        }
+    });
+
+    interactiveTextView.addEventListener('input', () => {
+        if (!mediaPlayer.paused) { state.wasPlayingBeforeEdit = true; mediaPlayer.pause(); }
+        clearTimeout(typingTimeout);
+        typingTimeout = setTimeout(() => {
+            interactiveTextView.querySelectorAll('span[data-id]').forEach(span => {
+                const subId = span.dataset.id;
+                const sub = state.subtitles.find(s => s.id == subId);
+                if (sub && sub.text !== span.textContent) sub.text = span.textContent;
+            });
+            recordHistory();
+            if(state.wasPlayingBeforeEdit) { mediaPlayer.play(); state.wasPlayingBeforeEdit = false; }
+        }, 1500);
+    });
+    
+    const handleTextViewEdit = (e) => {
+        const selection = window.getSelection();
+        if (!selection.rangeCount) return;
+
+        const range = selection.getRangeAt(0);
+        const container = range.commonAncestorContainer;
+
+        const isInsideSub = (container.nodeType === Node.ELEMENT_NODE)
+            ? container.closest('span[data-id]')
+            : container.parentElement.closest('span[data-id]');
+
+        if (!isInsideSub) {
+            e.preventDefault();
+            showNotification('ניתן לערוך רק את תוכן הכתובית עצמה.', 'error', 2000);
+        }
+    }
+    
+    interactiveTextView.addEventListener('keydown', e => {
+        const allowedKeys = ['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'Home', 'End', 'PageUp', 'PageDown'];
+        if (allowedKeys.includes(e.key) || e.ctrlKey || e.metaKey) {
+            return;
+        }
+        handleTextViewEdit(e);
+    });
+    interactiveTextView.addEventListener('paste', handleTextViewEdit);
+    
+    // --- Search and Replace ---
+    const clearSearch = () => {
+        document.querySelectorAll('mark.search-match').forEach(mark => {
+            const parent = mark.parentNode;
+            if (parent) {
+                parent.replaceChild(document.createTextNode(mark.textContent), mark);
+                parent.normalize();
+            }
+        });
+        document.querySelectorAll('.search-hit').forEach(el => el.classList.remove('search-hit'));
+        searchResults = []; currentSearchIndex = -1; searchResultsDisplay.textContent = '';
+        searchPrevBtn.disabled = true; searchNextBtn.disabled = true; replaceOneBtn.disabled = true; replaceAllBtn.disabled = true;
+    };
+
+    const performSearch = () => {
+        clearSearch();
+        const query = searchInput.value.trim();
+        if (!query) { return; }
+
+        replaceAllBtn.disabled = false;
+        const findRegex = new RegExp(query.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&'), 'gi');
+        
+        searchResults = [];
+
+        let elementsToSearch;
+        if (currentView === 'list') {
+            elementsToSearch = document.querySelectorAll('#subtitle-list .text-input');
+        } else { // 'text' view
+            elementsToSearch = document.querySelectorAll('#interactive-text-view span[data-id]');
+        }
+
+        elementsToSearch.forEach(element => {
+            const subId = element.closest('[data-id]').dataset.id;
+            const text = element.textContent;
+            if (text.match(findRegex)) {
+                const newHtml = text.replace(findRegex, match => `<mark class="search-match">${match}</mark>`);
+                element.innerHTML = newHtml;
+                (element.closest('.subtitle-item') || element).classList.add('search-hit');
+                
+                element.querySelectorAll('mark.search-match').forEach(markNode => {
+                    searchResults.push({
+                        subId: subId,
+                        element: element,
+                        domNode: markNode
+                    });
+                });
+            }
+        });
+        
+        const hasResults = searchResults.length > 0;
+        searchPrevBtn.disabled = !hasResults; searchNextBtn.disabled = !hasResults; replaceOneBtn.disabled = !hasResults;
+
+        if (hasResults) { 
+            currentSearchIndex = 0; 
+            navigateToSearchResult(0); 
+        } else { 
+            currentSearchIndex = -1; 
+            searchResultsDisplay.textContent = '0/0'; 
+        }
+    };
+    
+    const navigateToSearchResult = (index) => {
+        if (searchResults.length === 0) return;
+
+        if (currentSearchIndex > -1 && searchResults[currentSearchIndex]) {
+            searchResults[currentSearchIndex].domNode.classList.remove('current-match');
+        }
+
+        currentSearchIndex = (index + searchResults.length) % searchResults.length;
+        const currentMatch = searchResults[currentSearchIndex];
+        
+        if (currentMatch) {
+            currentMatch.domNode.classList.add('current-match');
+            
+            let elementToScroll;
+            if (currentView === 'list') {
+                elementToScroll = currentMatch.element.closest('.subtitle-item');
+            } else {
+                elementToScroll = currentMatch.domNode;
+            }
+            
+            if (elementToScroll) {
+                elementToScroll.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }
+        }
+        
+        searchResultsDisplay.textContent = `${currentSearchIndex + 1}/${searchResults.length}`;
+    };
+
+    searchInput.addEventListener('input', () => { clearTimeout(searchTimeout); searchTimeout = setTimeout(performSearch, 300); });
+    searchNextBtn.addEventListener('click', () => navigateToSearchResult(currentSearchIndex + 1));
+    searchPrevBtn.addEventListener('click', () => navigateToSearchResult(currentSearchIndex - 1));
+
+    searchInput.addEventListener('keydown', e => {
+        if (e.key === 'Enter' && searchResults.length > 0) {
+            e.preventDefault();
+            if (e.shiftKey) {
+                searchPrevBtn.click();
+            } else {
+                searchNextBtn.click();
+            }
+        }
+    });
+
+    replaceInput.addEventListener('keydown', e => {
+        if (e.key === 'Enter') {
+            e.preventDefault();
+            replaceOneBtn.click();
+        }
+    });
+
+    replaceOneBtn.addEventListener('click', () => {
+        clearTimeout(typingTimeout);
+        const findText = searchInput.value;
+        const replaceText = replaceInput.value;
+        if (!findText || currentSearchIndex < 0 || searchResults.length === 0) return;
+        
+        const indexBeforeReplace = currentSearchIndex;
+        const currentMatch = searchResults[indexBeforeReplace];
+        if (!currentMatch) return;
+
+        const markNode = currentMatch.domNode;
+        markNode.parentNode.replaceChild(document.createTextNode(replaceText), markNode);
+        markNode.parentNode.normalize();
+
+        const sub = state.subtitles.find(s => s.id == currentMatch.subId);
+        if (sub) {
+            sub.text = currentMatch.element.textContent;
+        }
+        
+        recordHistory();
+        renderCurrentView();
+        performSearch();
+        
+        if (searchResults.length > 0) {
+            const newIndex = Math.min(indexBeforeReplace, searchResults.length - 1);
+            navigateToSearchResult(newIndex);
+        }
+    });
+
+    replaceAllBtn.addEventListener('click', () => {
+        clearTimeout(typingTimeout);
+        const findText = searchInput.value; const replaceText = replaceInput.value;
+        if (!findText) return showNotification('יש להזין טקסט לחיפוש.', 'error');
+        const findRegex = new RegExp(findText.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&'), 'gi');
+        let replacementsCount = 0;
+        state.subtitles.forEach(sub => {
+            const currentText = sub.text || '';
+            if (currentText.match(findRegex)) {
+                const newText = currentText.replace(findRegex, replaceText);
+                if (newText !== currentText) { 
+                    sub.text = newText; 
+                    replacementsCount++; 
+                }
+            }
+        });
+        if (replacementsCount > 0) updateAndRefreshUI(`הוחלפו ${replacementsCount} מופעים.`);
+        else showNotification('הטקסט לחיפוש לא נמצא.', 'info');
+    });
+
+    applyOffsetBtn.addEventListener('click', () => {
+        const offset = parseFloat(offsetInput.value);
+        if (isNaN(offset)) return showNotification('ערך הזזה לא תקין.', 'error');
+        state.subtitles.forEach(sub => {
+            sub.start_time = secondsToTimeString(Math.max(0, timeStringToSeconds(sub.start_time) + offset));
+            sub.end_time = secondsToTimeString(Math.max(0, timeStringToSeconds(sub.end_time) + offset));
+        });
+        updateAndRefreshUI(`התזמונים הוזזו ב-${offset} שניות.`);
+    });
+    
+    // --- Download Functions ---
+    const generateSrtContent = () => {
+        return [...state.subtitles].sort((a,b) => timeStringToSeconds(a.start_time) - timeStringToSeconds(b.start_time))
+            .map((sub, index) => `${index + 1}\n${secondsToTimeString(timeStringToSeconds(sub.start_time), true)} --> ${secondsToTimeString(timeStringToSeconds(sub.end_time), true)}\n${(sub.text || '').trim()}\n`).join('\n');
+    };
+
+    const generatePlainTextContent = () => {
+        const sortedSubs = [...state.subtitles].sort((a,b) => timeStringToSeconds(a.start_time) - timeStringToSeconds(b.start_time));
+        if (sortedSubs.length === 0) return "";
+        
+        if (state.sourceFormat === 'simple') {
+            return sortedSubs.map(sub => (sub.text || '').trim()).join('\n\n');
+        }
+        
+        let fullText = "";
+        for (let i = 0; i < sortedSubs.length; i++) {
+            const currentSub = sortedSubs[i], textToAdd = (currentSub.text || '').trim();
+            if (i > 0) {
+                const prevSub = sortedSubs[i - 1];
+                const prevText = (prevSub.text || '').trim();
+                const prevTextEndsWithPeriod = /\.$/.test(prevText);
+                const prevTextEndsWithComma = /,$/.test(prevText);
+                const prevTextEndsStrongSentence = /[?!]$/.test(prevText);
+                const gap = timeStringToSeconds(currentSub.start_time) - timeStringToSeconds(prevSub.end_time);
+                if (!prevTextEndsWithPeriod && !prevTextEndsWithComma) fullText += ' ' + textToAdd;
+                else if (gap > 1.5 || prevTextEndsStrongSentence) fullText += '\n\n' + textToAdd;
+                else fullText += ' ' + textToAdd;
+            } else fullText += textToAdd;
+        }
+        return fullText;
+    };
+    
+    const downloadFile = (content, filename, type) => {
+        if (!content) return showNotification('אין כתוביות להורדה.', 'error');
+        const blob = new Blob([content], { type: `${type};charset=utf-8` });
+        const a = document.createElement('a');
+        a.href = URL.createObjectURL(blob);
+        a.download = filename;
+        document.body.appendChild(a); a.click(); document.body.removeChild(a);
+        URL.revokeObjectURL(a.href);
+        showNotification(`${filename} נוצר והורד בהצלחה!`);
+    }
+    
+    const baseFilename = () => (state.mediaFile?.name || 'subtitles').replace(/\.[^/.]+$/, "");
+
+    downloadSrtButton.addEventListener('click', () => downloadFile(generateSrtContent(), `${baseFilename()}.srt`, 'text/plain'));
+    downloadTxtButton.addEventListener('click', () => downloadFile(generatePlainTextContent(), `${baseFilename()}.txt`, 'text/plain'));
+    
+    loadFromLocalStorage();
+});
+// --- END OF main.js ---
+
+</script>
+</body>
+</html>
