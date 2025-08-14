@@ -12,8 +12,9 @@ def bundle_project(source_dir, output_file):
     
     # --- 1. Find the base HTML file ---
     html_file = None
+    output_filename = os.path.basename(output_file)
     for file in os.listdir(source_dir):
-        if file.endswith('.html'):
+        if file.endswith('.html') and file != output_filename:
             html_file = os.path.join(source_dir, file)
             print(f"Found base HTML file: '{html_file}'")
             break
