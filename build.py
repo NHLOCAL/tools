@@ -135,9 +135,9 @@ def main():
         
         if tool_lines:  # אם זהו קטע כלים
             title_lower = title.lower()
-            if 'html' in title_lower:
+            if 'דפדפן' in title_lower:
                 tool_type, icon = 'web', 'monitor'
-            elif 'python' in title_lower or 'פייתון' in title_lower:
+            elif 'scripts' in title_lower or 'סקריפטים' in title_lower:
                 tool_type, icon = 'python', 'code'
             elif 'extension' in title_lower or 'תוספי' in title_lower:
                 tool_type, icon = 'extension', 'package'
