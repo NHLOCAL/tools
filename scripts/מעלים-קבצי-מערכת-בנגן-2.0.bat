@@ -1,6 +1,6 @@
 @echo off
-chcp 1255>nul
-title îòìéí ÷áöéí îéåúøéí áðâï
+chcp 65001>nul
+title ×ž×¢×œ×™× ×§×‘×¦×™× ×ž×™×•×ª×¨×™× ×‘× ×’×Ÿ
 color 74
 MODE CON: COLS=70 lines=25
 
@@ -8,11 +8,11 @@ MODE CON: COLS=70 lines=25
 cls
 echo.
 echo.
-echo                           2.0 íéöá÷ä íéìòî
+echo                           2.0 ××™×¦×‘×§×” ××™×œ×¢×ž
 echo                          =================
 echo.
-echo                          !ïðåë úåà ïàë ñðëä
-echo                øèðà ù÷ä ïðåë ìù íééèîåèåà äøéçáå ùåôéçì
+echo                          !×Ÿ× ×•×› ×ª×•× ×Ÿ××› ×¡× ×›×”
+echo                ×¨×˜× × ×©×§×” ×Ÿ× ×•×› ×œ×© ××™×™×˜×ž×•×˜×•× ×”×¨×™×—×‘×• ×©×•×¤×™×—×œ
 set/p p=">>>"
 if exist %p%:\ (goto :start) else (
 if "%p%" == "" (goto :auto) else ( goto :welcome)
@@ -47,13 +47,13 @@ if exist MUSIC2.LIB attrib +s +h MUSIC2.LIB & set x=x
 if exist MUSICBMK.BMK attrib +s +h MUSICBMK.BMK & set x=x
 cls
 echo.
-echo                           2.0 íéöá÷ä íéìòî
+echo                           2.0 ××™×¦×‘×§×” ××™×œ×¢×ž
 echo                          =================
 echo.
 if "%x%"=="x" (
-echo                               !åðîééñ
+echo                               !×•× ×ž×™×™×¡
 ) else (
-echo                          !äçéìöä àì äìåòôä)
+echo                          !×”×—×™×œ×¦×” ××œ ×”×œ×•×¢×¤×”)
 echo.
-echo               ...úéðëåúä úà øåâñì éãë åäùìë ù÷î ìò õçì & pause>nul & exit /b 0
-::÷øãéè: nh.local11@gmail.com
+echo               ...×ª×™× ×›×•×ª×” ×ª× ×¨×•×’×¡×œ ×™×“×› ×•×”×©×œ×› ×©×§×ž ×œ×¢ ×¥×—×œ & pause>nul & exit /b 0
+::×§×¨×“×™×˜: nh.local11@gmail.com
