@@ -138,7 +138,7 @@ def main():
             if 'דפדפן' in title_lower:
                 tool_type, icon = 'web', 'monitor'
             elif 'scripts' in title_lower or 'סקריפטים' in title_lower:
-                tool_type, icon = 'python', 'code'
+                tool_type, icon = 'script', 'code'
             elif 'extension' in title_lower or 'תוספי' in title_lower:
                 tool_type, icon = 'extension', 'package'
             else:
