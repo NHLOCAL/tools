@@ -209,9 +209,9 @@
         <main id="content">
             <h1><img src="favicon.png" alt="" class="favicon-title" aria-hidden="true" /> ארגז הכלים של NH Local</h1>
 
-<p>אוסף כלים שימושיים וקלי משקל, כל אחד בקובץ HTML יחיד. נוצרו כדי לפתור בעיות קטנות במהירות, ישירות מהדפדפן.</p>
+<p>אוסף כלים שימושיים וקלי משקל. נוצרו כדי לפתור בעיות קטנות במהירות.</p>
 
-<h2><i data-feather='tool'></i> הכלים</h2>
+<h2><i data-feather='monitor'></i> כלי דפדפן</h2>
 
 <div class="tool-item" id="podcast_generator">
     <div class="tool-main-content">
@@ -231,7 +231,6 @@
     </div>
 </div>
 
-
 <div class="tool-item" id="subtitle_editor">
     <div class="tool-main-content">
         <a href="#subtitle_editor" class="link-icon" onclick="copyDirectLink(this, event)" title="העתק קישור ישיר">
@@ -239,7 +238,7 @@
         </a>
         <div class="tool-info">
             <h3>עורך כתוביות</h3>
-            <p>כלי מתקדם לעריכה וסנכרון של קבצי כתוביות (SRT, JSON) מול קובץ וידאו או שמע. מאפשר תיקונים, הוספה ומחיקה של שורות, הזזת תזמונים ועוד, והכל בממשק אחד נוח.</p>
+            <p>כלי מתקדם לעריכה וסנכרון של קבצי כתוביות (SRT, JSON) מול קובץ וידאו או שמע.</p>
         </div>
     </div>
     <div class="tool-actions">
@@ -250,7 +249,6 @@
     </div>
 </div>
 
-
 <div class="tool-item" id="hurban_clock">
     <div class="tool-main-content">
         <a href="#hurban_clock" class="link-icon" onclick="copyDirectLink(this, event)" title="העתק קישור ישיר">
@@ -258,7 +256,7 @@
         </a>
         <div class="tool-info">
             <h3>שעון החורבן</h3>
-            <p>כלי המציג את הזמן שחלף מאז חורבן בית שני, ומונה את הזמן שנותר עד להשלמת ששת אלפי שנות עולם.</p>
+            <p>מציג את הזמן שחלף מאז חורבן בית שני, ומונה את הזמן שנותר עד להשלמת ששת אלפי שנות עולם.</p>
         </div>
     </div>
     <div class="tool-actions">
@@ -268,7 +266,6 @@
 
     </div>
 </div>
-
 
 <div class="tool-item" id="the_enneagram">
     <div class="tool-main-content">
@@ -288,7 +285,50 @@
     </div>
 </div>
 
-<h3>על הפרויקט</h3>
+<h2><i data-feather='code'></i> סקריפטים</h2>
+
+<div class="tool-item">
+    <div class="tool-main-content">
+        <div class="tool-info">
+            <h3>משדרג הקישורים</h3>
+            <p>סקריפט להמרת קישורי Google Drive לקישורי הורדה ישירה או צפייה ללא עריכה</p>
+        </div>
+    </div>
+    <div class="tool-actions">
+        <a href="https://raw.githubusercontent.com/nhlocal/tools/main/scripts/משדרג-הקישורים-1.0.bat" onclick="event.preventDefault(); forceDownload(this.href, 'משדרג-הקישורים-1.0.bat');"><i data-feather="download"></i> הורד</a>
+        <a href="https://github.com/nhlocal/tools/tree/main/scripts/משדרג-הקישורים-1.0.bat"><i data-feather="github"></i> קוד מקור</a>
+    </div>
+</div>
+
+<div class="tool-item">
+    <div class="tool-main-content">
+        <div class="tool-info">
+            <h3>מעלים קבצי מערכת בנגן</h3>
+            <p>מסתיר קבצי מערכת בנגני מוזיקה, כדי למנוע הצגת קבצים לא רצויים</p>
+        </div>
+    </div>
+    <div class="tool-actions">
+        <a href="https://raw.githubusercontent.com/nhlocal/tools/main/scripts/מעלים-קבצי-מערכת-בנגן-2.0.bat" onclick="event.preventDefault(); forceDownload(this.href, 'מעלים-קבצי-מערכת-בנגן-2.0.bat');"><i data-feather="download"></i> הורד</a>
+        <a href="https://github.com/nhlocal/tools/tree/main/scripts/מעלים-קבצי-מערכת-בנגן-2.0.bat"><i data-feather="github"></i> קוד מקור</a>
+    </div>
+</div>
+
+<h2><i data-feather='package'></i> תוספי כרום</h2>
+
+<div class="tool-item">
+    <div class="tool-main-content">
+        <div class="tool-info">
+            <h3>מייצא שרשורים</h3>
+            <p>תוסף דפדפן פשוט וחזק לייצוא שרשורים מלאים מאתרים מבוססי NodeBB לפורמט JSON נקי ומסודר, אותו תוכלו להכניס לחלון ההקשר של AI Studio למשל</p>
+        </div>
+    </div>
+    <div class="tool-actions">
+        <a href="https://github.com/nhlocal/tools/releases/latest/download/nodebb-thread-exporter.zip"><i data-feather="archive"></i> הורד ZIP</a>
+        <a href="https://github.com/nhlocal/tools/tree/main/extensions/nodebb-thread-exporter/"><i data-feather="github"></i> קוד מקור</a>
+    </div>
+</div>
+
+<h2>על הפרויקט</h2>
 
 <p>רוב הכלים נכתבו באמצעות <strong>Vibe Code</strong>, והם נועדו לשימוש כמות שהם.
 כל אחד מוזמן לשפר, להתאים אותם לצרכיו המדויקים, ולשתף בחזרה.</p>

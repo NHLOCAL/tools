@@ -10,11 +10,12 @@ OUTPUT_FILE = 'index.html'
 GITHUB_USERNAME = 'nhlocal'
 GITHUB_REPO_NAME = 'tools'
 
-# ביטוי רגולרי למציאת פריטי רשימה בפורמט: * [Name](path) - Description
-TOOL_PATTERN = re.compile(r"^\*\s*\[(.*?)\]\((.*?)\)\s*-\s*(.*)$")
+# ביטוי רגולרי למציאת פריטי רשימה בפורמט: - [Name](path) - Description
+TOOL_PATTERN = re.compile(r"^-\s*\[(.*?)\]\((.*?)\)\s*-\s*(.*)$")
 
-# --- שינוי: סמל קישור במקום סולמית ---
-TOOL_ITEM_TEMPLATE = """
+# --- תבניות HTML ---
+
+WEB_TOOL_ITEM_TEMPLATE = """
 <div class="tool-item" id="{tool_id}">
     <div class="tool-main-content">
         <a href="#{tool_id}" class="link-icon" onclick="copyDirectLink(this, event)" title="העתק קישור ישיר">
@@ -34,40 +35,75 @@ TOOL_ITEM_TEMPLATE = """
 </div>
 """
 
-RESOURCES_BUTTON_TEMPLATE = '        <a href="https://github.com/{user}/{repo}/tree/main/resources/{tool_name}"><i data-feather="folder"></i> משאבים</a>'
+DOWNLOADABLE_TOOL_ITEM_TEMPLATE = """
+<div class="tool-item">
+    <div class="tool-main-content">
+        <div class="tool-info">
+            <h3>{name}</h3>
+            <p>{description}</p>
+        </div>
+    </div>
+    <div class="tool-actions">
+{action_buttons}
+    </div>
+</div>
+"""
 
-def generate_tools_html(lines):
-    """מקבל רשימת שורות ומייצר את ה-HTML עבור הכלים."""
-    html_output = []
-    for line in lines:
-        match = TOOL_PATTERN.match(line.strip())
-        if match:
-            name, path, description = [s.strip() for s in match.groups()]
-            filename = path.split('/')[-1]
-            
-            tool_id = filename.rsplit('.', 1)[0] if '.' in filename else filename
-            
-            tool_name = tool_id
-            resources_path = os.path.join('resources', tool_name)
-            resources_button_html = ""
-            if os.path.isdir(resources_path):
-                resources_button_html = RESOURCES_BUTTON_TEMPLATE.format(
-                    user=GITHUB_USERNAME,
-                    repo=GITHUB_REPO_NAME,
-                    tool_name=tool_name
-                )
-            
-            html_output.append(TOOL_ITEM_TEMPLATE.format(
-                name=name,
-                description=description,
-                path=path,
-                filename=filename,
-                user=GITHUB_USERNAME,
-                repo=GITHUB_REPO_NAME,
-                tool_id=tool_id,
-                resources_button=resources_button_html
+RESOURCES_BUTTON_TEMPLATE = '        <a href="https://github.com/{user}/{repo}/tree/main/resources/{tool_name}"><i data-feather="folder"></i> משאבים</a>'
+SOURCE_BUTTON_TEMPLATE = '        <a href="https://github.com/{user}/{repo}/tree/main/{path}"><i data-feather="github"></i> קוד מקור</a>'
+DOWNLOAD_BUTTON_TEMPLATE = '        <a href="https://raw.githubusercontent.com/{user}/{repo}/main/{path}" onclick="event.preventDefault(); forceDownload(this.href, \'{filename}\');"><i data-feather="download"></i> הורד</a>'
+DOWNLOAD_RELEASE_BUTTON_TEMPLATE = '        <a href="https://github.com/{user}/{repo}/releases/latest/download/{zip_name}"><i data-feather="archive"></i> הורד ZIP</a>'
+
+
+def generate_tool_html(line, tool_type):
+    """מקבל שורה וסוג כלי, ומייצר את ה-HTML המתאים."""
+    match = TOOL_PATTERN.match(line.strip())
+    if not match:
+        return ""
+
+    name, path, description = [s.strip() for s in match.groups()]
+    is_directory = path.endswith('/') or os.path.isdir(path)
+    
+    filename = path.strip('/').split('/')[-1] if is_directory else path.split('/')[-1]
+    tool_id = filename.rsplit('.', 1)[0] if '.' in filename and not is_directory else filename
+    
+    resources_button_html = ""
+    resources_path = os.path.join('resources', tool_id)
+    if os.path.isdir(resources_path):
+        resources_button_html = RESOURCES_BUTTON_TEMPLATE.format(
+            user=GITHUB_USERNAME, repo=GITHUB_REPO_NAME, tool_name=tool_id
+        )
+
+    if tool_type == 'web':
+        return WEB_TOOL_ITEM_TEMPLATE.format(
+            name=name, description=description, path=path, filename=filename,
+            user=GITHUB_USERNAME, repo=GITHUB_REPO_NAME, tool_id=tool_id,
+            resources_button=resources_button_html
+        )
+    
+    action_buttons = []
+    if tool_type == 'extension':
+        action_buttons.append(DOWNLOAD_RELEASE_BUTTON_TEMPLATE.format(
+            user=GITHUB_USERNAME, repo=GITHUB_REPO_NAME, zip_name=f"{tool_id}.zip"
+        ))
+        action_buttons.append(SOURCE_BUTTON_TEMPLATE.format(
+            user=GITHUB_USERNAME, repo=GITHUB_REPO_NAME, path=path
+        ))
+    else: # For python and other types
+        if not is_directory:
+            action_buttons.append(DOWNLOAD_BUTTON_TEMPLATE.format(
+                user=GITHUB_USERNAME, repo=GITHUB_REPO_NAME, path=path, filename=filename
             ))
-    return "\n".join(html_output)
+        action_buttons.append(SOURCE_BUTTON_TEMPLATE.format(
+            user=GITHUB_USERNAME, repo=GITHUB_REPO_NAME, path=path
+        ))
+    
+    if resources_button_html:
+        action_buttons.append(resources_button_html)
+
+    return DOWNLOADABLE_TOOL_ITEM_TEMPLATE.format(
+        name=name, description=description, action_buttons="\n".join(action_buttons)
+    )
 
 def main():
     """הפונקציה הראשית שבונה את האתר."""
@@ -79,33 +115,43 @@ def main():
         print(f"Error: The file {README_FILE} was not found.")
         return
 
-    try:
-        before_tools, rest = readme_content.split('## הכלים', 1)
-    except ValueError:
-        print(f"Error: Could not find the '## הכלים' heading in {README_FILE}.")
-        return
-
-    next_heading_match = re.search(r'^\s*#{1,6}\s', rest, flags=re.MULTILINE)
+    # פיצול לפי כותרות ## או ### כדי לטפל בכל סוגי התוכן
+    sections = re.split(r'^\s*(##|###)\s*(.*?)\s*$', readme_content, flags=re.MULTILINE)
     
-    if next_heading_match:
-        split_index = next_heading_match.start()
-        tools_section = rest[:split_index]
-        after_tools = rest[split_index:]
-    else:
-        tools_section = rest
-        after_tools = ""
-
+    intro_content = sections[0].strip()
     markdown_converter = Markdown(extras=["fenced-code-blocks", "tables", "cuddled-lists"])
-    html_before = markdown_converter.convert(before_tools.strip())
-    
-    html_before = re.sub(r'<h1>(.*?)</h1>', r'<h1><img src="favicon.png" alt="" class="favicon-title" aria-hidden="true" /> \1</h1>', html_before, 1)
+    final_content_html = markdown_converter.convert(intro_content)
+    final_content_html = re.sub(r'<h1>(.*?)</h1>', r'<h1><img src="favicon.png" alt="" class="favicon-title" aria-hidden="true" /> \1</h1>', final_content_html, 1)
 
-    html_after = markdown_converter.convert(after_tools.strip())
+    # מעבר על כל חלקי התוכן
+    # sections יכיל: [..., heading_level, title, content, ...]
+    for i in range(1, len(sections), 3):
+        heading_level = sections[i]
+        title = sections[i+1]
+        content = sections[i+2].strip()
+        
+        # --- השינוי המרכזי: בדיקה האם הקטע מכיל כלים ---
+        tool_lines = [line for line in content.split('\n') if TOOL_PATTERN.match(line.strip())]
+        
+        if tool_lines:  # אם זהו קטע כלים
+            title_lower = title.lower()
+            if 'דפדפן' in title_lower:
+                tool_type, icon = 'web', 'monitor'
+            elif 'scripts' in title_lower or 'סקריפטים' in title_lower:
+                tool_type, icon = 'script', 'code'
+            elif 'extension' in title_lower or 'תוספי' in title_lower:
+                tool_type, icon = 'extension', 'package'
+            else:
+                tool_type, icon = 'other', 'tool'
 
-    tools_lines = [line for line in tools_section.strip().split('\n') if line.strip()]
-    tools_html = generate_tools_html(tools_lines)
-    
-    final_content_html = f"{html_before}\n<h2><i data-feather='tool'></i> הכלים</h2>\n{tools_html}\n{html_after}"
+            final_content_html += f"\n<h2><i data-feather='{icon}'></i> {title}</h2>\n"
+            
+            for line in tool_lines:
+                final_content_html += generate_tool_html(line, tool_type)
+        
+        else:  # אם זהו קטע תוכן רגיל (כמו "על הפרויקט")
+            full_markdown_section = f"{heading_level} {title}\n{content}"
+            final_content_html += '\n' + markdown_converter.convert(full_markdown_section)
 
     print(f"Reading template from {TEMPLATE_FILE}...")
     with open(TEMPLATE_FILE, 'r', encoding='utf-8') as f:
@@ -120,7 +166,6 @@ def main():
         f.write(final_html)
 
     print(f"\nBuild complete! `{OUTPUT_FILE}` has been generated successfully.")
-
 
 if __name__ == "__main__":
     main()
