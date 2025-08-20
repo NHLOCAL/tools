@@ -10,8 +10,8 @@ OUTPUT_FILE = 'index.html'
 GITHUB_USERNAME = 'nhlocal'
 GITHUB_REPO_NAME = 'tools'
 
-# ביטוי רגולרי למציאת פריטי רשימה בפורמט: * [Name](path) - Description
-TOOL_PATTERN = re.compile(r"^\*\s*\[(.*?)\]\((.*?)\)\s*-\s*(.*)$")
+# ביטוי רגולרי למציאת פריטי רשימה בפורמט: - [Name](path) - Description
+TOOL_PATTERN = re.compile(r"^-\s*\[(.*?)\]\((.*?)\)\s*-\s*(.*)$")
 
 # --- תבניות HTML ---
 
