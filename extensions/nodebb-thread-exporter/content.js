@@ -96,10 +96,8 @@ async function fetchAndProcessThread() {
             return {
                 pid: post.pid,
                 author: post.user.username,
-                timestamp: post.timestampISO,
                 content: contentMarkdown,
                 reply_to_pid: post.toPid || null,
-                upvotes: post.upvotes,
             };
         });
 
