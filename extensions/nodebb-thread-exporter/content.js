@@ -1,14 +1,17 @@
+// --- הגדרת ממיר HTML ל-Markdown ---
 const turndownService = new TurndownService({
     headingStyle: 'atx',
     codeBlockStyle: 'fenced'
 });
 
+// כלל להמרת כתובות תמונה יחסיות למוחלטות
 turndownService.addRule('absoluteImages', {
     filter: 'img',
     replacement: function (content, node) {
         let src = node.getAttribute('src');
         if (src && !src.startsWith('http')) {
             try {
+                // ה-API מחזיר כתובות יחסיות, לכן נשתמש במיקום הנוכחי כבסיס
                 src = new URL(src, location.origin).href;
             } catch (e) {
                 console.error("Could not create absolute URL for image:", src, e);
@@ -19,6 +22,7 @@ turndownService.addRule('absoluteImages', {
     }
 });
 
+// כלל לניקוי ציטוטים אוטומטיים של NodeBB
 turndownService.addRule('cleanBlockquotes', {
     filter: 'blockquote',
     replacement: function (content, node) {
@@ -28,107 +32,91 @@ turndownService.addRule('cleanBlockquotes', {
     }
 });
 
+// כלל לטיפול בתיוגי משתמשים
 turndownService.addRule('userMentions', {
-    filter: function (node, options) {
-        return node.nodeName === 'A' && node.classList.contains('plugin-mentions-user');
-    },
-    replacement: function (content, node) {
-        return node.textContent;
-    }
+    filter: (node) => node.nodeName === 'A' && node.classList.contains('plugin-mentions-user'),
+    replacement: (content) => content
 });
 
-async function scrapeThread() {
-    const postsData = [];
-    const scrapedPostIds = new Set();
-    
-    let pageTitle;
-    const titleElement = document.querySelector('span[component="topic/title"]');
-    if (titleElement) {
-        pageTitle = titleElement.textContent.trim();
-    } else {
-        pageTitle = document.title;
-        const siteSeparator = ' - מתמחים טופ';
-        const sepIndex = pageTitle.lastIndexOf(siteSeparator);
-        if (sepIndex > 0) {
-            pageTitle = pageTitle.substring(0, sepIndex);
+
+/**
+ * פונקציה ראשית לאיסוף ועיבוד השרשור דרך ה-API
+ */
+async function fetchAndProcessThread() {
+    // שלב 1: חילוץ מזהה השרשור (TID) וכותרת
+    // --- התיקון כאן: שינוי const ל-let ---
+    let tid = window.ajaxify?.data?.tid;
+    let title = window.ajaxify?.data?.title;
+
+    // אם לא מצאנו TID ב-ajaxify, ננסה לחלץ אותו מה-URL
+    if (!tid) {
+        const match = window.location.pathname.match(/topic\/(\d+)/);
+        if (match && match[1]) {
+            tid = match[1];
+        } else {
+            throw new Error("לא ניתן היה למצוא את מזהה השרשור (TID).");
         }
     }
-    
-    const indicator = document.createElement('div');
-    indicator.textContent = 'טוען את כל השרשור, התהליך עשוי לקחת זמן...';
-    Object.assign(indicator.style, {
-        position: 'fixed',
-        bottom: '20px',
-        left: '50%',
-        transform: 'translateX(-50%)',
-        padding: '10px 20px',
-        backgroundColor: 'rgba(0, 0, 0, 0.8)',
-        color: 'white',
-        borderRadius: '5px',
-        zIndex: '9999',
-        fontSize: '16px',
-        textAlign: 'center'
-    });
-    document.body.appendChild(indicator);
+    // אם לא מצאנו כותרת, ננסה לחלץ אותה מה-DOM
+     if (!title) {
+        const titleElement = document.querySelector('span[component="topic/title"]');
+        title = titleElement ? titleElement.textContent.trim() : document.title;
+     }
 
-    indicator.textContent = 'טוען את תחילת השרשור...';
-    let lastScrollY = -1;
-    while (window.scrollY > 0 && window.scrollY !== lastScrollY) {
-        lastScrollY = window.scrollY;
-        window.scrollTo(0, 0);
-        await new Promise(resolve => setTimeout(resolve, 1500));
+
+    // שלב 2: קבלת מידע על מספר העמודים בשרשור
+    const paginationResponse = await fetch(`${location.origin}/api/topic/pagination/${tid}`);
+    if (!paginationResponse.ok) throw new Error(`שגיאה בקבלת מידע על עמודים: ${paginationResponse.statusText}`);
+    const paginationData = await paginationResponse.json();
+    const pageCount = paginationData.pagination.pageCount;
+
+    // שלב 3: בניית רשימת בקשות API לכל העמודים
+    const pagePromises = [];
+    for (let i = 1; i <= pageCount; i++) {
+        pagePromises.push(
+            fetch(`${location.origin}/api/topic/${tid}?page=${i}`).then(res => {
+                if (!res.ok) throw new Error(`שגיאה בטעינת עמוד ${i}`);
+                return res.json();
+            })
+        );
     }
 
-    indicator.textContent = 'אוסף פוסטים וגולל לסוף השרשור...';
-    let newPostsFound = true;
-    while (newPostsFound) {
-        const initialCount = scrapedPostIds.size;
+    // שלב 4: הרצת כל הבקשות במקביל ואיחוד התוצאות
+    const allPagesData = await Promise.all(pagePromises);
+    const allPosts = allPagesData.flatMap(pageData => pageData.posts);
 
-        const postElements = document.querySelectorAll('li[component="post"]');
-        postElements.forEach(postElement => {
-            const postId = postElement.getAttribute('data-pid');
-            if (postId && !scrapedPostIds.has(postId)) {
-                const authorElement = postElement.querySelector('[data-username]');
-                const author = authorElement ? authorElement.getAttribute('data-username') : 'לא ידוע';
-                const timestampElement = postElement.querySelector('.timeago');
-                const timestamp = timestampElement ? timestampElement.getAttribute('title') : 'לא ידוע';
-                const contentElement = postElement.querySelector('[component="post/content"]');
-                const contentHTML = contentElement ? contentElement.innerHTML : '';
-                const contentMarkdown = contentHTML ? turndownService.turndown(contentHTML).trim() : '';
+    // שלב 5: עיבוד, סינון וצמצום המידע עבור כל פוסט
+    const processedPosts = allPosts
+        .filter(post => post && !post.deleted) // סינון פוסטים שנמחקו או לא תקינים
+        .map(post => {
+            // המרת תוכן HTML ל-Markdown
+            const contentMarkdown = turndownService.turndown(post.content || '').trim();
 
-                if (contentMarkdown) {
-                    postsData.push({
-                        id: postId,
-                        author: author,
-                        timestamp: timestamp,
-                        content: contentMarkdown
-                    });
-                    scrapedPostIds.add(postId);
-                }
-            }
+            // יצירת אובייקט נקי ומצומצם
+            return {
+                pid: post.pid,
+                author: post.user.username,
+                timestamp: post.timestampISO,
+                content: contentMarkdown,
+                reply_to_pid: post.toPid || null,
+                upvotes: post.upvotes,
+            };
         });
 
-        const finalCount = scrapedPostIds.size;
-        newPostsFound = finalCount > initialCount;
-
-        if (newPostsFound) {
-            window.scrollTo(0, document.documentElement.scrollHeight);
-            await new Promise(resolve => setTimeout(resolve, 2000));
-        }
-    }
-
-    document.body.removeChild(indicator);
-
-    postsData.sort((a, b) => parseInt(a.id, 10) - parseInt(b.id, 10));
-
-    return { posts: postsData, title: pageTitle };
+    return { posts: processedPosts, title: title };
 }
 
+// מאזין להודעות מה-popup
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
-    if (request.action === "scrapeNodeBBThread") {
-        scrapeThread().then(data => {
-            sendResponse({ data: data });
-        });
+    if (request.action === "exportNodeBBThread") {
+        fetchAndProcessThread()
+            .then(data => {
+                sendResponse({ success: true, data: data });
+            })
+            .catch(error => {
+                console.error("Error exporting thread:", error);
+                sendResponse({ success: false, error: error.message });
+            });
     }
-    return true;
+    return true; // נדרש עבור תגובה אסינכרונית
 });

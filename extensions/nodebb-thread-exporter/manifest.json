@@ -1,8 +1,8 @@
 {
   "manifest_version": 3,
   "name": "מייצא שרשורים",
-  "version": "2.0",
-  "description": "מייצא שרשורים מאתרי NodeBB לקובץ JSON או ללוח",
+  "version": "3.0",
+  "description": "מייצא שרשורים מאתרי NodeBB לקובץ JSON נקי או ללוח.",
   "permissions": [
     "activeTab",
     "scripting",

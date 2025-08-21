@@ -17,20 +17,32 @@ document.addEventListener('DOMContentLoaded', function() {
         downloadButton.disabled = disabled;
     }
 
-    function getScrapedData(callback) {
+    function getThreadData(callback) {
         chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
+            if (!tabs[0] || !tabs[0].id) {
+                 showStatus("לא ניתן לגשת לטאב הנוכחי.", "error");
+                 callback(null);
+                 return;
+            }
             const tab = tabs[0];
-            chrome.tabs.sendMessage(tab.id, { action: "scrapeNodeBBThread" }, (response) => {
+
+            chrome.tabs.sendMessage(tab.id, { action: "exportNodeBBThread" }, (response) => {
                 if (chrome.runtime.lastError) {
-                    showStatus("שגיאה: רענן את הדף ונסה שוב.", "error");
+                    showStatus("שגיאת תקשורת עם הדף. רענן ונסה שוב.", "error");
                     console.error(chrome.runtime.lastError.message);
                     callback(null);
                     return;
                 }
-                if (response && response.data && response.data.posts && response.data.posts.length > 0) {
-                    callback(response.data);
+                
+                if (response && response.success && response.data) {
+                    if (response.data.posts && response.data.posts.length > 0) {
+                        callback(response.data);
+                    } else {
+                        showStatus('לא נמצאו פוסטים לאיסוף.', "error");
+                        callback(null);
+                    }
                 } else {
-                    showStatus('לא נמצאו פוסטים לאיסוף.', "error");
+                    showStatus(`שגיאה: ${response?.error || 'שגיאה לא ידועה'}`, "error");
                     callback(null);
                 }
             });
@@ -38,47 +50,44 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     copyButton.addEventListener('click', () => {
-        showStatus('אוסף את כל הפוסטים, נא להמתין...');
+        showStatus('אוסף פוסטים דרך ה-API, נא להמתין...');
         setButtonsState(true);
 
-        getScrapedData(data => {
+        getThreadData(data => {
             setButtonsState(false);
             if (!data) return;
 
-            const jsonString = JSON.stringify(data.posts, null, 2);
-            // Using a temporary textarea for large content clipboard copy
-            const textarea = document.createElement('textarea');
-            textarea.value = jsonString;
-            document.body.appendChild(textarea);
-            textarea.select();
-            document.execCommand('copy');
-            document.body.removeChild(textarea);
-
-            showStatus(`הועתקו ${data.posts.length} פוסטים!`, 'success');
-            setTimeout(hideStatus, 3000);
+            const jsonString = JSON.stringify({ title: data.title, posts: data.posts }, null, 2);
+            navigator.clipboard.writeText(jsonString).then(() => {
+                showStatus(`הועתקו ${data.posts.length} פוסטים ללוח!`, 'success');
+                setTimeout(hideStatus, 3000);
+            }).catch(err => {
+                showStatus('ההעתקה ללוח נכשלה.', 'error');
+                console.error('Clipboard write failed: ', err);
+            });
         });
     });
 
     downloadButton.addEventListener('click', () => {
-        showStatus('אוסף את כל הפוסטים, נא להמתין...');
+        showStatus('אוסף פוסטים דרך ה-API, נא להמתין...');
         setButtonsState(true);
 
-        getScrapedData(data => {
+        getThreadData(data => {
             setButtonsState(false);
             if (!data) return;
 
-            const jsonString = JSON.stringify(data.posts, null, 2);
-            const blob = new Blob([jsonString], { type: 'application/json' });
+            const jsonString = JSON.stringify({ title: data.title, posts: data.posts }, null, 2);
+            const blob = new Blob([jsonString], { type: 'application/json;charset=utf-8' });
             const url = URL.createObjectURL(blob);
 
-            const safeTitle = data.title.replace(/[<>:"/\\|?*]+/g, ' ').replace(/\s+/g, ' ').trim();
+            const safeTitle = data.title.replace(/[<>:"/\\|?*]+/g, '_').replace(/\s+/g, '_').trim();
             const fileName = `${safeTitle || 'thread'}.json`;
 
             const a = document.createElement('a');
             a.href = url;
             a.download = fileName;
             document.body.appendChild(a);
-a.click();
+            a.click();
             document.body.removeChild(a);
             URL.revokeObjectURL(url);
 
