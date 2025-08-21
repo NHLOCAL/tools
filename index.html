@@ -287,8 +287,11 @@
 
 <h2><i data-feather='code'></i> סקריפטים</h2>
 
-<div class="tool-item">
+<div class="tool-item" id="משדרג-הקישורים-1.0">
     <div class="tool-main-content">
+        <a href="#משדרג-הקישורים-1.0" class="link-icon" onclick="copyDirectLink(this, event)" title="העתק קישור ישיר">
+            <i data-feather="link"></i>
+        </a>
         <div class="tool-info">
             <h3>משדרג הקישורים</h3>
             <p>סקריפט להמרת קישורי Google Drive לקישורי הורדה ישירה או צפייה ללא עריכה</p>
@@ -300,8 +303,11 @@
     </div>
 </div>
 
-<div class="tool-item">
+<div class="tool-item" id="מעלים-קבצי-מערכת-בנגן-2.0">
     <div class="tool-main-content">
+        <a href="#מעלים-קבצי-מערכת-בנגן-2.0" class="link-icon" onclick="copyDirectLink(this, event)" title="העתק קישור ישיר">
+            <i data-feather="link"></i>
+        </a>
         <div class="tool-info">
             <h3>מעלים קבצי מערכת בנגן</h3>
             <p>מסתיר קבצי מערכת בנגני מוזיקה, כדי למנוע הצגת קבצים לא רצויים</p>
@@ -315,8 +321,11 @@
 
 <h2><i data-feather='package'></i> תוספי כרום</h2>
 
-<div class="tool-item">
+<div class="tool-item" id="nodebb-thread-exporter">
     <div class="tool-main-content">
+        <a href="#nodebb-thread-exporter" class="link-icon" onclick="copyDirectLink(this, event)" title="העתק קישור ישיר">
+            <i data-feather="link"></i>
+        </a>
         <div class="tool-info">
             <h3>מייצא שרשורים</h3>
             <p>תוסף דפדפן פשוט וחזק לייצוא שרשורים מלאים מאתרים מבוססי NodeBB לפורמט JSON נקי ומסודר, אותו תוכלו להכניס לחלון ההקשר של AI Studio למשל</p>
@@ -411,7 +420,8 @@
             document.querySelectorAll('.highlighted').forEach(el => el.classList.remove('highlighted'));
             if (window.location.hash) {
                 try {
-                    const element = document.querySelector(window.location.hash);
+                    const elementId = decodeURIComponent(window.location.hash.substring(1));
+                    const element = document.getElementById(elementId);
                     if (element) {
                         setTimeout(() => {
                             element.scrollIntoView({ behavior: 'smooth', block: 'center' });
