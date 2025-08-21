@@ -36,8 +36,11 @@ WEB_TOOL_ITEM_TEMPLATE = """
 """
 
 DOWNLOADABLE_TOOL_ITEM_TEMPLATE = """
-<div class="tool-item">
+<div class="tool-item" id="{tool_id}">
     <div class="tool-main-content">
+        <a href="#{tool_id}" class="link-icon" onclick="copyDirectLink(this, event)" title="העתק קישור ישיר">
+            <i data-feather="link"></i>
+        </a>
         <div class="tool-info">
             <h3>{name}</h3>
             <p>{description}</p>
@@ -102,8 +105,9 @@ def generate_tool_html(line, tool_type):
         action_buttons.append(resources_button_html)
 
     return DOWNLOADABLE_TOOL_ITEM_TEMPLATE.format(
-        name=name, description=description, action_buttons="\n".join(action_buttons)
+        name=name, description=description, action_buttons="\n".join(action_buttons), tool_id=tool_id
     )
+
 
 def main():
     """הפונקציה הראשית שבונה את האתר."""
