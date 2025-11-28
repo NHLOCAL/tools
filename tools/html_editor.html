@@ -52,15 +52,20 @@
 
         * { box-sizing: border-box; margin: 0; padding: 0; outline: none; }
         
+        html, body {
+            height: 100%;
+            width: 100%;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+        }
+        
         body { 
             font-family: 'Assistant', sans-serif; 
             background-color: var(--surface); 
             color: #191C1B; 
-            height: 100vh; /* גובה מלא מובטח */
-            width: 100vw;
             display: flex;
             flex-direction: column;
-            overflow: hidden; /* קריטי: מונע גלילה חיצונית של כל העמוד שיוצרת פסים לבנים */
             transition: background-color 0.5s, color 0.5s;
         }
         
@@ -68,7 +73,7 @@
 
         /* --- כותרת עליונה --- */
         header {
-            flex-shrink: 0; /* מונע כיווץ של הכותרת */
+            flex: 0 0 auto;
             height: var(--header-height);
             background-color: var(--primary-container);
             display: flex;
@@ -125,13 +130,13 @@
 
         /* --- איזור ראשי (התיקון הגדול) --- */
         main {
-            flex-grow: 1; /* ממלא את כל השטח שנותר בצורה אוטומטית */
+            flex: 1;
             display: flex;
             direction: ltr; 
-            /* הסרנו את ה-height המחושב ידנית שגרם לבעיות */
-            overflow: hidden; /* מונע זליגה של תוכן החוצה */
+            overflow: hidden;
             position: relative;
             width: 100%;
+            min-height: 0; /* קריטי לגלילה פנימית בתוך flex */
         }
         
         /* אין צורך יותר בהגדרת גובה מיוחדת למסך מלא, ה-Flex מטפל בזה לבד */
@@ -147,7 +152,8 @@
             transition: width 0.1s, transform var(--transition-speed) ease;
             z-index: 10;
             border-right: 1px solid var(--outline);
-            height: 100%; /* ממלא את המיין */
+            height: 100%;
+            overflow: hidden;
         }
 
         body.matrix-mode #editor-panel { border-right: 1px solid var(--primary); }
@@ -204,7 +210,7 @@
         .tool-btn.danger:hover { background-color: rgba(186, 26, 26, 0.08); }
 
         textarea#code-input {
-            flex-grow: 1; /* ממלא את יתרת המקום בפאנל */
+            flex: 1;
             background-color: var(--editor-bg);
             color: var(--editor-text);
             border: none;
