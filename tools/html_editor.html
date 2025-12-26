@@ -3,10 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>עורך HTML חי</title>
+    <title>עורך HTML חי - משופר</title>
     <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23006A60'><path d='M9.4 16.6L4.8 12l4.6-4.6L8 6l-6 6 6 6 1.4-1.4zm5.2 0l4.6-4.6-4.6-4.6L16 6l6 6-6 6-1.4-1.4z'/></svg>">
-
-
     
     <!-- פונטים וסמלים -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -131,7 +129,7 @@
         }
         .credits a:hover { opacity: 0.7; }
 
-        /* --- איזור ראשי (התיקון הגדול) --- */
+        /* --- איזור ראשי --- */
         main {
             flex: 1;
             display: flex;
@@ -139,10 +137,8 @@
             overflow: hidden;
             position: relative;
             width: 100%;
-            min-height: 0; /* קריטי לגלילה פנימית בתוך flex */
+            min-height: 0; 
         }
-        
-        /* אין צורך יותר בהגדרת גובה מיוחדת למסך מלא, ה-Flex מטפל בזה לבד */
 
         /* --- עורך הקוד (צד שמאל) --- */
         #editor-panel {
@@ -169,7 +165,7 @@
         }
 
         .editor-toolbar {
-            flex-shrink: 0; /* מונע כיווץ הסרגל */
+            flex-shrink: 0;
             height: var(--toolbar-height);
             background-color: var(--editor-toolbar-bg);
             color: var(--editor-toolbar-text);
@@ -225,7 +221,7 @@
             white-space: pre-wrap; 
             direction: ltr; 
             text-align: left;
-            overflow-y: auto; /* גלילה פנימית בלבד */
+            overflow-y: auto; 
         }
         
         textarea::-webkit-scrollbar { width: 10px; height: 10px; }
@@ -268,7 +264,7 @@
             position: relative; 
             height: 100%;
             overflow: hidden;
-            display: flex; /* מבטיח שילדים ימלאו אותו */
+            display: flex;
         }
         
         .iframe-shield {
@@ -287,7 +283,59 @@
             display: block;
         }
 
-        /* --- כפתור מסך מלא --- */
+        /* --- כפתורים צפים (Full Screen) --- */
+        
+        /* מיכל לכפתורים הנוספים במצב מסך מלא */
+        .fullscreen-tools {
+            position: fixed;
+            bottom: 90px; /* מעל הכפתור הראשי */
+            right: 24px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            z-index: 999;
+            pointer-events: none; /* כדי לא להפריע כשלא פעיל */
+        }
+
+        .fullscreen-tools .mini-fab {
+            width: 48px;
+            height: 48px;
+            border-radius: 12px;
+            border: none;
+            background-color: var(--primary);
+            color: var(--on-primary);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            opacity: 0;
+            transform: translateY(20px) scale(0.8);
+            pointer-events: auto;
+        }
+
+        .fullscreen-tools .mini-fab:hover {
+            transform: scale(1.1);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.3);
+        }
+
+        .fullscreen-tools .mini-fab.danger {
+            background-color: var(--error);
+        }
+
+        /* הצגה במצב מסך מלא */
+        body.fullscreen-active .fullscreen-tools .mini-fab {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+        }
+        
+        /* דירוג כניסה */
+        body.fullscreen-active .fullscreen-tools .mini-fab:nth-child(1) { transition-delay: 0.2s; } /* Clear */
+        body.fullscreen-active .fullscreen-tools .mini-fab:nth-child(2) { transition-delay: 0.1s; } /* Paste */
+        body.fullscreen-active .fullscreen-tools .mini-fab:nth-child(3) { transition-delay: 0s; }   /* Refresh */
+
+        /* --- כפתור מסך מלא ראשי --- */
         .fab {
             position: fixed;
             bottom: 24px;
@@ -327,9 +375,9 @@
         [data-tooltip]:hover::after {
             content: attr(data-tooltip);
             position: absolute;
-            top: 100%;
-            left: 50%;
-            transform: translateX(-50%) translateY(5px);
+            top: 50%;
+            right: 110%; /* Tooltip to the left */
+            transform: translateY(-50%);
             background-color: #333;
             color: white;
             padding: 4px 8px;
@@ -338,6 +386,7 @@
             white-space: nowrap;
             pointer-events: none;
             z-index: 1000;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
         }
 
         @media (max-width: 768px) {
@@ -349,6 +398,8 @@
             h1 { font-size: 1.2rem; }
             .credits { display: none; }
             .tool-btn span.text { display: none; }
+            .fullscreen-tools { bottom: 85px; right: 20px; }
+            .fab { bottom: 20px; right: 20px; }
         }
     </style>
 </head>
@@ -381,15 +432,24 @@
                 </div>
                 
                 <div class="toolbar-group">
+                    <!-- הוספת כפתור הדבק -->
+                    <button class="tool-btn" id="paste-btn" title="הדבק והחלף הכל">
+                        <span class="material-symbols-rounded">content_paste</span>
+                        <span class="text">הדבק</span>
+                    </button>
+                    
                     <button class="tool-btn" id="copy-btn" title="העתק קוד">
                         <span class="material-symbols-rounded">content_copy</span>
                         <span class="text">העתק</span>
                     </button>
+                    
                     <button class="tool-btn" id="refresh-btn" title="רענן תצוגה">
                         <span class="material-symbols-rounded">refresh</span>
                         <span class="text">רענן</span>
                     </button>
+                    
                     <div style="width: 1px; height: 20px; background: #ccc; margin: 0 4px; opacity: 0.5;"></div>
+                    
                     <button class="tool-btn danger" id="clear-btn" title="מחק הכל מיידית">
                         <span class="material-symbols-rounded">delete</span>
                         <span class="text">נקה</span>
@@ -410,6 +470,20 @@
         </div>
     </main>
 
+    <!-- כלים למסך מלא -->
+    <div class="fullscreen-tools">
+        <button class="mini-fab danger" id="fs-clear-btn" data-tooltip="נקה הכל">
+            <span class="material-symbols-rounded">delete_forever</span>
+        </button>
+        <button class="mini-fab" id="fs-paste-btn" data-tooltip="הדבק מהלוח">
+            <span class="material-symbols-rounded">content_paste_go</span>
+        </button>
+        <button class="mini-fab" id="fs-refresh-btn" data-tooltip="רענן">
+            <span class="material-symbols-rounded">refresh</span>
+        </button>
+    </div>
+
+    <!-- כפתור מעבר למסך מלא -->
     <button class="fab" id="toggle-view-btn" data-tooltip="מסך מלא">
         <span class="material-symbols-rounded">open_in_full</span>
     </button>
@@ -422,9 +496,18 @@
         const header = document.getElementById('main-header');
         const editorPanel = document.getElementById('editor-panel');
         const fabIcon = toggleBtn.querySelector('span');
+        
+        // כפתורי סרגל ראשי
         const refreshBtn = document.getElementById('refresh-btn');
         const clearBtn = document.getElementById('clear-btn');
         const copyBtn = document.getElementById('copy-btn');
+        const pasteBtn = document.getElementById('paste-btn');
+        
+        // כפתורי מסך מלא
+        const fsRefreshBtn = document.getElementById('fs-refresh-btn');
+        const fsClearBtn = document.getElementById('fs-clear-btn');
+        const fsPasteBtn = document.getElementById('fs-paste-btn');
+
         const dragHandle = document.getElementById('drag-handle');
         const mainContainer = document.getElementById('main-container');
 
@@ -439,6 +522,7 @@
     margin: 0; 
     background: #f0f7f6; 
     direction: rtl;
+  }
   .card {
     background: white;
     padding: 2.5rem;
@@ -486,6 +570,47 @@
             lineCountDisplay.textContent = lines === 1 ? 'שורה אחת' : `${lines} שורות`;
         }
 
+        // --- פונקציות עזר לפעולות ---
+        async function handlePaste() {
+            try {
+                const text = await navigator.clipboard.readText();
+                codeInput.value = text;
+                updatePreview();
+                updateLineCount();
+                
+                // משוב ויזואלי לכפתור רגיל
+                const originalText = pasteBtn.querySelector('.text').textContent;
+                pasteBtn.querySelector('.text').textContent = 'הודבק!';
+                setTimeout(() => pasteBtn.querySelector('.text').textContent = originalText, 1500);
+
+            } catch (err) {
+                alert('נדרשת הרשאת הדבקה כדי להשתמש בכפתור זה. אנא השתמש ב-Ctrl+V.');
+                console.error('Failed to paste', err);
+            }
+        }
+
+        function handleClear() {
+            if(confirm('האם למחוק את כל הקוד?')) {
+                codeInput.value = '';
+                updatePreview();
+                updateLineCount();
+                if(!document.body.classList.contains('fullscreen-active')) {
+                    codeInput.focus();
+                }
+            }
+        }
+
+        function handleRefresh(btnElement) {
+            // אנימציה לכפתור
+            const icon = btnElement.querySelector('.material-symbols-rounded');
+            if(icon) {
+                icon.style.transition = 'transform 0.5s';
+                icon.style.transform = 'rotate(360deg)';
+                setTimeout(() => icon.style.transform = 'rotate(0deg)', 500);
+            }
+            updatePreview();
+        }
+
         let isFullscreen = false;
         toggleBtn.addEventListener('click', () => {
             isFullscreen = !isFullscreen;
@@ -508,13 +633,20 @@
             }
         });
 
-        refreshBtn.addEventListener('click', () => {
-            const icon = refreshBtn.querySelector('.material-symbols-rounded');
-            icon.style.transition = 'transform 0.5s';
-            icon.style.transform = 'rotate(360deg)';
-            updatePreview();
-            setTimeout(() => icon.style.transform = 'rotate(0deg)', 500);
+        // חיבור אירועים לכפתורים (רגילים + מסך מלא)
+        refreshBtn.addEventListener('click', () => handleRefresh(refreshBtn));
+        fsRefreshBtn.addEventListener('click', () => handleRefresh(fsRefreshBtn));
+
+        clearBtn.addEventListener('click', () => {
+             codeInput.value = ''; // ניקוי רגיל ללא אישור כפי שהיה במקור
+             updatePreview();
+             updateLineCount();
+             codeInput.focus();
         });
+        fsClearBtn.addEventListener('click', handleClear); // במסך מלא עדיף עם אישור למניעת טעות
+
+        pasteBtn.addEventListener('click', handlePaste);
+        fsPasteBtn.addEventListener('click', handlePaste);
 
         copyBtn.addEventListener('click', async () => {
             try {
@@ -534,13 +666,6 @@
             } catch (err) {
                 console.error('Failed to copy', err);
             }
-        });
-
-        clearBtn.addEventListener('click', () => {
-            codeInput.value = '';
-            updatePreview();
-            updateLineCount();
-            codeInput.focus();
         });
 
         let isResizing = false;
