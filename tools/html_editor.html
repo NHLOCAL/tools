@@ -551,7 +551,7 @@
 <div class="card">
   <h1>ברוכים הבאים</h1>
   <p>זהו עורך חי ונוח.<br>הקלידו בצד שמאל וראו את השינויים כאן מיידית.</p>
-  <button class="btn" onclick="console.log('זה עובד!')">לחץ לבדיקה</button>
+  <button class="btn" onclick="alert('זה עובד! מעולה 🙂')">לחץ לבדיקה</button>
 </div>`;
 
     codeInput.value = defaultHTML;
@@ -775,6 +775,25 @@
       if (clickCount >= 5) {
         document.body.classList.toggle("matrix-mode");
         clickCount = 0;
+
+        if (document.body.classList.contains("matrix-mode")) {
+          const matrixCode = `<!-- Matrix Mode Activated -->
+<style>
+body { background: black; color: #0f0; font-family: monospace; overflow: hidden; }
+.matrix { position: absolute; top: 0; left: 0; width: 100%; height: 100%; font-size: 20px; text-align: center; }
+</style>
+<div class="matrix">
+  <br><br>
+  Wake up, Neo...<br>
+  The Matrix has you.<br><br>
+  (Press 'Live HTML Editor' 5 times to exit)
+</div>`;
+          if (codeInput.value.trim() === "" || codeInput.value.includes("דוגמה: כרטיס מעוצב")) {
+            codeInput.value = matrixCode;
+            updatePreview();
+            updateLineCount();
+          }
+        }
       }
     });
 
