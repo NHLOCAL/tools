@@ -350,6 +350,13 @@
                 <label for="apiKeyInput">Gemini API Key</label>
                 <input id="apiKeyInput" type="password" class="input-field" placeholder="הדבק כאן את מפתח ה-API שלך" />
             </div>
+
+            <div class="input-group" style="background: var(--md-sys-color-surface-container); border: 1px solid var(--md-sys-color-surface-variant); border-radius: var(--border-radius-small); padding: 1rem;">
+                <strong>מנוע יצירת השמע:</strong> המודל החדש של Gemini
+                <p style="margin-top: 0.35rem; color: var(--md-sys-color-on-surface-variant);">
+                    המודל תומך בדיאלוג רב-דוברי, בהנחיות סגנון טבעיות ובתגיות קול באנגלית כמו [laughs], [sighs] או [whispers].
+                </p>
+            </div>
             
             <div class="input-group">
                 <label for="topicInput">נושא הפודקאסט</label>
@@ -474,9 +481,9 @@
                         <span>Gemini 3 Flash</span>
                         <span style="font-size: 0.8em; opacity: 0.8;">מהיר וחסכוני</span>
                     </div>
-                    <div class="selection-card" onclick="selectModel('gemini-3-pro-preview', this)">
+                    <div class="selection-card" onclick="selectModel('gemini-3.1-pro-preview', this)">
                         <span class="material-symbols-outlined">psychology</span>
-                        <span>Gemini 3 Pro</span>
+                        <span>Gemini 3.1 Pro</span>
                         <span style="font-size: 0.8em; opacity: 0.8;">מתקדם</span>
                     </div>
                     <div class="selection-card" onclick="selectModel('custom', this)">
@@ -490,7 +497,7 @@
 
             <div class="input-group" id="customModelGroup" style="display: none;">
                 <label for="customModelInput">שם המודל המותאם אישית</label>
-                <input id="customModelInput" type="text" class="input-field" placeholder="לדוגמה: gemini-1.5-pro-latest" />
+                <input id="customModelInput" type="text" class="input-field" placeholder="לדוגמה: gemini-3.1-pro-preview" />
             </div>
 
             <details style="margin-bottom: 1.5rem; border: 1px solid var(--md-sys-color-outline); border-radius: var(--border-radius-small); padding: 0.5rem;">
@@ -518,20 +525,23 @@
             <details id="scriptHelp" style="margin-bottom: 1rem; background-color: var(--md-sys-color-surface); padding: 1rem; border-radius: var(--border-radius-small); border: 1px dashed var(--md-sys-color-outline);">
                 <summary style="cursor: pointer; font-weight: 600; color: var(--md-sys-color-primary);">עזרה: מבנה התסריט הרצוי (לחץ לפתיחה)</summary>
                 <div style="margin-top: 0.5rem; font-size: 0.95rem;">
-                    <p>כדי שהשמע יווצר בצורה תקינה, התסריט חייב להיות במבנה הבא:</p>
+                    <p>כדי שהשמע יווצר בצורה טבעית, התסריט בנוי כמו הנחיית בימוי קצרה לשחקני קול:</p>
                     <ol style="margin-right: 1.5rem; margin-top: 0.5rem;">
-                        <li><strong>שורה ראשונה באנגלית:</strong> הנחיה לטון הדיבור (למשל: "Speaker1 speaks fast, Speaker2 is calm").</li>
-                        <li><strong>גוף השיחה:</strong> דו-שיח בעברית, כאשר שם הדובר באנגלית ואחריו נקודתיים.</li>
+                        <li><strong>Audio Profile:</strong> מי הדוברים ומה הפרופיל הקולי שלהם.</li>
+                        <li><strong>Scene:</strong> אווירת ההקלטה והסיטואציה.</li>
+                        <li><strong>Director's Notes:</strong> סגנון, קצב, מבטא, דינמיקה והנחיות ביצוע.</li>
+                        <li><strong>Transcript:</strong> הטקסט המדויק בעברית, עם שמות הדוברים באנגלית.</li>
+                        <li><strong>Audio Tags:</strong> תגיות קול באנגלית כמו [laughs], [sighs] או [whispers], רק כשזה מוסיף.</li>
                     </ol>
                     <p style="margin-top: 1rem; font-weight: 600;">לדוגמה:</p>
                     <div style="background: #eee; padding: 0.5rem; border-radius: 4px; font-family: monospace; direction: ltr; text-align: left;">
-                        <span id="scriptExamplePrompt">The speakers are discussing technology with excitement.</span><br>
+                        <span id="scriptExamplePrompt">### AUDIO PROFILE<br>speaker1: curious, quick, amused.<br>speaker2: calm, warm, skeptical.<br><br>### DIRECTOR'S NOTES<br>Style: conversational and witty. Pacing: lively but clear. Use English audio tags sparingly.<br><br>### TRANSCRIPT</span><br>
                         <span id="scriptExampleDialog">
-                        speaker1: שלום לכולם!<br>
-                        speaker2: אהלן, מה העניינים?
+                        speaker1: שלום לכולם! היום נבדוק למה רעיון פשוט מסתבך כל כך מהר.<br>
+                        speaker2: [laughs] כי בני אדם אוהבים להוסיף כפתורים גם כשצריך רק מתג.
                         </span>
                     </div>
-                    <p style="margin-top: 0.5rem; font-size: 0.9rem; color: var(--md-sys-color-error);">חשוב: השמות (כמו man/girl) הם <strong>מזהים טכניים</strong> התואמים לקולות שנבחרו בהגדרות (שלב 1). אין לשנותם לשמות אחרים (כמו "דני" או "רונית") כי המערכת לא תזהה אותם והשמע לא יעבוד.</p>
+                    <p style="margin-top: 0.5rem; font-size: 0.9rem; color: var(--md-sys-color-error);">חשוב: שמות הדוברים (למשל man/girl או speaker1/speaker2) הם <strong>מזהים טכניים</strong> התואמים לקולות שנבחרו בהגדרות. אין לשנות אותם לשמות אחרים, כי המערכת משתמשת בהם כדי למפות כל דובר לקול הנכון.</p>
                 </div>
             </details>
 
@@ -596,6 +606,9 @@
         const scriptExampleDialog = document.getElementById('scriptExampleDialog');
 
         let isSystemPromptDirty = false; // Flag to track if user manually edited the prompt
+        const TTS_MODEL = 'gemini-3.1-flash-tts-preview';
+        const AUDIO_MAX_ATTEMPTS = 3;
+        const AUDIO_RETRYABLE_STATUS_CODES = new Set([429, 500, 502, 503, 504]);
 
         // --- Functions ---
         function updateStatus(message, type = 'script') {
@@ -649,7 +662,7 @@
                         desc1: 'captivating intellectual presence, sharp cynicism',
                         desc2: 'calm, resonant voice, storyteller',
                         tags: '`speaker1:`, `speaker2:`',
-                        example: 'speaker1 should be provocative, speaker2 calm.'
+                        example: 'speaker1 is sharp and provocative; speaker2 is calm, resonant, and quietly amused.'
                     };
                 case 'two_females':
                      return {
@@ -658,7 +671,7 @@
                         desc1: 'quicker, energetic wit, pragmatic',
                         desc2: 'deliberate, thoughtful, philosophical',
                         tags: '`speaker1:`, `speaker2:`',
-                        example: 'speaker1 should be energetic, speaker2 thoughtful.'
+                        example: 'speaker1 is energetic and witty; speaker2 is deliberate, thoughtful, and precise.'
                     };
                 case 'male_female':
                 default:
@@ -668,7 +681,7 @@
                         desc1: 'captivating intellectual presence, analytical, charming',
                         desc2: 'quicker, energetic wit, pragmatic foil',
                         tags: '`man:`, `girl:`',
-                        example: 'man should be provocative, girl incisive.'
+                        example: 'man is provocative and analytical; girl is quick, incisive, and amused.'
                     };
             }
         }
@@ -676,7 +689,7 @@
         function buildSystemPrompt(duration, speakersConfigValue) {
             const info = getSpeakersInfo(speakersConfigValue);
 
-            const baseIntro = `You are an AI specializing in writing podcast scripts. Your task is to create a dialogue that feels like a lively, engaging, and humorous **intellectual sparring match**. The conversation must be dynamic, fast-paced, and above all, thought-provoking.
+            const baseIntro = `You are an AI specializing in writing Hebrew podcast scripts that will be sent to a natural-language Text-to-Speech model. Your task is to create a dialogue that feels like a lively, engaging, and humorous **intellectual sparring match**. The conversation must be dynamic, fast-paced, and above all, thought-provoking.
 
 The desired podcast length is approximately ${duration} minutes.
 
@@ -694,23 +707,50 @@ Their interaction is the heart of the podcast. They complement and challenge eac
 
 *   **${info.s1}:** ${info.p1} possesses a **${info.desc1}**.
 *   **${info.s2}:** ${info.p2} possesses a **${info.desc2}**.
+*   Current voice direction baseline: ${info.example}
+
+#### **TTS Performance Prompting Principles:**
+The opening part of the script is not an API schema and should not be treated as content to read aloud. It is a compact directing brief for the TTS model, similar to notes a voice director would give performers.
+
+Use the following concepts:
+
+*   **Audio Profile:** who each speaker is, their vocal identity, archetype, and emotional posture.
+*   **Scene:** where the conversation is taking place, the atmosphere, and what is happening around the speakers.
+*   **Director's Notes:** how to perform the conversation: style, pacing, accent, articulation, energy, pauses, vocal smile, tension, and speaker dynamics.
+*   **Sample Context:** one or two short sentences that help the model understand the relationship, emotional stakes, and conversational setup.
+*   **Transcript:** the exact words to be spoken.
+*   **Audio Tags:** short English tags inside the transcript, such as [laughs], [sighs], [whispers], [sarcastic], [serious], [excited], or [shouting].
+
+Do not overload the performance prompt with too many rigid rules. Give enough direction to shape the voices, but leave room for natural delivery.
 
 #### **Exact Output Structure:**
 
-1.  **English Directive:**
-    *   The output must begin **directly** with an English directive for a Text-to-Speech (TTS) model.
-    *   This directive will describe **only** the required manner of speaking (tone, pace, style). **Do not mention the episode's topic.**
-    *   The speaking styles for the speakers must be **different and adapted for each new script.**
-    *   **Crucially:** The directive must be written as a **single, continuous sentence** describing the dynamic between the speakers (e.g., "${info.example}"). It should **not** be broken down into a list format with separate instructions for each speaker.
-    *   The directive should state that short vocal cues in parentheses, like (צוחק) or (אנחה), should be incorporated and used **sparingly**.
-    *   The cues will be in Hebrew, without Nikkud, and include **only simple, audible actions** (no facial expressions or gestures).
-    *   The English directive **must not** end with a colon (:).
+Output only the following sections, in this exact order:
 
-2.  **Hebrew Dialogue:**
-    *   Immediately following the English directive, the dialogue will appear.
-    *   Speaker names will appear in English: ${info.tags}.
-    *   **Ensure grammatically correct gender agreement throughout the dialogue** (masculine/feminine forms) to maintain natural and fluent Hebrew.
-    *   The entire text will be in **Hebrew, without Nikkud (vocalization).**`;
+### AUDIO PROFILE
+Write 2 short English bullets, one for each speaker. Include the speaker label exactly as it must appear in the transcript: ${info.tags}. Describe vocal identity, archetype, emotional temperature, and how the speakers contrast.
+
+### SCENE
+Write 1-2 concise English sentences describing the recording environment, mood, and surrounding atmosphere. The scene should support the topic without becoming narration.
+
+### DIRECTOR'S NOTES
+Write 4-6 concise English bullets. Cover:
+*   Style: emotional color and genre of delivery.
+*   Accent: natural modern Hebrew delivery unless the topic explicitly calls for something else.
+*   Pacing: speed, rhythm, urgency, pauses, and turn-taking.
+*   Articulation and intensity: clarity, breath, energy, vocal smile, and dynamic contrast.
+*   Audio tags: remind that English bracket tags may be used sparingly and only for audible delivery.
+
+### SAMPLE CONTEXT
+Write 1-2 short English sentences that help the TTS model understand why this conversation matters emotionally and intellectually.
+
+### TRANSCRIPT
+Write the exact spoken dialogue in Hebrew, without Nikkud.
+Speaker names must appear in English exactly as ${info.tags}, followed by a colon.
+Use grammatically correct gender agreement throughout the dialogue.
+Use English audio tags inside square brackets sparingly, and only for audible actions or delivery changes. Do not use tags for visual gestures or facial expressions.
+Do not write stage directions outside audio tags.
+Do not add any explanation before or after these sections.`;
 
             return baseIntro;
         }
@@ -724,8 +764,8 @@ Their interaction is the heart of the podcast. They complement and challenge eac
 
         function updateHelpExample() {
             const info = getSpeakersInfo(speakersConfig.value);
-            scriptExamplePrompt.textContent = info.example;
-            scriptExampleDialog.innerHTML = `${info.s1}: שלום לכולם!<br>${info.s2}: אהלן, מה העניינים?`;
+            scriptExamplePrompt.innerHTML = `### AUDIO PROFILE<br>${info.s1}: ${info.example}<br>${info.s2}: complementary voice with a distinct rhythm.<br><br>### DIRECTOR'S NOTES<br>Style: conversational and witty. Pacing: lively but clear. Use English audio tags sparingly.<br><br>### TRANSCRIPT`;
+            scriptExampleDialog.innerHTML = `${info.s1}: שלום לכולם! היום נבדוק למה רעיון פשוט מסתבך כל כך מהר.<br>${info.s2}: [laughs] כי בני אדם אוהבים להוסיף כפתורים גם כשצריך רק מתג.`;
         }
 
         // Initial setup
@@ -798,8 +838,8 @@ Their interaction is the heart of the podcast. They complement and challenge eac
                     body: JSON.stringify(body)
                 });
                 if (!res.ok) {
-                    const errorData = await res.json();
-                    throw new Error(`שגיאת API: ${errorData.error.message}`);
+                    const errorData = await res.json().catch(() => ({}));
+                    throw new Error(`שגיאת API: ${errorData.error?.message || 'לא התקבל פירוט'}`);
                 }
                 const data = await res.json();
                 const script = data.candidates?.[0]?.content?.parts?.[0]?.text || '';
@@ -843,6 +883,73 @@ Their interaction is the heart of the podcast. They complement and challenge eac
 
             return new Blob([buffer], { type: 'audio/wav' });
         }
+
+        function wait(ms) {
+            return new Promise(resolve => setTimeout(resolve, ms));
+        }
+
+        function buildTtsPrompt(script) {
+            const hasStructuredTtsPrompt = /^\s*###\s+AUDIO PROFILE/im.test(script) && /^\s*###\s+TRANSCRIPT/im.test(script);
+            if (hasStructuredTtsPrompt) {
+                return `Synthesize natural Hebrew podcast audio from this structured performance prompt.
+Use AUDIO PROFILE, SCENE, DIRECTOR'S NOTES, SAMPLE CONTEXT, and AUDIO TAGS only as acting guidance.
+Only vocalize the dialogue lines under ### TRANSCRIPT.
+Use the configured speaker voices exactly as mapped by speaker labels.
+The speaker labels are routing markers, not spoken words.
+Do not summarize, translate, or add content.
+
+${script}`;
+            }
+
+            const lines = script.split(/\r?\n/).map(line => line.trimEnd());
+            const firstContentLineIndex = lines.findIndex(line => line.trim());
+            if (firstContentLineIndex === -1) return script;
+
+            const directorNotes = lines[firstContentLineIndex].trim();
+            const transcript = lines.slice(firstContentLineIndex + 1).join('\n').trim();
+            if (!transcript) return script;
+
+            return `Synthesize natural Hebrew podcast audio from the following transcript.
+Use the configured speaker voices exactly as mapped by speaker labels.
+Follow the director notes for tone, pace, emotion, and short audio tags.
+Do not read section labels or these instructions aloud.
+Do not summarize, translate, or add content.
+
+DIRECTOR NOTES:
+${directorNotes}
+
+TRANSCRIPT:
+${transcript}`;
+        }
+
+        async function requestGeminiAudio(url, key, body) {
+            let lastError = null;
+
+            for (let attempt = 1; attempt <= AUDIO_MAX_ATTEMPTS; attempt++) {
+                updateStatus(`יוצר שמע... ניסיון ${attempt}/${AUDIO_MAX_ATTEMPTS}`, 'audio');
+
+                const res = await fetch(`${url}?key=${encodeURIComponent(key)}`, {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify(body)
+                });
+
+                if (res.ok) return await res.json();
+
+                const errorData = await res.json().catch(() => ({}));
+                const details = errorData.error?.message || 'לא התקבל פירוט';
+                lastError = new Error(`שגיאת API: ${details}`);
+
+                if (attempt < AUDIO_MAX_ATTEMPTS && AUDIO_RETRYABLE_STATUS_CODES.has(res.status)) {
+                    await wait(1000 * attempt);
+                    continue;
+                }
+
+                throw lastError;
+            }
+
+            throw lastError || new Error('יצירת השמע נכשלה.');
+        }
         
         async function generateAudio() {
             updateStatus('יוצר שמע, נא להמתין...', 'audio');
@@ -880,24 +987,17 @@ Their interaction is the heart of the podcast. They complement and challenge eac
                 break;
             }
           
-            const model = 'gemini-2.5-flash-preview-tts'; 
+            const model = TTS_MODEL;
             const url = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent`;
+            const ttsPrompt = buildTtsPrompt(script);
 
             const body = {
-                "contents": [{"parts": [{ "text": script }] }],
+                "contents": [{"parts": [{ "text": ttsPrompt }] }],
                 "generationConfig": { "responseModalities": ["AUDIO"], "speechConfig": speechConfig }
             };
 
             try {
-                const res = await fetch(`${url}?key=${encodeURIComponent(key)}`, {
-                    method: 'POST', headers: {'Content-Type': 'application/json'}, body: JSON.stringify(body)
-                });
-                if (!res.ok) {
-                    const errorData = await res.json();
-                    const details = errorData.error?.message || 'לא התקבל פירוט';
-                    throw new Error(`שגיאת API: ${details}`);
-                }
-                const data = await res.json();
+                const data = await requestGeminiAudio(url, key, body);
                 
                 const audioPart = data.candidates?.[0]?.content?.parts?.find(p => p.inlineData);
 
