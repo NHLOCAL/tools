@@ -1,0 +1,1603 @@
+{
+  "schema_version": 2,
+  "generated_at": "2026-07-10T02:55:11.832199+00:00",
+  "source_roots": [
+    "https://f2.freeivr.co.il/topic/2729",
+    "https://f2.freeivr.co.il/topic/55",
+    "https://f2.freeivr.co.il/topic/56",
+    "https://apiforum.yemot.tel/topic/97"
+  ],
+  "selection_policy": "All posts from central API topics and directly linked topics; otherwise all explicitly indexed posts, recursively referenced posts, and topic-author/staff posts. Unlinked discussion replies are excluded.",
+  "topic_count": 157,
+  "post_count": 607,
+  "document_count": 158,
+  "text_char_count": 1949449,
+  "max_document_chars": 239890,
+  "unresolved_post_ids": [
+    10548
+  ],
+  "failed_topics": [],
+  "external_index_urls": [
+    "https://apiforum.yemot.tel/",
+    "https://drive.google.com/drive/folders/1JYS2nlQFQ263XNG6I_vlp1tQkgRGu84m?usp=sharing",
+    "https://f2.freeivr.co.il/assets/uploads/files/1748420528071-%D7%99%D7%97%D7%99%D7%93%D7%95%D7%AA.pdf",
+    "https://f2.freeivr.co.il/categories",
+    "https://mitmachim.top/post/98923",
+    "https://queue.call2all.co.il/",
+    "https://www.yemot.co.il/%d7%a1%d7%a8%d7%98%d7%95%d7%a0%d7%99-%d7%94%d7%93%d7%a8%d7%9b%d7%94/"
+  ],
+  "topics": [
+    {
+      "source_kind": "api-forum",
+      "topic_id": 97,
+      "title": "אפשרויות API של חברת ימות המשיח",
+      "post_count": 28,
+      "url": "https://apiforum.yemot.tel/topic/97",
+      "files": [
+        "api-forum-97-אפשרויות-api-של-חברת-ימות-המשיח.md"
+      ]
+    },
+    {
+      "source_kind": "f2",
+      "topic_id": 2,
+      "title": "אינדקס קישורים - שרשור ישן",
+      "post_count": 1,
+      "url": "https://f2.freeivr.co.il/topic/2",
+      "files": [
+        "f2-2-אינדקס-קישורים-שרשור-ישן.md"
+      ]
+    },
+    {
+      "source_kind": "f2",
+      "topic_id": 3,
+      "title": "רשימת הודעות מערכת",
+      "post_count": 1,
+      "url": "https://f2.freeivr.co.il/topic/3",
+      "files": [
+        "f2-3-רשימת-הודעות-מערכת-part-01.md",
+        "f2-3-רשימת-הודעות-מערכת-part-02.md"
+      ]
+    },
+    {
+      "source_kind": "f2",
+      "topic_id": 4,
+      "title": "הקלטת הודעות מערכת בשלוחה",
+      "post_count": 1,
+      "url": "https://f2.freeivr.co.il/topic/4",
+      "files": [
+        "f2-4-הקלטת-הודעות-מערכת-בשלוחה.md"
+      ]
+    },
+    {
+      "source_kind": "f2",
+      "topic_id": 5,
+      "title": "שרשור ישן {הגדרות כלליות לניהול מערכת טלפונית}",
+      "post_count": 25,
+      "url": "https://f2.freeivr.co.il/topic/5",
+      "files": [
+        "f2-5-שרשור-ישן-הגדרות-כלליות-לניהול-מערכת-טלפונית.md"
+      ]
+    },
+    {
+      "source_kind": "f2",
+      "topic_id": 6,
+      "title": "menu-שלוחת תפריט",
+      "post_count": 15,
+      "url": "https://f2.freeivr.co.il/topic/6",
+      "files": [
+        "f2-6-menu-שלוחת-תפריט.md"
+      ]
+    },
+    {
+      "source_kind": "f2",
+      "topic_id": 7,
+      "title": "תפריט עם זיהוי דיבור קולי menu_voice",
+      "post_count": 1,
+      "url": "https://f2.freeivr.co.il/topic/7",
+      "files": [
+        "f2-7-תפריט-עם-זיהוי-דיבור-קולי-menu_voice.md"
+      ]
+    },
+    {
+      "source_kind": "f2",
+      "topic_id": 9,
+      "title": "שלוחה המאפשרת למאזין לבחור האם בשלוחת השמעת קבצים יהיה לו תפריט בחירת קובץ או לא - type=start_select_file",
+      "post_count": 1,
+      "url": "https://f2.freeivr.co.il/topic/9",
+      "files": [
+        "f2-9-שלוחה-המאפשרת-למאזין-לבחור-האם-בשלוחת-השמעת-קבצים-יהיה-לו-תפריט-בחירת-קובץ-או-לא.md"
+      ]
+    },
+    {
+      "source_kind": "f2",
+      "topic_id": 10,
+      "title": "השמעת קבצים / מערכת תגובות",
+      "post_count": 2,
+      "url": "https://f2.freeivr.co.il/topic/10",
+      "files": [
+        "f2-10-השמעת-קבצים-מערכת-תגובות.md"
+      ]
+    },
+    {
+      "source_kind": "f2",
+      "topic_id": 11,
+      "title": "השמעת קבצים / ניקוד על האזנה",
+      "post_count": 1,
+      "url": "https://f2.freeivr.co.il/topic/11",
+      "files": [
+        "f2-11-השמעת-קבצים-ניקוד-על-האזנה.md"
+      ]
+    },
+    {
+      "source_kind": "f2",
+      "topic_id": 12,
+      "title": "השמעת קבצים / דירוגים - Rating",
+      "post_count": 1,
+      "url": "https://f2.freeivr.co.il/topic/12",
+      "files": [
+        "f2-12-השמעת-קבצים-דירוגים-rating.md"
+      ]
+    },
+    {
+      "source_kind": "f2",
+      "topic_id": 14,
+      "title": "השמעת הודעת לפי תאריך עברי / לועזי / ספירת העומר / חנוכה - כולל הגבלת הפעמים להשמעת הודעה למאזין - toplay_time",
+      "post_count": 1,
+      "url": "https://f2.freeivr.co.il/topic/14",
+      "files": [
+        "f2-14-השמעת-הודעת-לפי-תאריך-עברי-לועזי-ספירת-העומר-חנוכה-כולל-הגבלת-הפעמים-להשמעת-הודע.md"
+      ]
+    },
+    {
+      "source_kind": "f2",
+      "topic_id": 15,
+      "title": "הודעה יומית מתחלפת ומעבר לשלוחה אחרת",
+      "post_count": 1,
+      "url": "https://f2.freeivr.co.il/topic/15",
+      "files": [
+        "f2-15-הודעה-יומית-מתחלפת-ומעבר-לשלוחה-אחרת.md"
+      ]
+    },
+    {
+      "source_kind": "f2",
+      "topic_id": 26,
+      "title": "הפעלת שלוחה רנדומלית - folder_play_random",
+      "post_count": 1,
+      "url": "https://f2.freeivr.co.il/topic/26",
+      "files": [
+        "f2-26-הפעלת-שלוחה-רנדומלית-folder_play_random.md"
+      ]
+    },
+    {
+      "source_kind": "f2",
+      "topic_id": 28,
+      "title": "שידור חי מדומה - מרובה קבצים - השמעת כל הקבצים בשלוחה בהתאם לזמן המוגדר - playdir_time",
+      "post_count": 2,
+      "url": "https://f2.freeivr.co.il/topic/28",
+      "files": [
+        "f2-28-שידור-חי-מדומה-מרובה-קבצים-השמעת-כל-הקבצים-בשלוחה-בהתאם-לזמן-המוגדר-playdir_time.md"
+      ]
+    },
+    {
+      "source_kind": "f2",
+      "topic_id": 30,
+      "title": "תא קולי השולח העתק לדוא\"ל - voicemail_email",
+      "post_count": 1,
+      "url": "https://f2.freeivr.co.il/topic/30",
+      "files": [
+        "f2-30-תא-קולי-השולח-העתק-לדוא-ל-voicemail_email.md"
+      ]
+    },
+    {
+      "source_kind": "f2",
+      "topic_id": 31,
+      "title": "השמעת נתונים והודעות אישיות - id_message | id_list_message",
+      "post_count": 1,
+      "url": "https://f2.freeivr.co.il/topic/31",
+      "files": [
+        "f2-31-השמעת-נתונים-והודעות-אישיות-id_message-id_list_message.md"
+      ]
+    },
+    {
+      "source_kind": "f2",
+      "topic_id": 33,
+      "title": "שאלות טריוויה ונכון או לא נכון - trivia_questions",
+      "post_count": 3,
+      "url": "https://f2.freeivr.co.il/topic/33",
+      "files": [
+        "f2-33-שאלות-טריוויה-ונכון-או-לא-נכון-trivia_questions.md"
+      ]
+    },
+    {
+      "source_kind": "f2",
+      "topic_id": 35,
+      "title": "פילטר לפי רשימות: ההעברה לשלוחה אחרת לפי הגדרות ספציפיות ללקוח לפי קובץ",
+      "post_count": 1,
+      "url": "https://f2.freeivr.co.il/topic/35",
+      "files": [
+        "f2-35-פילטר-לפי-רשימות-ההעברה-לשלוחה-אחרת-לפי-הגדרות-ספציפיות-ללקוח-לפי-קובץ.md"
+      ]
+    },
+    {
+      "source_kind": "f2",
+      "topic_id": 36,
+      "title": "שלוחת העברה לתיקיות אחרות לפי שעות/ימים - go_to_folder_time",
+      "post_count": 1,
+      "url": "https://f2.freeivr.co.il/topic/36",
+      "files": [
+        "f2-36-שלוחת-העברה-לתיקיות-אחרות-לפי-שעות-ימים-go_to_folder_time.md"
+      ]
+    },
+    {
+      "source_kind": "f2",
+      "topic_id": 37,
+      "title": "ההעברה לשלוחה אחרת - לפי תאריך עברי / לועזי או/ו לפי שעה / דקה",
+      "post_count": 1,
+      "url": "https://f2.freeivr.co.il/topic/37",
+      "files": [
+        "f2-37-ההעברה-לשלוחה-אחרת-לפי-תאריך-עברי-לועזי-או-ו-לפי-שעה-דקה.md"
+      ]
+    },
+    {
+      "source_kind": "f2",
+      "topic_id": 38,
+      "title": "מעבר לשלוחה אחרת - go_to_folder",
+      "post_count": 2,
+      "url": "https://f2.freeivr.co.il/topic/38",
+      "files": [
+        "f2-38-מעבר-לשלוחה-אחרת-go_to_folder.md"
+      ]
+    },
+    {
+      "source_kind": "f2",
+      "topic_id": 39,
+      "title": "מעבר לשלוחות שונות - לפי כמות מאזינים",
+      "post_count": 1,
+      "url": "https://f2.freeivr.co.il/topic/39",
+      "files": [
+        "f2-39-מעבר-לשלוחות-שונות-לפי-כמות-מאזינים.md"
+      ]
+    },
+    {
+      "source_kind": "f2",
+      "topic_id": 40,
+      "title": "הגדרת הפנית שיחה לשלוחה פנימית לפי מספר מחייג או מחויג",
+      "post_count": 3,
+      "url": "https://f2.freeivr.co.il/topic/40",
+      "files": [
+        "f2-40-הגדרת-הפנית-שיחה-לשלוחה-פנימית-לפי-מספר-מחייג-או-מחויג.md"
+      ]
+    },
+    {
+      "source_kind": "f2",
+      "topic_id": 41,
+      "title": "הפניית משתמשים לשלוחות שונות לפי רשימת התפוצה - template_filter",
+      "post_count": 2,
+      "url": "https://f2.freeivr.co.il/topic/41",
+      "files": [
+        "f2-41-הפניית-משתמשים-לשלוחות-שונות-לפי-רשימת-התפוצה-template_filter.md"
+      ]
+    },
+    {
+      "source_kind": "f2",
+      "topic_id": 42,
+      "title": "שלוחת ניהול המערכת admin_login",
+      "post_count": 1,
+      "url": "https://f2.freeivr.co.il/topic/42",
+      "files": [
+        "f2-42-שלוחת-ניהול-המערכת-admin_login.md"
+      ]
+    },
+    {
+      "source_kind": "f2",
+      "topic_id": 43,
+      "title": "דיווח משימות יומי",
+      "post_count": 1,
+      "url": "https://f2.freeivr.co.il/topic/43",
+      "files": [
+        "f2-43-דיווח-משימות-יומי.md"
+      ]
+    },
+    {
+      "source_kind": "f2",
+      "topic_id": 44,
+      "title": "מוזיקה בהמתנה",
+      "post_count": 2,
+      "url": "https://f2.freeivr.co.il/topic/44",
+      "files": [
+        "f2-44-מוזיקה-בהמתנה.md"
+      ]
+    },
+    {
+      "source_kind": "f2",
+      "topic_id": 45,
+      "title": "הפעלה מהירה לקמפיין",
+      "post_count": 1,
+      "url": "https://f2.freeivr.co.il/topic/45",
+      "files": [
+        "f2-45-הפעלה-מהירה-לקמפיין.md"
+      ]
+    },
+    {
+      "source_kind": "f2",
+      "topic_id": 47,
+      "title": "חלוקת פרקי תהילים / גמרא /פרשות/דפים/עמודים - chapter_receive",
+      "post_count": 8,
+      "url": "https://f2.freeivr.co.il/topic/47",
+      "files": [
+        "f2-47-חלוקת-פרקי-תהילים-גמרא-פרשות-דפים-עמודים-chapter_receive.md"
+      ]
+    },
+    {
+      "source_kind": "f2",
+      "topic_id": 48,
+      "title": "מודול בחירת ושמירת פרק תהילים קבוע ללקוח tehillim_select_save_and_listen",
+      "post_count": 1,
+      "url": "https://f2.freeivr.co.il/topic/48",
+      "files": [
+        "f2-48-מודול-בחירת-ושמירת-פרק-תהילים-קבוע-ללקוח-tehillim_select_save_and_listen.md"
+      ]
+    },
+    {
+      "source_kind": "f2",
+      "topic_id": 49,
+      "title": "מכירות | הזמנת מוצר לפי מק\"ט (מספר קטלוגי) sale_products",
+      "post_count": 1,
+      "url": "https://f2.freeivr.co.il/topic/49",
+      "files": [
+        "f2-49-מכירות-הזמנת-מוצר-לפי-מק-ט-מספר-קטלוגי-sale_products.md"
+      ]
+    },
+    {
+      "source_kind": "f2",
+      "topic_id": 50,
+      "title": "מערכת מכירת כסאות לבתי כנסת , אירועים וכד' sale_seats",
+      "post_count": 1,
+      "url": "https://f2.freeivr.co.il/topic/50",
+      "files": [
+        "f2-50-מערכת-מכירת-כסאות-לבתי-כנסת-אירועים-וכד-sale_seats.md"
+      ]
+    },
+    {
+      "source_kind": "f2",
+      "topic_id": 55,
+      "title": "API - גישת מפתחים למערכות",
+      "post_count": 72,
+      "url": "https://f2.freeivr.co.il/topic/55",
+      "files": [
+        "f2-55-api-גישת-מפתחים-למערכות.md"
+      ]
+    },
+    {
+      "source_kind": "f2",
+      "topic_id": 56,
+      "title": "מודול API - תקשור עם מחשבים וממשקי נתונים חיצוניים",
+      "post_count": 6,
+      "url": "https://f2.freeivr.co.il/topic/56",
+      "files": [
+        "f2-56-מודול-api-תקשור-עם-מחשבים-וממשקי-נתונים-חיצוניים.md"
+      ]
+    },
+    {
+      "source_kind": "f2",
+      "topic_id": 57,
+      "title": "limit_call_seconds - הגבלת אורך השיחה, \"טיימר\"",
+      "post_count": 1,
+      "url": "https://f2.freeivr.co.il/topic/57",
+      "files": [
+        "f2-57-limit_call_seconds-הגבלת-אורך-השיחה-טיימר.md"
+      ]
+    },
+    {
+      "source_kind": "f2",
+      "topic_id": 58,
+      "title": "הוספה והסרת המספר המחייג מרשימת התפוצה - template_add_number/template_remove_number",
+      "post_count": 2,
+      "url": "https://f2.freeivr.co.il/topic/58",
+      "files": [
+        "f2-58-הוספה-והסרת-המספר-המחייג-מרשימת-התפוצה-template_add_number-template_remove_numbe.md"
+      ]
+    },
+    {
+      "source_kind": "f2",
+      "topic_id": 59,
+      "title": "מודול הוספה, הסרה או חסימה מתבניות רשימות התפוצה yemot_dialer_campaign_list",
+      "post_count": 1,
+      "url": "https://f2.freeivr.co.il/topic/59",
+      "files": [
+        "f2-59-מודול-הוספה-הסרה-או-חסימה-מתבניות-רשימות-התפוצה-yemot_dialer_campaign_list.md"
+      ]
+    },
+    {
+      "source_kind": "f2",
+      "topic_id": 60,
+      "title": "שלוחת הוספת ניקוד points_save",
+      "post_count": 3,
+      "url": "https://f2.freeivr.co.il/topic/60",
+      "files": [
+        "f2-60-שלוחת-הוספת-ניקוד-points_save.md"
+      ]
+    },
+    {
+      "source_kind": "f2",
+      "topic_id": 61,
+      "title": "מודול הוספת / הורדת נקודות ללקוח על ידי מנהלים points_edit",
+      "post_count": 1,
+      "url": "https://f2.freeivr.co.il/topic/61",
+      "files": [
+        "f2-61-מודול-הוספת-הורדת-נקודות-ללקוח-על-ידי-מנהלים-points_edit.md"
+      ]
+    },
+    {
+      "source_kind": "f2",
+      "topic_id": 62,
+      "title": "דוחות נקודות",
+      "post_count": 1,
+      "url": "https://f2.freeivr.co.il/topic/62",
+      "files": [
+        "f2-62-דוחות-נקודות.md"
+      ]
+    },
+    {
+      "source_kind": "f2",
+      "topic_id": 63,
+      "title": "שלוחת השמעת הנקודות שנצברו points_say_total",
+      "post_count": 3,
+      "url": "https://f2.freeivr.co.il/topic/63",
+      "files": [
+        "f2-63-שלוחת-השמעת-הנקודות-שנצברו-points_say_total.md"
+      ]
+    },
+    {
+      "source_kind": "f2",
+      "topic_id": 64,
+      "title": "points_and_rating מודול נקודות ללקוח על קניה, ודירוג בעל העסק",
+      "post_count": 1,
+      "url": "https://f2.freeivr.co.il/topic/64",
+      "files": [
+        "f2-64-points_and_rating-מודול-נקודות-ללקוח-על-קניה-ודירוג-בעל-העסק.md"
+      ]
+    },
+    {
+      "source_kind": "f2",
+      "topic_id": 65,
+      "title": "חלוקת קופונים - coupon",
+      "post_count": 1,
+      "url": "https://f2.freeivr.co.il/topic/65",
+      "files": [
+        "f2-65-חלוקת-קופונים-coupon.md"
+      ]
+    },
+    {
+      "source_kind": "f2",
+      "topic_id": 66,
+      "title": "חלוקת אישורים approval_number",
+      "post_count": 1,
+      "url": "https://f2.freeivr.co.il/topic/66",
+      "files": [
+        "f2-66-חלוקת-אישורים-approval_number.md"
+      ]
+    },
+    {
+      "source_kind": "f2",
+      "topic_id": 67,
+      "title": "\"המספר כעת\" לתור (לדוגמה במרפאות, בדואר) והשמעת קופונים קבועים - number_now_is",
+      "post_count": 1,
+      "url": "https://f2.freeivr.co.il/topic/67",
+      "files": [
+        "f2-67-המספר-כעת-לתור-לדוגמה-במרפאות-בדואר-והשמעת-קופונים-קבועים-number_now_is.md"
+      ]
+    },
+    {
+      "source_kind": "f2",
+      "topic_id": 68,
+      "title": "שלוחה המנתקת את השיחה - hangup",
+      "post_count": 1,
+      "url": "https://f2.freeivr.co.il/topic/68",
+      "files": [
+        "f2-68-שלוחה-המנתקת-את-השיחה-hangup.md"
+      ]
+    },
+    {
+      "source_kind": "f2",
+      "topic_id": 69,
+      "title": "מודול מעקב גיוס תרומות fundraising",
+      "post_count": 1,
+      "url": "https://f2.freeivr.co.il/topic/69",
+      "files": [
+        "f2-69-מודול-מעקב-גיוס-תרומות-fundraising.md"
+      ]
+    },
+    {
+      "source_kind": "f2",
+      "topic_id": 71,
+      "title": "time_keeper שעון נוכחות",
+      "post_count": 1,
+      "url": "https://f2.freeivr.co.il/topic/71",
+      "files": [
+        "f2-71-time_keeper-שעון-נוכחות.md"
+      ]
+    },
+    {
+      "source_kind": "f2",
+      "topic_id": 72,
+      "title": "זמני היום וזמני השבת",
+      "post_count": 1,
+      "url": "https://f2.freeivr.co.il/topic/72",
+      "files": [
+        "f2-72-זמני-היום-וזמני-השבת.md"
+      ]
+    },
+    {
+      "source_kind": "f2",
+      "topic_id": 73,
+      "title": "חסימת משתמש block_id_type",
+      "post_count": 1,
+      "url": "https://f2.freeivr.co.il/topic/73",
+      "files": [
+        "f2-73-חסימת-משתמש-block_id_type.md"
+      ]
+    },
+    {
+      "source_kind": "f2",
+      "topic_id": 74,
+      "title": "השעה כעת - say_hour_and_minute",
+      "post_count": 1,
+      "url": "https://f2.freeivr.co.il/topic/74",
+      "files": [
+        "f2-74-השעה-כעת-say_hour_and_minute.md"
+      ]
+    },
+    {
+      "source_kind": "f2",
+      "topic_id": 75,
+      "title": "הגדרות שיתוף בין מערכות ווצאפון לivr2 וכן להיפך",
+      "post_count": 1,
+      "url": "https://f2.freeivr.co.il/topic/75",
+      "files": [
+        "f2-75-הגדרות-שיתוף-בין-מערכות-ווצאפון-לivr2-וכן-להיפך.md"
+      ]
+    },
+    {
+      "source_kind": "f2",
+      "topic_id": 76,
+      "title": "calculator_add_percentage - מחשבון אחוזי תוספת",
+      "post_count": 1,
+      "url": "https://f2.freeivr.co.il/topic/76",
+      "files": [
+        "f2-76-calculator_add_percentage-מחשבון-אחוזי-תוספת.md"
+      ]
+    },
+    {
+      "source_kind": "f2",
+      "topic_id": 79,
+      "title": "מודול סקר - כולל השמעת התוצאות בזמן אמת",
+      "post_count": 1,
+      "url": "https://f2.freeivr.co.il/topic/79",
+      "files": [
+        "f2-79-מודול-סקר-כולל-השמעת-התוצאות-בזמן-אמת.md"
+      ]
+    },
+    {
+      "source_kind": "f2",
+      "topic_id": 80,
+      "title": "ספירת כמות מספרי טלפון שונים שנכנסו לשלוחה",
+      "post_count": 1,
+      "url": "https://f2.freeivr.co.il/topic/80",
+      "files": [
+        "f2-80-ספירת-כמות-מספרי-טלפון-שונים-שנכנסו-לשלוחה.md"
+      ]
+    },
+    {
+      "source_kind": "f2",
+      "topic_id": 85,
+      "title": "מבחן אמריקאי examination_american",
+      "post_count": 1,
+      "url": "https://f2.freeivr.co.il/topic/85",
+      "files": [
+        "f2-85-מבחן-אמריקאי-examination_american.md"
+      ]
+    },
+    {
+      "source_kind": "f2",
+      "topic_id": 91,
+      "title": "צינתוקים והתראות במערכת תוכן (IVR) ללא עלות יחידות",
+      "post_count": 5,
+      "url": "https://f2.freeivr.co.il/topic/91",
+      "files": [
+        "f2-91-צינתוקים-והתראות-במערכת-תוכן-ivr-ללא-עלות-יחידות.md"
+      ]
+    },
+    {
+      "source_kind": "f2",
+      "topic_id": 92,
+      "title": "מודול מבחן - examination",
+      "post_count": 1,
+      "url": "https://f2.freeivr.co.il/topic/92",
+      "files": [
+        "f2-92-מודול-מבחן-examination.md"
+      ]
+    },
+    {
+      "source_kind": "f2",
+      "topic_id": 93,
+      "title": "מודול התרמות",
+      "post_count": 1,
+      "url": "https://f2.freeivr.co.il/topic/93",
+      "files": [
+        "f2-93-מודול-התרמות.md"
+      ]
+    },
+    {
+      "source_kind": "f2",
+      "topic_id": 94,
+      "title": "פילטר לפי מספר רשימות תפוצה שונות - כהטמעה בכל מודול",
+      "post_count": 2,
+      "url": "https://f2.freeivr.co.il/topic/94",
+      "files": [
+        "f2-94-פילטר-לפי-מספר-רשימות-תפוצה-שונות-כהטמעה-בכל-מודול.md"
+      ]
+    },
+    {
+      "source_kind": "f2",
+      "topic_id": 97,
+      "title": "מודול רשימות השמעה אישיות - playlist",
+      "post_count": 3,
+      "url": "https://f2.freeivr.co.il/topic/97",
+      "files": [
+        "f2-97-מודול-רשימות-השמעה-אישיות-playlist.md"
+      ]
+    },
+    {
+      "source_kind": "f2",
+      "topic_id": 99,
+      "title": "הפעלת קמפיינים יוצאים בtts",
+      "post_count": 1,
+      "url": "https://f2.freeivr.co.il/topic/99",
+      "files": [
+        "f2-99-הפעלת-קמפיינים-יוצאים-בtts.md"
+      ]
+    },
+    {
+      "source_kind": "f2",
+      "topic_id": 103,
+      "title": "המרת קבצי קול לטקסט stt_dir_all_file",
+      "post_count": 1,
+      "url": "https://f2.freeivr.co.il/topic/103",
+      "files": [
+        "f2-103-המרת-קבצי-קול-לטקסט-stt_dir_all_file.md"
+      ]
+    },
+    {
+      "source_kind": "f2",
+      "topic_id": 104,
+      "title": "מודול קבלת פקסים - Fax to mail",
+      "post_count": 2,
+      "url": "https://f2.freeivr.co.il/topic/104",
+      "files": [
+        "f2-104-מודול-קבלת-פקסים-fax-to-mail.md"
+      ]
+    },
+    {
+      "source_kind": "f2",
+      "topic_id": 105,
+      "title": "בדיקת יתרת יחידות נמוכה או פג תוקף מתקרב",
+      "post_count": 1,
+      "url": "https://f2.freeivr.co.il/topic/105",
+      "files": [
+        "f2-105-בדיקת-יתרת-יחידות-נמוכה-או-פג-תוקף-מתקרב.md"
+      ]
+    },
+    {
+      "source_kind": "f2",
+      "topic_id": 106,
+      "title": "שליחת הודעת טקסט מהמערכת מהזיהוי של המתקשר",
+      "post_count": 1,
+      "url": "https://f2.freeivr.co.il/topic/106",
+      "files": [
+        "f2-106-שליחת-הודעת-טקסט-מהמערכת-מהזיהוי-של-המתקשר.md"
+      ]
+    },
+    {
+      "source_kind": "f2",
+      "topic_id": 107,
+      "title": "מודול חישוב מונה",
+      "post_count": 1,
+      "url": "https://f2.freeivr.co.il/topic/107",
+      "files": [
+        "f2-107-מודול-חישוב-מונה.md"
+      ]
+    },
+    {
+      "source_kind": "f2",
+      "topic_id": 110,
+      "title": "מודול points_to_other_id הוספת ניקוד למשתמש אחר",
+      "post_count": 1,
+      "url": "https://f2.freeivr.co.il/topic/110",
+      "files": [
+        "f2-110-מודול-points_to_other_id-הוספת-ניקוד-למשתמש-אחר.md"
+      ]
+    },
+    {
+      "source_kind": "f2",
+      "topic_id": 204,
+      "title": "מעקב לימודים",
+      "post_count": 1,
+      "url": "https://f2.freeivr.co.il/topic/204",
+      "files": [
+        "f2-204-מעקב-לימודים.md"
+      ]
+    },
+    {
+      "source_kind": "f2",
+      "topic_id": 218,
+      "title": "ניתובי שיחה למענה אנושי - כל הסוגים",
+      "post_count": 4,
+      "url": "https://f2.freeivr.co.il/topic/218",
+      "files": [
+        "f2-218-ניתובי-שיחה-למענה-אנושי-כל-הסוגים.md"
+      ]
+    },
+    {
+      "source_kind": "f2",
+      "topic_id": 236,
+      "title": "האזנה אחרונה - last_play",
+      "post_count": 3,
+      "url": "https://f2.freeivr.co.il/topic/236",
+      "files": [
+        "f2-236-האזנה-אחרונה-last_play.md"
+      ]
+    },
+    {
+      "source_kind": "f2",
+      "topic_id": 377,
+      "title": "הפעלת קובץ בשעה מתוזמנת (שידור חי מדומה) playfile_time",
+      "post_count": 1,
+      "url": "https://f2.freeivr.co.il/topic/377",
+      "files": [
+        "f2-377-הפעלת-קובץ-בשעה-מתוזמנת-שידור-חי-מדומה-playfile_time.md"
+      ]
+    },
+    {
+      "source_kind": "f2",
+      "topic_id": 392,
+      "title": "המרת קבצי ymgr לאקסל",
+      "post_count": 1,
+      "url": "https://f2.freeivr.co.il/topic/392",
+      "files": [
+        "f2-392-המרת-קבצי-ymgr-לאקסל.md"
+      ]
+    },
+    {
+      "source_kind": "f2",
+      "topic_id": 481,
+      "title": "שליחת סמס ללקוח בכניסה לשלוחה כהטמעה בכל מודול",
+      "post_count": 1,
+      "url": "https://f2.freeivr.co.il/topic/481",
+      "files": [
+        "f2-481-שליחת-סמס-ללקוח-בכניסה-לשלוחה-כהטמעה-בכל-מודול.md"
+      ]
+    },
+    {
+      "source_kind": "f2",
+      "topic_id": 589,
+      "title": "מודול הוספת ערך ID של המתקשר או ערך מוגדר מראש לקובץ במערכת לבחירתכם",
+      "post_count": 1,
+      "url": "https://f2.freeivr.co.il/topic/589",
+      "files": [
+        "f2-589-מודול-הוספת-ערך-id-של-המתקשר-או-ערך-מוגדר-מראש-לקובץ-במערכת-לבחירתכם.md"
+      ]
+    },
+    {
+      "source_kind": "f2",
+      "topic_id": 610,
+      "title": "שמיעת כמות החברים - בדיקה האם מספר מסויים קיים - שמיעת כל המספרים ברצף",
+      "post_count": 1,
+      "url": "https://f2.freeivr.co.il/topic/610",
+      "files": [
+        "f2-610-שמיעת-כמות-החברים-בדיקה-האם-מספר-מסויים-קיים-שמיעת-כל-המספרים-ברצף.md"
+      ]
+    },
+    {
+      "source_kind": "f2",
+      "topic_id": 811,
+      "title": "קמפיין הודעות אישיות בAPI - אפשרות שהלקוח יחזור למספר וישמע את ההודעה שלו",
+      "post_count": 1,
+      "url": "https://f2.freeivr.co.il/topic/811",
+      "files": [
+        "f2-811-קמפיין-הודעות-אישיות-בapi-אפשרות-שהלקוח-יחזור-למספר-וישמע-את-ההודעה-שלו.md"
+      ]
+    },
+    {
+      "source_kind": "f2",
+      "topic_id": 896,
+      "title": "מודול שיחות שלא נענו - קבלת התראה במייל/סמס",
+      "post_count": 1,
+      "url": "https://f2.freeivr.co.il/topic/896",
+      "files": [
+        "f2-896-מודול-שיחות-שלא-נענו-קבלת-התראה-במייל-סמס.md"
+      ]
+    },
+    {
+      "source_kind": "f2",
+      "topic_id": 1049,
+      "title": "שלוחת שינוי סיסמה לשלוחה במערכת",
+      "post_count": 1,
+      "url": "https://f2.freeivr.co.il/topic/1049",
+      "files": [
+        "f2-1049-שלוחת-שינוי-סיסמה-לשלוחה-במערכת.md"
+      ]
+    },
+    {
+      "source_kind": "f2",
+      "topic_id": 1062,
+      "title": "עריכת סיסמה אישית",
+      "post_count": 1,
+      "url": "https://f2.freeivr.co.il/topic/1062",
+      "files": [
+        "f2-1062-עריכת-סיסמה-אישית.md"
+      ]
+    },
+    {
+      "source_kind": "f2",
+      "topic_id": 1104,
+      "title": "איחולי בוקר/צוהריים/ערב/לילה - טוב בשלוחת תפריט",
+      "post_count": 1,
+      "url": "https://f2.freeivr.co.il/topic/1104",
+      "files": [
+        "f2-1104-איחולי-בוקר-צוהריים-ערב-לילה-טוב-בשלוחת-תפריט.md"
+      ]
+    },
+    {
+      "source_kind": "f2",
+      "topic_id": 1359,
+      "title": "השמעת הודעה בלבד - חזרה בכל מקש / השמעה בלי אפשרות חזרה",
+      "post_count": 1,
+      "url": "https://f2.freeivr.co.il/topic/1359",
+      "files": [
+        "f2-1359-השמעת-הודעה-בלבד-חזרה-בכל-מקש-השמעה-בלי-אפשרות-חזרה.md"
+      ]
+    },
+    {
+      "source_kind": "f2",
+      "topic_id": 1360,
+      "title": "שלוחת איפוס מבחן אמריקאי",
+      "post_count": 26,
+      "url": "https://f2.freeivr.co.il/topic/1360",
+      "files": [
+        "f2-1360-שלוחת-איפוס-מבחן-אמריקאי.md"
+      ]
+    },
+    {
+      "source_kind": "f2",
+      "topic_id": 1462,
+      "title": "מודול סקר החדש - seker_questions",
+      "post_count": 1,
+      "url": "https://f2.freeivr.co.il/topic/1462",
+      "files": [
+        "f2-1462-מודול-סקר-החדש-seker_questions.md"
+      ]
+    },
+    {
+      "source_kind": "f2",
+      "topic_id": 1980,
+      "title": "בדיקת יתרת יחידות כהטמעה בכל מודול או בכניסה למערכת כולל שליחת שיחה למנהל הקו",
+      "post_count": 1,
+      "url": "https://f2.freeivr.co.il/topic/1980",
+      "files": [
+        "f2-1980-בדיקת-יתרת-יחידות-כהטמעה-בכל-מודול-או-בכניסה-למערכת-כולל-שליחת-שיחה-למנהל-הקו.md"
+      ]
+    },
+    {
+      "source_kind": "f2",
+      "topic_id": 2439,
+      "title": "הגבלת כמות כניסה לשלוחה בצורה כללית",
+      "post_count": 1,
+      "url": "https://f2.freeivr.co.il/topic/2439",
+      "files": [
+        "f2-2439-הגבלת-כמות-כניסה-לשלוחה-בצורה-כללית.md"
+      ]
+    },
+    {
+      "source_kind": "f2",
+      "topic_id": 2616,
+      "title": "מודול שליחת sms ללקוח בכניסה לשלוחה ומעבר לשלוחה אחרת",
+      "post_count": 1,
+      "url": "https://f2.freeivr.co.il/topic/2616",
+      "files": [
+        "f2-2616-מודול-שליחת-sms-ללקוח-בכניסה-לשלוחה-ומעבר-לשלוחה-אחרת.md"
+      ]
+    },
+    {
+      "source_kind": "f2",
+      "topic_id": 2678,
+      "title": "מודול הסרת ערך ID של המתקשר או ערך מוגדר מראש מקובץ במערכת לבחירתכם",
+      "post_count": 1,
+      "url": "https://f2.freeivr.co.il/topic/2678",
+      "files": [
+        "f2-2678-מודול-הסרת-ערך-id-של-המתקשר-או-ערך-מוגדר-מראש-מקובץ-במערכת-לבחירתכם.md"
+      ]
+    },
+    {
+      "source_kind": "f2",
+      "topic_id": 2704,
+      "title": "שלוחה לניהול קמפיין",
+      "post_count": 1,
+      "url": "https://f2.freeivr.co.il/topic/2704",
+      "files": [
+        "f2-2704-שלוחה-לניהול-קמפיין.md"
+      ]
+    },
+    {
+      "source_kind": "f2",
+      "topic_id": 2729,
+      "title": "אינדקס קישורים",
+      "post_count": 13,
+      "url": "https://f2.freeivr.co.il/topic/2729",
+      "files": [
+        "f2-2729-אינדקס-קישורים.md"
+      ]
+    },
+    {
+      "source_kind": "f2",
+      "topic_id": 2797,
+      "title": "חיבור IAX למערכת - אפשרות לבצע חיוג ולקבל שיחות מהמחשב למערכת שלכם",
+      "post_count": 1,
+      "url": "https://f2.freeivr.co.il/topic/2797",
+      "files": [
+        "f2-2797-חיבור-iax-למערכת-אפשרות-לבצע-חיוג-ולקבל-שיחות-מהמחשב-למערכת-שלכם.md"
+      ]
+    },
+    {
+      "source_kind": "f2",
+      "topic_id": 3240,
+      "title": "מודול שליחת פקסים חדש",
+      "post_count": 1,
+      "url": "https://f2.freeivr.co.il/topic/3240",
+      "files": [
+        "f2-3240-מודול-שליחת-פקסים-חדש.md"
+      ]
+    },
+    {
+      "source_kind": "f2",
+      "topic_id": 3779,
+      "title": "קבלת הקלטות ונתונים - recording_and_entering_data",
+      "post_count": 24,
+      "url": "https://f2.freeivr.co.il/topic/3779",
+      "files": [
+        "f2-3779-קבלת-הקלטות-ונתונים-recording_and_entering_data.md"
+      ]
+    },
+    {
+      "source_kind": "f2",
+      "topic_id": 3812,
+      "title": "זימון תורים",
+      "post_count": 1,
+      "url": "https://f2.freeivr.co.il/topic/3812",
+      "files": [
+        "f2-3812-זימון-תורים.md"
+      ]
+    },
+    {
+      "source_kind": "f2",
+      "topic_id": 3871,
+      "title": "בניית מערכות גדולות בקובץ אקסס",
+      "post_count": 10,
+      "url": "https://f2.freeivr.co.il/topic/3871",
+      "files": [
+        "f2-3871-בניית-מערכות-גדולות-בקובץ-אקסס.md"
+      ]
+    },
+    {
+      "source_kind": "f2",
+      "topic_id": 4005,
+      "title": "playfile_and_enter_digits_time - קליקרים  + שידור חי רציף מדומה מרובה קבצים",
+      "post_count": 1,
+      "url": "https://f2.freeivr.co.il/topic/4005",
+      "files": [
+        "f2-4005-playfile_and_enter_digits_time-קליקרים-שידור-חי-רציף-מדומה-מרובה-קבצים.md"
+      ]
+    },
+    {
+      "source_kind": "f2",
+      "topic_id": 4307,
+      "title": "פילטר לפי רשימות צינתוקים כמודול או כהטמעה בכל מודול",
+      "post_count": 2,
+      "url": "https://f2.freeivr.co.il/topic/4307",
+      "files": [
+        "f2-4307-פילטר-לפי-רשימות-צינתוקים-כמודול-או-כהטמעה-בכל-מודול.md"
+      ]
+    },
+    {
+      "source_kind": "f2",
+      "topic_id": 4874,
+      "title": "clicks קליקס - משחק קליקרים, השמעת קבצים עם אפשרות להקשת מקשים / עניית תשובות במהלך ההשמעה",
+      "post_count": 1,
+      "url": "https://f2.freeivr.co.il/topic/4874",
+      "files": [
+        "f2-4874-clicks-קליקס-משחק-קליקרים-השמעת-קבצים-עם-אפשרות-להקשת-מקשים-עניית-תשובות-במהלך-ה.md"
+      ]
+    },
+    {
+      "source_kind": "f2",
+      "topic_id": 5000,
+      "title": "קידומת בשליחת פקס",
+      "post_count": 2,
+      "url": "https://f2.freeivr.co.il/topic/5000",
+      "files": [
+        "f2-5000-קידומת-בשליחת-פקס.md"
+      ]
+    },
+    {
+      "source_kind": "f2",
+      "topic_id": 5041,
+      "title": "confbridge - חדר ועידה / שידור חי",
+      "post_count": 17,
+      "url": "https://f2.freeivr.co.il/topic/5041",
+      "files": [
+        "f2-5041-confbridge-חדר-ועידה-שידור-חי.md"
+      ]
+    },
+    {
+      "source_kind": "f2",
+      "topic_id": 5278,
+      "title": "חדש! שליחת הודעה לטלגרם בכניסה לשלוחה",
+      "post_count": 16,
+      "url": "https://f2.freeivr.co.il/topic/5278",
+      "files": [
+        "f2-5278-חדש-שליחת-הודעה-לטלגרם-בכניסה-לשלוחה.md"
+      ]
+    },
+    {
+      "source_kind": "f2",
+      "topic_id": 5363,
+      "title": "מונה ברכות יומי - get_brachot",
+      "post_count": 1,
+      "url": "https://f2.freeivr.co.il/topic/5363",
+      "files": [
+        "f2-5363-מונה-ברכות-יומי-get_brachot.md"
+      ]
+    },
+    {
+      "source_kind": "f2",
+      "topic_id": 5721,
+      "title": "פילטר כניסה לשלוחה לפי כמות נקודות - הטמעה בכל מודול",
+      "post_count": 1,
+      "url": "https://f2.freeivr.co.il/topic/5721",
+      "files": [
+        "f2-5721-פילטר-כניסה-לשלוחה-לפי-כמות-נקודות-הטמעה-בכל-מודול.md"
+      ]
+    },
+    {
+      "source_kind": "f2",
+      "topic_id": 5821,
+      "title": "הקלטות - record",
+      "post_count": 15,
+      "url": "https://f2.freeivr.co.il/topic/5821",
+      "files": [
+        "f2-5821-הקלטות-record.md"
+      ]
+    },
+    {
+      "source_kind": "f2",
+      "topic_id": 5987,
+      "title": "הגדרות לאקסס פילטר + ימים וחודשים לועזיים, להגדרה במערכת בטבלאות  מסודרות",
+      "post_count": 1,
+      "url": "https://f2.freeivr.co.il/topic/5987",
+      "files": [
+        "f2-5987-הגדרות-לאקסס-פילטר-ימים-וחודשים-לועזיים-להגדרה-במערכת-בטבלאות-מסודרות.md"
+      ]
+    },
+    {
+      "source_kind": "f2",
+      "topic_id": 6056,
+      "title": "בעל עסק? בעל משרד? מעוניין במרכזיית IP? חדש בימות המשיח! מרכזיית IP ללא עלות חודשית",
+      "post_count": 19,
+      "url": "https://f2.freeivr.co.il/topic/6056",
+      "files": [
+        "f2-6056-בעל-עסק-בעל-משרד-מעוניין-במרכזיית-ip-חדש-בימות-המשיח-מרכזיית-ip-ללא-עלות-חודשית.md"
+      ]
+    },
+    {
+      "source_kind": "f2",
+      "topic_id": 6076,
+      "title": "מודול תור (מענה אנושי)",
+      "post_count": 18,
+      "url": "https://f2.freeivr.co.il/topic/6076",
+      "files": [
+        "f2-6076-מודול-תור-מענה-אנושי.md"
+      ]
+    },
+    {
+      "source_kind": "f2",
+      "topic_id": 6133,
+      "title": "מודול sip - הגדרות לחיוג מטלפון משרדי או משלוחת sip",
+      "post_count": 1,
+      "url": "https://f2.freeivr.co.il/topic/6133",
+      "files": [
+        "f2-6133-מודול-sip-הגדרות-לחיוג-מטלפון-משרדי-או-משלוחת-sip.md"
+      ]
+    },
+    {
+      "source_kind": "f2",
+      "topic_id": 6152,
+      "title": "קובץ שקט תקין להחלפת הודעות מערכת",
+      "post_count": 1,
+      "url": "https://f2.freeivr.co.il/topic/6152",
+      "files": [
+        "f2-6152-קובץ-שקט-תקין-להחלפת-הודעות-מערכת.md"
+      ]
+    },
+    {
+      "source_kind": "f2",
+      "topic_id": 6165,
+      "title": "מודול אקסס פילטר כמודול או כהטמעה בכל מודול",
+      "post_count": 7,
+      "url": "https://f2.freeivr.co.il/topic/6165",
+      "files": [
+        "f2-6165-מודול-אקסס-פילטר-כמודול-או-כהטמעה-בכל-מודול.md"
+      ]
+    },
+    {
+      "source_kind": "f2",
+      "topic_id": 6179,
+      "title": "הסבר על התיקיות ואופן החיפוש בסל המחזור",
+      "post_count": 1,
+      "url": "https://f2.freeivr.co.il/topic/6179",
+      "files": [
+        "f2-6179-הסבר-על-התיקיות-ואופן-החיפוש-בסל-המחזור.md"
+      ]
+    },
+    {
+      "source_kind": "f2",
+      "topic_id": 6190,
+      "title": "התחברות למנוע סליקה כללי - credit_card",
+      "post_count": 2,
+      "url": "https://f2.freeivr.co.il/topic/6190",
+      "files": [
+        "f2-6190-התחברות-למנוע-סליקה-כללי-credit_card.md"
+      ]
+    },
+    {
+      "source_kind": "f2",
+      "topic_id": 6197,
+      "title": "השמעת הודעות קמפיין - כהטמעה בכל מודול",
+      "post_count": 4,
+      "url": "https://f2.freeivr.co.il/topic/6197",
+      "files": [
+        "f2-6197-השמעת-הודעות-קמפיין-כהטמעה-בכל-מודול.md"
+      ]
+    },
+    {
+      "source_kind": "f2",
+      "topic_id": 6323,
+      "title": "פורמט הקבצים של המערכת",
+      "post_count": 1,
+      "url": "https://f2.freeivr.co.il/topic/6323",
+      "files": [
+        "f2-6323-פורמט-הקבצים-של-המערכת.md"
+      ]
+    },
+    {
+      "source_kind": "f2",
+      "topic_id": 6536,
+      "title": "שינוי אינדקס הקישורים לאינדקס הישן",
+      "post_count": 1,
+      "url": "https://f2.freeivr.co.il/topic/6536",
+      "files": [
+        "f2-6536-שינוי-אינדקס-הקישורים-לאינדקס-הישן.md"
+      ]
+    },
+    {
+      "source_kind": "f2",
+      "topic_id": 6843,
+      "title": "השמעת המספר של המתקשר",
+      "post_count": 1,
+      "url": "https://f2.freeivr.co.il/topic/6843",
+      "files": [
+        "f2-6843-השמעת-המספר-של-המתקשר.md"
+      ]
+    },
+    {
+      "source_kind": "f2",
+      "topic_id": 6971,
+      "title": "בשביל כל מי שמחפש את תוכנת Audacity - תוכנה לעריכת אודיו",
+      "post_count": 1,
+      "url": "https://f2.freeivr.co.il/topic/6971",
+      "files": [
+        "f2-6971-בשביל-כל-מי-שמחפש-את-תוכנת-audacity-תוכנה-לעריכת-אודיו.md"
+      ]
+    },
+    {
+      "source_kind": "f2",
+      "topic_id": 6996,
+      "title": "הגל השקט + היסטוריית אזעקות",
+      "post_count": 2,
+      "url": "https://f2.freeivr.co.il/topic/6996",
+      "files": [
+        "f2-6996-הגל-השקט-היסטוריית-אזעקות.md"
+      ]
+    },
+    {
+      "source_kind": "f2",
+      "topic_id": 7010,
+      "title": "השמעת קבצים",
+      "post_count": 12,
+      "url": "https://f2.freeivr.co.il/topic/7010",
+      "files": [
+        "f2-7010-השמעת-קבצים.md"
+      ]
+    },
+    {
+      "source_kind": "f2",
+      "topic_id": 7023,
+      "title": "מודול שליחת קובץ למייל של המאזין",
+      "post_count": 2,
+      "url": "https://f2.freeivr.co.il/topic/7023",
+      "files": [
+        "f2-7023-מודול-שליחת-קובץ-למייל-של-המאזין.md"
+      ]
+    },
+    {
+      "source_kind": "f2",
+      "topic_id": 7078,
+      "title": "מודול שליחת הזמנה לחבר להצטרפות לרשימת התפוצה",
+      "post_count": 1,
+      "url": "https://f2.freeivr.co.il/topic/7078",
+      "files": [
+        "f2-7078-מודול-שליחת-הזמנה-לחבר-להצטרפות-לרשימת-התפוצה.md"
+      ]
+    },
+    {
+      "source_kind": "f2",
+      "topic_id": 7519,
+      "title": "ראוטינג טלגרם - העברת שיחה למשתמש טלגרם",
+      "post_count": 1,
+      "url": "https://f2.freeivr.co.il/topic/7519",
+      "files": [
+        "f2-7519-ראוטינג-טלגרם-העברת-שיחה-למשתמש-טלגרם.md"
+      ]
+    },
+    {
+      "source_kind": "f2",
+      "topic_id": 7602,
+      "title": "יצירת קובץ ini",
+      "post_count": 1,
+      "url": "https://f2.freeivr.co.il/topic/7602",
+      "files": [
+        "f2-7602-יצירת-קובץ-ini.md"
+      ]
+    },
+    {
+      "source_kind": "f2",
+      "topic_id": 7635,
+      "title": "שופינג.פון - מרכז הקניות של חברת ימות המשיח",
+      "post_count": 13,
+      "url": "https://f2.freeivr.co.il/topic/7635",
+      "files": [
+        "f2-7635-שופינג-פון-מרכז-הקניות-של-חברת-ימות-המשיח.md"
+      ]
+    },
+    {
+      "source_kind": "f2",
+      "topic_id": 7795,
+      "title": "תזמון השמעת קבצים - מודול playfile",
+      "post_count": 6,
+      "url": "https://f2.freeivr.co.il/topic/7795",
+      "files": [
+        "f2-7795-תזמון-השמעת-קבצים-מודול-playfile.md"
+      ]
+    },
+    {
+      "source_kind": "f2",
+      "topic_id": 7869,
+      "title": "כניסה לפי מפתח - מעבר | השמעות | קבלת הקשות והקלטות לפי הקשת המשתמש",
+      "post_count": 7,
+      "url": "https://f2.freeivr.co.il/topic/7869",
+      "files": [
+        "f2-7869-כניסה-לפי-מפתח-מעבר-השמעות-קבלת-הקשות-והקלטות-לפי-הקשת-המשתמש.md"
+      ]
+    },
+    {
+      "source_kind": "f2",
+      "topic_id": 8056,
+      "title": "דיגיקול - דפי נחיתה עם התממשקות טלפונית",
+      "post_count": 2,
+      "url": "https://f2.freeivr.co.il/topic/8056",
+      "files": [
+        "f2-8056-דיגיקול-דפי-נחיתה-עם-התממשקות-טלפונית.md"
+      ]
+    },
+    {
+      "source_kind": "f2",
+      "topic_id": 8082,
+      "title": "הגדרות כלליות לניהול מערכת תכנים - IVR - המערכות הטלפוניות המתקדמות בעולם מבית ימות המשיח פתרונות תקשורות",
+      "post_count": 17,
+      "url": "https://f2.freeivr.co.il/topic/8082",
+      "files": [
+        "f2-8082-הגדרות-כלליות-לניהול-מערכת-תכנים-ivr-המערכות-הטלפוניות-המתקדמות-בעולם-מבית-ימות.md"
+      ]
+    },
+    {
+      "source_kind": "f2",
+      "topic_id": 8122,
+      "title": "הרשאות כניסה לשלוחה",
+      "post_count": 12,
+      "url": "https://f2.freeivr.co.il/topic/8122",
+      "files": [
+        "f2-8122-הרשאות-כניסה-לשלוחה.md"
+      ]
+    },
+    {
+      "source_kind": "f2",
+      "topic_id": 8166,
+      "title": "קווי יסוד למרכזייה הטלפונית של ימות המשיח",
+      "post_count": 6,
+      "url": "https://f2.freeivr.co.il/topic/8166",
+      "files": [
+        "f2-8166-קווי-יסוד-למרכזייה-הטלפונית-של-ימות-המשיח.md"
+      ]
+    },
+    {
+      "source_kind": "f2",
+      "topic_id": 8191,
+      "title": "חלוקת קודים",
+      "post_count": 1,
+      "url": "https://f2.freeivr.co.il/topic/8191",
+      "files": [
+        "f2-8191-חלוקת-קודים.md"
+      ]
+    },
+    {
+      "source_kind": "f2",
+      "topic_id": 8204,
+      "title": "הגדרות הזיהוי בכלל המערכת",
+      "post_count": 18,
+      "url": "https://f2.freeivr.co.il/topic/8204",
+      "files": [
+        "f2-8204-הגדרות-הזיהוי-בכלל-המערכת.md"
+      ]
+    },
+    {
+      "source_kind": "f2",
+      "topic_id": 8219,
+      "title": "סדר פעולות בכניסה לשלוחה לפני המעבר למודול עצמו",
+      "post_count": 1,
+      "url": "https://f2.freeivr.co.il/topic/8219",
+      "files": [
+        "f2-8219-סדר-פעולות-בכניסה-לשלוחה-לפני-המעבר-למודול-עצמו.md"
+      ]
+    },
+    {
+      "source_kind": "f2",
+      "topic_id": 8248,
+      "title": "השמעת הודעות קמפיין בכניסה לשלוחה",
+      "post_count": 1,
+      "url": "https://f2.freeivr.co.il/topic/8248",
+      "files": [
+        "f2-8248-השמעת-הודעות-קמפיין-בכניסה-לשלוחה.md"
+      ]
+    },
+    {
+      "source_kind": "f2",
+      "topic_id": 8320,
+      "title": "דוחות מסוג ymgr html ו-csv",
+      "post_count": 1,
+      "url": "https://f2.freeivr.co.il/topic/8320",
+      "files": [
+        "f2-8320-דוחות-מסוג-ymgr-html-ו-csv.md"
+      ]
+    },
+    {
+      "source_kind": "f2",
+      "topic_id": 8325,
+      "title": "אופן יצירת  קבצי TTS",
+      "post_count": 1,
+      "url": "https://f2.freeivr.co.il/topic/8325",
+      "files": [
+        "f2-8325-אופן-יצירת-קבצי-tts.md"
+      ]
+    },
+    {
+      "source_kind": "f2",
+      "topic_id": 8332,
+      "title": "שימושון כללי למשתמשים מתקדמים",
+      "post_count": 3,
+      "url": "https://f2.freeivr.co.il/topic/8332",
+      "files": [
+        "f2-8332-שימושון-כללי-למשתמשים-מתקדמים.md"
+      ]
+    },
+    {
+      "source_kind": "f2",
+      "topic_id": 8399,
+      "title": "מודול תור שרשור ישן",
+      "post_count": 1,
+      "url": "https://f2.freeivr.co.il/topic/8399",
+      "files": [
+        "f2-8399-מודול-תור-שרשור-ישן.md"
+      ]
+    },
+    {
+      "source_kind": "f2",
+      "topic_id": 8470,
+      "title": "בדיקת הרשאת כניסה מול API  כמודול או כהטמעה בכל מודול",
+      "post_count": 2,
+      "url": "https://f2.freeivr.co.il/topic/8470",
+      "files": [
+        "f2-8470-בדיקת-הרשאת-כניסה-מול-api-כמודול-או-כהטמעה-בכל-מודול.md"
+      ]
+    },
+    {
+      "source_kind": "f2",
+      "topic_id": 9616,
+      "title": "הסבר כללי על צבירת נקודות והגדרות לניקוד שתקפות בכלל המערכת",
+      "post_count": 8,
+      "url": "https://f2.freeivr.co.il/topic/9616",
+      "files": [
+        "f2-9616-הסבר-כללי-על-צבירת-נקודות-והגדרות-לניקוד-שתקפות-בכלל-המערכת.md"
+      ]
+    },
+    {
+      "source_kind": "f2",
+      "topic_id": 9771,
+      "title": "מודול יצירת קבצי tts",
+      "post_count": 1,
+      "url": "https://f2.freeivr.co.il/topic/9771",
+      "files": [
+        "f2-9771-מודול-יצירת-קבצי-tts.md"
+      ]
+    },
+    {
+      "source_kind": "f2",
+      "topic_id": 9779,
+      "title": "שליחת צנתוק למחייג בכניסה לשלוחה",
+      "post_count": 1,
+      "url": "https://f2.freeivr.co.il/topic/9779",
+      "files": [
+        "f2-9779-שליחת-צנתוק-למחייג-בכניסה-לשלוחה.md"
+      ]
+    },
+    {
+      "source_kind": "f2",
+      "topic_id": 10156,
+      "title": "הרשאת כניסה לשלוחה (פילטר) לפי האזנה לקובץ מסוים במערכת",
+      "post_count": 1,
+      "url": "https://f2.freeivr.co.il/topic/10156",
+      "files": [
+        "f2-10156-הרשאת-כניסה-לשלוחה-פילטר-לפי-האזנה-לקובץ-מסוים-במערכת.md"
+      ]
+    },
+    {
+      "source_kind": "f2",
+      "topic_id": 10744,
+      "title": "שלוחה לדיווח שיעורים",
+      "post_count": 1,
+      "url": "https://f2.freeivr.co.il/topic/10744",
+      "files": [
+        "f2-10744-שלוחה-לדיווח-שיעורים.md"
+      ]
+    },
+    {
+      "source_kind": "f2",
+      "topic_id": 10822,
+      "title": "מודול השתקת קבלת חיוגים והתראות מהמערכת שלכם",
+      "post_count": 1,
+      "url": "https://f2.freeivr.co.il/topic/10822",
+      "files": [
+        "f2-10822-מודול-השתקת-קבלת-חיוגים-והתראות-מהמערכת-שלכם.md"
+      ]
+    },
+    {
+      "source_kind": "f2",
+      "topic_id": 11203,
+      "title": "תוסף Click To Call לדפדפן",
+      "post_count": 1,
+      "url": "https://f2.freeivr.co.il/topic/11203",
+      "files": [
+        "f2-11203-תוסף-click-to-call-לדפדפן.md"
+      ]
+    },
+    {
+      "source_kind": "f2",
+      "topic_id": 11713,
+      "title": "מודול שינוי 'סיסמת הקלטות' במערכת",
+      "post_count": 1,
+      "url": "https://f2.freeivr.co.il/topic/11713",
+      "files": [
+        "f2-11713-מודול-שינוי-סיסמת-הקלטות-במערכת.md"
+      ]
+    },
+    {
+      "source_kind": "f2",
+      "topic_id": 11714,
+      "title": "מודול שינוי 'סיסמת גישה' במערכת",
+      "post_count": 1,
+      "url": "https://f2.freeivr.co.il/topic/11714",
+      "files": [
+        "f2-11714-מודול-שינוי-סיסמת-גישה-במערכת.md"
+      ]
+    },
+    {
+      "source_kind": "f2",
+      "topic_id": 11897,
+      "title": "עדכון דפי גמרא - תלמוד בבלי",
+      "post_count": 1,
+      "url": "https://f2.freeivr.co.il/topic/11897",
+      "files": [
+        "f2-11897-עדכון-דפי-גמרא-תלמוד-בבלי.md"
+      ]
+    },
+    {
+      "source_kind": "f2",
+      "topic_id": 12134,
+      "title": "מודול שינוי 'סיסמת ניהול' במערכת",
+      "post_count": 1,
+      "url": "https://f2.freeivr.co.il/topic/12134",
+      "files": [
+        "f2-12134-מודול-שינוי-סיסמת-ניהול-במערכת.md"
+      ]
+    },
+    {
+      "source_kind": "f2",
+      "topic_id": 12759,
+      "title": "פתיחת שלוחות בהדרגה, לפי זמנים ולפי זיהוי אישי - להטמעה בכל שלוחה",
+      "post_count": 1,
+      "url": "https://f2.freeivr.co.il/topic/12759",
+      "files": [
+        "f2-12759-פתיחת-שלוחות-בהדרגה-לפי-זמנים-ולפי-זיהוי-אישי-להטמעה-בכל-שלוחה.md"
+      ]
+    },
+    {
+      "source_kind": "f2",
+      "topic_id": 14268,
+      "title": "אחסון קבצים במערכת - מידע והגבלות",
+      "post_count": 1,
+      "url": "https://f2.freeivr.co.il/topic/14268",
+      "files": [
+        "f2-14268-אחסון-קבצים-במערכת-מידע-והגבלות.md"
+      ]
+    },
+    {
+      "source_kind": "f2",
+      "topic_id": 15175,
+      "title": "טוקארד",
+      "post_count": 1,
+      "url": "https://f2.freeivr.co.il/topic/15175",
+      "files": [
+        "f2-15175-טוקארד.md"
+      ]
+    },
+    {
+      "source_kind": "f2",
+      "topic_id": 18186,
+      "title": "שיתוף מערכת בין מאזינים",
+      "post_count": 1,
+      "url": "https://f2.freeivr.co.il/topic/18186",
+      "files": [
+        "f2-18186-שיתוף-מערכת-בין-מאזינים.md"
+      ]
+    },
+    {
+      "source_kind": "f2",
+      "topic_id": 19256,
+      "title": "מודול ניתוב שיחות לפי תור (בטא)",
+      "post_count": 19,
+      "url": "https://f2.freeivr.co.il/topic/19256",
+      "files": [
+        "f2-19256-מודול-ניתוב-שיחות-לפי-תור-בטא.md"
+      ]
+    },
+    {
+      "source_kind": "f2",
+      "topic_id": 19353,
+      "title": "מודול טלזכור - telezchor - שירות שליחת תזכורת לחיוג למספר מותאם אישית - לפי שעות ולפי ימים",
+      "post_count": 1,
+      "url": "https://f2.freeivr.co.il/topic/19353",
+      "files": [
+        "f2-19353-מודול-טלזכור-telezchor-שירות-שליחת-תזכורת-לחיוג-למספר-מותאם-אישית-לפי-שעות-ולפי.md"
+      ]
+    }
+  ],
+  "sanitization_policy": "Numeric values that look like management tokens or passwords are replaced with <REDACTED>; parameter names, placeholders, and live source links are preserved."
+}

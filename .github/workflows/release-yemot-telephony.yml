@@ -1,0 +1,53 @@
+name: Release Yemot telephony skill
+
+on:
+  push:
+    tags:
+      - "yemot-telephony-v*"
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: "Release tag, for example yemot-telephony-v0.1.0"
+        required: true
+        type: string
+
+permissions:
+  contents: write
+
+jobs:
+  validate-package-release:
+    runs-on: windows-latest
+    env:
+      RELEASE_TAG: ${{ github.event_name == 'push' && github.ref_name || inputs.tag }}
+      GH_TOKEN: ${{ github.token }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install site dependency
+        run: python -m pip install markdown2
+
+      - name: Validate skill and snapshot
+        shell: pwsh
+        run: |
+          python skills/yemot-telephony/scripts/validate_snapshot.py
+          python -m unittest discover -s skills/yemot-telephony/tests -p "test_*.py" -v
+          python tests/test_build.py -v
+          python build.py
+
+      - name: Package skill
+        shell: pwsh
+        run: ./scripts/package-yemot-telephony.ps1 -OutputPath ./dist/yemot-telephony.zip
+
+      - name: Create or update GitHub Release
+        shell: pwsh
+        run: |
+          $displayVersion = $env:RELEASE_TAG -replace '^yemot-telephony-', ''
+          gh release view $env:RELEASE_TAG 2>$null
+          if ($LASTEXITCODE -ne 0) {
+            gh release create $env:RELEASE_TAG --title "ימות המשיח — מערכות טלפוניות $displayVersion" --generate-notes
+          }
+          gh release upload $env:RELEASE_TAG ./dist/yemot-telephony.zip --clobber
