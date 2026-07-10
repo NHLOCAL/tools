@@ -7,7 +7,7 @@ on:
   workflow_dispatch:
     inputs:
       tag:
-        description: "Release tag, for example yemot-telephony-v1.0.0"
+        description: "Release tag, for example yemot-telephony-v0.1.0"
         required: true
         type: string
 
@@ -45,8 +45,9 @@ jobs:
       - name: Create or update GitHub Release
         shell: pwsh
         run: |
+          $displayVersion = $env:RELEASE_TAG -replace '^yemot-telephony-', ''
           gh release view $env:RELEASE_TAG 2>$null
           if ($LASTEXITCODE -ne 0) {
-            gh release create $env:RELEASE_TAG --title "Yemot Telephony Skill $env:RELEASE_TAG" --generate-notes
+            gh release create $env:RELEASE_TAG --title "ימות המשיח — מערכות טלפוניות $displayVersion" --generate-notes
           }
           gh release upload $env:RELEASE_TAG ./dist/yemot-telephony.zip --clobber

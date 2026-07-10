@@ -46,6 +46,14 @@ Add a deterministic PowerShell packaging script and a GitHub Actions workflow tr
 - Preserve the retrieval timestamp and direct source URL for every corpus record.
 - Report HTTP 418 or certificate failures as possible Netfree filtering and keep the previous valid snapshot intact on refresh failure.
 
+## Implemented Decisions (2026-07-10)
+
+- Keep `source-manifest.json`: it is operational metadata used by refresh, validation and release automation, not a duplicate documentation payload.
+- Keep these Superpowers planning documents in the repository for future maintenance history; exclude them from the distributable skill ZIP.
+- Use `ימות המשיח — מערכות טלפוניות` as the human-facing name and retain `yemot-telephony` for stable machine paths, release assets and tags.
+- Place the concise `סקילים` catalog section before other project categories.
+- Start at `v0.1.0` because the skill is in initial development. Publish it as the latest normal GitHub Release so the website's stable `releases/latest/download/yemot-telephony.zip` link remains valid.
+
 ## Verification
 
 - Validate skill metadata with the official `quick_validate.py`.

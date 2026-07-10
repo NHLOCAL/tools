@@ -25,10 +25,22 @@ class SkillCardTests(unittest.TestCase):
             self.build.classify_tool_section("סקילים"), ("skill", "zap")
         )
 
+    def test_skills_are_the_first_catalog_section(self):
+        catalog = (ROOT / "README.md").read_text(encoding="utf-8")
+        headings = [
+            line.removeprefix("## ")
+            for line in catalog.splitlines()
+            if line.startswith("## ")
+        ]
+        self.assertEqual(headings[0], "סקילים")
+        website = (ROOT / "index.html").read_text(encoding="utf-8")
+        self.assertLess(website.index("סקילים"), website.index("כלי דפדפן"))
+
     def test_skill_card_contains_only_release_download_and_source_actions(self):
-        line = "- [ימות המשיח — מערכות וחיבורים טלפוניים](skills/yemot-telephony/) - סקיל מקיף"
+        line = "- [ימות המשיח — מערכות טלפוניות](skills/yemot-telephony/) - סקיל מקיף"
         output = self.build.generate_tool_html(line, "skill")
-        self.assertIn("ימות המשיח — מערכות וחיבורים טלפוניים", output)
+        self.assertIn("ימות המשיח — מערכות טלפוניות", output)
+        self.assertNotIn("מערכות וחיבורים טלפוניים", output)
         self.assertNotIn("טלפוניה", output)
         self.assertIn("releases/latest/download/yemot-telephony.zip", output)
         self.assertIn("tree/main/skills/yemot-telephony/", output)
@@ -89,11 +101,14 @@ class PackageScriptTests(unittest.TestCase):
         self.assertIn("yemot-telephony-v*", content)
         self.assertIn("yemot-telephony.zip", content)
         self.assertIn("package-yemot-telephony.ps1", content)
+        self.assertIn("$displayVersion", content)
+        self.assertIn("ימות המשיח — מערכות טלפוניות $displayVersion", content)
 
     def test_skill_ui_metadata_uses_clear_hebrew_name(self):
         metadata = ROOT / "skills" / "yemot-telephony" / "agents" / "openai.yaml"
         content = metadata.read_text(encoding="utf-8")
-        self.assertIn("ימות המשיח — מערכות וחיבורים טלפוניים", content)
+        self.assertIn("ימות המשיח — מערכות טלפוניות", content)
+        self.assertNotIn("מערכות וחיבורים טלפוניים", content)
         self.assertNotIn("טלפוניה", content)
 
 

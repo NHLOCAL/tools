@@ -1,4 +1,4 @@
 interface:
-  display_name: "ימות המשיח — מערכות וחיבורים טלפוניים"
-  short_description: "בניית מערכות וחיבורים טלפוניים בימות המשיח"
+  display_name: "ימות המשיח — מערכות טלפוניות"
+  short_description: "בנייה וחיבור של מערכות טלפוניות בימות המשיח"
   default_prompt: "Use $yemot-telephony to design a secure Yemot IVR flow and provide source-backed configuration."
