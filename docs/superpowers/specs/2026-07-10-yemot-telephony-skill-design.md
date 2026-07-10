@@ -27,7 +27,7 @@ Store the full snapshot as one generated Markdown document per source topic unde
 
 ## Website Integration
 
-Add a single `סקילים ל-Codex` section to `README.md`. Extend `build.py` with a skill item type whose actions are only:
+Add a single `סקילים` section to `README.md`. Extend `build.py` with a skill item type whose actions are only:
 
 - Download the latest `yemot-telephony.zip` release asset.
 - Open the skill source folder on GitHub.

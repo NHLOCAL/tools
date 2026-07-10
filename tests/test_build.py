@@ -22,12 +22,14 @@ class SkillCardTests(unittest.TestCase):
 
     def test_skill_section_uses_dedicated_type_and_icon(self):
         self.assertEqual(
-            self.build.classify_tool_section("סקילים ל-Codex"), ("skill", "cpu")
+            self.build.classify_tool_section("סקילים"), ("skill", "zap")
         )
 
     def test_skill_card_contains_only_release_download_and_source_actions(self):
-        line = "- [ימות המשיח — טלפוניה](skills/yemot-telephony/) - סקיל מקיף"
+        line = "- [ימות המשיח — מערכות וחיבורים טלפוניים](skills/yemot-telephony/) - סקיל מקיף"
         output = self.build.generate_tool_html(line, "skill")
+        self.assertIn("ימות המשיח — מערכות וחיבורים טלפוניים", output)
+        self.assertNotIn("טלפוניה", output)
         self.assertIn("releases/latest/download/yemot-telephony.zip", output)
         self.assertIn("tree/main/skills/yemot-telephony/", output)
         self.assertIn("הורד ZIP", output)
@@ -87,6 +89,12 @@ class PackageScriptTests(unittest.TestCase):
         self.assertIn("yemot-telephony-v*", content)
         self.assertIn("yemot-telephony.zip", content)
         self.assertIn("package-yemot-telephony.ps1", content)
+
+    def test_skill_ui_metadata_uses_clear_hebrew_name(self):
+        metadata = ROOT / "skills" / "yemot-telephony" / "agents" / "openai.yaml"
+        content = metadata.read_text(encoding="utf-8")
+        self.assertIn("ימות המשיח — מערכות וחיבורים טלפוניים", content)
+        self.assertNotIn("טלפוניה", content)
 
 
 if __name__ == "__main__":

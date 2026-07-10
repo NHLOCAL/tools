@@ -68,7 +68,7 @@ def classify_tool_section(title):
     if 'extension' in title_lower or 'תוספי' in title_lower:
         return 'extension', 'package'
     if 'skill' in title_lower or 'סקיל' in title_lower:
-        return 'skill', 'cpu'
+        return 'skill', 'zap'
     return 'other', 'tool'
 
 
