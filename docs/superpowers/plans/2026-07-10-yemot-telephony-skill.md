@@ -12,7 +12,7 @@
 
 - The complete readable snapshot is implemented and validated: 157 topics, 607 selected posts and 158 Markdown documents.
 - `source-manifest.json` is intentionally retained as machine-readable provenance and coverage data. The refresher generates it, the validator requires it, and the release workflow validates it.
-- The public display name is `ימות המשיח — מערכות טלפוניות`; the stable technical slug remains `yemot-telephony`.
+- The public display name is `ימות המשיח - מערכות טלפוניות`; the stable technical slug remains `yemot-telephony`.
 - The website remains a compact catalog. Its `סקילים` section appears first and exposes only ZIP download and source actions.
 - The initial release target is `yemot-telephony-v0.1.0`, reflecting an early-development SemVer release.
 - Repository publication status is authoritative in GitHub history; the final unchecked items below intentionally preserve the pre-publication gate recorded by this plan.

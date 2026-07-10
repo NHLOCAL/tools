@@ -50,7 +50,7 @@ Add a deterministic PowerShell packaging script and a GitHub Actions workflow tr
 
 - Keep `source-manifest.json`: it is operational metadata used by refresh, validation and release automation, not a duplicate documentation payload.
 - Keep these Superpowers planning documents in the repository for future maintenance history; exclude them from the distributable skill ZIP.
-- Use `ימות המשיח — מערכות טלפוניות` as the human-facing name and retain `yemot-telephony` for stable machine paths, release assets and tags.
+- Use `ימות המשיח - מערכות טלפוניות` as the human-facing name and retain `yemot-telephony` for stable machine paths, release assets and tags.
 - Place the concise `סקילים` catalog section before other project categories.
 - Start at `v0.1.0` because the skill is in initial development. Publish it as the latest normal GitHub Release so the website's stable `releases/latest/download/yemot-telephony.zip` link remains valid.
 
