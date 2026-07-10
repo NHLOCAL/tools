@@ -48,6 +48,6 @@ jobs:
           $displayVersion = $env:RELEASE_TAG -replace '^yemot-telephony-', ''
           gh release view $env:RELEASE_TAG 2>$null
           if ($LASTEXITCODE -ne 0) {
-            gh release create $env:RELEASE_TAG --title "ימות המשיח — מערכות טלפוניות $displayVersion" --generate-notes
+            gh release create $env:RELEASE_TAG --title "ימות המשיח - מערכות טלפוניות $displayVersion" --generate-notes
           }
           gh release upload $env:RELEASE_TAG ./dist/yemot-telephony.zip --clobber

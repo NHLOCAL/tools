@@ -37,9 +37,10 @@ class SkillCardTests(unittest.TestCase):
         self.assertLess(website.index("סקילים"), website.index("כלי דפדפן"))
 
     def test_skill_card_contains_only_release_download_and_source_actions(self):
-        line = "- [ימות המשיח — מערכות טלפוניות](skills/yemot-telephony/) - סקיל מקיף"
+        line = "- [ימות המשיח - מערכות טלפוניות](skills/yemot-telephony/) - סקיל מקיף"
         output = self.build.generate_tool_html(line, "skill")
-        self.assertIn("ימות המשיח — מערכות טלפוניות", output)
+        self.assertIn("ימות המשיח - מערכות טלפוניות", output)
+        self.assertNotIn("ימות המשיח —", output)
         self.assertNotIn("מערכות וחיבורים טלפוניים", output)
         self.assertNotIn("טלפוניה", output)
         self.assertIn("releases/latest/download/yemot-telephony.zip", output)
@@ -102,12 +103,14 @@ class PackageScriptTests(unittest.TestCase):
         self.assertIn("yemot-telephony.zip", content)
         self.assertIn("package-yemot-telephony.ps1", content)
         self.assertIn("$displayVersion", content)
-        self.assertIn("ימות המשיח — מערכות טלפוניות $displayVersion", content)
+        self.assertIn("ימות המשיח - מערכות טלפוניות $displayVersion", content)
+        self.assertNotIn("ימות המשיח —", content)
 
     def test_skill_ui_metadata_uses_clear_hebrew_name(self):
         metadata = ROOT / "skills" / "yemot-telephony" / "agents" / "openai.yaml"
         content = metadata.read_text(encoding="utf-8")
-        self.assertIn("ימות המשיח — מערכות טלפוניות", content)
+        self.assertIn("ימות המשיח - מערכות טלפוניות", content)
+        self.assertNotIn("ימות המשיח —", content)
         self.assertNotIn("מערכות וחיבורים טלפוניים", content)
         self.assertNotIn("טלפוניה", content)
 
