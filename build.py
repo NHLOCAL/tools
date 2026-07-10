@@ -58,6 +58,20 @@ DOWNLOAD_BUTTON_TEMPLATE = '        <a href="https://raw.githubusercontent.com/{
 DOWNLOAD_RELEASE_BUTTON_TEMPLATE = '        <a href="https://github.com/{user}/{repo}/releases/latest/download/{zip_name}"><i data-feather="archive"></i> הורד ZIP</a>'
 
 
+def classify_tool_section(title):
+    """Return the rendering type and Feather icon for a README section."""
+    title_lower = title.lower()
+    if 'דפדפן' in title_lower:
+        return 'web', 'monitor'
+    if 'scripts' in title_lower or 'סקריפטים' in title_lower:
+        return 'script', 'code'
+    if 'extension' in title_lower or 'תוספי' in title_lower:
+        return 'extension', 'package'
+    if 'skill' in title_lower or 'סקיל' in title_lower:
+        return 'skill', 'cpu'
+    return 'other', 'tool'
+
+
 def generate_tool_html(line, tool_type):
     """מקבל שורה וסוג כלי, ומייצר את ה-HTML המתאים."""
     match = TOOL_PATTERN.match(line.strip())
@@ -85,7 +99,7 @@ def generate_tool_html(line, tool_type):
         )
     
     action_buttons = []
-    if tool_type == 'extension':
+    if tool_type in {'extension', 'skill'}:
         action_buttons.append(DOWNLOAD_RELEASE_BUTTON_TEMPLATE.format(
             user=GITHUB_USERNAME, repo=GITHUB_REPO_NAME, zip_name=f"{tool_id}.zip"
         ))
@@ -138,15 +152,7 @@ def main():
         tool_lines = [line for line in content.split('\n') if TOOL_PATTERN.match(line.strip())]
         
         if tool_lines:  # אם זהו קטע כלים
-            title_lower = title.lower()
-            if 'דפדפן' in title_lower:
-                tool_type, icon = 'web', 'monitor'
-            elif 'scripts' in title_lower or 'סקריפטים' in title_lower:
-                tool_type, icon = 'script', 'code'
-            elif 'extension' in title_lower or 'תוספי' in title_lower:
-                tool_type, icon = 'extension', 'package'
-            else:
-                tool_type, icon = 'other', 'tool'
+            tool_type, icon = classify_tool_section(title)
 
             final_content_html += f"\n<h2><i data-feather='{icon}'></i> {title}</h2>\n"
             
