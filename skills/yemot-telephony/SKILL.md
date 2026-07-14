@@ -1,6 +1,6 @@
 ---
 name: yemot-telephony
-description: Use when Codex needs to design, configure, integrate, automate, migrate, or troubleshoot Yemot Hamashiach telephone systems, IVR extensions, ext.ini settings, audio and TTS files, caller identification, queues, campaigns, the interactive API module, the call2all management API, SIP, WSS, or WebRTC. Provides a complete readable snapshot of Yemot-hosted documentation plus practical source-backed workflows and secure examples.
+description: Use when an agent needs to design, configure, integrate, automate, migrate, or troubleshoot Yemot Hamashiach telephone systems, IVR extensions, ext.ini settings, audio and TTS files, caller identification, queues, campaigns, the interactive API module, the call2all management API, SIP, WSS, or WebRTC. Provides a complete readable snapshot of Yemot-hosted documentation plus practical source-backed workflows and secure examples.
 ---
 
 # Yemot Telephony
@@ -86,6 +86,8 @@ Follow replacement links from old threads. Link the specific supporting post, no
 ## Refresh the snapshot
 
 Run only when current documentation is required:
+
+Before running either script, warn the user that refreshing and validating the snapshot may take a long time.
 
 ```powershell
 python scripts/refresh_docs.py --output-dir references --workers 6 --min-topics 140 --max-chars 240000
