@@ -111,6 +111,10 @@ function isLoopback(host) {
 }
 function sameSite(req) {
   if (!isLoopback(req.headers.host)) return false;
+  // Browsers set Sec-Fetch-Site; reject any cross-site request. This also covers
+  // cross-origin GETs (<img>/<script>) that carry no Origin header. Non-browser
+  // clients (curl, the CLI) omit it and are allowed.
+  if (req.headers['sec-fetch-site'] === 'cross-site') return false;
   const origin = req.headers.origin;
   if (origin) {
     try { if (!isLoopback(new URL(origin).host)) return false; } catch { return false; }

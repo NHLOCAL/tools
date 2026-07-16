@@ -207,9 +207,12 @@ export async function download(name, remotePath, localPath) {
 // project linking
 // --------------------------------------------------------------------------- //
 // True if `child` is `parent` or a subdirectory of it (cross-platform, via
-// path.relative rather than fragile string-prefix matching).
+// path.relative rather than fragile string-prefix matching). Only fold case on
+// Windows - lowercasing on case-sensitive filesystems (Linux) would wrongly
+// treat `/x/Project` and `/x/project` as the same directory.
 function isInside(parent, child) {
-  const rel = path.relative(path.resolve(parent).toLowerCase(), path.resolve(child).toLowerCase());
+  const norm = (p) => (process.platform === 'win32' ? path.resolve(p).toLowerCase() : path.resolve(p));
+  const rel = path.relative(norm(parent), norm(child));
   return rel === '' || (!rel.startsWith('..') && !path.isAbsolute(rel));
 }
 
