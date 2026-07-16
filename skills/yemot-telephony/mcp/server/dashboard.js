@@ -9,6 +9,8 @@ import * as core from './core.js';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const HTML_FILE = path.join(__dirname, '..', 'public', 'dashboard.html');
+const HTML_CONTENT = fs.readFileSync(HTML_FILE, 'utf8'); // cached once at startup
+const MAX_BODY = 10 * 1024 * 1024; // 10 MB - avoid unbounded-body OOM
 
 function send(res, code, body, type = 'application/json') {
   const data = type === 'application/json' ? JSON.stringify(body) : body;
@@ -18,7 +20,12 @@ function send(res, code, body, type = 'application/json') {
 
 async function readBody(req) {
   const chunks = [];
-  for await (const c of req) chunks.push(c);
+  let size = 0;
+  for await (const c of req) {
+    size += c.length;
+    if (size > MAX_BODY) throw new Error('Request body too large');
+    chunks.push(c);
+  }
   if (!chunks.length) return {};
   try { return JSON.parse(Buffer.concat(chunks).toString('utf8')); } catch { return {}; }
 }
@@ -28,6 +35,9 @@ function upsertSystem(payload) {
   const systems = core.loadSystems();
   const name = (payload.name || '').trim();
   if (!name) throw new Error('name is required');
+  if (!/^[A-Za-z0-9_-]+$/.test(name) || ['__proto__', 'constructor', 'prototype'].includes(name)) {
+    throw new Error('name may contain only letters, digits, underscore, and hyphen');
+  }
   const prev = systems[name] || {};
   systems[name] = {
     label: payload.label ?? prev.label ?? name,
@@ -92,14 +102,35 @@ const ROUTES = {
   'POST /api/mfa/trust': async (body) => core.mfa(body.name, 'getMFATrustTokens', {}),
 };
 
+// Reject cross-site / DNS-rebinding requests: Host must be loopback, and any
+// Origin header must be loopback too. Blocks a malicious web page from POSTing
+// to the dashboard and overwriting the user's systems/secrets (CSRF).
+function isLoopback(host) {
+  const h = (host || '').replace(/:\d+$/, '').replace(/^\[|\]$/g, '');
+  return h === '127.0.0.1' || h === 'localhost' || h === '::1';
+}
+function sameSite(req) {
+  if (!isLoopback(req.headers.host)) return false;
+  const origin = req.headers.origin;
+  if (origin) {
+    try { if (!isLoopback(new URL(origin).host)) return false; } catch { return false; }
+  }
+  return true;
+}
+
 async function handler(req, res) {
+  if (!sameSite(req)) return send(res, 403, { error: 'forbidden' });
   const url = new URL(req.url, 'http://127.0.0.1');
   if (req.method === 'GET' && url.pathname === '/') {
-    return send(res, 200, fs.readFileSync(HTML_FILE, 'utf8'), 'text/html');
+    return send(res, 200, HTML_CONTENT, 'text/html');
   }
   const route = ROUTES[`${req.method} ${url.pathname}`];
   if (!route) return send(res, 404, { error: 'not found' });
   try {
+    if (req.method === 'POST') {
+      const ct = (req.headers['content-type'] || '').split(';')[0].trim();
+      if (ct !== 'application/json') return send(res, 415, { error: 'content-type must be application/json' });
+    }
     const body = req.method === 'POST' ? await readBody(req) : null;
     send(res, 200, await route(body));
   } catch (e) {

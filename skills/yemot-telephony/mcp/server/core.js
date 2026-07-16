@@ -55,6 +55,7 @@ function loadState() {
 function saveState(state) {
   ensureHome();
   fs.writeFileSync(STATE_FILE, JSON.stringify(state, null, 2), { mode: 0o600 });
+  try { fs.chmodSync(STATE_FILE, 0o600); } catch { /* windows */ }
 }
 
 // --------------------------------------------------------------------------- //
@@ -112,7 +113,9 @@ export function resolveToken(cfg, st, now) {
 async function login(cfg) {
   if (!cfg.password) throw new Error("auth='login' but no password set for this system.");
   const { json } = await postJson('Login', { username: cfg.system, password: cfg.password });
-  if (!json || !json.token) throw new Error(`Login failed: ${JSON.stringify(json)}`);
+  if (!json) throw new Error('Login: non-JSON response');
+  checkStatus(json);
+  if (!json.token) throw new Error('Login failed: no token returned.');
   return json.token;
 }
 
@@ -156,6 +159,7 @@ export async function mfa(name, action, extra = {}) {
   const { token, state } = await tokenFor(name);
   const { json } = await postJson('MFASession', { token, action, ...extra });
   if (!json) throw new Error('MFASession: non-JSON response');
+  checkStatus(json);
   touch(name, cfg, state);
   return json;
 }
@@ -192,8 +196,11 @@ export async function download(name, remotePath, localPath) {
 // --------------------------------------------------------------------------- //
 // project linking
 // --------------------------------------------------------------------------- //
-function norm(p) {
-  return path.resolve(p).replace(/[\\/]+$/, '').toLowerCase();
+// True if `child` is `parent` or a subdirectory of it (cross-platform, via
+// path.relative rather than fragile string-prefix matching).
+function isInside(parent, child) {
+  const rel = path.relative(path.resolve(parent).toLowerCase(), path.resolve(child).toLowerCase());
+  return rel === '' || (!rel.startsWith('..') && !path.isAbsolute(rel));
 }
 
 export function currentProject() {
@@ -201,7 +208,7 @@ export function currentProject() {
 }
 
 // Systems linked to a directory: an explicit `.yemot` marker file naming a
-// system, plus any system whose `projects` list contains (a prefix of) the cwd.
+// system, plus any system whose `projects` list contains (a parent of) the cwd.
 export function systemsForProject(cwd) {
   const systems = loadSystems();
   const names = [];
@@ -212,14 +219,8 @@ export function systemsForProject(cwd) {
       if (systems[n]) names.push(n);
     }
   } catch { /* ignore */ }
-  const c = norm(cwd);
   for (const [name, cfg] of Object.entries(systems)) {
-    for (const proj of cfg.projects || []) {
-      if (c === norm(proj) || c.startsWith(norm(proj) + path.sep.toLowerCase())) {
-        names.push(name);
-        break;
-      }
-    }
+    if ((cfg.projects || []).some((proj) => isInside(proj, cwd))) names.push(name);
   }
   return [...new Set(names)];
 }

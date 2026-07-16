@@ -33,13 +33,15 @@ function fail(e) {
 }
 
 function searchDocs(query, ctx = 3, maxHits = 40) {
+  const terms = (query || '').toLowerCase().split(/\s+/).filter(Boolean);
+  if (!query || query.trim().length < 2) return 'Query must be at least 2 characters long.';
   if (!fs.existsSync(DOCS_DIR)) return '(no bundled docs found)';
-  const q = query.toLowerCase();
   const out = [];
   for (const f of fs.readdirSync(DOCS_DIR).filter((n) => n.endsWith('.md')).sort()) {
     const lines = fs.readFileSync(path.join(DOCS_DIR, f), 'utf8').split(/\r?\n/);
     for (let i = 0; i < lines.length; i++) {
-      if (lines[i].toLowerCase().includes(q)) {
+      const low = lines[i].toLowerCase();
+      if (terms.some((t) => low.includes(t))) { // any term matches (multi-word friendly)
         const snippet = lines.slice(Math.max(0, i - ctx), Math.min(lines.length, i + ctx + 1)).join('\n');
         out.push(`### ${f}:${i + 1}\n${snippet}`);
         if (out.length >= maxHits) return out.join('\n\n') + `\n\n... (truncated at ${maxHits})`;

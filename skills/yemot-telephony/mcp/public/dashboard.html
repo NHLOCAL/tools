@@ -213,7 +213,8 @@ async function startMfa(name) {
     if (!Array.isArray(methods) || !methods.length) { box.innerHTML = '<p class="muted">אין שיטות אימות זמינות.</p>'; return; }
     box.innerHTML = '';
     for (const m of methods) {
-      for (const t of (m.SEND_TYPE || ['SMS'])) {
+      const sendTypes = Array.isArray(m.SEND_TYPE) ? m.SEND_TYPE : [m.SEND_TYPE || 'SMS'];
+      for (const t of sendTypes) {
         const b = document.createElement('button');
         b.className = 'ghost'; b.style.margin = '4px';
         b.textContent = `${t} → ${m.VALUE || ''} ${m.NOTE ? '('+m.NOTE+')' : ''}`;
