@@ -7,6 +7,23 @@ import path from 'node:path';
 
 export const BASE = 'https://www.call2all.co.il/ym/api/';
 export const IDLE_MS = 30 * 60 * 1000; // Yemot session token expires after 30 min idle
+const REQUEST_TIMEOUT = 30_000; // Node fetch has no default timeout
+const UPLOAD_TIMEOUT = 120_000; // larger files need longer
+
+// fetch with an AbortController timeout, so a hung Yemot request can't block
+// the whole server indefinitely.
+async function fetchWithTimeout(url, opts = {}, timeout = REQUEST_TIMEOUT) {
+  const ac = new AbortController();
+  const timer = setTimeout(() => ac.abort(), timeout);
+  try {
+    return await fetch(url, { ...opts, signal: ac.signal });
+  } catch (e) {
+    if (e.name === 'AbortError') throw new Error(`Request timed out after ${timeout / 1000}s`);
+    throw e;
+  } finally {
+    clearTimeout(timer);
+  }
+}
 
 const HOME = process.env.YEMOT_HOME || path.join(os.homedir(), '.yemot');
 const SYSTEMS_FILE = path.join(HOME, 'systems.json');
@@ -64,7 +81,7 @@ function saveState(state) {
 // HTTP
 // --------------------------------------------------------------------------- //
 async function postJson(command, params) {
-  const res = await fetch(BASE + command, {
+  const res = await fetchWithTimeout(BASE + command, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(params),
@@ -113,6 +130,7 @@ export function resolveToken(cfg, st, now) {
 }
 
 async function login(cfg) {
+  if (!cfg.system) throw new Error("auth='login' but no system number (username) set for this system.");
   if (!cfg.password) throw new Error("auth='login' but no password set for this system.");
   const { json } = await postJson('Login', { username: cfg.system, password: cfg.password });
   if (!json) throw new Error('Login: non-JSON response');
@@ -183,7 +201,7 @@ export async function upload(name, localPath, remotePath) {
   fd.append('token', token);
   fd.append('path', remotePath);
   fd.append('file', new Blob([data]), path.basename(remotePath));
-  const res = await fetch(BASE + 'UploadFile', { method: 'POST', body: fd });
+  const res = await fetchWithTimeout(BASE + 'UploadFile', { method: 'POST', body: fd }, UPLOAD_TIMEOUT);
   const ct = res.headers.get('content-type') || '';
   if (!res.ok || !ct.includes('json')) {
     throw new Error(`UploadFile: HTTP ${res.status} (${ct || 'no content-type'})`);

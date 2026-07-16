@@ -14,7 +14,7 @@ const MAX_BODY = 10 * 1024 * 1024; // 10 MB - avoid unbounded-body OOM
 
 function send(res, code, body, type = 'application/json') {
   const data = type === 'application/json' ? JSON.stringify(body) : body;
-  res.writeHead(code, { 'Content-Type': type + '; charset=utf-8' });
+  res.writeHead(code, { 'Content-Type': type + '; charset=utf-8', 'X-Content-Type-Options': 'nosniff' });
   res.end(data);
 }
 

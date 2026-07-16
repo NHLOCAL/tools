@@ -138,7 +138,7 @@ function render(statusMap) {
       <h3>${esc(s.label)} ${badge(st)} ${linked ? '<span class="tag">בפרויקט הזה</span>' : ''}</h3>
       <div class="kv">מספר: <b>${esc(s.system || '-')}</b></div>
       <div class="kv">אימות: <b>${s.auth === 'login' ? 'שם+סיסמה' : 'מפתח קבוע'}</b></div>
-      ${st && st.status === 'ok' ? `<div class="kv">יתרת יחידות: <b>${st.balance ?? '-'}</b> ${st.customer ? '· ' + esc(st.customer) : ''}</div>` : ''}
+      ${st && st.status === 'ok' ? `<div class="kv">יתרת יחידות: <b>${esc(st.balance ?? '-')}</b> ${st.customer ? '· ' + esc(st.customer) : ''}</div>` : ''}
       ${st && st.status === 'error' ? `<div class="kv" style="color:var(--err)">${esc(st.error)}</div>` : ''}
       ${s.note ? `<div class="kv">${esc(s.note)}</div>` : ''}
       <div class="row">
