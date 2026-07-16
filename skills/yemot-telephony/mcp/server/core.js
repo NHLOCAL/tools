@@ -27,8 +27,10 @@ function readJson(file, fallback) {
   }
 }
 
+// null-prototype so a system named like a built-in (toString, __proto__, ...)
+// can't resolve to an inherited property in `systems[name]` lookups.
 export function loadSystems() {
-  return readJson(SYSTEMS_FILE, { systems: {} }).systems || {};
+  return Object.assign(Object.create(null), readJson(SYSTEMS_FILE, { systems: {} }).systems || {});
 }
 
 export function saveSystems(systems) {
@@ -49,7 +51,7 @@ export function getSystem(name) {
 }
 
 function loadState() {
-  return readJson(STATE_FILE, {});
+  return Object.assign(Object.create(null), readJson(STATE_FILE, {}));
 }
 
 function saveState(state) {
@@ -73,7 +75,7 @@ async function postJson(command, params) {
   if (ct.includes('json') || buf[0] === 0x7b || buf[0] === 0x5b) {
     try { json = JSON.parse(buf.toString('utf8')); } catch { /* binary */ }
   }
-  return { json, buf, ct };
+  return { json, buf, ct, ok: res.ok, status: res.status };
 }
 
 export class MFARequired extends Error {}
@@ -145,9 +147,12 @@ function touch(name, cfg, state) {
 // public API
 // --------------------------------------------------------------------------- //
 export async function call(name, command, params = {}) {
+  // Command becomes part of the request path; keep it a bare API command name so
+  // a manipulated value can't redirect the request elsewhere (path traversal).
+  if (!/^[A-Za-z][A-Za-z0-9_]*$/.test(command)) throw new Error(`Invalid command: ${command}`);
   const { token, cfg, state } = await tokenFor(name);
-  const { json } = await postJson(command, { ...params, token });
-  if (!json) throw new Error(`${command}: non-JSON response`);
+  const { json, ok, status } = await postJson(command, { ...params, token });
+  if (!json) throw new Error(ok ? `${command}: non-JSON response` : `${command}: HTTP ${status}`);
   checkStatus(json);
   touch(name, cfg, state);
   return json;
@@ -179,16 +184,21 @@ export async function upload(name, localPath, remotePath) {
   fd.append('path', remotePath);
   fd.append('file', new Blob([data]), path.basename(remotePath));
   const res = await fetch(BASE + 'UploadFile', { method: 'POST', body: fd });
+  const ct = res.headers.get('content-type') || '';
+  if (!res.ok || !ct.includes('json')) {
+    throw new Error(`UploadFile: HTTP ${res.status} (${ct || 'no content-type'})`);
+  }
   return checkStatus(await res.json());
 }
 
 export async function download(name, remotePath, localPath) {
   const { token } = await tokenFor(name);
-  const { json, buf } = await postJson('DownloadFile', { token, path: remotePath });
+  const { json, buf, ok, status } = await postJson('DownloadFile', { token, path: remotePath });
   if (json) { // an error response, not the file
     checkStatus(json);
     throw new Error(`DownloadFile returned JSON, not a file: ${JSON.stringify(json)}`);
   }
+  if (!ok) throw new Error(`DownloadFile: HTTP ${status}`); // don't write an error page to disk
   fs.writeFileSync(localPath, buf);
   return { saved: localPath, bytes: buf.length };
 }

@@ -143,12 +143,17 @@ export function startDashboard(preferredPort = 8787) {
   return new Promise((resolve, reject) => {
     const server = http.createServer(handler);
     let port = preferredPort;
+    const onError = (e) => {
+      if (e.code === 'EADDRINUSE' && port < preferredPort + 20) { port += 1; attempt(); }
+      else reject(e);
+    };
     const attempt = () => {
-      server.once('error', (e) => {
-        if (e.code === 'EADDRINUSE' && port < preferredPort + 20) { port += 1; attempt(); }
-        else reject(e);
+      server.removeListener('error', onError);
+      server.once('error', onError);
+      server.listen(port, '127.0.0.1', () => {
+        server.removeListener('error', onError); // don't leak the startup listener into runtime
+        resolve({ server, url: `http://127.0.0.1:${port}/`, port });
       });
-      server.listen(port, '127.0.0.1', () => resolve({ server, url: `http://127.0.0.1:${port}/`, port }));
     };
     attempt();
   });

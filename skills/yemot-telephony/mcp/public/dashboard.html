@@ -142,7 +142,7 @@ function render(statusMap) {
       ${st && st.status === 'error' ? `<div class="kv" style="color:var(--err)">${esc(st.error)}</div>` : ''}
       ${s.note ? `<div class="kv">${esc(s.note)}</div>` : ''}
       <div class="row">
-        <button class="ghost" onclick='edit(${JSON.stringify(s)})'>ערוך</button>
+        <button class="ghost" onclick="editByName('${s.name}')">ערוך</button>
         <button class="ghost" onclick="link('${s.name}')">${linked ? 'מקושר' : 'קשר לפרויקט'}</button>
         ${s.auth === 'login' ? `<button onclick="startMfa('${s.name}')">אימות 2FA</button>` : ''}
         ${s.auth === 'login' ? `<button class="ghost" onclick="relogin('${s.name}')">רענן</button>` : ''}
@@ -155,6 +155,7 @@ function render(statusMap) {
 function esc(s) { return String(s ?? '').replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c])); }
 
 function openForm() { edit({ name:'', label:'', system:'', auth:'key', note:'' }); }
+function editByName(name) { const s = STATE.systems.find(x => x.name === name); if (s) edit(s); }
 function edit(s) {
   document.getElementById('editorTitle').textContent = s.name ? 'עריכת ' + s.label : 'מערכת חדשה';
   f_name.value = s.name; f_name.readOnly = !!s.name;
