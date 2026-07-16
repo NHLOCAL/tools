@@ -1,0 +1,42 @@
+{
+  "manifest_version": "0.2",
+  "name": "yemot",
+  "display_name": "Yemot Hamashiach",
+  "version": "1.0.0",
+  "description": "Persistent, authenticated access to the Yemot Hamashiach (call2all) management API, with a live management dashboard and two-step verification.",
+  "author": { "name": "Anonymous" },
+  "license": "Unlicense",
+  "server": {
+    "type": "node",
+    "entry_point": "server/index.js",
+    "mcp_config": {
+      "command": "node",
+      "args": ["${__dirname}/server/index.js"],
+      "env": {
+        "YEMOT_DASHBOARD_PORT": "${user_config.dashboard_port}"
+      }
+    }
+  },
+  "user_config": {
+    "dashboard_port": {
+      "type": "number",
+      "title": "Dashboard port",
+      "description": "Local port for the management dashboard (systems and secrets are configured there, not here).",
+      "default": 8787,
+      "min": 1024,
+      "max": 65535,
+      "required": false
+    }
+  },
+  "tools": [
+    { "name": "yemot_systems", "description": "List configured systems." },
+    { "name": "yemot_call", "description": "Call any management-API command." },
+    { "name": "yemot_upload", "description": "Upload a file." },
+    { "name": "yemot_download", "description": "Download a file." },
+    { "name": "yemot_mfa_status", "description": "MFA state and methods." },
+    { "name": "yemot_mfa_send", "description": "Send an OTP code." },
+    { "name": "yemot_mfa_verify", "description": "Verify an OTP code." },
+    { "name": "yemot_docs", "description": "Search bundled Yemot docs." },
+    { "name": "yemot_dashboard", "description": "Open the management dashboard." }
+  ]
+}

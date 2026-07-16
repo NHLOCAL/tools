@@ -1,0 +1,24 @@
+{
+  "name": "yemot-mcp",
+  "version": "1.0.0",
+  "description": "MCP server for the Yemot Hamashiach (call2all) management API, with a live management dashboard.",
+  "type": "module",
+  "license": "Unlicense",
+  "bin": {
+    "yemot-mcp": "server/index.js"
+  },
+  "scripts": {
+    "start": "node server/index.js",
+    "dashboard": "node server/dashboard.js",
+    "test": "node server/selftest.js",
+    "docs:sync": "node scripts/prepare-docs.mjs",
+    "bundle": "npm run docs:sync && npx --yes @anthropic-ai/mcpb pack"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.12.0",
+    "zod": "^3.23.8"
+  }
+}

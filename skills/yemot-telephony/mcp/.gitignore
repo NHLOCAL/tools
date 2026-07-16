@@ -1,0 +1,9 @@
+node_modules/
+*.mcpb
+# docs/ is generated from ../references at bundle time (npm run docs:sync)
+docs/
+.DS_Store
+# never commit local secrets/state if someone points YEMOT_HOME into the repo
+.yemot/
+systems.json
+state.json
