@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ניהול מערכות ימות המשיח</title>
+<style>
+  :root { --bg:#0f1720; --card:#1b2733; --line:#2c3a49; --fg:#e6edf3; --muted:#8b98a5;
+          --ok:#2ea043; --warn:#d29922; --err:#f85149; --accent:#3b82f6; }
+  * { box-sizing:border-box; }
+  body { margin:0; font-family:system-ui,'Segoe UI',Arial,sans-serif; background:var(--bg); color:var(--fg); }
+  header { padding:16px 22px; border-bottom:1px solid var(--line); display:flex; align-items:center; gap:14px; flex-wrap:wrap; }
+  header h1 { font-size:18px; margin:0; }
+  .muted { color:var(--muted); font-size:13px; }
+  main { padding:22px; max-width:1000px; margin:0 auto; }
+  button { background:var(--accent); color:#fff; border:0; border-radius:7px; padding:7px 12px; cursor:pointer; font-size:13px; }
+  button.ghost { background:transparent; border:1px solid var(--line); color:var(--fg); }
+  button.danger { background:var(--err); }
+  button:hover { opacity:.9; }
+  .cards { display:grid; grid-template-columns:repeat(auto-fill,minmax(300px,1fr)); gap:14px; margin-top:18px; }
+  .card { background:var(--card); border:1px solid var(--line); border-radius:10px; padding:14px; }
+  .card h3 { margin:0 0 4px; font-size:15px; display:flex; align-items:center; gap:8px; }
+  .badge { font-size:11px; padding:2px 8px; border-radius:20px; font-weight:600; }
+  .b-ok { background:rgba(46,160,67,.18); color:var(--ok); }
+  .b-mfa { background:rgba(210,153,34,.18); color:var(--warn); }
+  .b-err { background:rgba(248,81,73,.18); color:var(--err); }
+  .b-idle { background:#2c3a49; color:var(--muted); }
+  .row { display:flex; gap:8px; flex-wrap:wrap; margin-top:10px; }
+  .kv { font-size:13px; color:var(--muted); margin:3px 0; }
+  .kv b { color:var(--fg); font-weight:600; }
+  .linked { outline:1px solid var(--accent); }
+  form { background:var(--card); border:1px solid var(--line); border-radius:10px; padding:16px; margin-top:8px; }
+  label { display:block; font-size:12px; color:var(--muted); margin:8px 0 3px; }
+  input, select, textarea { width:100%; background:var(--bg); border:1px solid var(--line); border-radius:6px; color:var(--fg); padding:7px; font-size:13px; }
+  .grid2 { display:grid; grid-template-columns:1fr 1fr; gap:10px; }
+  dialog { background:var(--card); color:var(--fg); border:1px solid var(--line); border-radius:12px; padding:18px; max-width:420px; width:92%; }
+  dialog::backdrop { background:rgba(0,0,0,.6); }
+  .hide { display:none; }
+  .tag { font-size:11px; background:#2c3a49; color:var(--muted); border-radius:5px; padding:1px 6px; }
+</style>
+</head>
+<body>
+<header>
+  <h1>🕻 ניהול מערכות ימות המשיח</h1>
+  <span class="muted" id="project"></span>
+  <span style="flex:1"></span>
+  <button class="ghost" onclick="refresh()">רענן סטטוס</button>
+  <button onclick="openForm()">+ מערכת חדשה</button>
+</header>
+<main>
+  <div id="cards" class="cards"></div>
+
+  <form id="editor" class="hide" onsubmit="return saveSystem(event)">
+    <h3 id="editorTitle" style="margin-top:0">מערכת חדשה</h3>
+    <div class="grid2">
+      <div><label>מזהה (באנגלית, ייחודי)</label><input id="f_name" required placeholder="mysystem"></div>
+      <div><label>שם תצוגה</label><input id="f_label" placeholder="המערכת שלי"></div>
+    </div>
+    <div class="grid2">
+      <div><label>מספר מערכת</label><input id="f_system" placeholder="0771234567"></div>
+      <div><label>שיטת אימות</label>
+        <select id="f_auth" onchange="authChanged()">
+          <option value="key">מפתח קבוע (פטור מ-2FA)</option>
+          <option value="login">שם משתמש + סיסמה (2FA מדי פעם)</option>
+        </select>
+      </div>
+    </div>
+    <div id="f_keyWrap"><label>מפתח API קבוע</label><input id="f_apiKey" type="password" placeholder="הדבק מפתח - נשמר מקומית בלבד"></div>
+    <div id="f_pwWrap" class="hide"><label>סיסמת ניהול</label><input id="f_password" type="password" placeholder="נשמרת מקומית בלבד"></div>
+    <label>הערה</label><input id="f_note" placeholder="הערה חופשית">
+    <div class="row">
+      <button type="submit">שמור</button>
+      <button type="button" class="ghost" onclick="closeForm()">ביטול</button>
+    </div>
+    <p class="muted" style="margin-bottom:0">הסודות נשמרים אצלך ב-<code>~/.yemot/systems.json</code> ולא עוברים בשום מקום אחר.</p>
+  </form>
+</main>
+
+<dialog id="mfa">
+  <h3 style="margin-top:0">אימות דו-שלבי - <span id="mfaName"></span></h3>
+  <div id="mfaMethods"></div>
+  <div id="mfaCodeWrap" class="hide">
+    <label>הקוד שקיבלת</label>
+    <input id="mfaCode" inputmode="numeric" placeholder="######">
+    <div class="row"><button onclick="mfaVerify()">אמת</button></div>
+  </div>
+  <p class="muted" id="mfaMsg"></p>
+  <div class="row"><button class="ghost" onclick="document.getElementById('mfa').close()">סגור</button></div>
+</dialog>
+
+<script>
+let STATE = { linked: [], systems: [] };
+
+async function api(path, body) {
+  const opt = body ? { method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify(body) } : {};
+  const r = await fetch(path, opt);
+  const j = await r.json();
+  if (!r.ok) throw new Error(j.error || 'error');
+  return j;
+}
+
+async function load() {
+  STATE = await api('/api/state');
+  document.getElementById('project').textContent = 'פרויקט נוכחי: ' + STATE.project;
+  render({});
+  refresh();
+}
+
+async function refresh() {
+  try {
+    const statuses = await api('/api/status');
+    const map = {};
+    for (const s of statuses) map[s.name] = s;
+    render(map);
+  } catch (e) { /* keep static view */ }
+}
+
+function badge(st) {
+  if (!st) return '<span class="badge b-idle">...</span>';
+  if (st.status === 'ok') return '<span class="badge b-ok">מחובר</span>';
+  if (st.status === 'mfa_required') return '<span class="badge b-mfa">צריך 2FA</span>';
+  return '<span class="badge b-err">שגיאה</span>';
+}
+
+function render(statusMap) {
+  const el = document.getElementById('cards');
+  el.innerHTML = '';
+  if (!STATE.systems.length) {
+    el.innerHTML = '<p class="muted">אין מערכות עדיין. לחץ "+ מערכת חדשה".</p>';
+    return;
+  }
+  for (const s of STATE.systems) {
+    const st = statusMap[s.name];
+    const linked = STATE.linked.includes(s.name);
+    const card = document.createElement('div');
+    card.className = 'card' + (linked ? ' linked' : '');
+    card.innerHTML = `
+      <h3>${esc(s.label)} ${badge(st)} ${linked ? '<span class="tag">בפרויקט הזה</span>' : ''}</h3>
+      <div class="kv">מספר: <b>${esc(s.system || '-')}</b></div>
+      <div class="kv">אימות: <b>${s.auth === 'login' ? 'שם+סיסמה' : 'מפתח קבוע'}</b></div>
+      ${st && st.status === 'ok' ? `<div class="kv">יתרת יחידות: <b>${esc(st.balance ?? '-')}</b> ${st.customer ? '· ' + esc(st.customer) : ''}</div>` : ''}
+      ${st && st.status === 'error' ? `<div class="kv" style="color:var(--err)">${esc(st.error)}</div>` : ''}
+      ${s.note ? `<div class="kv">${esc(s.note)}</div>` : ''}
+      <div class="row">
+        <button class="ghost" onclick="editByName('${s.name}')">ערוך</button>
+        <button class="ghost" onclick="link('${s.name}')">${linked ? 'מקושר' : 'קשר לפרויקט'}</button>
+        ${s.auth === 'login' ? `<button onclick="startMfa('${s.name}')">אימות 2FA</button>` : ''}
+        ${s.auth === 'login' ? `<button class="ghost" onclick="relogin('${s.name}')">רענן</button>` : ''}
+        <button class="danger" onclick="del('${s.name}')">מחק</button>
+      </div>`;
+    el.appendChild(card);
+  }
+}
+
+function esc(s) { return String(s ?? '').replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c])); }
+
+function openForm() { edit({ name:'', label:'', system:'', auth:'key', note:'' }); }
+function editByName(name) { const s = STATE.systems.find(x => x.name === name); if (s) edit(s); }
+function edit(s) {
+  document.getElementById('editorTitle').textContent = s.name ? 'עריכת ' + s.label : 'מערכת חדשה';
+  f_name.value = s.name; f_name.readOnly = !!s.name;
+  f_label.value = s.label || ''; f_system.value = s.system || '';
+  f_auth.value = s.auth || 'key'; f_note.value = s.note || '';
+  f_apiKey.value = ''; f_password.value = '';
+  authChanged();
+  document.getElementById('editor').classList.remove('hide');
+  window.scrollTo(0, document.body.scrollHeight);
+}
+function closeForm() { document.getElementById('editor').classList.add('hide'); }
+function authChanged() {
+  const login = f_auth.value === 'login';
+  f_keyWrap.classList.toggle('hide', login);
+  f_pwWrap.classList.toggle('hide', !login);
+}
+
+async function saveSystem(e) {
+  e.preventDefault();
+  await api('/api/system', {
+    name: f_name.value.trim(), label: f_label.value.trim(), system: f_system.value.trim(),
+    auth: f_auth.value, note: f_note.value.trim(),
+    apiKey: f_apiKey.value || undefined, password: f_password.value || undefined,
+  });
+  closeForm(); await load();
+  return false;
+}
+async function del(name) {
+  if (!confirm('למחוק את ' + name + '?')) return;
+  await api('/api/system/delete', { name }); await load();
+}
+async function link(name) {
+  const s = STATE.systems.find(x => x.name === name);
+  if (STATE.linked.includes(name)) await api('/api/system/unlink', { name, project: STATE.project });
+  else await api('/api/system/link', { name });
+  await load();
+}
+async function relogin(name) {
+  try { await api('/api/system/relogin', { name }); } catch (e) {}
+  refresh();
+}
+
+// ---- MFA flow ----
+let MFA_NAME = null;
+async function startMfa(name) {
+  MFA_NAME = name;
+  document.getElementById('mfaName').textContent = name;
+  document.getElementById('mfaMsg').textContent = '';
+  document.getElementById('mfaCodeWrap').classList.add('hide');
+  const box = document.getElementById('mfaMethods');
+  box.innerHTML = 'טוען שיטות...';
+  document.getElementById('mfa').showModal();
+  try {
+    const r = await api('/api/mfa/methods', { name });
+    const methods = (r.methods && (r.methods.mfaMethods || r.methods)) || [];
+    if (!Array.isArray(methods) || !methods.length) { box.innerHTML = '<p class="muted">אין שיטות אימות זמינות.</p>'; return; }
+    box.innerHTML = '';
+    for (const m of methods) {
+      const sendTypes = Array.isArray(m.SEND_TYPE) ? m.SEND_TYPE : [m.SEND_TYPE || 'SMS'];
+      for (const t of sendTypes) {
+        const b = document.createElement('button');
+        b.className = 'ghost'; b.style.margin = '4px';
+        b.textContent = `${t} → ${m.VALUE || ''} ${m.NOTE ? '('+m.NOTE+')' : ''}`;
+        b.onclick = () => mfaSend(m.ID, t);
+        box.appendChild(b);
+      }
+    }
+  } catch (e) { box.innerHTML = '<p style="color:var(--err)">' + esc(e.message) + '</p>'; }
+}
+async function mfaSend(mfaId, sendType) {
+  document.getElementById('mfaMsg').textContent = 'שולח קוד...';
+  try {
+    await api('/api/mfa/send', { name: MFA_NAME, mfaId, sendType });
+    document.getElementById('mfaCodeWrap').classList.remove('hide');
+    document.getElementById('mfaMsg').textContent = 'קוד נשלח. הזן אותו למטה.';
+  } catch (e) { document.getElementById('mfaMsg').textContent = e.message; }
+}
+async function mfaVerify() {
+  try {
+    const r = await api('/api/mfa/verify', { name: MFA_NAME, code: document.getElementById('mfaCode').value.trim() });
+    const st = r.mfa_valid_status || (r && r.mfa_valid_status);
+    if (st === 'VALID' || r.responseStatus === 'OK') {
+      document.getElementById('mfaMsg').textContent = 'אומת! ✓';
+      setTimeout(() => { document.getElementById('mfa').close(); refresh(); }, 800);
+    } else {
+      document.getElementById('mfaMsg').textContent = 'קוד שגוי. ' + (r.mfa_valid_left != null ? 'נותרו ' + r.mfa_valid_left : '');
+    }
+  } catch (e) { document.getElementById('mfaMsg').textContent = e.message; }
+}
+
+load();
+</script>
+</body>
+</html>

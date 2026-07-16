@@ -98,6 +98,40 @@ Content-Type: application/json
 
 Use placeholders only. GET URLs leak through histories, proxies, access logs, and error reports.
 
+### Authentication and two-step verification (MFA)
+
+Yemot enforces **two-step verification (MFA)** on password-based sessions. There
+are two ways to authenticate; pick one per system.
+
+**Method A - permanent API key (recommended for automation).** Create a key by
+hand in the firewall portal (`https://www.call2all.co.il/firewall`, itself
+2FA-gated) or the admin site under אבטחה > ניהול מפתחות גישה. The key is **exempt
+from MFA** and can be restricted by IP, service, parameters, and file paths. Use
+it directly as `token` in every call. No OTP flow ever.
+
+**Method B - `Login` + session token + MFA.**
+
+1. `Login` with `username` (system number) and `password` -> returns `token`
+   (session; expires after 30 minutes idle).
+2. If the session has not passed MFA, commands return `responseStatus`
+   `ERROR`/`FORBIDDEN` with `message` `MFA_REQUIRED`.
+3. Complete MFA with the `MFASession` command and an `action`:
+   - `isPass` -> `isPass`, `isAvailable`, `isPassInThisSession`, `passReason`.
+   - `getMFAMethods` -> `mfaMethods[]` (`ID`, `STATUS`, `SEND_TYPE`
+     `[CALL|SMS|EMAIL]`, `VALUE` masked, `NOTE`).
+   - `sendMFA` params `mfaId`, `mfaSendType` (+`lang`) -> sends the OTP.
+   - `validMFA` params `mfaCode`, `mfaRememberMe`, `mfaRememberNote` ->
+     `mfa_valid_status` (`VALID|UNVALID|OVERTRY`), `mfa_valid_left`.
+   - `getMFATrustTokens` -> `trustTokens[]` (`trust_key_type` `CUSTOMER_IP` or
+     `YM_CALL2ALL_WEBSITE`).
+4. `mfaRememberMe:true` creates a trust token (typically IP-bound) so future
+   logins from the same context skip MFA.
+
+The OTP is delivered to the account owner, so Method B needs a one-time human
+step; Method A does not. A ready-made MCP connector implementing both methods
+lives in the `mcp/` subfolder of this skill. Verify command/field names against
+the live API forum before production.
+
 ### Command families
 
 | Family | Representative commands |

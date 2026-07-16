@@ -1,0 +1,52 @@
+name: Build yemot-mcp bundle
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "skills/yemot-telephony/mcp/**"
+      - "skills/yemot-telephony/references/**"
+      - ".github/workflows/build-yemot-mcp.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    env:
+      GH_TOKEN: ${{ github.token }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Install, test, sync docs, and pack .mcpb
+        working-directory: skills/yemot-telephony/mcp
+        run: |
+          npm ci
+          npm test
+          npm run docs:sync
+          npx --yes @anthropic-ai/mcpb pack
+
+      - name: Upload build artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: yemot-mcp
+          path: skills/yemot-telephony/mcp/*.mcpb
+
+      # After merge to main, publish the .mcpb to a rolling "latest" release so
+      # anyone can download it immediately - no manual tag needed.
+      - name: Publish rolling "latest" release (main only)
+        if: github.ref == 'refs/heads/main'
+        working-directory: skills/yemot-telephony/mcp
+        run: |
+          gh release view yemot-mcp-latest >/dev/null 2>&1 || \
+            gh release create yemot-mcp-latest \
+              --title "yemot-mcp (latest)" \
+              --notes "Auto-built from main on every change to the connector." \
+              --latest=false
+          gh release upload yemot-mcp-latest ./*.mcpb --clobber
