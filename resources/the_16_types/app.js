@@ -94,14 +94,18 @@
     $('review-finish').querySelector('span').textContent = answered() === questions.length ? 'לתוצאות' : `להמשיך לשאלות שנותרו (${questions.length - answered()})`;
     show('review', 'review-heading');
   }
+  function typeStyle(code) {
+    const p = MBTI_PALETTES[code];
+    return p ? `--type-light-accent:${p.accent};--type-light-soft:${p.soft};--type-dark-accent:${p.darkAccent};--type-dark-soft:${p.darkSoft}` : '';
+  }
   function profileHTML(code, preview = false) {
     const p = MBTI_PROFILES[code];
     const words = [...code].map((letter,i) => MBTI.axes[i].labels[MBTI.axes[i].id.indexOf(letter)]).join(' · ');
-    return `<div class="${preview ? 'preview-card' : ''}"><div class="profile-top"><div><bdi class="type-code">${code}</bdi> <span class="he-code">${p.he}</span></div></div><h3 class="profile-name">${esc(p.name)}</h3><p>${words}</p><p>${esc(p.description)}</p><h4>העדפות וחוזקות אפשריות</h4><ul>${p.strengths.map(s => `<li>${esc(s)}</li>`).join('')}</ul><h4>נקודה למחשבה</h4><p>${esc(p.stretch)}</p><h4>בקשרים עם אנשים</h4><p>${esc(p.relationships)}</p><h4>בלמידה ובעשייה</h4><p>${esc(p.work)}</p><div class="experiment"><h4>אפשר לנסות השבוע</h4><p>${esc(p.experiment)}</p></div></div>`;
+    return `<div class="type-profile ${preview ? 'preview-card' : ''}" style="${typeStyle(code)}"><div class="profile-top"><div class="profile-identity"><div class="profile-codes"><bdi class="type-code">${code}</bdi><span class="he-code">${p.he}</span></div><h3 class="profile-name">${esc(p.name)}</h3><p>${words}</p></div><img class="profile-character" src="${MBTI_ILLUSTRATIONS[code]}" alt="" width="210" height="210"></div><p>${esc(p.description)}</p><h4>העדפות וחוזקות אפשריות</h4><ul>${p.strengths.map(s => `<li>${esc(s)}</li>`).join('')}</ul><h4>נקודה למחשבה</h4><p>${esc(p.stretch)}</p><h4>בקשרים עם אנשים</h4><p>${esc(p.relationships)}</p><h4>בלמידה ובעשייה</h4><p>${esc(p.work)}</p><div class="experiment"><h4>אפשר לנסות השבוע</h4><p>${esc(p.experiment)}</p></div></div>`;
   }
   function typeButton(code) {
     const p = MBTI_PROFILES[code];
-    return `<button type="button" class="type-chip" data-type="${code}" aria-pressed="false" aria-controls="type-preview"><span class="type-chip-codes"><bdi dir="ltr">${code}</bdi><span>${p.he}</span></span><span class="type-chip-name">${esc(p.name)}</span></button>`;
+    return `<button type="button" class="type-chip" style="${typeStyle(code)}" data-type="${code}" aria-pressed="false" aria-controls="type-preview"><img class="type-character" src="${MBTI_ILLUSTRATIONS[code]}" alt="" width="96" height="96" loading="lazy"><span class="type-chip-codes"><bdi dir="ltr">${code}</bdi><span>${p.he}</span></span><span class="type-chip-name">${esc(p.name)}</span></button>`;
   }
   function previewType(code) {
     document.querySelectorAll('[data-type]').forEach(button => button.setAttribute('aria-pressed', String(button.dataset.type === code)));
@@ -111,6 +115,7 @@
     if (answered() !== questions.length) { current = answers.indexOf(null); returnToReview = false; renderQuestion(); return; }
     result = MBTI.score(questions, answers);
     const tied = result.code.includes('X');
+    $('results').style.cssText = typeStyle(result.code);
     $('result-heading').textContent = tied ? 'לא התקבלה העדפה בכל הצירים' : `הכיוון שלך: ${MBTI_PROFILES[result.code].name}`;
     $('result-subtitle').textContent = tied ? 'בחלק מהצירים אין כרגע העדפה מכריעה. אפשר לעיין בפירוט ולהשוות בין התיאורים' : 'הפרופיל שעולה מהתשובות שלך';
     $('profile-card').innerHTML = tied ? `<div class="profile-top"><bdi class="type-code">${result.code}</bdi></div><h3>אין טיפוס יחיד בתוצאה הזו</h3><p>האות X מסמנת ציר שבו התקבל שוויון. לא בחרנו עבורך צד שרירותי, ולכן אין כאן תיאור של טיפוס יחיד.</p><p>אפשר לעיין בצירופים המוצעים בהמשך, ולחשוב איזו העדפה חוזרת בחיים שלך כשיש חופש לבחור.</p><div class="experiment"><h4>אפשר לנסות השבוע</h4><p>לתעד שלושה רגעים של בחירה חופשית: מה בחרת, למה, והאם זו הייתה העדפה או דרישה של המצב.</p></div>` : profileHTML(result.code);

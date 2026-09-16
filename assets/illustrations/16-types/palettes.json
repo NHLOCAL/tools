@@ -1,0 +1,98 @@
+{
+  "INTJ": {
+    "accent": "#43558B",
+    "soft": "#EBEDF7",
+    "darkAccent": "#AFBAF4",
+    "darkSoft": "#252D49"
+  },
+  "INTP": {
+    "accent": "#745F8B",
+    "soft": "#F0EBF5",
+    "darkAccent": "#CEB4E6",
+    "darkSoft": "#362A43"
+  },
+  "ENTJ": {
+    "accent": "#933F56",
+    "soft": "#F7E9ED",
+    "darkAccent": "#F2A9BA",
+    "darkSoft": "#482935"
+  },
+  "ENTP": {
+    "accent": "#A4502B",
+    "soft": "#F9ECDF",
+    "darkAccent": "#F5B48C",
+    "darkSoft": "#493124"
+  },
+  "INFJ": {
+    "accent": "#3B6C59",
+    "soft": "#E7F1EB",
+    "darkAccent": "#9ED4B7",
+    "darkSoft": "#263D33"
+  },
+  "INFP": {
+    "accent": "#5E7034",
+    "soft": "#EFF2E2",
+    "darkAccent": "#C6D598",
+    "darkSoft": "#363D25"
+  },
+  "ENFJ": {
+    "accent": "#267376",
+    "soft": "#E4F2EF",
+    "darkAccent": "#98DADB",
+    "darkSoft": "#203D40"
+  },
+  "ENFP": {
+    "accent": "#89641B",
+    "soft": "#FBF2D8",
+    "darkAccent": "#EAC66F",
+    "darkSoft": "#443921"
+  },
+  "ISTJ": {
+    "accent": "#476778",
+    "soft": "#E8EFF3",
+    "darkAccent": "#ABCADB",
+    "darkSoft": "#293942"
+  },
+  "ISFJ": {
+    "accent": "#9A5263",
+    "soft": "#F7EAEE",
+    "darkAccent": "#EDB3C2",
+    "darkSoft": "#472D37"
+  },
+  "ESTJ": {
+    "accent": "#345A8B",
+    "soft": "#E7EEF7",
+    "darkAccent": "#A9C7F2",
+    "darkSoft": "#26354B"
+  },
+  "ESFJ": {
+    "accent": "#A1503E",
+    "soft": "#FAEAE3",
+    "darkAccent": "#F3B29C",
+    "darkSoft": "#4B302A"
+  },
+  "ISTP": {
+    "accent": "#317469",
+    "soft": "#E4F2EE",
+    "darkAccent": "#98D6C8",
+    "darkSoft": "#243F38"
+  },
+  "ISFP": {
+    "accent": "#795B98",
+    "soft": "#F2EAF9",
+    "darkAccent": "#D3B6F1",
+    "darkSoft": "#3B2D4C"
+  },
+  "ESTP": {
+    "accent": "#9B5B20",
+    "soft": "#FFF0DE",
+    "darkAccent": "#F7C286",
+    "darkSoft": "#4C3724"
+  },
+  "ESFP": {
+    "accent": "#A3477A",
+    "soft": "#F9E9F2",
+    "darkAccent": "#F0AED4",
+    "darkSoft": "#492C40"
+  }
+}

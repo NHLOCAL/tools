@@ -4,6 +4,16 @@ const crypto = require('node:crypto');
 const read = name => fs.readFileSync(path.join(__dirname, name), 'utf8').replace(/^\uFEFF/, '').replace(/\r\n/g, '\n');
 const data = JSON.parse(read('questions.json'));
 const profiles = JSON.parse(read('profiles.json'));
+const palettes = JSON.parse(fs.readFileSync(path.resolve(__dirname, '../../assets/illustrations/16-types/palettes.json'), 'utf8'));
+for (const code of Object.keys(profiles)) {
+  for (const key of ['accent', 'soft', 'darkAccent', 'darkSoft']) {
+    if (!/^#[0-9a-f]{6}$/i.test(palettes[code]?.[key])) throw new Error(`Invalid ${code} illustration palette: ${key}`);
+  }
+}
+const illustrations = Object.fromEntries(Object.keys(profiles).map(code => {
+  const svg = fs.readFileSync(path.resolve(__dirname, '../../assets/illustrations/16-types', code + '.svg'), 'utf8').replace(/\r\n/g, '\n');
+  return [code, 'data:image/svg+xml;base64,' + Buffer.from(svg).toString('base64')];
+}));
 data.revision = data.version + '-' + crypto.createHash('sha256').update(JSON.stringify(data.questions)).digest('hex').slice(0, 12);
 const serialize = value => JSON.stringify(value).replace(/</g, '\\u003c');
 const fontFolder = path.resolve(__dirname, '../../assets/fonts');
@@ -12,7 +22,7 @@ const fontLicense = fs.readFileSync(path.join(fontFolder, 'OFL.txt'), 'utf8').re
 const styles = read('styles.css').replace('/* FONT */', () => `/* Embedded Assistant font license:\n${fontLicense}\n*/\n@font-face{font-family:Assistant;src:url(data:font/ttf;base64,${font}) format('truetype');font-weight:200 800;font-display:swap}`);
 let page = read('page.html')
   .replace('/* STYLES */', () => styles)
-  .replace('/* DATA */', () => `const MBTI_DATA = ${serialize(data)};\nconst MBTI_PROFILES = ${serialize(profiles)};`)
+  .replace('/* DATA */', () => `const MBTI_DATA = ${serialize(data)};\nconst MBTI_PROFILES = ${serialize(profiles)};\nconst MBTI_ILLUSTRATIONS = ${serialize(illustrations)};\nconst MBTI_PALETTES = ${serialize(palettes)};`)
   .replace('/* SCORING */', () => read('scoring.js'))
   .replace('/* APP */', () => read('app.js'));
 const output = path.resolve(__dirname, '../../tools/the_16_types.html');
