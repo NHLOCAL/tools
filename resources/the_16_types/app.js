@@ -99,8 +99,12 @@
     const words = [...code].map((letter,i) => MBTI.axes[i].labels[MBTI.axes[i].id.indexOf(letter)]).join(' · ');
     return `<div class="${preview ? 'preview-card' : ''}"><div class="profile-top"><div><bdi class="type-code">${code}</bdi> <span class="he-code">${p.he}</span></div></div><h3 class="profile-name">${esc(p.name)}</h3><p>${words}</p><p>${esc(p.description)}</p><h4>העדפות וחוזקות אפשריות</h4><ul>${p.strengths.map(s => `<li>${esc(s)}</li>`).join('')}</ul><h4>נקודה למחשבה</h4><p>${esc(p.stretch)}</p><h4>בקשרים עם אנשים</h4><p>${esc(p.relationships)}</p><h4>בלמידה ובעשייה</h4><p>${esc(p.work)}</p><div class="experiment"><h4>אפשר לנסות השבוע</h4><p>${esc(p.experiment)}</p></div></div>`;
   }
+  function typeButton(code) {
+    const p = MBTI_PROFILES[code];
+    return `<button type="button" class="type-chip" data-type="${code}" aria-pressed="false" aria-controls="type-preview"><span class="type-chip-codes"><bdi dir="ltr">${code}</bdi><span>${p.he}</span></span><span class="type-chip-name">${esc(p.name)}</span></button>`;
+  }
   function previewType(code) {
-    $('type-select').value = code;
+    document.querySelectorAll('[data-type]').forEach(button => button.setAttribute('aria-pressed', String(button.dataset.type === code)));
     $('type-preview').innerHTML = profileHTML(code, true);
   }
   function results() {
@@ -126,9 +130,9 @@
     $('result-notice').innerHTML = notices.map(n => `<p>${esc(n)}</p>`).join('');
     const nearby = result.candidates.filter(c => c !== result.code);
     $('nearby').hidden = nearby.length === 0;
-    $('nearby-explanation').textContent = `הצירים הקרובים לאמצע מאפשרים ${result.candidates.length} צירופים לעיון. אלה אפשרויות להשוואה, ללא אחוזי סבירות. לחיצה פותחת תיאור ואינה משנה את התוצאה`;
-    $('nearby-types').innerHTML = nearby.map(code => `<button class="type-chip" data-type="${code}"><bdi><b>${code}</b></bdi>${MBTI_PROFILES[code].he} · ${esc(MBTI_PROFILES[code].name)}</button>`).join('');
-    if (!$('type-select').options.length) $('type-select').innerHTML = Object.entries(MBTI_PROFILES).map(([code,p])=>`<option value="${code}">${code} · ${p.he} · ${esc(p.name)}</option>`).join('');
+    $('nearby-explanation').textContent = 'בצירים הקרובים לאמצע כדאי להשוות גם לתיאורים האלה';
+    $('nearby-types').innerHTML = nearby.map(typeButton).join('');
+    $('type-picker').innerHTML = Object.keys(MBTI_PROFILES).map(typeButton).join('');
     previewType(tied ? result.candidates[0] : result.code);
     save(); show('results', 'result-heading');
   }
@@ -169,8 +173,14 @@
   $('review-back').addEventListener('click',()=>{returnToReview=false;renderQuestion();});
   $('review-finish').addEventListener('click',results);
   $('edit').addEventListener('click',review);
-  $('type-select').addEventListener('change',event=>previewType(event.target.value));
-  $('nearby-types').addEventListener('click',event=>{const button=event.target.closest('[data-type]');if(!button)return;document.querySelector('.explore').open=true;previewType(button.dataset.type);$('type-select').focus();$('type-preview').scrollIntoView({block:'start',behavior:'instant'});});
+  $('type-picker').addEventListener('click', event => {
+    const button = event.target.closest('[data-type]');
+    if (!button) return;
+    previewType(button.dataset.type);
+    $('type-preview').focus({preventScroll:true});
+    $('type-preview').scrollIntoView({block:'start',behavior:'instant'});
+  });
+  $('nearby-types').addEventListener('click',event=>{const button=event.target.closest('[data-type]');if(!button)return;document.querySelector('.explore').open=true;previewType(button.dataset.type);$('type-preview').focus({preventScroll:true});$('type-preview').scrollIntoView({block:'start',behavior:'instant'});});
   $('download').addEventListener('click',()=>{const blob=new Blob(['\ufeff'+resultText()],{type:'text/plain;charset=utf-8'});const url=URL.createObjectURL(blob);const link=document.createElement('a');link.href=url;link.download=`16-types-${result.code}.txt`;document.body.appendChild(link);link.click();link.remove();setTimeout(()=>URL.revokeObjectURL(url),1000);toast('הסיכום מוכן להורדה');});
   $('copy').addEventListener('click',async()=>{try{await navigator.clipboard.writeText(resultText());toast('הסיכום הועתק');}catch{toast('ההעתקה אינה זמינה בדפדפן הזה. אפשר לשמור את התוצאה כקובץ');}});
   $('print').addEventListener('click',()=>window.print());

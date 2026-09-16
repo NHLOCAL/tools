@@ -302,14 +302,18 @@ main.shell:has(#results:not([hidden])) { max-width: 1400px; }
 .notice p:last-child { margin-bottom: 0; }
 .nearby { margin-top: 27px; padding: 24px; background: var(--surface-warm); border-radius: 25px; }
 .nearby p { font-size: .95rem; color: var(--muted); }
-.type-chips { display: flex; gap: 9px; flex-wrap: wrap; }
-.type-chip { border: 1px solid var(--line); border-radius: 16px; background: var(--white); padding: 11px 16px; font-size: .85rem; cursor: pointer; }
-.type-chip:hover { background: var(--blue-soft); }
-.type-chip b { margin-inline-end: 8px; }
+.type-chips, .type-picker { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; }
+.type-chip { display: flex; flex-direction: column; align-items: stretch; gap: 8px; min-width: 0; border: 1px solid var(--line); border-radius: 18px; background: var(--white); color: var(--ink); padding: 16px; text-align: start; cursor: pointer; transition: background var(--ease), border-color var(--ease); }
+.type-chip:hover { background: var(--blue-soft); border-color: var(--accent); }
+.type-chip[aria-pressed="true"] { background: var(--blue-soft); border-color: var(--accent); box-shadow: inset 0 0 0 1px var(--accent); }
+.type-chip-codes { display: flex; align-items: baseline; justify-content: space-between; gap: 8px; }
+.type-chip-codes bdi { font-size: 1.3rem; font-weight: 750; color: var(--accent); letter-spacing: .04em; }
+.type-chip-codes > span { color: var(--muted); font-size: .95rem; }
+.type-chip-name { font-size: 1.05rem; font-weight: 650; line-height: 1.4; }
 .result-disclaimer { max-width: 930px; }
 .explore { margin: 27px 0 40px; }
-.explore label { font-size: .93rem; margin-inline-end: 12px; }
-.explore select { max-width: 100%; padding: 12px; border: 1px solid var(--line); border-radius: 13px; background: var(--white); color: var(--ink); margin-top: 20px; }
+.explore summary { font-size: 1.2rem; font-weight: 650; }
+#type-preview { scroll-margin-top: 24px; }
 .preview-card { background: var(--white); padding: 15px; max-width: 820px; color: var(--ink); }
 .preview-card p { font-size: .97rem; }
 .preview-card h4 { margin-bottom: 8px; }
@@ -339,6 +343,7 @@ dialog::backdrop { background: #41495c80; backdrop-filter: blur(4px); }
   .sheet-axes > div { font-size: .8rem; padding: 9px 12px; gap: 4px; }
   .sheet-axes bdi { font-size: .75rem; }
   .result-layout { grid-template-columns: 1fr; gap: 20px; }
+  .type-chips, .type-picker { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .profile-card { padding: 25px; }
   .axis-panel { padding: 24px 20px; }
   .axis-title { flex-wrap: wrap; gap: 3px 10px; }
@@ -387,6 +392,8 @@ dialog::backdrop { background: #41495c80; backdrop-filter: blur(4px); }
   .quiz-bottom .text-button { font-size: .8rem; }
   .reading-width { margin-block: 28px; }
   .result-intro { margin-top: 25px; }
+  .type-chip { padding: 12px; }
+  .type-chip-codes { flex-wrap: wrap; gap: 4px 8px; }
   .result-layout { grid-template-columns: 1fr; gap: 22px; }
   .profile-card { padding: 24px 20px; border-radius: 25px; }
   .profile-top { padding: 17px; border-radius: 18px; }
@@ -508,7 +515,7 @@ dialog::backdrop { background: #41495c80; backdrop-filter: blur(4px); }
     <div id="nearby" class="nearby" hidden><h3>טיפוסים נוספים להשוואה</h3><p id="nearby-explanation"></p><div id="nearby-types" class="type-chips"></div></div>
     <div class="result-actions action-row"><button id="download" class="button primary"><span>לשמור את התוצאה</span> <svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 3v12m-5-5 5 5 5-5M5 16v5h14v-5"/></svg></button><button id="copy" class="button secondary">העתקת סיכום</button><button id="print" class="button secondary">הדפסה</button><button id="edit" class="text-button">לעבור על התשובות</button><button id="restart" class="text-button">להתחיל מחדש</button></div>
     <p class="micro result-disclaimer">שאלון עצמאי להיכרות עצמית, ללא תיקוף פסיכומטרי. התוצאה אינה אבחון</p>
-    <details class="explore"><summary>כל 16 הטיפוסים</summary><p>אפשר לעיין בכל התיאורים. הבחירה כאן אינה משנה את התוצאה שלך.</p><label for="type-select">טיפוס לעיון</label><select id="type-select"></select><div id="type-preview"></div></details>
+    <details class="explore"><summary>כל 16 הטיפוסים</summary><p>אפשר לעיין בכל התיאורים. הבחירה כאן אינה משנה את התוצאה שלך.</p><div id="type-picker" class="type-picker" role="group" aria-label="בחירת טיפוס לעיון"></div><div id="type-preview" tabindex="-1"></div></details>
   </section>
   <p id="storage-status" class="storage-status" role="status" hidden></p>
   <noscript><div class="notice">כדי למלא את השאלון נדרש להפעיל JavaScript בדפדפן. אין צורך בחיבור לרשת</div></noscript>
@@ -663,8 +670,12 @@ const MBTI_PROFILES = {"ISTJ":{"he":"מקשג","name":"המפקח / הלוגיס
     const words = [...code].map((letter,i) => MBTI.axes[i].labels[MBTI.axes[i].id.indexOf(letter)]).join(' · ');
     return `<div class="${preview ? 'preview-card' : ''}"><div class="profile-top"><div><bdi class="type-code">${code}</bdi> <span class="he-code">${p.he}</span></div></div><h3 class="profile-name">${esc(p.name)}</h3><p>${words}</p><p>${esc(p.description)}</p><h4>העדפות וחוזקות אפשריות</h4><ul>${p.strengths.map(s => `<li>${esc(s)}</li>`).join('')}</ul><h4>נקודה למחשבה</h4><p>${esc(p.stretch)}</p><h4>בקשרים עם אנשים</h4><p>${esc(p.relationships)}</p><h4>בלמידה ובעשייה</h4><p>${esc(p.work)}</p><div class="experiment"><h4>אפשר לנסות השבוע</h4><p>${esc(p.experiment)}</p></div></div>`;
   }
+  function typeButton(code) {
+    const p = MBTI_PROFILES[code];
+    return `<button type="button" class="type-chip" data-type="${code}" aria-pressed="false" aria-controls="type-preview"><span class="type-chip-codes"><bdi dir="ltr">${code}</bdi><span>${p.he}</span></span><span class="type-chip-name">${esc(p.name)}</span></button>`;
+  }
   function previewType(code) {
-    $('type-select').value = code;
+    document.querySelectorAll('[data-type]').forEach(button => button.setAttribute('aria-pressed', String(button.dataset.type === code)));
     $('type-preview').innerHTML = profileHTML(code, true);
   }
   function results() {
@@ -690,9 +701,9 @@ const MBTI_PROFILES = {"ISTJ":{"he":"מקשג","name":"המפקח / הלוגיס
     $('result-notice').innerHTML = notices.map(n => `<p>${esc(n)}</p>`).join('');
     const nearby = result.candidates.filter(c => c !== result.code);
     $('nearby').hidden = nearby.length === 0;
-    $('nearby-explanation').textContent = `הצירים הקרובים לאמצע מאפשרים ${result.candidates.length} צירופים לעיון. אלה אפשרויות להשוואה, ללא אחוזי סבירות. לחיצה פותחת תיאור ואינה משנה את התוצאה`;
-    $('nearby-types').innerHTML = nearby.map(code => `<button class="type-chip" data-type="${code}"><bdi><b>${code}</b></bdi>${MBTI_PROFILES[code].he} · ${esc(MBTI_PROFILES[code].name)}</button>`).join('');
-    if (!$('type-select').options.length) $('type-select').innerHTML = Object.entries(MBTI_PROFILES).map(([code,p])=>`<option value="${code}">${code} · ${p.he} · ${esc(p.name)}</option>`).join('');
+    $('nearby-explanation').textContent = 'בצירים הקרובים לאמצע כדאי להשוות גם לתיאורים האלה';
+    $('nearby-types').innerHTML = nearby.map(typeButton).join('');
+    $('type-picker').innerHTML = Object.keys(MBTI_PROFILES).map(typeButton).join('');
     previewType(tied ? result.candidates[0] : result.code);
     save(); show('results', 'result-heading');
   }
@@ -733,8 +744,14 @@ const MBTI_PROFILES = {"ISTJ":{"he":"מקשג","name":"המפקח / הלוגיס
   $('review-back').addEventListener('click',()=>{returnToReview=false;renderQuestion();});
   $('review-finish').addEventListener('click',results);
   $('edit').addEventListener('click',review);
-  $('type-select').addEventListener('change',event=>previewType(event.target.value));
-  $('nearby-types').addEventListener('click',event=>{const button=event.target.closest('[data-type]');if(!button)return;document.querySelector('.explore').open=true;previewType(button.dataset.type);$('type-select').focus();$('type-preview').scrollIntoView({block:'start',behavior:'instant'});});
+  $('type-picker').addEventListener('click', event => {
+    const button = event.target.closest('[data-type]');
+    if (!button) return;
+    previewType(button.dataset.type);
+    $('type-preview').focus({preventScroll:true});
+    $('type-preview').scrollIntoView({block:'start',behavior:'instant'});
+  });
+  $('nearby-types').addEventListener('click',event=>{const button=event.target.closest('[data-type]');if(!button)return;document.querySelector('.explore').open=true;previewType(button.dataset.type);$('type-preview').focus({preventScroll:true});$('type-preview').scrollIntoView({block:'start',behavior:'instant'});});
   $('download').addEventListener('click',()=>{const blob=new Blob(['\ufeff'+resultText()],{type:'text/plain;charset=utf-8'});const url=URL.createObjectURL(blob);const link=document.createElement('a');link.href=url;link.download=`16-types-${result.code}.txt`;document.body.appendChild(link);link.click();link.remove();setTimeout(()=>URL.revokeObjectURL(url),1000);toast('הסיכום מוכן להורדה');});
   $('copy').addEventListener('click',async()=>{try{await navigator.clipboard.writeText(resultText());toast('הסיכום הועתק');}catch{toast('ההעתקה אינה זמינה בדפדפן הזה. אפשר לשמור את התוצאה כקובץ');}});
   $('print').addEventListener('click',()=>window.print());
