@@ -1,4 +1,4 @@
-name: Rebuild 16-type artwork (one-off)
+name: Verify redesigned 16-type artwork (one-off)
 
 on:
   pull_request:
@@ -8,10 +8,10 @@ on:
       - .github/workflows/rebuild-16-type-artwork.yml
 
 permissions:
-  contents: write
+  contents: read
 
 jobs:
-  rebuild:
+  verify:
     if: >-
       github.event.pull_request.head.repo.full_name == 'NHLOCAL/tools' &&
       github.event.pull_request.head.ref == 'codex/redesign-16-type-illustrations'
@@ -26,62 +26,111 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: '22'
-      - name: Install the existing site build dependency
-        run: python -m pip install -r requirements.txt
-      - name: Identify already-stale generated outputs before changing artwork
-        run: |
-          python build.py
-          python - <<'PY'
-          import difflib, hashlib, json, pathlib, subprocess
-          changed = subprocess.check_output(['git', 'diff', '--name-only'], text=True).splitlines()
-          baseline = {}
-          for name in changed:
-              data = pathlib.Path(name).read_bytes()
-              baseline[name] = hashlib.sha256(data).hexdigest()
-              print('Pre-existing generated difference:', name)
-              if name.startswith('tools/') and name.endswith('.html'):
-                  before = subprocess.check_output(['git', 'show', 'HEAD:' + name]).decode()
-                  after = data.decode()
-                  assert before.partition('</head>')[2] == after.partition('</head>')[2], name + ': body changed unexpectedly'
-                  for line in difflib.unified_diff(before.splitlines(), after.splitlines(), n=2):
-                      print(line[:300])
-          pathlib.Path('/tmp/preexisting-generated.json').write_text(json.dumps(baseline))
-          PY
-          git restore .
-      - name: Regenerate artwork and its standalone consumers
-        run: |
-          python scripts/redraw_16_type_illustrations.py
-          node resources/the_16_types/build.cjs
-          python build.py
-      - name: Validate the artwork and existing site contracts
+      - name: Install temporary verification dependencies
+        run: python -m pip install -r requirements.txt playwright
+      - name: Validate contracts, scoring and exact build reproducibility
         run: |
           python -m unittest discover -s tests -v
           node --test resources/the_16_types/scoring.test.cjs
+          python scripts/redraw_16_type_illustrations.py
+          node resources/the_16_types/build.cjs
+          python build.py
           node resources/the_16_types/build.cjs --check
-      - name: Provide the exact built page for browser inspection
+          git diff --exit-code
+      - name: Exercise the real test and all 16 profile illustrations in Chromium
+        run: |
+          python - <<'PY'
+          import base64, functools, http.server, json, pathlib, shutil, threading
+          from playwright.sync_api import sync_playwright
+          root = pathlib.Path.cwd()
+          evidence = pathlib.Path('/tmp/16-type-review')
+          evidence.mkdir(exist_ok=True)
+          class QuietHandler(http.server.SimpleHTTPRequestHandler):
+              def log_message(self, *args): pass
+          handler = functools.partial(QuietHandler, directory=str(root))
+          server = http.server.ThreadingHTTPServer(('127.0.0.1', 0), handler)
+          threading.Thread(target=server.serve_forever, daemon=True).start()
+          url = f'http://127.0.0.1:{server.server_port}/tools/the_16_types.html'
+          expected = {p.stem: 'data:image/svg+xml;base64,' + base64.b64encode(p.read_bytes()).decode() for p in (root/'assets/illustrations/16-types').glob('*.svg')}
+          report = []
+          with sync_playwright() as p:
+              executable = shutil.which('google-chrome') or shutil.which('chromium') or shutil.which('chromium-browser')
+              assert executable, 'A Chromium browser must be available on the runner'
+              browser = p.chromium.launch(executable_path=executable, headless=True, args=['--no-sandbox'])
+              print('Browser:', browser.version, executable)
+              for label, width, height in [('desktop',1280,900), ('mobile',390,844)]:
+                  context = browser.new_context(viewport={'width':width,'height':height}, color_scheme='light', reduced_motion='reduce')
+                  page = context.new_page()
+                  page.set_default_timeout(10000)
+                  errors = []
+                  page.on('pageerror', lambda error: errors.append(str(error)))
+                  page.on('console', lambda message: errors.append(message.text) if message.type=='error' else None)
+                  page.goto(url, wait_until='networkidle')
+                  assert '16' in page.title()
+                  assert page.locator('#welcome').is_visible()
+                  page.locator('#start').click()
+                  page.locator('input[name=answer][value="2"]').check()
+                  page.locator('#next').click()
+                  assert '2' in page.locator('#question-counter').inner_text()
+                  code = page.evaluate('''() => {
+                    for (let seed=1;seed<=200;seed++) {
+                      const answers=MBTI_DATA.questions.map((q,i)=>1+((i*i+seed*i+seed)%5));
+                      const result=MBTI.score(MBTI_DATA.questions,answers);
+                      if (!result.code.includes('X')) {
+                        localStorage.setItem('nhlocal.16-types.v1',JSON.stringify({version:MBTI_DATA.revision,answers,current:0}));
+                        return result.code;
+                      }
+                    }
+                    throw new Error('No deterministic complete fixture found');
+                  }''')
+                  page.reload(wait_until='networkidle')
+                  page.locator('#resume').click()
+                  assert page.locator('#results').is_visible()
+                  hero = page.locator('#profile-card .profile-character')
+                  assert hero.get_attribute('src') == expected[code]
+                  page.locator('.explore > summary').click()
+                  assert page.locator('#type-picker [data-type]').count()==16
+                  for theme in ('light','dark'):
+                      if page.locator('html').get_attribute('data-theme') != theme:
+                          page.locator('#theme-toggle').click()
+                      assert page.locator('html').get_attribute('data-theme')==theme
+                      for name, src in expected.items():
+                          button = page.locator(f'#type-picker [data-type="{name}"]')
+                          button.click()
+                          assert button.get_attribute('aria-pressed')=='true'
+                          assert page.locator('#type-preview .type-code').inner_text()==name
+                          image = page.locator('#type-preview .profile-character')
+                          assert image.get_attribute('src')==src
+                          image.evaluate('(image) => image.decode()')
+                          assert image.evaluate('(image) => image.complete && image.naturalWidth>0')
+                      page.locator('#type-picker [data-type="INTP"]').click()
+                      page.locator('#type-preview').scroll_into_view_if_needed()
+                      assert page.evaluate('document.documentElement.scrollWidth <= innerWidth + 1'), 'Horizontal overflow'
+                      page.screenshot(path=str(evidence/f'{label}-{theme}.png'))
+                      sizes=page.locator('#type-preview .profile-character').evaluate('(e) => ({width:e.getBoundingClientRect().width,height:e.getBoundingClientRect().height})')
+                      report.append({'viewport':label,'theme':theme,'profiles':16,'imageSize':sizes,'errors':list(errors)})
+                      print('Verified:', report[-1])
+                  assert not errors, errors
+                  context.close()
+              browser.close()
+          server.shutdown()
+          (evidence/'report.json').write_text(json.dumps(report,indent=2))
+          print('PASS: welcome, answer selection, question navigation, saved-result resume, 64 type previews, both themes, desktop/mobile, no horizontal overflow or browser errors.')
+          PY
+      - name: Preserve browser evidence
+        if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: 16-type-artwork-validation
-          retention-days: 3
+          name: 16-type-browser-review
+          retention-days: 7
+          path: /tmp/16-type-review
+      - name: Provide the editable SVG set without fonts or application bundles
+        uses: actions/upload-artifact@v4
+        with:
+          name: 16-types-editable-svg
+          retention-days: 7
           path: |
-            tools/the_16_types.html
             assets/illustrations/16-types/*.svg
-      - name: Commit generated assets to this feature branch only
-        run: |
-          git config user.name 'github-actions[bot]'
-          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git add assets/illustrations/16-types/*.svg tools/the_16_types.html assets/downloads/the_16_types.js catalog
-          python - <<'PY'
-          import hashlib, json, pathlib, subprocess
-          baseline = json.loads(pathlib.Path('/tmp/preexisting-generated.json').read_text())
-          remaining = subprocess.check_output(['git', 'diff', '--name-only'], text=True).splitlines()
-          for name in remaining:
-              actual = hashlib.sha256(pathlib.Path(name).read_bytes()).hexdigest()
-              assert baseline.get(name) == actual, 'Unexpected non-artwork change: ' + name
-              print('Synchronizing unchanged pre-existing generated output:', name)
-              subprocess.run(['git', 'add', '--', name], check=True)
-          PY
-          if ! git diff --quiet; then exit 1; fi
-          if git diff --cached --quiet; then exit 0; fi
-          git commit -m 'Rebuild all 16 SVG illustrations and synchronize generated outputs'
-          git push origin HEAD:refs/heads/codex/redesign-16-type-illustrations
+            assets/illustrations/16-types/palettes.json
+            scripts/redraw_16_type_illustrations.py
+            tests/test_type_illustrations.py
