@@ -47,6 +47,12 @@ jobs:
           evidence.mkdir(exist_ok=True)
           class QuietHandler(http.server.SimpleHTTPRequestHandler):
               def log_message(self, *args): pass
+              def do_GET(self):
+                  if self.path == '/favicon.ico':
+                      self.send_response(204)
+                      self.end_headers()
+                      return
+                  super().do_GET()
           handler = functools.partial(QuietHandler, directory=str(root))
           server = http.server.ThreadingHTTPServer(('127.0.0.1', 0), handler)
           threading.Thread(target=server.serve_forever, daemon=True).start()
@@ -69,19 +75,15 @@ jobs:
                   assert '16' in page.title()
                   assert page.locator('#welcome').is_visible()
                   page.locator('#start').click()
-                  page.locator('input[name=answer][value="2"]').check()
+                  page.locator('.answer-choice').nth(1).click()
                   page.locator('#next').click()
                   assert '2' in page.locator('#question-counter').inner_text()
                   code = page.evaluate('''() => {
-                    for (let seed=1;seed<=200;seed++) {
-                      const answers=MBTI_DATA.questions.map((q,i)=>1+((i*i+seed*i+seed)%5));
-                      const result=MBTI.score(MBTI_DATA.questions,answers);
-                      if (!result.code.includes('X')) {
-                        localStorage.setItem('nhlocal.16-types.v1',JSON.stringify({version:MBTI_DATA.revision,answers,current:0}));
-                        return result.code;
-                      }
-                    }
-                    throw new Error('No deterministic complete fixture found');
+                    const answers = MBTI_DATA.questions.map(q => 'INTP'.includes(q.aPole) ? 1 : 5);
+                    const result = MBTI.score(MBTI_DATA.questions, answers);
+                    if (result.code !== 'INTP') throw new Error('Invalid oriented INTP fixture');
+                    localStorage.setItem('nhlocal.16-types.v1',JSON.stringify({version:MBTI_DATA.revision,answers,current:0}));
+                    return result.code;
                   }''')
                   page.reload(wait_until='networkidle')
                   page.locator('#resume').click()
