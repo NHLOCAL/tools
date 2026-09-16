@@ -326,3 +326,12 @@ dialog::backdrop { background: #41495c80; backdrop-filter: blur(4px); }
   #results[hidden] { display: none !important; }
   dialog { display: none; }
 }
+
+/* Clear question choices in dark mode and a separate restart action. */
+#fresh { display: block; width: fit-content; margin-top: 8px; }
+@media screen {
+  :root[data-theme="dark"] .question-card legend { color: var(--ink); font-size: 1.125rem; font-weight: 650; line-height: 1.5; }
+  :root[data-theme="dark"] .situation { background: #303f53; border: 1px solid #52667e; }
+  :root[data-theme="dark"] .situation p { color: #f5f7fb; font-size: 1.125rem; font-weight: 550; line-height: 1.7; }
+  :root[data-theme="dark"] .situation > span { background: #3c5270; color: #f3f7ff; font-weight: 700; }
+}
