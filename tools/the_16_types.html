@@ -266,7 +266,8 @@ legend { font-size: 1rem; text-align: center; margin: 0 auto 16px; padding: 0; c
 .result-intro { margin: 35px 0 29px; }
 .result-intro h2 { margin: 15px 0; }
 .result-intro .lead { max-width: 750px; }
-.result-layout { display: grid; grid-template-columns: 1.15fr 1fr; gap: 27px; align-items: start; }
+main.shell:has(#results:not([hidden])) { max-width: 1400px; }
+.result-layout { display: grid; grid-template-columns: minmax(0, 1.75fr) minmax(320px, 1fr); gap: 27px; align-items: start; }
 .profile-card { background: var(--white); padding: 30px; border: 1px solid var(--line); border-radius: 30px; box-shadow: var(--soft-shadow); }
 .profile-top { display: flex; align-items: center; justify-content: space-between; gap: 14px; padding: 16px 21px; margin-bottom: 24px; border-radius: 22px; background: var(--blue-soft); }
 .type-code { font-size: 2.8rem; letter-spacing: .02em; font-weight: 600; line-height: 1.15; color: var(--accent); }
@@ -274,22 +275,29 @@ legend { font-size: 1rem; text-align: center; margin: 0 auto 16px; padding: 0; c
 .profile-name { font-size: 1.7rem; margin-bottom: 15px; }
 .profile-card p { font-size: 1.0625rem; line-height: 1.8; }
 .profile-card h4 { font-size: 1.02rem; margin: 25px 0 9px; color: var(--clay); font-weight: 500; }
-.profile-card ul { padding-inline-start: 20px; font-size: .97rem; }
+.profile-card ul { padding-inline-start: 20px; font-size: 1.05rem; }
 .profile-card li { margin-bottom: 7px; }
 .experiment { padding: 18px 20px; border-radius: 20px; background: var(--peach-soft); margin-top: 25px; }
 .experiment h4 { margin-top: 0; }
 .experiment p { margin-bottom: 0; }
 .axis-panel { padding: 28px 25px; background: var(--surface-cool); border: 1px solid var(--line); border-radius: 30px; }
-.axis-row { margin: 28px 0; }
-.axis-title { display: flex; justify-content: space-between; gap: 10px; align-items: baseline; font-size: .88rem; margin-bottom: 11px; }
-.axis-title b { font-weight: 500; }
-.axis-title span { font-size: .75rem; color: var(--muted); }
-.axis-labels { display: flex; justify-content: space-between; gap: 10px; font-size: .85rem; }
-.axis-labels strong { font-weight: 500; }
-.axis-bar { height: 10px; border-radius: 20px; background: var(--track); margin: 11px 0; position: relative; overflow: hidden; direction: rtl; }
-.axis-bar i { display: block; background: var(--accent); height: 100%; }
-.axis-bar:after { content: ""; position: absolute; top: 0; bottom: 0; left: 50%; border-inline-start: 2px solid var(--white); }
-.axis-explain { font-size: .9375rem; color: var(--muted); line-height: 1.7; margin: 0; }
+.axis-row { margin: 26px 0; padding-bottom: 24px; border-bottom: 1px solid var(--line); }
+.axis-row:last-child { margin-bottom: 0; padding-bottom: 0; border-bottom: 0; }
+.axis-title { font-size: 1rem; margin-bottom: 12px; }
+.axis-title b { font-weight: 650; }
+.axis-labels { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+.axis-pole { display: flex; flex-direction: column; gap: 3px; padding: 10px 12px; border: 2px solid transparent; border-radius: 14px; color: var(--muted); }
+.axis-pole strong { font-weight: 500; }
+.axis-pole.is-dominant { border-color: var(--accent); background: var(--white); color: var(--accent); }
+.axis-pole.is-dominant strong { font-weight: 800; }
+.axis-pole bdi { font-size: 1.05rem; font-weight: 650; }
+.axis-bar { display: flex; height: 10px; border-radius: 20px; background: var(--track); margin: 12px 0; overflow: hidden; direction: rtl; }
+.axis-bar i { display: block; height: 100%; background: var(--track); }
+.axis-bar i.is-dominant { background: var(--accent); }
+.axis-bar i + i { border-inline-start: 2px solid var(--white); }
+.axis-explain { font-size: .96rem; color: var(--muted); line-height: 1.7; margin: 0; }
+.axis-explain strong { color: var(--ink); }
+.axis-note { font-size: .93rem; color: var(--muted); line-height: 1.7; }
 .notice { border: 1px solid var(--notice-line); background: var(--notice-bg); border-radius: 20px; padding: 18px 23px; font-size: .96rem; margin: 25px 0; }
 .notice p:last-child { margin-bottom: 0; }
 .nearby { margin-top: 27px; padding: 24px; background: var(--surface-warm); border-radius: 25px; }
@@ -330,7 +338,7 @@ dialog::backdrop { background: #41495c80; backdrop-filter: blur(4px); }
   .sheet-number { font-size: 8rem; }
   .sheet-axes > div { font-size: .8rem; padding: 9px 12px; gap: 4px; }
   .sheet-axes bdi { font-size: .75rem; }
-  .result-layout { gap: 20px; }
+  .result-layout { grid-template-columns: 1fr; gap: 20px; }
   .profile-card { padding: 25px; }
   .axis-panel { padding: 24px 20px; }
   .axis-title { flex-wrap: wrap; gap: 3px 10px; }
@@ -494,12 +502,12 @@ dialog::backdrop { background: #41495c80; backdrop-filter: blur(4px); }
     <span class="eyebrow">בדיקה ועריכה</span><h2 id="review-heading" tabindex="-1">התשובות שלך</h2><p>לחיצה על שאלה מאפשרת לעדכן את התשובה. אין צורך לענות מחדש על הכול.</p><p id="review-count"></p><div id="review-list"></div><div class="action-row"><button id="review-finish" class="button primary"><span>לתוצאות</span> <svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M19 12H5m7-7-7 7 7 7"/></svg></button><button id="review-back" class="button secondary">חזרה לשאלון</button></div>
   </section>
   <section id="results" class="screen" hidden aria-labelledby="result-heading">
-    <div class="result-intro"><span class="eyebrow">סיכום השאלון</span><h2 id="result-heading" tabindex="-1"></h2><p id="result-subtitle" class="lead"></p></div>
+    <div class="result-intro"><h2 id="result-heading" tabindex="-1"></h2><p id="result-subtitle" class="lead"></p></div>
     <div id="result-notice" class="notice" hidden></div>
-    <div class="result-layout"><div id="profile-card" class="profile-card"></div><div class="axis-panel"><h3>התוצאה בכל ציר</h3><div id="axis-results"></div><p class="micro">האחוזים הם ציוני נטייה מתוך התשובות, לא הסתברות לטיפוס או דירוג ביחס לאנשים אחרים</p></div></div>
+    <div class="result-layout"><div id="profile-card" class="profile-card"></div><div class="axis-panel"><h3>ההעדפות שלך בארבעת התחומים</h3><div id="axis-results"></div><p class="axis-note">האחוזים מתארים נטייה בתשובות, ולא סבירות לטיפוס</p></div></div>
     <div id="nearby" class="nearby" hidden><h3>טיפוסים נוספים להשוואה</h3><p id="nearby-explanation"></p><div id="nearby-types" class="type-chips"></div></div>
     <div class="result-actions action-row"><button id="download" class="button primary"><span>לשמור את התוצאה</span> <svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 3v12m-5-5 5 5 5-5M5 16v5h14v-5"/></svg></button><button id="copy" class="button secondary">העתקת סיכום</button><button id="print" class="button secondary">הדפסה</button><button id="edit" class="text-button">לעבור על התשובות</button><button id="restart" class="text-button">להתחיל מחדש</button></div>
-    <p class="micro result-disclaimer">זהו שאלון עצמאי שלא עבר תיקוף פסיכומטרי, והתוצאה אינה אבחון. כדאי לבדוק אילו חלקים בתיאור תואמים את ההעדפות שלך ואילו פחות.</p>
+    <p class="micro result-disclaimer">שאלון עצמאי להיכרות עצמית, ללא תיקוף פסיכומטרי. התוצאה אינה אבחון</p>
     <details class="explore"><summary>כל 16 הטיפוסים</summary><p>אפשר לעיין בכל התיאורים. הבחירה כאן אינה משנה את התוצאה שלך.</p><label for="type-select">טיפוס לעיון</label><select id="type-select"></select><div id="type-preview"></div></details>
   </section>
   <p id="storage-status" class="storage-status" role="status" hidden></p>
@@ -664,9 +672,15 @@ const MBTI_PROFILES = {"ISTJ":{"he":"מקשג","name":"המפקח / הלוגיס
     result = MBTI.score(questions, answers);
     const tied = result.code.includes('X');
     $('result-heading').textContent = tied ? 'לא התקבלה העדפה בכל הצירים' : `הכיוון שלך: ${MBTI_PROFILES[result.code].name}`;
-    $('result-subtitle').textContent = tied ? 'בחלק מהצירים אין כרגע העדפה מכריעה. אפשר לעיין בפירוט ולהשוות בין התיאורים' : 'זה הצירוף שעולה מהתשובות שלך. התיאור כללי: חלקים ממנו עשויים להתאים לך יותר מאחרים';
+    $('result-subtitle').textContent = tied ? 'בחלק מהצירים אין כרגע העדפה מכריעה. אפשר לעיין בפירוט ולהשוות בין התיאורים' : 'הפרופיל שעולה מהתשובות שלך';
     $('profile-card').innerHTML = tied ? `<div class="profile-top"><bdi class="type-code">${result.code}</bdi></div><h3>אין טיפוס יחיד בתוצאה הזו</h3><p>האות X מסמנת ציר שבו התקבל שוויון. לא בחרנו עבורך צד שרירותי, ולכן אין כאן תיאור של טיפוס יחיד.</p><p>אפשר לעיין בצירופים המוצעים בהמשך, ולחשוב איזו העדפה חוזרת בחיים שלך כשיש חופש לבחור.</p><div class="experiment"><h4>אפשר לנסות השבוע</h4><p>לתעד שלושה רגעים של בחירה חופשית: מה בחרת, למה, והאם זו הייתה העדפה או דרישה של המצב.</p></div>` : profileHTML(result.code);
-    $('axis-results').innerHTML = result.axes.map(a => `<section class="axis-row"><div class="axis-title"><b>${a.title}</b><span>${a.label}</span></div><div class="axis-labels"><span><strong>${a.labels[0]}</strong> <bdi>${a.id[0]} · ${a.firstPercent}%</bdi></span><span><strong>${a.labels[1]}</strong> <bdi>${a.id[1]} · ${a.secondPercent}%</bdi></span></div><div class="axis-bar" role="img" aria-label="${a.labels[0]} ${a.firstPercent} אחוז, ${a.labels[1]} ${a.secondPercent} אחוז"><i style="width:${a.firstPercent}%"></i></div><p class="axis-explain">${a.labels[0]}: ${a.explanations[0]}<br>${a.labels[1]}: ${a.explanations[1]}</p></section>`).join('');
+    $('axis-results').innerHTML = result.axes.map(a => {
+      const winner = a.id.indexOf(a.letter);
+      const percentages = [a.firstPercent, a.secondPercent];
+      const emphasis = i => i === winner ? ' is-dominant' : '';
+      const summary = winner < 0 ? 'אין העדפה לצד מסוים' : `${a.close ? 'נטייה קלה' : 'הנטייה שלך'}: ${a.labels[winner]}`;
+      return `<section class="axis-row"><div class="axis-title"><b>${a.title}</b></div><div class="axis-labels">${a.labels.map((label,i) => `<div class="axis-pole${emphasis(i)}"><strong>${label}</strong><bdi dir="ltr">${a.id[i]} · ${percentages[i]}%</bdi></div>`).join('')}</div><div class="axis-bar" role="img" aria-label="${a.labels[0]} ${a.firstPercent} אחוז, ${a.labels[1]} ${a.secondPercent} אחוז">${percentages.map((value,i) => `<i class="${emphasis(i).trim()}" style="width:${value}%"></i>`).join('')}</div><p class="axis-explain"><strong>${summary}</strong>${winner < 0 ? '' : `<br>${a.explanations[winner]}`}</p></section>`;
+    }).join('');
     const notices = [];
     if (result.neutralCount >= questions.length / 2) notices.push('בחלק גדול מהשאלות נבחר האמצע. ייתכן ששתי האפשרויות מתאימות לך או שההעדפות משתנות בין מצבים. כדאי לתת לתיאורים משקל מוגבל');
     if (result.straightLine && result.neutralCount === 0) notices.push('נבחרה אותה עמדה בכל השאלות. מכיוון שכיוון האפשרויות מתחלף, התוצאה מאוזנת. כדאי לעבור על התשובות ולבדוק שהבחירות מבטאות את ההעדפות שלך');
@@ -688,7 +702,7 @@ const MBTI_PROFILES = {"ISTJ":{"he":"מקשג","name":"המפקח / הלוגיס
       const p = MBTI_PROFILES[result.code];
       lines.push(p.name, '', p.description, '', 'חוזקות אפשריות:', ...p.strengths.map(s=>'• '+s), '', 'נקודה למחשבה:',p.stretch,'','בקשרים:',p.relationships,'','בלמידה ובעשייה:',p.work,'','ניסוי קטן:',p.experiment);
     } else lines.push('X מסמן שוויון בציר. לא נבחר טיפוס יחיד');
-    lines.push('', 'התוצאה בכל ציר:');
+    lines.push('', 'ההעדפות שלך בארבעת התחומים:');
     result.axes.forEach(a => lines.push(`${a.labels[0]} ${a.firstPercent}% | ${a.labels[1]} ${a.secondPercent}% (${a.label})`));
     if (result.candidates.length > 1) lines.push('', 'צירופים להשוואה: ' + result.candidates.join(', '));
     if (!$('result-notice').hidden) lines.push('', $('result-notice').textContent);

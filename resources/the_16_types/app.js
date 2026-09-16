@@ -108,9 +108,15 @@
     result = MBTI.score(questions, answers);
     const tied = result.code.includes('X');
     $('result-heading').textContent = tied ? 'לא התקבלה העדפה בכל הצירים' : `הכיוון שלך: ${MBTI_PROFILES[result.code].name}`;
-    $('result-subtitle').textContent = tied ? 'בחלק מהצירים אין כרגע העדפה מכריעה. אפשר לעיין בפירוט ולהשוות בין התיאורים' : 'זה הצירוף שעולה מהתשובות שלך. התיאור כללי: חלקים ממנו עשויים להתאים לך יותר מאחרים';
+    $('result-subtitle').textContent = tied ? 'בחלק מהצירים אין כרגע העדפה מכריעה. אפשר לעיין בפירוט ולהשוות בין התיאורים' : 'הפרופיל שעולה מהתשובות שלך';
     $('profile-card').innerHTML = tied ? `<div class="profile-top"><bdi class="type-code">${result.code}</bdi></div><h3>אין טיפוס יחיד בתוצאה הזו</h3><p>האות X מסמנת ציר שבו התקבל שוויון. לא בחרנו עבורך צד שרירותי, ולכן אין כאן תיאור של טיפוס יחיד.</p><p>אפשר לעיין בצירופים המוצעים בהמשך, ולחשוב איזו העדפה חוזרת בחיים שלך כשיש חופש לבחור.</p><div class="experiment"><h4>אפשר לנסות השבוע</h4><p>לתעד שלושה רגעים של בחירה חופשית: מה בחרת, למה, והאם זו הייתה העדפה או דרישה של המצב.</p></div>` : profileHTML(result.code);
-    $('axis-results').innerHTML = result.axes.map(a => `<section class="axis-row"><div class="axis-title"><b>${a.title}</b><span>${a.label}</span></div><div class="axis-labels"><span><strong>${a.labels[0]}</strong> <bdi>${a.id[0]} · ${a.firstPercent}%</bdi></span><span><strong>${a.labels[1]}</strong> <bdi>${a.id[1]} · ${a.secondPercent}%</bdi></span></div><div class="axis-bar" role="img" aria-label="${a.labels[0]} ${a.firstPercent} אחוז, ${a.labels[1]} ${a.secondPercent} אחוז"><i style="width:${a.firstPercent}%"></i></div><p class="axis-explain">${a.labels[0]}: ${a.explanations[0]}<br>${a.labels[1]}: ${a.explanations[1]}</p></section>`).join('');
+    $('axis-results').innerHTML = result.axes.map(a => {
+      const winner = a.id.indexOf(a.letter);
+      const percentages = [a.firstPercent, a.secondPercent];
+      const emphasis = i => i === winner ? ' is-dominant' : '';
+      const summary = winner < 0 ? 'אין העדפה לצד מסוים' : `${a.close ? 'נטייה קלה' : 'הנטייה שלך'}: ${a.labels[winner]}`;
+      return `<section class="axis-row"><div class="axis-title"><b>${a.title}</b></div><div class="axis-labels">${a.labels.map((label,i) => `<div class="axis-pole${emphasis(i)}"><strong>${label}</strong><bdi dir="ltr">${a.id[i]} · ${percentages[i]}%</bdi></div>`).join('')}</div><div class="axis-bar" role="img" aria-label="${a.labels[0]} ${a.firstPercent} אחוז, ${a.labels[1]} ${a.secondPercent} אחוז">${percentages.map((value,i) => `<i class="${emphasis(i).trim()}" style="width:${value}%"></i>`).join('')}</div><p class="axis-explain"><strong>${summary}</strong>${winner < 0 ? '' : `<br>${a.explanations[winner]}`}</p></section>`;
+    }).join('');
     const notices = [];
     if (result.neutralCount >= questions.length / 2) notices.push('בחלק גדול מהשאלות נבחר האמצע. ייתכן ששתי האפשרויות מתאימות לך או שההעדפות משתנות בין מצבים. כדאי לתת לתיאורים משקל מוגבל');
     if (result.straightLine && result.neutralCount === 0) notices.push('נבחרה אותה עמדה בכל השאלות. מכיוון שכיוון האפשרויות מתחלף, התוצאה מאוזנת. כדאי לעבור על התשובות ולבדוק שהבחירות מבטאות את ההעדפות שלך');
@@ -132,7 +138,7 @@
       const p = MBTI_PROFILES[result.code];
       lines.push(p.name, '', p.description, '', 'חוזקות אפשריות:', ...p.strengths.map(s=>'• '+s), '', 'נקודה למחשבה:',p.stretch,'','בקשרים:',p.relationships,'','בלמידה ובעשייה:',p.work,'','ניסוי קטן:',p.experiment);
     } else lines.push('X מסמן שוויון בציר. לא נבחר טיפוס יחיד');
-    lines.push('', 'התוצאה בכל ציר:');
+    lines.push('', 'ההעדפות שלך בארבעת התחומים:');
     result.axes.forEach(a => lines.push(`${a.labels[0]} ${a.firstPercent}% | ${a.labels[1]} ${a.secondPercent}% (${a.label})`));
     if (result.candidates.length > 1) lines.push('', 'צירופים להשוואה: ' + result.candidates.join(', '));
     if (!$('result-notice').hidden) lines.push('', $('result-notice').textContent);

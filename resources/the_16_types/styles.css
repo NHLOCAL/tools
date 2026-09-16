@@ -152,7 +152,8 @@ legend { font-size: 1rem; text-align: center; margin: 0 auto 16px; padding: 0; c
 .result-intro { margin: 35px 0 29px; }
 .result-intro h2 { margin: 15px 0; }
 .result-intro .lead { max-width: 750px; }
-.result-layout { display: grid; grid-template-columns: 1.15fr 1fr; gap: 27px; align-items: start; }
+main.shell:has(#results:not([hidden])) { max-width: 1400px; }
+.result-layout { display: grid; grid-template-columns: minmax(0, 1.75fr) minmax(320px, 1fr); gap: 27px; align-items: start; }
 .profile-card { background: var(--white); padding: 30px; border: 1px solid var(--line); border-radius: 30px; box-shadow: var(--soft-shadow); }
 .profile-top { display: flex; align-items: center; justify-content: space-between; gap: 14px; padding: 16px 21px; margin-bottom: 24px; border-radius: 22px; background: var(--blue-soft); }
 .type-code { font-size: 2.8rem; letter-spacing: .02em; font-weight: 600; line-height: 1.15; color: var(--accent); }
@@ -160,22 +161,29 @@ legend { font-size: 1rem; text-align: center; margin: 0 auto 16px; padding: 0; c
 .profile-name { font-size: 1.7rem; margin-bottom: 15px; }
 .profile-card p { font-size: 1.0625rem; line-height: 1.8; }
 .profile-card h4 { font-size: 1.02rem; margin: 25px 0 9px; color: var(--clay); font-weight: 500; }
-.profile-card ul { padding-inline-start: 20px; font-size: .97rem; }
+.profile-card ul { padding-inline-start: 20px; font-size: 1.05rem; }
 .profile-card li { margin-bottom: 7px; }
 .experiment { padding: 18px 20px; border-radius: 20px; background: var(--peach-soft); margin-top: 25px; }
 .experiment h4 { margin-top: 0; }
 .experiment p { margin-bottom: 0; }
 .axis-panel { padding: 28px 25px; background: var(--surface-cool); border: 1px solid var(--line); border-radius: 30px; }
-.axis-row { margin: 28px 0; }
-.axis-title { display: flex; justify-content: space-between; gap: 10px; align-items: baseline; font-size: .88rem; margin-bottom: 11px; }
-.axis-title b { font-weight: 500; }
-.axis-title span { font-size: .75rem; color: var(--muted); }
-.axis-labels { display: flex; justify-content: space-between; gap: 10px; font-size: .85rem; }
-.axis-labels strong { font-weight: 500; }
-.axis-bar { height: 10px; border-radius: 20px; background: var(--track); margin: 11px 0; position: relative; overflow: hidden; direction: rtl; }
-.axis-bar i { display: block; background: var(--accent); height: 100%; }
-.axis-bar:after { content: ""; position: absolute; top: 0; bottom: 0; left: 50%; border-inline-start: 2px solid var(--white); }
-.axis-explain { font-size: .9375rem; color: var(--muted); line-height: 1.7; margin: 0; }
+.axis-row { margin: 26px 0; padding-bottom: 24px; border-bottom: 1px solid var(--line); }
+.axis-row:last-child { margin-bottom: 0; padding-bottom: 0; border-bottom: 0; }
+.axis-title { font-size: 1rem; margin-bottom: 12px; }
+.axis-title b { font-weight: 650; }
+.axis-labels { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+.axis-pole { display: flex; flex-direction: column; gap: 3px; padding: 10px 12px; border: 2px solid transparent; border-radius: 14px; color: var(--muted); }
+.axis-pole strong { font-weight: 500; }
+.axis-pole.is-dominant { border-color: var(--accent); background: var(--white); color: var(--accent); }
+.axis-pole.is-dominant strong { font-weight: 800; }
+.axis-pole bdi { font-size: 1.05rem; font-weight: 650; }
+.axis-bar { display: flex; height: 10px; border-radius: 20px; background: var(--track); margin: 12px 0; overflow: hidden; direction: rtl; }
+.axis-bar i { display: block; height: 100%; background: var(--track); }
+.axis-bar i.is-dominant { background: var(--accent); }
+.axis-bar i + i { border-inline-start: 2px solid var(--white); }
+.axis-explain { font-size: .96rem; color: var(--muted); line-height: 1.7; margin: 0; }
+.axis-explain strong { color: var(--ink); }
+.axis-note { font-size: .93rem; color: var(--muted); line-height: 1.7; }
 .notice { border: 1px solid var(--notice-line); background: var(--notice-bg); border-radius: 20px; padding: 18px 23px; font-size: .96rem; margin: 25px 0; }
 .notice p:last-child { margin-bottom: 0; }
 .nearby { margin-top: 27px; padding: 24px; background: var(--surface-warm); border-radius: 25px; }
@@ -216,7 +224,7 @@ dialog::backdrop { background: #41495c80; backdrop-filter: blur(4px); }
   .sheet-number { font-size: 8rem; }
   .sheet-axes > div { font-size: .8rem; padding: 9px 12px; gap: 4px; }
   .sheet-axes bdi { font-size: .75rem; }
-  .result-layout { gap: 20px; }
+  .result-layout { grid-template-columns: 1fr; gap: 20px; }
   .profile-card { padding: 25px; }
   .axis-panel { padding: 24px 20px; }
   .axis-title { flex-wrap: wrap; gap: 3px 10px; }
