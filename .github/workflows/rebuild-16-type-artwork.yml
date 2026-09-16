@@ -1,0 +1,61 @@
+name: Rebuild 16-type artwork (one-off)
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+    paths:
+      - scripts/redraw_16_type_illustrations.py
+      - .github/workflows/rebuild-16-type-artwork.yml
+
+permissions:
+  contents: write
+
+jobs:
+  rebuild:
+    if: >-
+      github.event.pull_request.head.repo.full_name == 'NHLOCAL/tools' &&
+      github.event.pull_request.head.ref == 'codex/redesign-16-type-illustrations'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Install the existing site build dependency
+        run: python -m pip install -r requirements.txt
+      - name: Regenerate artwork and its standalone consumers
+        run: |
+          python scripts/redraw_16_type_illustrations.py
+          node resources/the_16_types/build.cjs
+          python build.py
+      - name: Validate the artwork and existing site contracts
+        run: |
+          python -m unittest discover -s tests -v
+          node --test resources/the_16_types/scoring.test.cjs
+          node resources/the_16_types/build.cjs --check
+      - name: Provide the exact built page for browser inspection
+        uses: actions/upload-artifact@v4
+        with:
+          name: 16-type-artwork-validation
+          retention-days: 3
+          path: |
+            tools/the_16_types.html
+            assets/illustrations/16-types/*.svg
+      - name: Commit generated assets to this feature branch only
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add assets/illustrations/16-types/*.svg tools/the_16_types.html assets/downloads/the_16_types.js catalog
+          if ! git diff --quiet; then
+            echo 'Unexpected changes outside the illustration build outputs:'
+            git diff --name-only
+            exit 1
+          fi
+          if git diff --cached --quiet; then exit 0; fi
+          git commit -m 'Rebuild all 16 SVG illustrations and standalone test outputs'
+          git push origin HEAD:refs/heads/codex/redesign-16-type-illustrations
