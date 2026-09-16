@@ -7,6 +7,7 @@ The SVG files remain the inputs to resources/the_16_types/build.cjs.
 from pathlib import Path
 from html import escape
 import json
+import math
 import xml.etree.ElementTree as ET
 
 OUT = Path(__file__).resolve().parents[1] / 'assets' / 'illustrations' / '16-types'
@@ -23,8 +24,51 @@ def rect(x,y,w,h,r,fill,**attrs): return el('rect',x=x,y=y,width=w,height=h,rx=r
 def g(content, **attrs): return '<g'+''.join(' '+k.replace('_','-')+'="'+str(v)+'"' for k,v in attrs.items())+'>'+content+'</g>'
 def limb(d, color, width=14):
     return p(d,stroke=INK,stroke_width=width+2.6)+p(d,stroke=color,stroke_width=width)
-def shoe(x,y,flip=False,color=INK,angle=0):
-    return g(p('M0 0H14Q18 4 26 5Q30 6 29 11H-1Q-4 8 0 0Z',color)+p('M0 9H27',stroke=PAPER if color==INK else INK,stroke_width=1,opacity='.38'),transform=f'translate({x} {y}) rotate({angle}) scale({-1 if flip else 1} 1)')
+def point(value):
+    """Small, stable coordinates; rounding is shared by both cuff endpoints."""
+    return ' '.join(f'{v:.2f}'.rstrip('0').rstrip('.') if v else '0' for v in value)
+
+def ankle_edges(x, y, width=15, angle=0):
+    """World-space ends of the hem, rotated about the ankle, not the heel."""
+    theta = math.radians(angle)
+    dx, dy = width * math.cos(theta) / 2, width * math.sin(theta) / 2
+    return (x - dx, y - dy), (x + dx, y + dy)
+
+def shoe(x, y, flip=False, color=INK, angle=0, cuff=15, sole=None):
+    """An ankle-centred shoe. Its collar extends 3 units under the trousers.
+
+    Reflection changes only the toe direction: the collar remains centred.
+    Paint the matching trousers after the shoe to hide the rear collar seam.
+    """
+    half = cuff / 2
+    body = (f'M{-half:g} -3H{half:g}'
+            f'Q{half:g} 0 {half + 2:g} 2L17 4.5'
+            f'Q21 5.5 21 8V10H{-half:g}'
+            f'Q{-half - 1:g} 10 {-half - 1:g} 7Z')
+    line = sole or (PAPER if color == INK else INK)
+    art = p(body, color)
+    art += p(f'M{-half + 1:g} 8H19', stroke=line, stroke_width=1,
+             opacity='.32' if color == INK else '.7')
+    if color == PAPER:
+        art += p('M7 2 10 3M5 4 8 5', stroke=line, stroke_width=1)
+    return g(art, data_part='shoe',
+             transform=f'translate({x} {y}) rotate({angle}) scale({-1 if flip else 1} 1)')
+
+def leg(outline, ankle, color, *, flip=False, angle=0, cuff=15,
+        shoe_color=INK, sole=None):
+    """One continuous trouser leg and shoe with an exact shared hem.
+
+    L/R are the endpoints of the ankle cross-section, not arbitrary anchors.
+    Each pose owns its thigh and knee curves; only the join is shared.
+    """
+    if outline.count('{L}') != 1 or outline.count('{R}') != 1:
+        raise ValueError('A leg outline must include each cuff endpoint once')
+    left, right = ankle_edges(*ankle, cuff, angle)
+    trousers = p(outline.format(L=point(left), R=point(right)), color,
+                 data_part='trousers')
+    return g(shoe(*ankle, flip=flip, color=shoe_color, angle=angle,
+                  cuff=cuff, sole=sole) + trousers, data_part='leg')
+
 def hand(x,y,skin=0,angle=0,kind='grip'):
     s,sh=SKINS[skin]
     if kind=='open':
@@ -52,7 +96,6 @@ def head(x,y,skin=0,hair='#594335',style='sweep',beard=False,moustache=False,gla
     if style=='silver':out+=p('M-10-20Q-4-23 2-21',stroke=PAPER,stroke_width=1.4,opacity='.65')
     if beard:
         out+=p('M-15 6-10 10-5 10 0 8 6 10 11 9 15 5 13 16Q8 24 0 24Q-10 22-14 15Z',hair,stroke=hair)
-    # Faces deliberately use few, legible marks rather than tiny stacked details.
     brow='M-11-2Q-7-4-3-2M4-2Q8-4 12-2' if mood!='thought' else 'M-11-2-4-3M4-3 11-1'
     out+=p(brow,stroke=hair,stroke_width=1.4)
     out+=c(-7,3,1.15,INK,stroke='none')+c(8,3,1.15,INK,stroke='none')
@@ -87,7 +130,11 @@ def torso(x,color,shade=None,kind='jacket',angle=0):
     return g(art,transform=f'translate({x} 0) rotate({angle} 0 126)')
 
 def standing(x=116, pants=INK, shade='#415363', spread=0):
-    return g(p('M-23 153H1L-4 201H-20Z',pants)+p(f'M1 153H24L{30+spread} 200 {14+spread} 203 4 174Z',shade)+shoe(-22,200,True)+shoe(13+spread,201),transform=f'translate({x} 0)')
+    left = leg('M-23 152H2Q1 168-3 180L{R} L{L}Q-23 181-23 152Z',
+               (-13, 204), pants, flip=True)
+    right = leg('M1 152H23Q24 170 25 184L{R} L{L}Q8 184 3 173L-1 166Z',
+                (21 + spread, 204), shade)
+    return g(left + right, transform=f'translate({x} 0)')
 
 def compact_inherited_styles(svg):
     """Remove only redundant inherited presentation attributes, not geometry."""
@@ -103,7 +150,6 @@ def compact_inherited_styles(svg):
         for child in node:
             visit(child, current)
     root = ET.fromstring(svg)
-    # Whitespace between shapes is irrelevant and is reapplied consistently below.
     for node in root.iter():
         if node.text is not None and not node.text.strip(): node.text = None
         node.tail = None
@@ -116,7 +162,6 @@ def write(code,title,desc,body):
     start=f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 240" role="img" aria-labelledby="{code.lower()}-title" aria-describedby="{code.lower()}-desc">\n<title id="{code.lower()}-title">{code}: {escape(title)}</title>\n<desc id="{code.lower()}-desc">{escape(desc)}</desc>\n'
     bg=c(120,122,84,soft)+el('ellipse',cx=120,cy=216,rx=65,ry=3,fill=INK,opacity='.08')
     svg=start+bg+'\n'+g(body,fill='none',stroke=INK,stroke_width='1.4',stroke_linecap='round',stroke_linejoin='round')+'\n</svg>\n'
-    # Keep each SVG readable while avoiding redundant attributes and giant path lines.
     svg=compact_inherited_styles(svg)
     (OUT/f'{code}.svg').write_text(svg, encoding='utf-8', newline='\n')
     return svg
@@ -126,7 +171,6 @@ def intj():
     art=standing(117,INK,'#344B5E')
     art+=limb('M94 107Q83 116 77 140',a)+limb('M139 107Q151 119 157 139',a)
     art+=torso(117,a,'#364673')+head(117,67,skin,INK,glasses=True,angle=-5,mood='thought')
-    # An actual folded three-panel plan, gripped at both outside edges.
     art+=g(p('M72 135 99 130 127 135 157 128V165L128 172 99 167 72 172Z','#B9CFDE')+p('M99 130 127 135 128 172 99 167Z','#DCE7EF',stroke='none')+p('M99 134V164M127 139V168',stroke=a,opacity='.45')+p('M79 145 91 142V155H85V161M106 159V143L120 146V163M134 159V145L149 141V156',stroke=a,stroke_width=1.5)+p('M108 150 119 152M141 145V157',stroke=a,stroke_width=1),stroke=a)
     art+=hand(73,149,skin,-8)+hand(156,146,skin,14)
     write('INTJ','The architect with a folded blueprint','A bespectacled male architect in an indigo jacket studies a three-panel architectural plan. His balanced stance and precise drawing convey quiet planning.',art)
@@ -134,9 +178,8 @@ def intj():
 def intp():
     a,s=PALETTES['INTP'];skin=0
     art=rect(67,165,63,7,3,'#B8A28E')+p('M74 173 69 212M122 173 131 212',stroke='#A28A75',stroke_width=4)
-    art+=p('M97 152Q123 150 139 167L152 191 139 198 120 176 94 175Z','#384954')
-    art+=p('M79 153H106L100 180 85 196 106 202 102 215 72 207Q64 204 70 193L83 174Z',INK)
-    art+=shoe(101,207)+shoe(140,194,angle=13)
+    art+=leg('M101 153Q126 149 142 165Q150 172 149 183L{R} L{L}L135 185Q133 180 122 177L99 174Z', (143,204), '#384954', cuff=14)
+    art+=leg('M80 153L102 154Q109 164 115 173Q121 180 115 187L{R} L{L}Q94 196 100 183Q88 178 81 168Z', (100,204), INK, cuff=14)
     art+=limb('M82 107Q64 127 78 144L105 146',a)
     art+=limb('M128 107 142 126Q146 129 152 123L165 102',a)
     art+=torso(106,a,'#9680AA')+limb('M77 141Q86 146 103 146',a,12)+hand(106,145,skin,83)
@@ -149,7 +192,8 @@ def intp():
 def entj():
     a,s=PALETTES['ENTJ'];skin=3
     art=p('M139 215V192H166V172H192V150H214V215Z','#E8C8CE',stroke='none')+p('M166 191H191M192 171H212',stroke=a,opacity='.25')
-    art+=p('M84 152H108L104 202H86Z',INK)+p('M108 151 131 149Q142 150 151 160L154 180H138L136 170 114 174Z','#374A57')+shoe(85,201,True)+shoe(139,181)
+    art+=leg('M84 151H109Q109 170 106 184L{R} L{L}Q84 183 84 151Z', (95,204), INK, flip=True)
+    art+=leg('M107 151Q127 145 140 153Q152 158 152 168L{R} L{L}L135 171Q122 175 110 174L105 164Z', (144,182), '#374A57', cuff=14)
     art+=limb('M87 107 72 133Q70 143 93 147',a)+limb('M133 107 152 122Q156 123 160 115L177 88',a)
     art+=torso(108,a,'#7B3549')+p('M106 106 111 106 115 132 111 138 106 132Z',GOLD,stroke='none')
     art+=limb('M73 136Q76 144 91 146',a,12)+hand(95,145,skin,75)+head(108,66,skin,INK,'short',moustache=True,angle=-4)
@@ -158,7 +202,8 @@ def entj():
 
 def entp():
     a,s=PALETTES['ENTP'];skin=1
-    art=p('M97 153 120 156 109 184 90 207 77 199 94 172Z',INK)+p('M120 155 142 151 143 180 161 201 148 211 126 188Z','#415363')+shoe(81,200,True,angle=-7)+shoe(150,202,angle=12)
+    art=leg('M96 151L120 155Q115 177 106 189Q101 197 {R} L{L}Q81 192 91 177Q93 163 96 151Z', (86,204), INK, flip=True, cuff=14)
+    art+=leg('M120 154L142 150Q144 166 142 177Q146 189 {R} L{L}Q140 195 132 184Q127 177 124 165Z', (157,204), '#415363', cuff=14)
     art+=limb('M98 107 77 130Q72 135 66 128L49 108',a)+limb('M141 109 158 132Q162 137 169 130L188 105',a)
     art+=torso(119,a,'#D17A4D',angle=4)+head(117,66,skin,'#8E5038','wave',angle=8)
     art+=hand(46,105,skin,-35,'open')+hand(190,103,skin,38,'open')
@@ -179,8 +224,8 @@ def infj():
 def infp():
     a,s=PALETTES['INFP'];skin=0
     art=rect(67,166,55,43,9,'#D1D8B9',stroke='none')+p('M72 174H117',stroke=a,opacity='.25')
-    art+=p('M87 155 108 157 103 185 88 204H73L88 177Z','#415340')
-    art+=p('M106 153Q125 151 143 173Q149 180 143 188L128 204 115 196 129 180 107 177Z',INK)+shoe(77,202,True)+shoe(119,199,angle=20)
+    art+=leg('M105 153Q128 150 143 170Q151 180 144 190L{R} L{L}Q121 194 130 182Q117 178 105 176Z', (127,204), INK, cuff=14)
+    art+=leg('M81 153L103 157Q110 169 103 184L{R} L{L}Q83 193 89 179Q81 176 80 166Z', (90,204), '#415340', flip=True, cuff=14)
     art+=limb('M82 108Q67 126 81 145L100 150',a)+limb('M127 108Q146 121 152 140',a)
     art+=torso(104,a,'#889A56')+head(103,69,skin,'#624A39','wave',angle=8)
     art+=limb('M79 143 100 151',a,12)
@@ -199,7 +244,8 @@ def enfj():
 
 def enfp():
     a,s=PALETTES['ENFP'];skin=1;coat='#C19435'
-    art=p('M91 153 113 157 99 181 74 201 61 190 84 169Z',INK)+p('M113 157 136 153 141 180 158 203 144 212 121 187Z','#4E5146')+shoe(65,192,True,angle=14)+shoe(146,204,angle=3)
+    art=leg('M89 151L113 157Q107 173 98 182Q90 190 {R} L{L}Q76 178 84 171Z', (72,191), INK, flip=True, angle=15, cuff=14)
+    art+=leg('M111 155L136 151Q139 165 139 177Q141 188 {R} L{L}Q133 193 125 184Q118 172 115 166Z', (151,204), '#4E5146', cuff=14)
     art+=limb('M88 105Q74 122 61 148',coat)+limb('M132 106 151 107Q158 107 160 98L164 79',coat)
     art+=torso(108,coat,a,angle=-5)+head(108,66,skin,'#684D35','wave',angle=-10)+hand(57,155,skin,15)
     art+=g(p('M157 47 185 24 209 52 181 80Z',coat)+p('M185 24 181 80 173 48Z',PAPER,stroke='none')+p('M157 47 209 52M185 24 181 80',stroke=a,stroke_width=1.3)+p('M181 80Q168 95 164 79M181 80Q183 99 200 106Q181 114 198 124',stroke=a,stroke_width=1.2)+p('M184 97 193 94 191 103Z',coat)+p('M192 116 201 113 200 122Z',coat),stroke=a)
@@ -250,7 +296,8 @@ def esfj():
 
 def istp():
     a,s=PALETTES['ISTP'];skin=3
-    art=p('M83 154 107 160 92 196 110 205 104 216H79Q68 215 73 204Z',INK)+p('M109 154 132 160 154 174Q159 178 157 186L151 207H135L137 186 111 179Z','#355954')+shoe(103,206)+shoe(136,205)
+    art=leg('M83 154L108 159Q105 180 99 201Q97 217 84 214L{R} L{L}L83 198Q87 201 89 194Q92 178 93 166Z', (65,196), INK, angle=105, cuff=14)
+    art+=leg('M104 153Q131 153 151 170Q160 176 157 188L{R} L{L}L136 187Q123 183 111 177L99 166Z', (145,204), '#355954', cuff=14)
     art+=limb('M78 113Q63 136 51 167',a)+limb('M127 114 149 139Q155 143 160 134L171 115',a)
     art+=torso(103,a,'#5C9B8B',angle=6)+p('M81 131 92 129 94 140 83 142ZM115 128 126 130 125 141 114 139Z','#276355',stroke='none')
     art+=head(101,73,skin,'#33463B','cap',beard=True,angle=7)+hand(47,175,skin,25)
@@ -261,7 +308,8 @@ def istp():
 def isfp():
     a,s=PALETTES['ISFP'];skin=0
     art=rect(69,166,60,7,3,'#BCA383')+p('M76 174 67 213M122 174 131 213',stroke='#A88C70',stroke_width=4)
-    art+=p('M81 156 105 159 100 181 84 203 69 198 85 176Z','#D9CBAE')+p('M103 154 126 159 141 175 137 203H120L124 182 104 176Z','#C8B99C')+shoe(75,201,True)+shoe(121,202)
+    art+=leg('M102 153Q123 154 139 170Q147 177 143 188L{R} L{L}L124 183Q112 179 100 175Z', (131,204), '#C8B99C', cuff=14)
+    art+=leg('M80 153L104 157Q110 171 103 185L{R} L{L}Q77 193 88 178Q80 174 79 165Z', (84,204), '#D9CBAE', flip=True, cuff=14)
     art+=limb('M78 109 62 134Q59 141 65 149',a)+limb('M124 112 138 136Q142 141 151 137L158 132',a)
     art+=torso(101,a,'#B498CC',kind='sweater')+head(99,69,skin,'#6B4E3D','sweep',beard=True,angle=7)
     art+=g(p('M156 212 177 82 181 82 203 212',stroke='#A78B70',stroke_width=4)+p('M163 202H196',stroke='#A78B70',stroke_width=2)+rect(161,94,47,68,2,'#B99C7D')+rect(165,98,39,59,1,PAPER,stroke='none')+c(193,111,5.5,GOLD,stroke='none')+p('M166 140 178 122 192 141 203 130V156H166Z','#A4B990',stroke='none')+p('M166 150 177 139 190 154 181 157H166Z',a,stroke='none')+p('M157 165H211',stroke='#9C8069',stroke_width=4))
@@ -272,7 +320,8 @@ def isfp():
 def estp():
     a,s=PALETTES['ESTP'];skin=2;coat='#B56B25'
     art=p('M134 214 143 195 161 190 183 195 202 214Z','#C7C5B1',stroke='none')+p('M143 195 160 198 168 207M161 190 174 201',stroke='#9C9C8C',stroke_width=1.2)
-    art+=p('M86 153H110L105 203H88Z',INK)+p('M108 152 132 149Q149 149 157 160L155 179H139L137 168 114 174Z','#4D565A')+shoe(88,201,True)+shoe(140,181)
+    art+=leg('M86 151H111Q111 171 107 185L{R} L{L}Q86 181 86 151Z', (97,204), INK, flip=True)
+    art+=leg('M108 152Q132 145 146 155Q158 161 157 170L{R} L{L}L137 173Q124 177 113 175L106 164Z', (147,184), '#4D565A', cuff=14)
     art+=limb('M87 108Q70 127 64 148',coat)+limb('M133 108Q152 120 151 145',coat)
     art+=torso(110,coat,'#D5914B')+hand(61,155,skin,-10)+head(110,67,skin,'#403D35','short',glasses='sun',angle=-6)
     art+=p('M101 105 118 140M130 105 136 141',stroke=INK,stroke_width=2.5)
@@ -282,13 +331,14 @@ def estp():
 
 def esfp():
     a,s=PALETTES['ESFP'];skin=3
-    art=p('M96 153 119 159 109 184 84 206 72 196 96 175Z',INK)+p('M119 155 140 149 159 171 182 182 176 199 148 186 125 175Z','#4F435A')+shoe(78,202,True,color=PAPER,angle=-7)+shoe(180,186,color=PAPER,angle=58)
+    art=leg('M96 152L120 157Q115 177 106 188Q99 198 {R} L{L}Q78 194 90 180L96 170Z', (85,204), INK, flip=True, cuff=14, shoe_color=PAPER, sole=a)
+    art+=leg('M118 154L140 149Q149 161 156 169Q163 175 {R} L{L}Q154 191 145 183L125 175Z', (179,196), '#4F435A', angle=-28, cuff=14, shoe_color=PAPER, sole=a)
     art+=p('M42 111Q25 135 31 167Q35 190 64 195',stroke='#71868E',stroke_width=1.4)
     art+=limb('M91 107 70 139Q66 144 61 135L43 113',a)+limb('M136 107 157 114Q161 115 166 108L182 88',a)
     art+=torso(113,a,'#C570A0',angle=-6)+p('M91 148 110 157 96 176 80 163Z','#C570A0',stroke='none')+head(113,65,skin,'#342F38','wave',moustache=True,angle=-10)
     art+=hand(187,81,skin,34,'open')
     art+=g(rect(-4,-3,8,28,4,INK)+el('ellipse',cx=0,cy=-10,rx=8,ry=11,fill='#70838B')+p('M-5-16 6-12M-6-11 6-7M-5-6 4-3',stroke=PAPER,stroke_width=1)+rect(-2,7,4,3,1,GOLD,stroke='none'),transform='translate(39 94) rotate(-26)')
-    art+=hand(45,108,skin,-26)+p('M63 209 76 208M181 198 185 205',stroke=a,stroke_width=1.4)
+    art+=hand(45,108,skin,-26)
     write('ESFP','The performer dancing with a microphone','An expressive moustached male performer in a magenta jacket dances in light sneakers. A clearly held microphone, a loose cable and an open raised hand complete the movement.',art)
 
 if __name__=='__main__':
