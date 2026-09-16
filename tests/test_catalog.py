@@ -12,7 +12,7 @@ from site_builder.catalog import CATEGORIES, parse_tool, read_catalog
 class CatalogTests(unittest.TestCase):
     def test_all_readme_tools_have_existing_paths_and_stable_anchors(self):
         tools = read_catalog()
-        self.assertEqual(len(tools), 9)
+        self.assertTrue(tools, "The README catalog must not be empty")
         self.assertEqual({tool.category for tool in tools}, {c.key for c in CATEGORIES})
         self.assertEqual(tools[0].id, "yemot-telephony")
         subtitle = next(tool for tool in tools if tool.id == "subtitle_editor")

@@ -1,0 +1,475 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-09-16T01:09:01.328Z",
+  "title": "Design System: NH Local Toolbox",
+  "extensions": {
+    "colorMeta": {
+      "paper": {
+        "role": "neutral",
+        "tonalRamp": [
+          "oklch(0.1500 0.0079 106.55)",
+          "oklch(0.2643 0.0079 106.55)",
+          "oklch(0.3786 0.0079 106.55)",
+          "oklch(0.4929 0.0079 106.55)",
+          "oklch(0.6071 0.0079 106.55)",
+          "oklch(0.7214 0.0079 106.55)",
+          "oklch(0.8357 0.0079 106.55)",
+          "oklch(0.9500 0.0079 106.55)"
+        ]
+      },
+      "surface": {
+        "role": "neutral",
+        "tonalRamp": [
+          "oklch(0.1500 0.0067 97.35)",
+          "oklch(0.2643 0.0067 97.35)",
+          "oklch(0.3786 0.0067 97.35)",
+          "oklch(0.4929 0.0067 97.35)",
+          "oklch(0.6071 0.0067 97.35)",
+          "oklch(0.7214 0.0067 97.35)",
+          "oklch(0.8357 0.0067 97.35)",
+          "oklch(0.9500 0.0067 97.35)"
+        ]
+      },
+      "ink": {
+        "role": "neutral",
+        "tonalRamp": [
+          "oklch(0.1500 0.0322 166.92)",
+          "oklch(0.2643 0.0322 166.92)",
+          "oklch(0.3786 0.0322 166.92)",
+          "oklch(0.4929 0.0322 166.92)",
+          "oklch(0.6071 0.0322 166.92)",
+          "oklch(0.7214 0.0322 166.92)",
+          "oklch(0.8357 0.0322 166.92)",
+          "oklch(0.9500 0.0322 166.92)"
+        ]
+      },
+      "muted": {
+        "role": "neutral",
+        "tonalRamp": [
+          "oklch(0.1500 0.0262 155.28)",
+          "oklch(0.2643 0.0262 155.28)",
+          "oklch(0.3786 0.0262 155.28)",
+          "oklch(0.4929 0.0262 155.28)",
+          "oklch(0.6071 0.0262 155.28)",
+          "oklch(0.7214 0.0262 155.28)",
+          "oklch(0.8357 0.0262 155.28)",
+          "oklch(0.9500 0.0262 155.28)"
+        ]
+      },
+      "line": {
+        "role": "neutral",
+        "tonalRamp": [
+          "oklch(0.1500 0.0211 138.44)",
+          "oklch(0.2643 0.0211 138.44)",
+          "oklch(0.3786 0.0211 138.44)",
+          "oklch(0.4929 0.0211 138.44)",
+          "oklch(0.6071 0.0211 138.44)",
+          "oklch(0.7214 0.0211 138.44)",
+          "oklch(0.8357 0.0211 138.44)",
+          "oklch(0.9500 0.0211 138.44)"
+        ]
+      },
+      "accent": {
+        "role": "primary",
+        "tonalRamp": [
+          "oklch(0.1500 0.1177 120.29)",
+          "oklch(0.2643 0.1177 120.29)",
+          "oklch(0.3786 0.1177 120.29)",
+          "oklch(0.4929 0.1177 120.29)",
+          "oklch(0.6071 0.1177 120.29)",
+          "oklch(0.7214 0.1177 120.29)",
+          "oklch(0.8357 0.1177 120.29)",
+          "oklch(0.9500 0.1177 120.29)"
+        ]
+      },
+      "accent-ink": {
+        "role": "neutral",
+        "tonalRamp": [
+          "oklch(0.1500 0.0322 166.92)",
+          "oklch(0.2643 0.0322 166.92)",
+          "oklch(0.3786 0.0322 166.92)",
+          "oklch(0.4929 0.0322 166.92)",
+          "oklch(0.6071 0.0322 166.92)",
+          "oklch(0.7214 0.0322 166.92)",
+          "oklch(0.8357 0.0322 166.92)",
+          "oklch(0.9500 0.0322 166.92)"
+        ]
+      },
+      "hero": {
+        "role": "neutral",
+        "tonalRamp": [
+          "oklch(0.1500 0.0181 123.98)",
+          "oklch(0.2643 0.0181 123.98)",
+          "oklch(0.3786 0.0181 123.98)",
+          "oklch(0.4929 0.0181 123.98)",
+          "oklch(0.6071 0.0181 123.98)",
+          "oklch(0.7214 0.0181 123.98)",
+          "oklch(0.8357 0.0181 123.98)",
+          "oklch(0.9500 0.0181 123.98)"
+        ]
+      },
+      "screen": {
+        "role": "neutral",
+        "tonalRamp": [
+          "oklch(0.1500 0.0358 164.02)",
+          "oklch(0.2643 0.0358 164.02)",
+          "oklch(0.3786 0.0358 164.02)",
+          "oklch(0.4929 0.0358 164.02)",
+          "oklch(0.6071 0.0358 164.02)",
+          "oklch(0.7214 0.0358 164.02)",
+          "oklch(0.8357 0.0358 164.02)",
+          "oklch(0.9500 0.0358 164.02)"
+        ]
+      },
+      "screen-ink": {
+        "role": "neutral",
+        "tonalRamp": [
+          "oklch(0.1500 0.0344 123.21)",
+          "oklch(0.2643 0.0344 123.21)",
+          "oklch(0.3786 0.0344 123.21)",
+          "oklch(0.4929 0.0344 123.21)",
+          "oklch(0.6071 0.0344 123.21)",
+          "oklch(0.7214 0.0344 123.21)",
+          "oklch(0.8357 0.0344 123.21)",
+          "oklch(0.9500 0.0344 123.21)"
+        ]
+      },
+      "skill": {
+        "role": "neutral",
+        "tonalRamp": [
+          "oklch(0.1500 0.0676 121.30)",
+          "oklch(0.2643 0.0676 121.30)",
+          "oklch(0.3786 0.0676 121.30)",
+          "oklch(0.4929 0.0676 121.30)",
+          "oklch(0.6071 0.0676 121.30)",
+          "oklch(0.7214 0.0676 121.30)",
+          "oklch(0.8357 0.0676 121.30)",
+          "oklch(0.9500 0.0676 121.30)"
+        ]
+      },
+      "web": {
+        "role": "neutral",
+        "tonalRamp": [
+          "oklch(0.1500 0.0203 189.19)",
+          "oklch(0.2643 0.0203 189.19)",
+          "oklch(0.3786 0.0203 189.19)",
+          "oklch(0.4929 0.0203 189.19)",
+          "oklch(0.6071 0.0203 189.19)",
+          "oklch(0.7214 0.0203 189.19)",
+          "oklch(0.8357 0.0203 189.19)",
+          "oklch(0.9500 0.0203 189.19)"
+        ]
+      },
+      "script": {
+        "role": "neutral",
+        "tonalRamp": [
+          "oklch(0.1500 0.0384 85.34)",
+          "oklch(0.2643 0.0384 85.34)",
+          "oklch(0.3786 0.0384 85.34)",
+          "oklch(0.4929 0.0384 85.34)",
+          "oklch(0.6071 0.0384 85.34)",
+          "oklch(0.7214 0.0384 85.34)",
+          "oklch(0.8357 0.0384 85.34)",
+          "oklch(0.9500 0.0384 85.34)"
+        ]
+      },
+      "extension": {
+        "role": "neutral",
+        "tonalRamp": [
+          "oklch(0.1500 0.0257 313.95)",
+          "oklch(0.2643 0.0257 313.95)",
+          "oklch(0.3786 0.0257 313.95)",
+          "oklch(0.4929 0.0257 313.95)",
+          "oklch(0.6071 0.0257 313.95)",
+          "oklch(0.7214 0.0257 313.95)",
+          "oklch(0.8357 0.0257 313.95)",
+          "oklch(0.9500 0.0257 313.95)"
+        ]
+      },
+      "paper-dark": {
+        "role": "neutral",
+        "tonalRamp": [
+          "oklch(0.1500 0.0244 159.04)",
+          "oklch(0.2643 0.0244 159.04)",
+          "oklch(0.3786 0.0244 159.04)",
+          "oklch(0.4929 0.0244 159.04)",
+          "oklch(0.6071 0.0244 159.04)",
+          "oklch(0.7214 0.0244 159.04)",
+          "oklch(0.8357 0.0244 159.04)",
+          "oklch(0.9500 0.0244 159.04)"
+        ]
+      },
+      "surface-dark": {
+        "role": "neutral",
+        "tonalRamp": [
+          "oklch(0.1500 0.0309 157.15)",
+          "oklch(0.2643 0.0309 157.15)",
+          "oklch(0.3786 0.0309 157.15)",
+          "oklch(0.4929 0.0309 157.15)",
+          "oklch(0.6071 0.0309 157.15)",
+          "oklch(0.7214 0.0309 157.15)",
+          "oklch(0.8357 0.0309 157.15)",
+          "oklch(0.9500 0.0309 157.15)"
+        ]
+      },
+      "ink-dark": {
+        "role": "neutral",
+        "tonalRamp": [
+          "oklch(0.1500 0.0180 123.97)",
+          "oklch(0.2643 0.0180 123.97)",
+          "oklch(0.3786 0.0180 123.97)",
+          "oklch(0.4929 0.0180 123.97)",
+          "oklch(0.6071 0.0180 123.97)",
+          "oklch(0.7214 0.0180 123.97)",
+          "oklch(0.8357 0.0180 123.97)",
+          "oklch(0.9500 0.0180 123.97)"
+        ]
+      },
+      "muted-dark": {
+        "role": "neutral",
+        "tonalRamp": [
+          "oklch(0.1500 0.0274 138.30)",
+          "oklch(0.2643 0.0274 138.30)",
+          "oklch(0.3786 0.0274 138.30)",
+          "oklch(0.4929 0.0274 138.30)",
+          "oklch(0.6071 0.0274 138.30)",
+          "oklch(0.7214 0.0274 138.30)",
+          "oklch(0.8357 0.0274 138.30)",
+          "oklch(0.9500 0.0274 138.30)"
+        ]
+      },
+      "line-dark": {
+        "role": "neutral",
+        "tonalRamp": [
+          "oklch(0.1500 0.0374 145.00)",
+          "oklch(0.2643 0.0374 145.00)",
+          "oklch(0.3786 0.0374 145.00)",
+          "oklch(0.4929 0.0374 145.00)",
+          "oklch(0.6071 0.0374 145.00)",
+          "oklch(0.7214 0.0374 145.00)",
+          "oklch(0.8357 0.0374 145.00)",
+          "oklch(0.9500 0.0374 145.00)"
+        ]
+      },
+      "hero-dark": {
+        "role": "neutral",
+        "tonalRamp": [
+          "oklch(0.1500 0.0358 153.52)",
+          "oklch(0.2643 0.0358 153.52)",
+          "oklch(0.3786 0.0358 153.52)",
+          "oklch(0.4929 0.0358 153.52)",
+          "oklch(0.6071 0.0358 153.52)",
+          "oklch(0.7214 0.0358 153.52)",
+          "oklch(0.8357 0.0358 153.52)",
+          "oklch(0.9500 0.0358 153.52)"
+        ]
+      },
+      "screen-dark": {
+        "role": "neutral",
+        "tonalRamp": [
+          "oklch(0.1500 0.0241 156.76)",
+          "oklch(0.2643 0.0241 156.76)",
+          "oklch(0.3786 0.0241 156.76)",
+          "oklch(0.4929 0.0241 156.76)",
+          "oklch(0.6071 0.0241 156.76)",
+          "oklch(0.7214 0.0241 156.76)",
+          "oklch(0.8357 0.0241 156.76)",
+          "oklch(0.9500 0.0241 156.76)"
+        ]
+      },
+      "skill-dark": {
+        "role": "neutral",
+        "tonalRamp": [
+          "oklch(0.1500 0.0521 138.86)",
+          "oklch(0.2643 0.0521 138.86)",
+          "oklch(0.3786 0.0521 138.86)",
+          "oklch(0.4929 0.0521 138.86)",
+          "oklch(0.6071 0.0521 138.86)",
+          "oklch(0.7214 0.0521 138.86)",
+          "oklch(0.8357 0.0521 138.86)",
+          "oklch(0.9500 0.0521 138.86)"
+        ]
+      },
+      "web-dark": {
+        "role": "neutral",
+        "tonalRamp": [
+          "oklch(0.1500 0.0298 195.85)",
+          "oklch(0.2643 0.0298 195.85)",
+          "oklch(0.3786 0.0298 195.85)",
+          "oklch(0.4929 0.0298 195.85)",
+          "oklch(0.6071 0.0298 195.85)",
+          "oklch(0.7214 0.0298 195.85)",
+          "oklch(0.8357 0.0298 195.85)",
+          "oklch(0.9500 0.0298 195.85)"
+        ]
+      },
+      "script-dark": {
+        "role": "neutral",
+        "tonalRamp": [
+          "oklch(0.1500 0.0301 94.43)",
+          "oklch(0.2643 0.0301 94.43)",
+          "oklch(0.3786 0.0301 94.43)",
+          "oklch(0.4929 0.0301 94.43)",
+          "oklch(0.6071 0.0301 94.43)",
+          "oklch(0.7214 0.0301 94.43)",
+          "oklch(0.8357 0.0301 94.43)",
+          "oklch(0.9500 0.0301 94.43)"
+        ]
+      },
+      "extension-dark": {
+        "role": "neutral",
+        "tonalRamp": [
+          "oklch(0.1500 0.0312 315.20)",
+          "oklch(0.2643 0.0312 315.20)",
+          "oklch(0.3786 0.0312 315.20)",
+          "oklch(0.4929 0.0312 315.20)",
+          "oklch(0.6071 0.0312 315.20)",
+          "oklch(0.7214 0.0312 315.20)",
+          "oklch(0.8357 0.0312 315.20)",
+          "oklch(0.9500 0.0312 315.20)"
+        ]
+      }
+    },
+    "shadows": [
+      {
+        "name": "frame-light",
+        "value": "7px 7px 0 #253b32",
+        "purpose": "Terminal frame, about note, and sharing dialog."
+      },
+      {
+        "name": "frame-dark",
+        "value": "7px 7px 0 #080f0a",
+        "purpose": "Dark-theme frame override."
+      },
+      {
+        "name": "button-hover",
+        "value": "3px 3px 0 var(--ink)",
+        "purpose": "Tactile hover response."
+      },
+      {
+        "name": "easter-egg",
+        "value": "4px 4px 0 var(--accent-ink)",
+        "purpose": "Brief discovery notice."
+      }
+    ],
+    "motion": [
+      {
+        "name": "ease",
+        "value": "cubic-bezier(.16, 1, .3, 1)",
+        "purpose": "Shared interaction easing."
+      },
+      {
+        "name": "button",
+        "value": "160ms",
+        "purpose": "Background, shift, and hard shadow."
+      },
+      {
+        "name": "directory-boot",
+        "value": "460ms; stagger 45ms",
+        "purpose": "Finite drawer entrance."
+      },
+      {
+        "name": "screen-scan",
+        "value": "650ms steps(14)",
+        "purpose": "Finite terminal startup."
+      },
+      {
+        "name": "cursor-ready",
+        "value": "500ms steps(2, end), 4 iterations",
+        "purpose": "Finite cursor startup."
+      },
+      {
+        "name": "grid",
+        "value": "input-driven requestAnimationFrame",
+        "purpose": "No idle loop. Two physical G keypresses within 1200ms outside editable fields trigger the pixel burst and 30-lives message. Reduced motion prevents wells and particles; text discoveries remain available."
+      }
+    ],
+    "breakpoints": [
+      {
+        "name": "compact-desktop",
+        "value": "1050px"
+      },
+      {
+        "name": "mobile-navigation",
+        "value": "780px"
+      },
+      {
+        "name": "single-column",
+        "value": "560px"
+      }
+    ]
+  },
+  "components": [
+    {
+      "name": "Primary button",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "Lime main action.",
+      "html": "<a class=\"ds-button\" href=\"#example\" dir=\"rtl\">פתיחת הכלי</a>",
+      "css": ".ds-button{display:inline-flex;align-items:center;justify-content:center;min-height:43px;padding:8px 15px;border:1px solid var(--ink);font:700 16px/1.4 var(--font);text-decoration:none;transition:transform 160ms var(--ease),box-shadow 160ms var(--ease),background 160ms}.ds-button:hover{box-shadow:3px 3px 0 var(--ink);transform:translate(-2px,-2px)}.ds-button:active{box-shadow:none;transform:translate(1px,1px)}.ds-button:focus-visible{outline:3px solid var(--ink);outline-offset:5px}@media(prefers-reduced-motion:reduce){.ds-button{transition:none}.ds-button:hover,.ds-button:active{transform:none}}.ds-button{background:var(--accent);color:var(--accent-ink);border-color:var(--accent-ink)}"
+    },
+    {
+      "name": "Secondary button",
+      "kind": "button",
+      "refersTo": "button-secondary",
+      "description": "Outlined surface action.",
+      "html": "<a class=\"ds-button\" href=\"#example\" dir=\"rtl\">הורדה</a>",
+      "css": ".ds-button{display:inline-flex;align-items:center;justify-content:center;min-height:43px;padding:8px 15px;border:1px solid var(--ink);font:700 16px/1.4 var(--font);text-decoration:none;transition:transform 160ms var(--ease),box-shadow 160ms var(--ease),background 160ms}.ds-button:hover{box-shadow:3px 3px 0 var(--ink);transform:translate(-2px,-2px)}.ds-button:active{box-shadow:none;transform:translate(1px,1px)}.ds-button:focus-visible{outline:3px solid var(--ink);outline-offset:5px}@media(prefers-reduced-motion:reduce){.ds-button{transition:none}.ds-button:hover,.ds-button:active{transform:none}}.ds-button{background:var(--surface);color:var(--ink)}"
+    },
+    {
+      "name": "Search field",
+      "kind": "input",
+      "refersTo": "search-field",
+      "description": "Full-field outline for keyboard focus.",
+      "html": "<label class=\"ds-search\" dir=\"rtl\"><input aria-label=\"חיפוש כלים\" placeholder=\"חיפוש כלים\"></label>",
+      "css": ".ds-search{display:flex;align-items:center;min-height:54px;padding:0 17px;border:1px solid var(--ink);background:var(--surface);color:var(--ink)}.ds-search:focus-within{outline:2px solid var(--ink);outline-offset:3px}.ds-search input{width:100%;min-width:0;height:52px;border:0;outline:none;background:none;color:inherit;font:18px var(--font)}.ds-search input::placeholder{color:var(--muted);opacity:1}"
+    },
+    {
+      "name": "Category navigation",
+      "kind": "nav",
+      "refersTo": "category-current",
+      "description": "Current category inverts ink and paper; mobile links wrap.",
+      "html": "<nav class=\"ds-nav\" aria-label=\"קטגוריות\" dir=\"rtl\"><a href=\"#web\" aria-current=\"page\">כלי דפדפן</a><a href=\"#scripts\">סקריפטים</a></nav>",
+      "css": ".ds-nav{display:flex;flex-direction:column;gap:5px;font:16px var(--font)}.ds-nav a{display:flex;align-items:center;min-height:44px;padding:9px 11px;border:1px solid transparent;text-decoration:none;color:var(--ink);transition:background 160ms,border-color 160ms}.ds-nav a:hover{background:var(--hero);border-color:var(--line)}.ds-nav a[aria-current]{background:var(--ink);color:var(--paper);border-color:var(--ink)}.ds-nav a:focus-visible{outline:3px solid var(--ink);outline-offset:5px}@media(max-width:780px){.ds-nav{flex-direction:row;flex-wrap:wrap;gap:6px}.ds-nav a{padding:8px 10px;border-color:var(--line);font-size:14px}}@media(prefers-reduced-motion:reduce){.ds-nav a{transition:none}}"
+    },
+    {
+      "name": "Tool card",
+      "kind": "card",
+      "refersTo": "tool-card",
+      "description": "Flat directory cell with tonal hover.",
+      "html": "<article class=\"ds-card\" dir=\"rtl\"><h3>כלי שימושי</h3><p>כלים שימושיים. קוד פתוח. מקום לרעיונות חדשים.</p><a href=\"#source\">קוד מקור</a></article>",
+      "css": ".ds-card{padding:23px;border:1px solid var(--line);background:var(--surface);color:var(--ink);font:16px/1.65 var(--font);transition:background 200ms}.ds-card:hover{background:var(--hero)}.ds-card h3{margin:0 0 12px;font:700 24px/1.16 var(--font)}.ds-card p{margin:0;color:var(--muted);max-width:65ch}.ds-card a{display:inline-flex;align-items:center;min-height:36px;margin-top:22px;color:inherit;font-size:14px;text-underline-offset:4px}.ds-card a:focus-visible{outline:3px solid var(--ink);outline-offset:5px}@media(prefers-reduced-motion:reduce){.ds-card{transition:none}}"
+    },
+    {
+      "name": "Directory drawer",
+      "kind": "custom",
+      "refersTo": "directory-drawer-active",
+      "description": "Keyboard and pointer activation share the lime treatment.",
+      "html": "<a class=\"ds-drawer\" dir=\"rtl\" href=\"#web\"><strong>כלי דפדפן</strong></a>",
+      "css": ".ds-drawer{display:flex;align-items:center;min-height:49px;padding:8px 14px;border:1px solid #afc393;background:#334b3c;color:#edf4df;text-decoration:none;font:600 18px var(--font);transition:transform 250ms var(--ease),background 180ms,color 180ms}.ds-drawer:hover,.ds-drawer:focus-visible{transform:translateX(-9px);background:var(--accent);color:var(--accent-ink)}.ds-drawer:focus-visible{outline:3px solid var(--accent);outline-offset:5px}.ds-drawer:active{transform:translateX(-4px)}@media(prefers-reduced-motion:reduce){.ds-drawer{transition:none}.ds-drawer:hover,.ds-drawer:active{transform:none}}"
+    }
+  ],
+  "narrative": {
+    "northStar": "A carefully made retro desktop",
+    "overview": "The user selected polished terminal and pixel references. The implemented world combines paper grey, green ink, phosphor lime, crisp frames, and readable Hebrew. The directory window supplies the retro character; ordinary reading and tool actions stay clear and familiar.",
+    "keyCharacteristics": [
+      "Hebrew RTL with locally served Assistant and restrained monospace metadata.",
+      "Square outlines, connected catalog cells, and hard offset shadows.",
+      "Light and dark palettes with stable lime accents.",
+      "A quiet spacetime grid, brief input feedback, and three Easter eggs explained in the footer: double G, three clicks on the terminal title or help button for a cat, and search 42."
+    ],
+    "rules": [],
+    "dos": [
+      "**Do** preserve the approved Hebrew retro desktop identity and both themes.",
+      "**Do** keep labels readable, focus visible, and ordinary content selectable.",
+      "**Do** use square framing and restrained hard shadows for the established depth hierarchy.",
+      "**Do** keep grid motion input-driven and honor reduced motion."
+    ],
+    "donts": [
+      "**Don't** replace Hebrew body text with decorative pixel or monospace typography.",
+      "**Don't** let background interaction start on reading content or actionable controls.",
+      "**Don't** use animation or color as the only explanation of a state.",
+      "**Don't** assume this catalog shell replaces each independent tool's own interface."
+    ]
+  }
+}

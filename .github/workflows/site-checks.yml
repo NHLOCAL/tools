@@ -1,0 +1,79 @@
+name: Validate static website
+
+on:
+  pull_request:
+    paths:
+      - "README.md"
+      - "CNAME"
+      - "build.py"
+      - "requirements.txt"
+      - ".gitattributes"
+      - "template.html"
+      - "*.html"
+      - "assets/**"
+      - "catalog/**"
+      - "site_builder/**"
+      - "tests/**"
+      - "tools/**"
+      - "scripts/**"
+      - "robots.txt"
+      - "sitemap.xml"
+      - ".github/workflows/site-checks.yml"
+  push:
+    branches: [main]
+    paths:
+      - "README.md"
+      - "CNAME"
+      - "build.py"
+      - "requirements.txt"
+      - ".gitattributes"
+      - "template.html"
+      - "*.html"
+      - "assets/**"
+      - "catalog/**"
+      - "site_builder/**"
+      - "tests/**"
+      - "tools/**"
+      - "scripts/**"
+      - "robots.txt"
+      - "sitemap.xml"
+      - ".github/workflows/site-checks.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  site:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - name: Install build dependency
+        run: python -m pip install -r requirements.txt
+      - name: Validate catalog, routes, metadata and download bytes
+        run: python -m unittest discover -s tests -v
+      - name: Validate browser scripts
+        shell: pwsh
+        run: |
+          foreach ($script in @('assets/site.js', 'assets/theme.js', 'assets/space-grid.js')) {
+            node --check $script
+            if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          }
+      - name: Verify committed build outputs are current
+        shell: pwsh
+        run: |
+          python build.py
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          git diff --exit-code -- index.html about.html downloads.html 404.html catalog assets/downloads tools robots.txt sitemap.xml
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          $newOutputs = git ls-files --others --exclude-standard -- catalog assets/downloads
+          if ($newOutputs) {
+            Write-Error "Uncommitted generated outputs: $newOutputs"
+            exit 1
+          }
