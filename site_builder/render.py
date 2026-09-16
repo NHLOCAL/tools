@@ -128,7 +128,7 @@ def hero(tools):
       <p>ארגז הכלים של <bdi>NH Local</bdi>. אוסף כלים שימושיים וקלי משקל, שנוצרו כדי לפתור בעיות קטנות במהירות.</p>
       <div class="hero-actions"><a class="button primary" href="#catalog">פותחים את הארגז{icon("arrow")}</a><a class="text-action" href="downloads.html">כל מה שצריך להורדה{icon("download")}</a></div>
       <p class="hero-note"><span class="status-dot" aria-hidden="true"></span>לשימוש חופשי · בקוד פתוח · גם להורדה</p></div>
-      <div class="toolbox" aria-label="גישה מהירה לקטגוריות"><div class="window-title"><span dir="ltr">NH_LOCAL / TOOLBOX</span><span class="window-dots" aria-hidden="true"><i></i><i></i><i></i></span></div>
+      <div class="toolbox" aria-label="גישה מהירה לקטגוריות"><button class="window-title" type="button" aria-label="מסוף ארגז הכלים"><span dir="ltr">NH_LOCAL / TOOLBOX</span><span class="window-dots" aria-hidden="true"><i></i><i></i><i></i></span></button>
       <div class="toolbox-screen"><div class="terminal-line" dir="ltr"><span>&gt;</span> find your next tool<span class="cursor" aria-hidden="true">_</span></div>
       <div class="drawers">{"".join(drawers)}</div><div class="terminal-footer"><span dir="ltr">{len(tools)} tools · 4 directories</span><span dir="ltr">READY{icon("check")}</span></div></div></div></section>'''
 

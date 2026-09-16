@@ -23,6 +23,7 @@
     <script src="../assets/theme.js"></script>
     <link rel="stylesheet" href="../assets/site.css">
     <script src="../assets/site.js" defer></script>
+    <script src="../assets/space-grid.js" defer></script>
 </head>
 <body data-page="category">
     <!-- THESIS: A useful Hebrew tool directory as a carefully made retro desktop.
@@ -31,6 +32,7 @@
     FIRST VIEWPORT: Compact navigation, large Hebrew title beside an interactive directory window; catalog below.
     FORM: User-selected polished terminal and pixels; user preference overrides seed 36ff221b.
     FINISH: unreviewed and undocumented is unfinished; this build ends with the finish review, the verdict, and DESIGN.md -->
+    <canvas id="space-grid" aria-hidden="true"></canvas>
     <a class="skip-link" href="#content">דילוג לתוכן הראשי</a>
     <header class="site-header"><div class="header-inner">
       <a class="brand" href="../index.html" aria-label="ארגז הכלים של NH Local, דף הבית"><span class="brand-symbol"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="square" stroke-linejoin="miter" aria-hidden="true"><path d="m4 5 7 7-7 7m9 0h7"/></svg></span><span>ארגז הכלים<small dir="ltr">NH LOCAL</small></span></a>
@@ -66,6 +68,7 @@
       <nav class="footer-links" aria-label="קישורים נוספים"><a href="https://github.com/NHLOCAL/tools">קוד מקור</a><a href="https://nhlocal.github.io">פרויקטים נוספים</a><a href="https://blog.ze-kal.top">בלוג</a><a id="contact-link" href="mailto:nh.local11@gmail.com?subject=פנייה%20מאתר%20ארגז%20הכלים">יצירת קשר</a></nav>
       <div class="footer-bottom"><span>נוצר על ידי <bdi>NH Local</bdi></span><a href="https://github.com/NHLOCAL/tools/blob/main/LICENSE">רישיון MIT</a><span dir="ltr">BUILT TO BE USEFUL<span class="footer-square" aria-hidden="true"></span></span></div></div></footer>
     <div id="toast" class="toast" role="status" aria-live="polite" aria-atomic="true" hidden></div>
+    <div id="easter-egg" class="easter-egg" role="status" aria-live="polite" hidden></div>
     <dialog id="share-dialog" aria-labelledby="share-title"><div class="dialog-heading"><h2 id="share-title">קישור ישיר לכלי</h2><button class="icon-button" type="button" data-close-dialog aria-label="סגירת חלון"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="square" stroke-linejoin="miter" aria-hidden="true"><path d="m5 5 14 14M5 19 19 5"/></svg></button></div><p>ההעתקה האוטומטית אינה זמינה. אפשר להעתיק את הקישור מהשדה הבא.</p><label for="share-url">כתובת הקישור</label><input id="share-url" dir="ltr" readonly><form method="dialog"><button class="button primary">סיום</button></form></dialog>
 </body>
 </html>
