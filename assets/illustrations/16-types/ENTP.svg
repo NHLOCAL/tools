@@ -1,3 +1,58 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 240" role="img" aria-labelledby="title-entp"><title id="title-entp">ENTP: an expressive male inventor comparing two geometric ideas</title>
-<ellipse cx="121" cy="218" rx="79" ry="5" fill="#263D48" opacity=".08"/><circle cx="122" cy="123" r="83" fill="#F9ECDF"/><path d="M98 150 121 151 110 187 95 212 79 207 94 179Z" fill="#263D48"/><path d="M121 151 142 148 143 183 163 206 150 216 122 188Z" fill="#415363"/><path d="M81 202 98 209 93 218 67 214Q64 209 81 202Z" fill="#263D48"/><path d="M150 207 161 199 179 212Q180 218 169 220L154 217Z" fill="#263D48"/><path d="M95 94 115 87 132 90 148 105 145 155 97 162 87 120Z" fill="#AC542D"/><path d="M107 91 119 101 127 91 131 155 112 157Z" fill="#FFF9ED"/><path d="M100 93 113 100 109 113 96 106ZM131 92 121 102 133 113 142 102Z" fill="#D17A4D"/><path d="M95 96Q85 95 76 107L57 124 66 137 86 127 105 111Z" fill="#AC542D"/><path d="M58 123 49 108 40 113 47 138Q51 145 59 140L69 132Z" fill="#E3AF87"/><path d="M57 121 68 135 76 127 66 114Z" fill="#D17A4D"/><g transform="translate(45 107) rotate(-25)"><path d="M-5-6Q-5-10-1-10L4-9 7-5 7 4Q6 9 1 9L-4 5-8-1Q-10-5-7-6L-4-3Z" fill="#E3AF87"/><path d="M-3-2 0 2" fill="none" stroke="#C98963" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/></g><path d="M139 99 155 120 179 103 187 115 161 137Q153 141 147 136L129 117Z" fill="#AC542D"/><path d="M172 110 181 121 189 114 180 102Z" fill="#D17A4D"/><g transform="translate(184 102) rotate(28)"><path d="M-5-6Q-5-10-1-10L4-9 7-5 7 4Q6 9 1 9L-4 5-8-1Q-10-5-7-6L-4-3Z" fill="#E3AF87"/><path d="M-3-2 0 2" fill="none" stroke="#C98963" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/></g><g transform="translate(99 41)"><rect x="14" y="37" width="14" height="17" rx="2" fill="#E3AF87"/><path d="M14 40H28V46L14 49Z" fill="#C98963"/></g><g transform="translate(99 41) rotate(6 20 25)"><ellipse cx="5" cy="27" rx="4.5" ry="6" fill="#E3AF87"/><ellipse cx="36" cy="27" rx="4" ry="5.5" fill="#E3AF87"/><path d="M5 17Q5 4 21 5Q37 5 36 19L35 31Q34 45 21 47Q8 44 6 33Z" fill="#E3AF87"/><path d="M5 26 1 17 5 7 1 2 15 4 22-4 25 2 34 0 40 8 36 19 30 14 18 11 10 18 9 27Z" fill="#8E5038"/><path d="M10 23 16 22M25 22 30 23" fill="none" stroke="#263D48" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><circle cx="13.5" cy="27" r="1.45" fill="#263D48"/><circle cx="27.5" cy="27" r="1.45" fill="#263D48"/><path d="M21 26 19 33 23 33" fill="none" stroke="#C98963" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M15 37Q21 41 27 36Q23 43 18 40Z" fill="#263D48"/></g><path d="M38 80 49 74 60 80 60 94 49 100 38 94Z" fill="#6D889E"/><path d="M38 80 49 87 60 80M49 87V100" fill="none" stroke="#FFF9ED" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M177 75 190 59 201 77 190 90Z" fill="#E6B65D"/><path d="M190 59V90M177 75 201 77" fill="none" stroke="#FFF9ED" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 240" role="img" aria-labelledby="entp-title" aria-describedby="entp-desc">
+<title id="entp-title">ENTP: The inventor comparing two ideas</title>
+<desc id="entp-desc">An expressive male inventor in a rust jacket compares a blue cube and a golden geometric solid. Open palms and an asymmetric stance suggest lively curiosity.</desc>
+<circle cx="120" cy="122" r="84" fill="#F9ECDF"/>
+<ellipse cx="120" cy="216" rx="65" ry="3" fill="#263D48" opacity=".08"/>
+<g fill="none" stroke="#263D48" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
+<path d="M97 153 120 156 109 184 90 207 77 199 94 172Z" fill="#263D48"/>
+<path d="M120 155 142 151 143 180 161 201 148 211 126 188Z" fill="#415363"/>
+<g transform="translate(81 200) rotate(-7) scale(-1 1)">
+<path d="M0 0H14Q18 4 26 5Q30 6 29 11H-1Q-4 8 0 0Z" fill="#263D48"/>
+<path d="M0 9H27" stroke="#FFF9ED" stroke-width="1" opacity=".38"/>
+</g>
+<g transform="translate(150 202) rotate(12) scale(1 1)">
+<path d="M0 0H14Q18 4 26 5Q30 6 29 11H-1Q-4 8 0 0Z" fill="#263D48"/>
+<path d="M0 9H27" stroke="#FFF9ED" stroke-width="1" opacity=".38"/>
+</g>
+<path d="M98 107 77 130Q72 135 66 128L49 108" stroke-width="16.6"/>
+<path d="M98 107 77 130Q72 135 66 128L49 108" stroke="#A4502B" stroke-width="14"/>
+<path d="M141 109 158 132Q162 137 169 130L188 105" stroke-width="16.6"/>
+<path d="M141 109 158 132Q162 137 169 130L188 105" stroke="#A4502B" stroke-width="14"/>
+<g transform="translate(119 0) rotate(4 0 126)">
+<path d="M-10 96Q-26 97-28 109L-24 158Q0 163 26 156L25 109Q23 99 10 96Z" fill="#A4502B"/>
+<path d="M-9 97 0 104 10 97 12 156-7 159Z" fill="#FFF9ED" stroke="none"/>
+<path d="M-11 96-2 104-10 122-20 108Z" fill="#D17A4D" stroke="none"/>
+<path d="M11 96 2 104 12 121 21 107Z" fill="#D17A4D" stroke="none"/>
+<path d="M-10 124-11 154M13 125 16 153" stroke="#FFF9ED" stroke-width="1" opacity=".28"/>
+</g>
+<g transform="translate(117 66) rotate(8)">
+<rect x="-6" y="17" width="12" height="16" rx="3" fill="#E3AF87"/>
+<path d="M-5 21Q0 26 6 22V28Q0 30-5 27Z" fill="#C98963" stroke="none"/>
+<ellipse cx="-16.5" cy="3" rx="3.5" ry="5" fill="#E3AF87"/>
+<ellipse cx="16.5" cy="3" rx="3.5" ry="5" fill="#E3AF87"/>
+<path d="M-16-12Q-16-24 0-24Q16-24 16-12V7Q15 21 0 24Q-14 22-16 8Z" fill="#E3AF87"/>
+<path d="M-16 4Q-22-5-17-12Q-21-22-10-23Q-3-30 5-25Q16-29 18-18Q24-13 17-5L13 2V-9Q3-4-4-13Q-8-7-12-8V4Z" fill="#8E5038" stroke="#8E5038"/>
+<path d="M-11-2Q-7-4-3-2M4-2Q8-4 12-2" stroke="#8E5038"/>
+<circle cx="-7" cy="3" r="1.15" fill="#263D48" stroke="none"/>
+<circle cx="8" cy="3" r="1.15" fill="#263D48" stroke="none"/>
+<path d="M1 4-1 9 2 10" stroke="#C98963" stroke-width="1.2"/>
+<path d="M-5 14Q0 19 6 14"/>
+</g>
+<g transform="translate(46 105) rotate(-35)">
+<path d="M-4 6-7-1Q-9-5-7-6Q-5-7-3-3L-2-9Q-2-12 0-11L3-4 6-8Q8-9 9-7L7 2Q6 7 2 8Z" fill="#E3AF87"/>
+<path d="M-3-2 1 2" stroke="#C98963" stroke-width="1"/>
+</g>
+<g transform="translate(190 103) rotate(38)">
+<path d="M-4 6-7-1Q-9-5-7-6Q-5-7-3-3L-2-9Q-2-12 0-11L3-4 6-8Q8-9 9-7L7 2Q6 7 2 8Z" fill="#E3AF87"/>
+<path d="M-3-2 1 2" stroke="#C98963" stroke-width="1"/>
+</g>
+<g stroke="#476778">
+<path d="M32 68 48 59 64 68V86L48 95 32 86Z" fill="#6D889E"/>
+<path d="M32 68 48 77 64 68M48 77V95" stroke="#FFF9ED" stroke-width="1.3"/>
+</g>
+<g stroke="#A4502B">
+<path d="M179 69 192 48 207 69 193 90Z" fill="#E6B65D"/>
+<path d="M192 48 193 90M179 69H207" stroke="#FFF9ED" stroke-width="1.3"/>
+</g>
+</g>
 </svg>

@@ -1,3 +1,57 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 240" role="img" aria-labelledby="title-enfj"><title id="title-enfj">ENFJ: a welcoming bearded male guide connecting people and ideas</title>
-<ellipse cx="121" cy="218" rx="79" ry="5" fill="#263D48" opacity=".08"/><circle cx="122" cy="123" r="83" fill="#E4F2EF"/><path d="M164 49Q164 40 175 40H193Q204 40 204 51V63Q204 73 194 73H180L170 82V72Q164 70 164 63Z" fill="#28787B"/><path d="M176 53Q179 49 184 54Q190 49 192 54Q193 60 184 65Q175 61 176 53Z" fill="#FFF9ED"/><path d="M96 148 119 151 110 203 93 203Z" fill="#263D48"/><path d="M119 151 140 149 157 201 141 206 121 176Z" fill="#34565A"/><path d="M93 200 110 201 111 215H80Q76 211 93 200Z" fill="#263D48"/><path d="M141 201 155 197 172 209Q175 215 162 216H143Z" fill="#263D48"/><path d="M89 100 111 88 125 89 147 101 145 155Q118 167 88 155Z" fill="#28787B"/><path d="M106 92 119 104 129 92 133 155 112 158Z" fill="#FFF9ED"/><path d="M98 95 113 103 107 119 95 111ZM135 95 124 103 133 118 144 105Z" fill="#479392"/><path d="M98 97Q85 93 77 110L63 130 45 119 37 132 60 148Q69 154 77 146L104 116Z" fill="#28787B"/><path d="M40 126 25 118 20 110Q17 109 17 113L19 120Q12 115 11 121L20 134 32 139 42 134Z" fill="#BF825B"/><path d="M138 102Q150 93 158 107L177 127 192 115 202 126 183 147Q176 154 166 145L131 119Z" fill="#28787B"/><path d="M195 119 205 104Q209 101 210 106L208 113 217 107Q222 108 216 115L208 127 200 132Z" fill="#BF825B"/><g transform="translate(98 41)"><rect x="14" y="37" width="14" height="17" rx="2" fill="#BF825B"/><path d="M14 40H28V46L14 49Z" fill="#965C40"/></g><g transform="translate(98 41) rotate(0 20 25)"><ellipse cx="5" cy="27" rx="4.5" ry="6" fill="#BF825B"/><ellipse cx="36" cy="27" rx="4" ry="5.5" fill="#BF825B"/><path d="M4 17Q4 5 21 5Q36 5 37 18L37 32Q34 42 22 44Q10 44 5 33Z" fill="#BF825B"/><path d="M6 28 10 32 15 33 20 31 25 33 31 31 35 27 34 37Q29 46 21 46Q10 44 7 37Z" fill="#383932"/><path d="M4 27Q-3 25 0 18Q-5 12 2 9Q-2 0 8 0Q12-8 20-3Q28-7 33 0Q43-1 40 9Q46 16 38 21L35 26 30 22V13Q25 16 20 11Q15 16 10 12V25Z" fill="#383932"/><path d="M10 23 16 22M25 22 30 23" fill="none" stroke="#263D48" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><circle cx="13.5" cy="27" r="1.45" fill="#263D48"/><circle cx="27.5" cy="27" r="1.45" fill="#263D48"/><path d="M21 26 19 33 23 33" fill="none" stroke="#965C40" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M15 37Q21 41 27 36Q23 43 18 40Z" fill="#FFF9ED"/></g>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 240" role="img" aria-labelledby="enfj-title" aria-describedby="enfj-desc">
+<title id="enfj-title">ENFJ: The guide welcoming connection</title>
+<desc id="enfj-desc">A smiling bearded male guide in a teal jacket opens both hands in welcome. A small heart in a speech bubble reinforces empathy and connection.</desc>
+<circle cx="120" cy="122" r="84" fill="#E4F2EF"/>
+<ellipse cx="120" cy="216" rx="65" ry="3" fill="#263D48" opacity=".08"/>
+<g fill="none" stroke="#263D48" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
+<g transform="translate(118 0)">
+<path d="M-23 153H1L-4 201H-20Z" fill="#263D48"/>
+<path d="M1 153H24L34 200 18 203 4 174Z" fill="#34565A"/>
+<g transform="translate(-22 200) rotate(0) scale(-1 1)">
+<path d="M0 0H14Q18 4 26 5Q30 6 29 11H-1Q-4 8 0 0Z" fill="#263D48"/>
+<path d="M0 9H27" stroke="#FFF9ED" stroke-width="1" opacity=".38"/>
+</g>
+<g transform="translate(17 201) rotate(0) scale(1 1)">
+<path d="M0 0H14Q18 4 26 5Q30 6 29 11H-1Q-4 8 0 0Z" fill="#263D48"/>
+<path d="M0 9H27" stroke="#FFF9ED" stroke-width="1" opacity=".38"/>
+</g>
+</g>
+<path d="M95 107 75 137Q71 143 63 138L39 124" stroke-width="16.6"/>
+<path d="M95 107 75 137Q71 143 63 138L39 124" stroke="#267376" stroke-width="14"/>
+<path d="M141 107 166 134Q171 140 178 134L200 118" stroke-width="16.6"/>
+<path d="M141 107 166 134Q171 140 178 134L200 118" stroke="#267376" stroke-width="14"/>
+<g transform="translate(118 0) rotate(0 0 126)">
+<path d="M-10 96Q-26 97-28 109L-24 158Q0 163 26 156L25 109Q23 99 10 96Z" fill="#267376"/>
+<path d="M-9 97 0 104 10 97 12 156-7 159Z" fill="#FFF9ED" stroke="none"/>
+<path d="M-11 96-2 104-10 122-20 108Z" fill="#479392" stroke="none"/>
+<path d="M11 96 2 104 12 121 21 107Z" fill="#479392" stroke="none"/>
+<path d="M-10 124-11 154M13 125 16 153" stroke="#FFF9ED" stroke-width="1" opacity=".28"/>
+</g>
+<g transform="translate(31 122) rotate(-57)">
+<path d="M-4 6-7-1Q-9-5-7-6Q-5-7-3-3L-2-9Q-2-12 0-11L3-4 6-8Q8-9 9-7L7 2Q6 7 2 8Z" fill="#BF825B"/>
+<path d="M-3-2 1 2" stroke="#965C40" stroke-width="1"/>
+</g>
+<g transform="translate(207 113) rotate(47)">
+<path d="M-4 6-7-1Q-9-5-7-6Q-5-7-3-3L-2-9Q-2-12 0-11L3-4 6-8Q8-9 9-7L7 2Q6 7 2 8Z" fill="#BF825B"/>
+<path d="M-3-2 1 2" stroke="#965C40" stroke-width="1"/>
+</g>
+<g transform="translate(118 66) rotate(0)">
+<rect x="-6" y="17" width="12" height="16" rx="3" fill="#BF825B"/>
+<path d="M-5 21Q0 26 6 22V28Q0 30-5 27Z" fill="#965C40" stroke="none"/>
+<ellipse cx="-16.5" cy="3" rx="3.5" ry="5" fill="#BF825B"/>
+<ellipse cx="16.5" cy="3" rx="3.5" ry="5" fill="#BF825B"/>
+<path d="M-16-12Q-16-24 0-24Q16-24 16-12V7Q15 21 0 24Q-14 22-16 8Z" fill="#BF825B"/>
+<path d="M-16 4Q-23 0-20-7Q-25-14-18-18Q-21-26-11-26Q-5-33 2-28Q10-33 15-26Q24-25 20-17Q25-10 18-5L15 3 12-7Q5-4 0-10Q-5-5-12-7L-12 4Z" fill="#383932" stroke="#383932"/>
+<path d="M-15 6-10 10-5 10 0 8 6 10 11 9 15 5 13 16Q8 24 0 24Q-10 22-14 15Z" fill="#383932" stroke="#383932"/>
+<path d="M-11-2Q-7-4-3-2M4-2Q8-4 12-2" stroke="#383932"/>
+<circle cx="-7" cy="3" r="1.15" fill="#263D48" stroke="none"/>
+<circle cx="8" cy="3" r="1.15" fill="#263D48" stroke="none"/>
+<path d="M1 4-1 9 2 10" stroke="#965C40" stroke-width="1.2"/>
+<path d="M-5 14Q0 19 6 14" stroke="#FFF9ED"/>
+</g>
+<g>
+<path d="M169 41H196Q205 41 205 50V65Q205 73 196 73H182L173 81V73H169Q161 73 161 65V50Q161 41 169 41Z" fill="#267376" stroke="none"/>
+<path d="M175 54Q178 49 183 54Q189 49 192 54Q194 59 183 66Q172 60 175 54Z" fill="#FFF9ED" stroke="none"/>
+</g>
+</g>
 </svg>

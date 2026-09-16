@@ -1,3 +1,63 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 240" role="img" aria-labelledby="title-infj"><title id="title-infj">INFJ: a thoughtful bearded male guide carrying a warm lantern</title>
-<ellipse cx="121" cy="218" rx="79" ry="5" fill="#263D48" opacity=".08"/><circle cx="122" cy="123" r="83" fill="#E7F1EB"/><path d="M88 147 119 153 111 205 94 207Z" fill="#263D48"/><path d="M119 153 138 150 152 204 136 209 120 180Z" fill="#354F48"/><path d="M94 201 111 201 114 214 84 214Q81 210 94 201Z" fill="#263D48"/><path d="M135 204 151 201 165 211Q167 216 154 216H135Z" fill="#263D48"/><path d="M87 101 107 89 127 89 145 104 145 159Q114 171 80 153Z" fill="#3B6C59"/><path d="M107 92 117 101 128 92 123 117 110 116Z" fill="#FFF9ED"/><path d="M98 95 112 103 106 124 94 113ZM135 97 121 104 128 124 143 108Z" fill="#50836D"/><path d="M85 105Q73 118 65 147 74 161 100 162L104 148 83 145 99 119Z" fill="#3B6C59"/><g transform="translate(103 154) rotate(80)"><path d="M-5-6Q-5-10-1-10L4-9 7-5 7 4Q6 9 1 9L-4 5-8-1Q-10-5-7-6L-4-3Z" fill="#BF825B"/><path d="M-3-2 0 2" fill="none" stroke="#965C40" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/></g><path d="M141 105Q155 107 165 125L179 147 169 155 150 138 131 122Z" fill="#3B6C59"/><g transform="translate(174 152) rotate(50)"><path d="M-5-6Q-5-10-1-10L4-9 7-5 7 4Q6 9 1 9L-4 5-8-1Q-10-5-7-6L-4-3Z" fill="#BF825B"/><path d="M-3-2 0 2" fill="none" stroke="#965C40" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/></g><g transform="translate(96 43)"><rect x="14" y="37" width="14" height="17" rx="2" fill="#BF825B"/><path d="M14 40H28V46L14 49Z" fill="#965C40"/></g><g transform="translate(96 43) rotate(-4 20 25)"><ellipse cx="5" cy="27" rx="4.5" ry="6" fill="#BF825B"/><ellipse cx="36" cy="27" rx="4" ry="5.5" fill="#BF825B"/><path d="M5 17Q5 4 21 5Q37 5 36 19L35 31Q34 45 21 47Q8 44 6 33Z" fill="#BF825B"/><path d="M6 28 10 32 15 33 20 31 25 33 31 31 35 27 34 37Q29 46 21 46Q10 44 7 37Z" fill="#364238"/><path d="M4 25 2 14Q1 3 12 0L25 0Q37 2 38 14L35 25 31 22V14L20 9 9 15 8 25Z" fill="#364238"/><path d="M10 23 16 22M25 22 30 23" fill="none" stroke="#263D48" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><circle cx="13.5" cy="27" r="1.45" fill="#263D48"/><circle cx="27.5" cy="27" r="1.45" fill="#263D48"/><path d="M21 26 19 33 23 33" fill="none" stroke="#965C40" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M17 38 25 37" fill="none" stroke="#FFF9ED" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></g><path d="M174 155V165" fill="none" stroke="#263D48" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M161 172 166 164H181L187 172 184 198H164Z" fill="#263D48"/><path d="M166 175H183L180 194H168Z" fill="#E6B65D"/><path d="M174 178Q167 187 174 190Q181 187 174 178Z" fill="#FFF9ED"/><path d="M170 171H179" fill="none" stroke="#E6B65D" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 240" role="img" aria-labelledby="infj-title" aria-describedby="infj-desc">
+<title id="infj-title">INFJ: The guide carrying a lantern</title>
+<desc id="infj-desc">A contemplative bearded male guide in a forest-green coat carries a warm lantern by its handle. A quiet stance and a small flame suggest insight and guidance.</desc>
+<circle cx="120" cy="122" r="84" fill="#E7F1EB"/>
+<ellipse cx="120" cy="216" rx="65" ry="3" fill="#263D48" opacity=".08"/>
+<g fill="none" stroke="#263D48" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
+<g transform="translate(113 0)">
+<path d="M-23 153H1L-4 201H-20Z" fill="#263D48"/>
+<path d="M1 153H24L31 200 15 203 4 174Z" fill="#354F48"/>
+<g transform="translate(-22 200) rotate(0) scale(-1 1)">
+<path d="M0 0H14Q18 4 26 5Q30 6 29 11H-1Q-4 8 0 0Z" fill="#263D48"/>
+<path d="M0 9H27" stroke="#FFF9ED" stroke-width="1" opacity=".38"/>
+</g>
+<g transform="translate(14 201) rotate(0) scale(1 1)">
+<path d="M0 0H14Q18 4 26 5Q30 6 29 11H-1Q-4 8 0 0Z" fill="#263D48"/>
+<path d="M0 9H27" stroke="#FFF9ED" stroke-width="1" opacity=".38"/>
+</g>
+</g>
+<path d="M89 108Q68 132 79 145L103 148" stroke-width="16.6"/>
+<path d="M89 108Q68 132 79 145L103 148" stroke="#3B6C59" stroke-width="14"/>
+<path d="M138 108Q152 121 170 149" stroke-width="16.6"/>
+<path d="M138 108Q152 121 170 149" stroke="#3B6C59" stroke-width="14"/>
+<g transform="translate(113 0) rotate(0 0 126)">
+<path d="M-10 96Q-26 97-28 109L-24 158Q0 163 26 156L25 109Q23 99 10 96Z" fill="#3B6C59"/>
+<path d="M-9 97 0 104 10 97 12 156-7 159Z" fill="#FFF9ED" stroke="none"/>
+<path d="M-11 96-2 104-10 122-20 108Z" fill="#50836D" stroke="none"/>
+<path d="M11 96 2 104 12 121 21 107Z" fill="#50836D" stroke="none"/>
+<path d="M-10 124-11 154M13 125 16 153" stroke="#FFF9ED" stroke-width="1" opacity=".28"/>
+</g>
+<path d="M78 142Q85 148 103 148" stroke-width="14.6"/>
+<path d="M78 142Q85 148 103 148" stroke="#3B6C59" stroke-width="12"/>
+<g transform="translate(106 149) rotate(85)">
+<path d="M-5 3V-4Q-5-7-2-7H3Q7-7 7-3V3Q6 8 1 8Q-3 8-5 3Z" fill="#BF825B"/>
+<path d="M-5 0-1-2Q2-3 3 0L0 3" stroke="#965C40" stroke-width="1"/>
+</g>
+<g transform="translate(113 67) rotate(-4)">
+<rect x="-6" y="17" width="12" height="16" rx="3" fill="#BF825B"/>
+<path d="M-5 21Q0 26 6 22V28Q0 30-5 27Z" fill="#965C40" stroke="none"/>
+<ellipse cx="-16.5" cy="3" rx="3.5" ry="5" fill="#BF825B"/>
+<ellipse cx="16.5" cy="3" rx="3.5" ry="5" fill="#BF825B"/>
+<path d="M-16-12Q-16-24 0-24Q16-24 16-12V7Q15 21 0 24Q-14 22-16 8Z" fill="#BF825B"/>
+<path d="M-16 4Q-23-13-13-21Q-4-30 8-25Q16-25 19-17Q23-14 18-9L14-7Q6-9 0-16Q-5-9-12-9L-12 3Z" fill="#364238" stroke="#364238"/>
+<path d="M-15 6-10 10-5 10 0 8 6 10 11 9 15 5 13 16Q8 24 0 24Q-10 22-14 15Z" fill="#364238" stroke="#364238"/>
+<path d="M-11-2-4-3M4-3 11-1" stroke="#364238"/>
+<circle cx="-7" cy="3" r="1.15" fill="#263D48" stroke="none"/>
+<circle cx="8" cy="3" r="1.15" fill="#263D48" stroke="none"/>
+<path d="M1 4-1 9 2 10" stroke="#965C40" stroke-width="1.2"/>
+<path d="M-4 15 4 14" stroke="#FFF9ED" stroke-width="1.3"/>
+</g>
+<g>
+<ellipse cx="175" cy="162" rx="7" ry="9"/>
+<path d="M161 174 165 170H185L189 174 185 204H165Z" fill="#263D48"/>
+<path d="M165 171 170 166H181L185 171Z" fill="#3B6C59"/>
+<path d="M166 177H184L181 199H169Z" fill="#E6B65D" stroke="none"/>
+<path d="M175 181Q166 193 175 196Q184 193 175 181Z" fill="#FFF9ED" stroke="none"/>
+<path d="M164 204H186" stroke-width="3"/>
+</g>
+<g transform="translate(172 151) rotate(-21)">
+<path d="M-5 3V-4Q-5-7-2-7H3Q7-7 7-3V3Q6 8 1 8Q-3 8-5 3Z" fill="#BF825B"/>
+<path d="M-5 0-1-2Q2-3 3 0L0 3" stroke="#965C40" stroke-width="1"/>
+</g>
+</g>
 </svg>

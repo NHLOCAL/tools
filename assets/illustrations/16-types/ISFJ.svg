@@ -1,3 +1,62 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 240" role="img" aria-labelledby="title-isfj"><title id="title-isfj">ISFJ: a kindly bearded male gardener protecting a young plant</title>
-<ellipse cx="121" cy="218" rx="79" ry="5" fill="#263D48" opacity=".08"/><circle cx="122" cy="123" r="83" fill="#F7EAEE"/><path d="M91 154 120 158 113 207 94 207Z" fill="#43554C"/><path d="M120 158 144 154 151 207 132 208 120 180Z" fill="#263D48"/><path d="M94 202H113L115 217H80Q78 212 94 202Z" fill="#263D48"/><path d="M132 204 150 202 166 212Q167 219 155 219H132Z" fill="#263D48"/><path d="M85 100 104 88 128 87 152 102 157 153Q121 173 82 155L75 126Z" fill="#A35769"/><path d="M105 91 117 101 129 91 134 154 107 158Z" fill="#FFF9ED"/><path d="M97 92 111 103 105 126 104 165 82 158 84 105ZM136 92 124 103 133 126 131 164 155 156 151 106Z" fill="#BA7786"/><path d="M80 106Q65 115 66 137Q67 152 97 157L103 143 85 133 97 117Z" fill="#A35769"/><path d="M150 105Q166 117 165 138Q164 153 138 160L132 145 145 133 134 116Z" fill="#A35769"/><g transform="translate(97 41)"><rect x="14" y="37" width="14" height="17" rx="2" fill="#E3AF87"/><path d="M14 40H28V46L14 49Z" fill="#C98963"/></g><g transform="translate(97 41) rotate(1 20 25)"><ellipse cx="5" cy="27" rx="4.5" ry="6" fill="#E3AF87"/><ellipse cx="36" cy="27" rx="4" ry="5.5" fill="#E3AF87"/><path d="M4 17Q4 5 21 5Q36 5 37 18L37 32Q34 42 22 44Q10 44 5 33Z" fill="#E3AF87"/><path d="M6 28 10 32 15 33 20 31 25 33 31 31 35 27 34 37Q29 46 21 46Q10 44 7 37Z" fill="#66513F"/><path d="M4 26 2 15Q2 3 13 2L12 11 8 17 9 27ZM26 2Q38 5 38 18L35 27 31 24 32 16Z" fill="#66513F"/><path d="M10 23 16 22M25 22 30 23" fill="none" stroke="#263D48" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><circle cx="13.5" cy="27" r="1.45" fill="#263D48"/><circle cx="27.5" cy="27" r="1.45" fill="#263D48"/><path d="M21 26 19 33 23 33" fill="none" stroke="#C98963" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M15 37Q21 41 27 36Q23 43 18 40Z" fill="#FFF9ED"/></g><path d="M101 141H137L132 172Q119 178 106 172Z" fill="#BA7C55"/><path d="M101 141H137V149H101Z" fill="#D59A6C"/><path d="M119 143V115" fill="none" stroke="#597953" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/><path d="M118 132Q96 134 99 115Q117 113 118 132Z" fill="#6A925E"/><path d="M119 122Q117 101 138 102Q140 120 119 122Z" fill="#8BA976"/><path d="M105 120 117 131M121 118 133 108" fill="none" stroke="#C7D9AB" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/><g transform="translate(99 156) rotate(-70)"><path d="M-5-6Q-5-10-1-10L4-9 7-5 7 4Q6 9 1 9L-4 5-8-1Q-10-5-7-6L-4-3Z" fill="#E3AF87"/><path d="M-3-2 0 2" fill="none" stroke="#C98963" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/></g><g transform="translate(139 158) rotate(80)"><path d="M-5-6Q-5-10-1-10L4-9 7-5 7 4Q6 9 1 9L-4 5-8-1Q-10-5-7-6L-4-3Z" fill="#E3AF87"/><path d="M-3-2 0 2" fill="none" stroke="#C98963" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/></g>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 240" role="img" aria-labelledby="isfj-title" aria-describedby="isfj-desc">
+<title id="isfj-title">ISFJ: The gardener protecting a young plant</title>
+<desc id="isfj-desc">A kindly balding, bearded male gardener in a rose cardigan cups a terracotta pot in both hands. Two fresh green leaves are the gentle focal point.</desc>
+<circle cx="120" cy="122" r="84" fill="#F7EAEE"/>
+<ellipse cx="120" cy="216" rx="65" ry="3" fill="#263D48" opacity=".08"/>
+<g fill="none" stroke="#263D48" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
+<g transform="translate(119 0)">
+<path d="M-23 153H1L-4 201H-20Z" fill="#43554C"/>
+<path d="M1 153H24L30 200 14 203 4 174Z" fill="#263D48"/>
+<g transform="translate(-22 200) rotate(0) scale(-1 1)">
+<path d="M0 0H14Q18 4 26 5Q30 6 29 11H-1Q-4 8 0 0Z" fill="#263D48"/>
+<path d="M0 9H27" stroke="#FFF9ED" stroke-width="1" opacity=".38"/>
+</g>
+<g transform="translate(13 201) rotate(0) scale(1 1)">
+<path d="M0 0H14Q18 4 26 5Q30 6 29 11H-1Q-4 8 0 0Z" fill="#263D48"/>
+<path d="M0 9H27" stroke="#FFF9ED" stroke-width="1" opacity=".38"/>
+</g>
+</g>
+<path d="M94 107Q72 128 84 145L105 161" stroke-width="16.6"/>
+<path d="M94 107Q72 128 84 145L105 161" stroke="#9A5263" stroke-width="14"/>
+<path d="M143 107Q165 128 154 146L134 161" stroke-width="16.6"/>
+<path d="M143 107Q165 128 154 146L134 161" stroke="#9A5263" stroke-width="14"/>
+<g transform="translate(119 0) rotate(0 0 126)">
+<path d="M-10 96Q-26 97-28 109L-24 158Q0 163 26 156L25 109Q23 99 10 96Z" fill="#9A5263"/>
+<path d="M-9 97 0 104 10 97 12 156-7 159Z" fill="#FFF9ED" stroke="none"/>
+<path d="M-11 96-2 104-10 122-20 108Z" fill="#BA7786" stroke="none"/>
+<path d="M11 96 2 104 12 121 21 107Z" fill="#BA7786" stroke="none"/>
+<path d="M-10 124-11 154M13 125 16 153" stroke="#FFF9ED" stroke-width="1" opacity=".28"/>
+</g>
+<g transform="translate(119 67) rotate(1)">
+<rect x="-6" y="17" width="12" height="16" rx="3" fill="#E3AF87"/>
+<path d="M-5 21Q0 26 6 22V28Q0 30-5 27Z" fill="#C98963" stroke="none"/>
+<ellipse cx="-16.5" cy="3" rx="3.5" ry="5" fill="#E3AF87"/>
+<ellipse cx="16.5" cy="3" rx="3.5" ry="5" fill="#E3AF87"/>
+<path d="M-16-12Q-16-24 0-24Q16-24 16-12V7Q15 21 0 24Q-14 22-16 8Z" fill="#E3AF87"/>
+<path d="M-16 5Q-21-9-15-16L-10-20V-13L-12-6V5ZM11-20Q21-12 17 5L13 4V-8Z" fill="#66513F" stroke="#66513F"/>
+<path d="M-15 6-10 10-5 10 0 8 6 10 11 9 15 5 13 16Q8 24 0 24Q-10 22-14 15Z" fill="#66513F" stroke="#66513F"/>
+<path d="M-11-2Q-7-4-3-2M4-2Q8-4 12-2" stroke="#66513F"/>
+<circle cx="-7" cy="3" r="1.15" fill="#263D48" stroke="none"/>
+<circle cx="8" cy="3" r="1.15" fill="#263D48" stroke="none"/>
+<path d="M1 4-1 9 2 10" stroke="#C98963" stroke-width="1.2"/>
+<path d="M-5 14Q0 19 6 14" stroke="#FFF9ED"/>
+</g>
+<path d="M83 141Q85 153 108 166" stroke-width="14.6"/>
+<path d="M83 141Q85 153 108 166" stroke="#9A5263" stroke-width="12"/>
+<path d="M155 141Q151 154 132 166" stroke-width="14.6"/>
+<path d="M155 141Q151 154 132 166" stroke="#9A5263" stroke-width="12"/>
+<g stroke="#965C40">
+<path d="M104 146H135L131 174Q119 178 109 174Z" fill="#BA7C55"/>
+<rect x="101" y="142" width="37" height="7" rx="2" fill="#D59A6C"/>
+<path d="M119 142V113" stroke="#597953" stroke-width="2"/>
+<path d="M118 131Q97 133 98 114Q117 113 118 131Z" fill="#6A925E" stroke="none"/>
+<path d="M120 122Q117 102 138 102Q139 122 120 122Z" fill="#8BA976" stroke="none"/>
+<path d="M104 119 117 131M121 119 133 107" stroke="#C7D9AB" stroke-width="1.2"/>
+</g>
+<g>
+<path d="M98 158Q102 155 107 161L109 169 119 171Q122 174 118 177L107 175Q100 174 96 167Z" fill="#E3AF87"/>
+<path d="M140 157Q136 155 133 161L130 169 122 171Q119 174 122 177L134 175Q141 173 144 166Z" fill="#E3AF87"/>
+<path d="M107 168 113 172M133 168 128 172" stroke="#C98963" stroke-width="1"/>
+</g>
+</g>
 </svg>

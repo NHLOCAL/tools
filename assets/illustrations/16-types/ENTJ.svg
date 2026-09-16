@@ -1,3 +1,56 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 240" role="img" aria-labelledby="title-entj"><title id="title-entj">ENTJ: a confident male leader pointing toward the next step</title>
-<ellipse cx="121" cy="218" rx="79" ry="5" fill="#263D48" opacity=".08"/><circle cx="122" cy="123" r="83" fill="#F7E9ED"/><path d="M131 215V195H178V170H201V146H215V215Z" fill="#E8C8CE"/><path d="M82 145 111 149 105 205 87 207Z" fill="#263D48"/><path d="M111 148 137 146 155 156Q160 160 157 167L153 181 137 180 139 167 118 171Z" fill="#374A57"/><path d="M86 201H105L112 215H79Q74 211 86 201Z" fill="#263D48"/><path d="M137 178 153 178 169 188Q173 195 162 195H137Z" fill="#263D48"/><path d="M84 96 106 86 123 88 143 102 136 154 81 151Z" fill="#933F56"/><path d="M101 91 113 102 122 91 127 141 107 144Z" fill="#FFF9ED"/><path d="M111 101 116 100 120 127 115 133 111 126Z" fill="#D69A58"/><path d="M96 91 109 101 102 119 91 110ZM127 91 117 102 127 119 139 102Z" fill="#7B3549"/><path d="M86 99Q72 105 67 128L62 151 78 157 91 131 99 110Z" fill="#933F56"/><path d="M64 146 76 149 93 141 95 151 74 163Q66 166 61 159Z" fill="#9A6247"/><g transform="translate(94 143) rotate(-35)"><path d="M-5-6Q-5-10-1-10L4-9 7-5 7 4Q6 9 1 9L-4 5-8-1Q-10-5-7-6L-4-3Z" fill="#9A6247"/><path d="M-3-2 0 2" fill="none" stroke="#7D4A36" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/></g><path d="M136 100 155 111 169 89 181 96 166 128Q160 139 149 133L129 119Z" fill="#933F56"/><g transform="translate(178 88) rotate(20)"><path d="M-5-6Q-5-10-1-10L4-9 7-5 7 4Q6 9 1 9L-4 5-8-1Q-10-5-7-6L-4-3Z" fill="#9A6247"/><path d="M-3-2 0 2" fill="none" stroke="#7D4A36" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/></g><path d="M175 84 178 66Q179 62 182 65L183 86Z" fill="#9A6247"/><g transform="translate(91 41)"><rect x="14" y="37" width="14" height="17" rx="2" fill="#9A6247"/><path d="M14 40H28V46L14 49Z" fill="#7D4A36"/></g><g transform="translate(91 41) rotate(-3 20 25)"><ellipse cx="5" cy="27" rx="4.5" ry="6" fill="#9A6247"/><ellipse cx="36" cy="27" rx="4" ry="5.5" fill="#9A6247"/><path d="M4 16Q6 3 20 4Q35 4 36 18L35 34 28 44 14 44 6 36Z" fill="#9A6247"/><path d="M4 25 3 13Q3 2 18 1Q35-1 37 13V24L32 23V13L9 13V25Z" fill="#263D48"/><path d="M10 23 16 22M25 22 30 23" fill="none" stroke="#263D48" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><circle cx="13.5" cy="27" r="1.45" fill="#263D48"/><circle cx="27.5" cy="27" r="1.45" fill="#263D48"/><path d="M21 26 19 33 23 33" fill="none" stroke="#7D4A36" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M12 35Q16 31 21 34Q26 31 30 35L28 38 21 36 15 38Z" fill="#263D48"/><path d="M18 41H25" fill="none" stroke="#263D48" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></g>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 240" role="img" aria-labelledby="entj-title" aria-describedby="entj-desc">
+<title id="entj-title">ENTJ: The leader indicating the next step</title>
+<desc id="entj-desc">A confident moustached male leader wears a burgundy suit. One foot is on a low step and one hand points forward and upward along a clear staircase.</desc>
+<circle cx="120" cy="122" r="84" fill="#F7E9ED"/>
+<ellipse cx="120" cy="216" rx="65" ry="3" fill="#263D48" opacity=".08"/>
+<g fill="none" stroke="#263D48" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
+<path d="M139 215V192H166V172H192V150H214V215Z" fill="#E8C8CE" stroke="none"/>
+<path d="M166 191H191M192 171H212" stroke="#933F56" opacity=".25"/>
+<path d="M84 152H108L104 202H86Z" fill="#263D48"/>
+<path d="M108 151 131 149Q142 150 151 160L154 180H138L136 170 114 174Z" fill="#374A57"/>
+<g transform="translate(85 201) rotate(0) scale(-1 1)">
+<path d="M0 0H14Q18 4 26 5Q30 6 29 11H-1Q-4 8 0 0Z" fill="#263D48"/>
+<path d="M0 9H27" stroke="#FFF9ED" stroke-width="1" opacity=".38"/>
+</g>
+<g transform="translate(139 181) rotate(0) scale(1 1)">
+<path d="M0 0H14Q18 4 26 5Q30 6 29 11H-1Q-4 8 0 0Z" fill="#263D48"/>
+<path d="M0 9H27" stroke="#FFF9ED" stroke-width="1" opacity=".38"/>
+</g>
+<path d="M87 107 72 133Q70 143 93 147" stroke-width="16.6"/>
+<path d="M87 107 72 133Q70 143 93 147" stroke="#933F56" stroke-width="14"/>
+<path d="M133 107 152 122Q156 123 160 115L177 88" stroke-width="16.6"/>
+<path d="M133 107 152 122Q156 123 160 115L177 88" stroke="#933F56" stroke-width="14"/>
+<g transform="translate(108 0) rotate(0 0 126)">
+<path d="M-10 96Q-26 97-28 109L-24 158Q0 163 26 156L25 109Q23 99 10 96Z" fill="#933F56"/>
+<path d="M-9 97 0 104 10 97 12 156-7 159Z" fill="#FFF9ED" stroke="none"/>
+<path d="M-11 96-2 104-10 122-20 108Z" fill="#7B3549" stroke="none"/>
+<path d="M11 96 2 104 12 121 21 107Z" fill="#7B3549" stroke="none"/>
+<path d="M-10 124-11 154M13 125 16 153" stroke="#FFF9ED" stroke-width="1" opacity=".28"/>
+</g>
+<path d="M106 106 111 106 115 132 111 138 106 132Z" fill="#E6B65D" stroke="none"/>
+<path d="M73 136Q76 144 91 146" stroke-width="14.6"/>
+<path d="M73 136Q76 144 91 146" stroke="#933F56" stroke-width="12"/>
+<g transform="translate(95 145) rotate(75)">
+<path d="M-5 3V-4Q-5-7-2-7H3Q7-7 7-3V3Q6 8 1 8Q-3 8-5 3Z" fill="#9A6247"/>
+<path d="M-5 0-1-2Q2-3 3 0L0 3" stroke="#7D4A36" stroke-width="1"/>
+</g>
+<g transform="translate(108 66) rotate(-4)">
+<rect x="-6" y="17" width="12" height="16" rx="3" fill="#9A6247"/>
+<path d="M-5 21Q0 26 6 22V28Q0 30-5 27Z" fill="#7D4A36" stroke="none"/>
+<ellipse cx="-16.5" cy="3" rx="3.5" ry="5" fill="#9A6247"/>
+<ellipse cx="16.5" cy="3" rx="3.5" ry="5" fill="#9A6247"/>
+<path d="M-16-12Q-16-24 0-24Q16-24 16-12V7Q15 21 0 24Q-14 22-16 8Z" fill="#9A6247"/>
+<path d="M-16 3Q-20-9-16-17Q-12-25 0-25Q14-26 17-16L16 2H13V-12Q0-8-12-12V3Z" fill="#263D48"/>
+<path d="M-11-2Q-7-4-3-2M4-2Q8-4 12-2"/>
+<circle cx="-7" cy="3" r="1.15" fill="#263D48" stroke="none"/>
+<circle cx="8" cy="3" r="1.15" fill="#263D48" stroke="none"/>
+<path d="M1 4-1 9 2 10" stroke="#7D4A36" stroke-width="1.2"/>
+<path d="M-9 13Q-4 9 0 12Q5 9 10 13Q7 17 1 14Q-5 17-9 13Z" fill="#263D48" stroke="none"/>
+<path d="M-3 19Q1 21 5 18" stroke-width="1.1"/>
+</g>
+<g transform="translate(177 82) rotate(19)">
+<path d="M-5 7-6-3Q-7-8-3-8L0-6 2-20Q3-24 5-21L6-5 10-2 9 7Q5 12 0 11Z" fill="#9A6247"/>
+<path d="M0-5 4-2" stroke="#7D4A36" stroke-width="1"/>
+</g>
+</g>
 </svg>

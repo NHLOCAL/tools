@@ -1,3 +1,65 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 240" role="img" aria-labelledby="title-estp"><title id="title-estp">ESTP: a confident male adventurer stepping onto a rock with a camera</title>
-<ellipse cx="121" cy="218" rx="79" ry="5" fill="#263D48" opacity=".08"/><circle cx="122" cy="123" r="83" fill="#FFF0DE"/><path d="M136 215 144 196 184 196 201 215Z" fill="#C7C5B1"/><path d="M89 147 114 151 108 207 90 207Z" fill="#263D48"/><path d="M113 149 136 145 157 151Q164 154 163 162L160 181 145 183 144 166 121 170Z" fill="#4D565A"/><path d="M90 201 108 202 111 216H78Q74 211 90 201Z" fill="#263D48"/><path d="M145 178 160 178 179 188Q183 196 171 196H145Z" fill="#263D48"/><path d="M85 99 106 87 122 90 145 103 140 157 88 159 78 124Z" fill="#B56B25"/><path d="M106 92 119 101 126 94 134 155 115 159Z" fill="#FFF9ED"/><path d="M99 92 110 101 106 118 88 106ZM132 96 121 102 135 117 143 106Z" fill="#D5914B"/><path d="M115 111 121 154" fill="none" stroke="#263D48" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/><path d="M84 103Q72 101 67 116L59 146 72 151 86 131 97 110Z" fill="#B56B25"/><path d="M61 143 74 148 70 158 57 153Z" fill="#D5914B"/><g transform="translate(64 159) rotate(-20)"><path d="M-5-6Q-5-10-1-10L4-9 7-5 7 4Q6 9 1 9L-4 5-8-1Q-10-5-7-6L-4-3Z" fill="#BF825B"/><path d="M-3-2 0 2" fill="none" stroke="#965C40" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/></g><path d="M137 103 157 121 157 153 143 154 140 133 139 120Z" fill="#B56B25"/><path d="M143 147H158L158 159 144 160Z" fill="#D5914B"/><g transform="translate(152 166) rotate(20)"><path d="M-5-6Q-5-10-1-10L4-9 7-5 7 4Q6 9 1 9L-4 5-8-1Q-10-5-7-6L-4-3Z" fill="#BF825B"/><path d="M-3-2 0 2" fill="none" stroke="#965C40" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/></g><rect x="143" y="155" width="17" height="5" rx="2" fill="#263D48"/><rect x="149" y="154" width="7" height="7" rx="2" fill="#FFF9ED"/><g transform="translate(94 41)"><rect x="14" y="37" width="14" height="17" rx="2" fill="#BF825B"/><path d="M14 40H28V46L14 49Z" fill="#965C40"/></g><g transform="translate(94 41) rotate(-5 20 25)"><ellipse cx="5" cy="27" rx="4.5" ry="6" fill="#BF825B"/><ellipse cx="36" cy="27" rx="4" ry="5.5" fill="#BF825B"/><path d="M4 16Q6 3 20 4Q35 4 36 18L35 34 28 44 14 44 6 36Z" fill="#BF825B"/><path d="M4 25 3 13Q3 2 18 1Q35-1 37 13V24L32 23V13L9 13V25Z" fill="#403D35"/><path d="M10 23 16 22M25 22 30 23" fill="none" stroke="#263D48" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><circle cx="13.5" cy="27" r="1.45" fill="#263D48"/><circle cx="27.5" cy="27" r="1.45" fill="#263D48"/><path d="M21 26 19 33 23 33" fill="none" stroke="#965C40" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M15 37Q21 41 27 36Q23 43 18 40Z" fill="#263D48"/></g><path d="M106 61 126 61" fill="none" stroke="#263D48" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M99 60H112L111 66 102 66ZM117 60H130L128 66H119Z" fill="#263D48"/><path d="M104 61H109M120 61H125" fill="none" stroke="#FFF9ED" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/><path d="M102 104 116 138M135 104 136 140" fill="none" stroke="#263D48" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/><rect x="113" y="138" width="27" height="19" rx="3" fill="#263D48"/><rect x="119" y="134" width="11" height="6" rx="2" fill="#263D48"/><circle cx="127" cy="147" r="7" fill="#6D8790"/><circle cx="127" cy="147" r="4" fill="#FFF9ED"/><circle cx="117" cy="143" r="1.5" fill="#E6B65D"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 240" role="img" aria-labelledby="estp-title" aria-describedby="estp-desc">
+<title id="estp-title">ESTP: The adventurer stepping onto a rock</title>
+<desc id="estp-desc">A confident male adventurer in an ochre jacket rests one foot on a rock. Sunglasses, a wristwatch and a camera on a connected neck strap convey readiness to explore.</desc>
+<circle cx="120" cy="122" r="84" fill="#FFF0DE"/>
+<ellipse cx="120" cy="216" rx="65" ry="3" fill="#263D48" opacity=".08"/>
+<g fill="none" stroke="#263D48" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
+<path d="M134 214 143 195 161 190 183 195 202 214Z" fill="#C7C5B1" stroke="none"/>
+<path d="M143 195 160 198 168 207M161 190 174 201" stroke="#9C9C8C" stroke-width="1.2"/>
+<path d="M86 153H110L105 203H88Z" fill="#263D48"/>
+<path d="M108 152 132 149Q149 149 157 160L155 179H139L137 168 114 174Z" fill="#4D565A"/>
+<g transform="translate(88 201) rotate(0) scale(-1 1)">
+<path d="M0 0H14Q18 4 26 5Q30 6 29 11H-1Q-4 8 0 0Z" fill="#263D48"/>
+<path d="M0 9H27" stroke="#FFF9ED" stroke-width="1" opacity=".38"/>
+</g>
+<g transform="translate(140 181) rotate(0) scale(1 1)">
+<path d="M0 0H14Q18 4 26 5Q30 6 29 11H-1Q-4 8 0 0Z" fill="#263D48"/>
+<path d="M0 9H27" stroke="#FFF9ED" stroke-width="1" opacity=".38"/>
+</g>
+<path d="M87 108Q70 127 64 148" stroke-width="16.6"/>
+<path d="M87 108Q70 127 64 148" stroke="#B56B25" stroke-width="14"/>
+<path d="M133 108Q152 120 151 145" stroke-width="16.6"/>
+<path d="M133 108Q152 120 151 145" stroke="#B56B25" stroke-width="14"/>
+<g transform="translate(110 0) rotate(0 0 126)">
+<path d="M-10 96Q-26 97-28 109L-24 158Q0 163 26 156L25 109Q23 99 10 96Z" fill="#B56B25"/>
+<path d="M-9 97 0 104 10 97 12 156-7 159Z" fill="#FFF9ED" stroke="none"/>
+<path d="M-11 96-2 104-10 122-20 108Z" fill="#D5914B" stroke="none"/>
+<path d="M11 96 2 104 12 121 21 107Z" fill="#D5914B" stroke="none"/>
+<path d="M-10 124-11 154M13 125 16 153" stroke="#FFF9ED" stroke-width="1" opacity=".28"/>
+</g>
+<g transform="translate(61 155) rotate(-10)">
+<path d="M-5 3V-4Q-5-7-2-7H3Q7-7 7-3V3Q6 8 1 8Q-3 8-5 3Z" fill="#BF825B"/>
+<path d="M-5 0-1-2Q2-3 3 0L0 3" stroke="#965C40" stroke-width="1"/>
+</g>
+<g transform="translate(110 67) rotate(-6)">
+<rect x="-6" y="17" width="12" height="16" rx="3" fill="#BF825B"/>
+<path d="M-5 21Q0 26 6 22V28Q0 30-5 27Z" fill="#965C40" stroke="none"/>
+<ellipse cx="-16.5" cy="3" rx="3.5" ry="5" fill="#BF825B"/>
+<ellipse cx="16.5" cy="3" rx="3.5" ry="5" fill="#BF825B"/>
+<path d="M-16-12Q-16-24 0-24Q16-24 16-12V7Q15 21 0 24Q-14 22-16 8Z" fill="#BF825B"/>
+<path d="M-16 3Q-20-9-16-17Q-12-25 0-25Q14-26 17-16L16 2H13V-12Q0-8-12-12V3Z" fill="#403D35" stroke="#403D35"/>
+<path d="M-11-2Q-7-4-3-2M4-2Q8-4 12-2" stroke="#403D35"/>
+<circle cx="-7" cy="3" r="1.15" fill="#263D48" stroke="none"/>
+<circle cx="8" cy="3" r="1.15" fill="#263D48" stroke="none"/>
+<path d="M1 4-1 9 2 10" stroke="#965C40" stroke-width="1.2"/>
+<path d="M-14-1H-2L-3 6Q-8 9-12 5ZM3-1H15L13 6Q8 9 4 5Z" fill="#263D48"/>
+<path d="M-2 0H3M-10 0H-6M7 0H11" stroke="#FFF9ED" stroke-width="1"/>
+<path d="M-5 14Q0 19 6 14"/>
+</g>
+<path d="M101 105 118 140M130 105 136 141" stroke-width="2.5"/>
+<g>
+<rect x="111" y="138" width="34" height="24" rx="4" fill="#263D48"/>
+<rect x="119" y="134" width="13" height="7" rx="2" fill="#263D48"/>
+<circle cx="129" cy="150" r="8" fill="#6D8790" stroke="none"/>
+<circle cx="129" cy="150" r="4.8" fill="#FFF9ED" stroke="none"/>
+<circle cx="130" cy="149" r="2.2" fill="#6D8790" stroke="none"/>
+<circle cx="116" cy="143" r="1.5" fill="#E6B65D" stroke="none"/>
+</g>
+<g transform="translate(149 151) rotate(16)">
+<path d="M-5 3V-4Q-5-7-2-7H3Q7-7 7-3V3Q6 8 1 8Q-3 8-5 3Z" fill="#BF825B"/>
+<path d="M-5 0-1-2Q2-3 3 0L0 3" stroke="#965C40" stroke-width="1"/>
+</g>
+<rect x="144" y="138" width="15" height="5" rx="2" fill="#9B5B20"/>
+<rect x="149" y="137" width="6" height="7" rx="2" fill="#FFF9ED"/>
+</g>
 </svg>

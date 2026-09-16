@@ -1,3 +1,65 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 240" role="img" aria-labelledby="title-estj"><title id="title-estj">ESTJ: a silver-haired male organiser arranging a clear series of steps</title>
-<ellipse cx="121" cy="218" rx="79" ry="5" fill="#263D48" opacity=".08"/><circle cx="122" cy="123" r="83" fill="#E7EEF7"/><path d="M78 150 103 153 103 206 85 207Z" fill="#263D48"/><path d="M103 153 125 149 137 207 119 209 103 177Z" fill="#40556D"/><path d="M85 202 103 202 109 216H75Q70 212 85 202Z" fill="#263D48"/><path d="M119 205 135 202 152 213Q153 218 140 218H120Z" fill="#263D48"/><path d="M76 98 96 88 114 89 136 103 131 158 75 155Z" fill="#345A8B"/><path d="M91 93 104 104 116 93 120 153 101 157Z" fill="#FFF9ED"/><path d="M101 102 108 102 110 130 105 138 100 129Z" fill="#CF9555"/><path d="M86 94 100 103 94 121 81 108ZM121 95 109 104 120 122 132 105Z" fill="#274973"/><path d="M77 101Q64 100 61 118L55 156 70 161 80 129 90 109Z" fill="#345A8B"/><g transform="translate(62 162) rotate(-15)"><path d="M-5-6Q-5-10-1-10L4-9 7-5 7 4Q6 9 1 9L-4 5-8-1Q-10-5-7-6L-4-3Z" fill="#EDC2A1"/><path d="M-3-2 0 2" fill="none" stroke="#D89C77" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/></g><path d="M130 103 151 130 175 129 177 145 148 149Q141 149 138 144L120 121Z" fill="#345A8B"/><g transform="translate(178 137) rotate(90)"><path d="M-5-6Q-5-10-1-10L4-9 7-5 7 4Q6 9 1 9L-4 5-8-1Q-10-5-7-6L-4-3Z" fill="#EDC2A1"/><path d="M-3-2 0 2" fill="none" stroke="#D89C77" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/></g><g transform="translate(83 42)"><rect x="14" y="37" width="14" height="17" rx="2" fill="#EDC2A1"/><path d="M14 40H28V46L14 49Z" fill="#D89C77"/></g><g transform="translate(83 42) rotate(-4 20 25)"><ellipse cx="5" cy="27" rx="4.5" ry="6" fill="#EDC2A1"/><ellipse cx="36" cy="27" rx="4" ry="5.5" fill="#EDC2A1"/><path d="M4 16Q6 3 20 4Q35 4 36 18L35 34 28 44 14 44 6 36Z" fill="#EDC2A1"/><path d="M3 25 1 13 6 3 16-1 29 0 38 7 37 24 32 22 30 11 20 9 10 13 8 25Z" fill="#A8ADB0"/><path d="M10 23 16 22M25 22 30 23" fill="none" stroke="#263D48" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><circle cx="13.5" cy="27" r="1.45" fill="#263D48"/><circle cx="27.5" cy="27" r="1.45" fill="#263D48"/><path d="M21 26 19 33 23 33" fill="none" stroke="#D89C77" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><rect x="7" y="24" width="12" height="9" rx="3" fill="none" stroke="#263D48" stroke-width="1.5"/><rect x="23" y="24" width="12" height="9" rx="3" fill="none" stroke="#263D48" stroke-width="1.5"/><path d="M19 27H23M4 26H7" fill="none" stroke="#263D48" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/><path d="M17 38 25 37" fill="none" stroke="#263D48" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></g><rect x="151" y="163" width="52" height="8" rx="2" fill="#AF987D"/><path d="M157 171 151 212M196 171 204 213" fill="none" stroke="#A18B76" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/><rect x="155" y="151" width="15" height="12" rx="2" fill="#7798B8"/><rect x="174" y="140" width="15" height="23" rx="2" fill="#345A8B"/><rect x="193" y="128" width="15" height="35" rx="2" fill="#C3D4E7"/><path d="M197 135H204" fill="none" stroke="#FFF9ED" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 240" role="img" aria-labelledby="estj-title" aria-describedby="estj-desc">
+<title id="estj-title">ESTJ: The organiser arranging clear steps</title>
+<desc id="estj-desc">A silver-haired male organiser in a blue suit arranges three ascending blocks on a small wooden table. His glasses and measured gesture emphasise practical structure.</desc>
+<circle cx="120" cy="122" r="84" fill="#E7EEF7"/>
+<ellipse cx="120" cy="216" rx="65" ry="3" fill="#263D48" opacity=".08"/>
+<g fill="none" stroke="#263D48" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
+<g transform="translate(101 0)">
+<path d="M-23 153H1L-4 201H-20Z" fill="#263D48"/>
+<path d="M1 153H24L30 200 14 203 4 174Z" fill="#40556D"/>
+<g transform="translate(-22 200) rotate(0) scale(-1 1)">
+<path d="M0 0H14Q18 4 26 5Q30 6 29 11H-1Q-4 8 0 0Z" fill="#263D48"/>
+<path d="M0 9H27" stroke="#FFF9ED" stroke-width="1" opacity=".38"/>
+</g>
+<g transform="translate(13 201) rotate(0) scale(1 1)">
+<path d="M0 0H14Q18 4 26 5Q30 6 29 11H-1Q-4 8 0 0Z" fill="#263D48"/>
+<path d="M0 9H27" stroke="#FFF9ED" stroke-width="1" opacity=".38"/>
+</g>
+</g>
+<path d="M79 108Q66 128 62 152" stroke-width="16.6"/>
+<path d="M79 108Q66 128 62 152" stroke="#345A8B" stroke-width="14"/>
+<path d="M124 108 145 133 174 133" stroke-width="16.6"/>
+<path d="M124 108 145 133 174 133" stroke="#345A8B" stroke-width="14"/>
+<g transform="translate(101 0) rotate(0 0 126)">
+<path d="M-10 96Q-26 97-28 109L-24 158Q0 163 26 156L25 109Q23 99 10 96Z" fill="#345A8B"/>
+<path d="M-9 97 0 104 10 97 12 156-7 159Z" fill="#FFF9ED" stroke="none"/>
+<path d="M-11 96-2 104-10 122-20 108Z" fill="#274973" stroke="none"/>
+<path d="M11 96 2 104 12 121 21 107Z" fill="#274973" stroke="none"/>
+<path d="M-10 124-11 154M13 125 16 153" stroke="#FFF9ED" stroke-width="1" opacity=".28"/>
+</g>
+<path d="M99 106 105 106 108 132 103 138 98 132Z" fill="#CF9555" stroke="none"/>
+<g transform="translate(60 160) rotate(-9)">
+<path d="M-5 3V-4Q-5-7-2-7H3Q7-7 7-3V3Q6 8 1 8Q-3 8-5 3Z" fill="#EDC2A1"/>
+<path d="M-5 0-1-2Q2-3 3 0L0 3" stroke="#D89C77" stroke-width="1"/>
+</g>
+<g transform="translate(101 67) rotate(-3)">
+<rect x="-6" y="17" width="12" height="16" rx="3" fill="#EDC2A1"/>
+<path d="M-5 21Q0 26 6 22V28Q0 30-5 27Z" fill="#D89C77" stroke="none"/>
+<ellipse cx="-16.5" cy="3" rx="3.5" ry="5" fill="#EDC2A1"/>
+<ellipse cx="16.5" cy="3" rx="3.5" ry="5" fill="#EDC2A1"/>
+<path d="M-16-12Q-16-24 0-24Q16-24 16-12V7Q15 21 0 24Q-14 22-16 8Z" fill="#EDC2A1"/>
+<path d="M-16 4Q-21-14-12-20Q0-29 13-20Q21-16 17 3L13 2 12-11Q-1-7-8-16L-12-10V4Z" fill="#A8ADB0" stroke="#A8ADB0"/>
+<path d="M-10-20Q-4-23 2-21" stroke="#FFF9ED" opacity=".65"/>
+<path d="M-11-2-4-3M4-3 11-1" stroke="#A8ADB0"/>
+<circle cx="-7" cy="3" r="1.15" fill="#263D48" stroke="none"/>
+<circle cx="8" cy="3" r="1.15" fill="#263D48" stroke="none"/>
+<path d="M1 4-1 9 2 10" stroke="#D89C77" stroke-width="1.2"/>
+<g stroke-width="1.2">
+<circle cx="-7" cy="3" r="5.8"/>
+<circle cx="8" cy="3" r="5.8"/>
+<path d="M-1 2H2M-16 1-13 2M14 2 17 1"/>
+</g>
+<path d="M-4 15 4 14" stroke-width="1.3"/>
+</g>
+<rect x="150" y="165" width="60" height="7" rx="2" fill="#AF987D"/>
+<path d="M158 173 152 211M202 173 209 211" stroke="#A18B76" stroke-width="4"/>
+<rect x="155" y="152" width="14" height="12" rx="2" fill="#7798B8" stroke="none"/>
+<rect x="175" y="140" width="14" height="24" rx="2" fill="#345A8B" stroke="none"/>
+<rect x="195" y="126" width="14" height="38" rx="2" fill="#C3D4E7" stroke="none"/>
+<path d="M158 157H165M178 145H185M198 131H205" stroke="#FFF9ED"/>
+<g transform="translate(177 134) rotate(90)">
+<path d="M-5 3V-4Q-5-7-2-7H3Q7-7 7-3V3Q6 8 1 8Q-3 8-5 3Z" fill="#EDC2A1"/>
+<path d="M-5 0-1-2Q2-3 3 0L0 3" stroke="#D89C77" stroke-width="1"/>
+</g>
+</g>
 </svg>

@@ -1,3 +1,60 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 240" role="img" aria-labelledby="title-esfp"><title id="title-esfp">ESFP: an expressive male performer dancing with a microphone</title>
-<ellipse cx="121" cy="218" rx="79" ry="5" fill="#263D48" opacity=".08"/><circle cx="122" cy="123" r="83" fill="#F9E9F2"/><path d="M101 152 123 154 116 187 88 211 76 199 99 176Z" fill="#263D48"/><path d="M122 152 142 146 163 174 186 183 180 200 150 188 126 174Z" fill="#4F435A"/><path d="M78 195 91 207 82 218 59 216Q53 212 67 205Z" fill="#FFF9ED"/><path d="M180 180 190 183 199 200Q200 207 187 207L178 201Z" fill="#FFF9ED"/><path d="M67 211 83 213M185 200 194 200" fill="none" stroke="#A7497D" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M88 99 108 87 125 90 146 107 144 152 101 164 82 126Z" fill="#A7497D"/><path d="M108 92 119 102 127 95 134 152 113 159Z" fill="#FFF9ED"/><path d="M102 92 113 102 106 121 92 108ZM132 95 121 103 135 122 145 107Z" fill="#C570A0"/><path d="M97 151 111 159 98 181 77 165Z" fill="#C570A0"/><path d="M88 102Q74 101 68 113L55 137 41 121 29 131 50 155Q58 164 66 153L100 119Z" fill="#A7497D"/><path d="M35 126 28 111 36 102 47 120Z" fill="#9A6247"/><path d="M139 104 158 105 177 84 188 93 169 123Q164 130 155 126L130 119Z" fill="#A7497D"/><path d="M177 87 184 73 181 65Q183 60 187 66L191 72 200 66Q205 66 200 72L196 84 187 94Z" fill="#9A6247"/><g transform="translate(98 41)"><rect x="14" y="37" width="14" height="17" rx="2" fill="#9A6247"/><path d="M14 40H28V46L14 49Z" fill="#7D4A36"/></g><g transform="translate(98 41) rotate(-10 20 25)"><ellipse cx="5" cy="27" rx="4.5" ry="6" fill="#9A6247"/><ellipse cx="36" cy="27" rx="4" ry="5.5" fill="#9A6247"/><path d="M4 16Q6 3 20 4Q35 4 36 18L35 34 28 44 14 44 6 36Z" fill="#9A6247"/><path d="M3 25Q-2 19 2 13Q-2 4 8 3Q12-5 20 0Q29-5 32 3Q42 2 39 13L35 25 31 22 31 14Q22 16 16 9L9 16 8 25Z" fill="#342F38"/><path d="M10 23 16 22M25 22 30 23" fill="none" stroke="#263D48" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><circle cx="13.5" cy="27" r="1.45" fill="#263D48"/><circle cx="27.5" cy="27" r="1.45" fill="#263D48"/><path d="M21 26 19 33 23 33" fill="none" stroke="#7D4A36" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M12 35Q16 31 21 34Q26 31 30 35L28 38 21 36 15 38Z" fill="#342F38"/><path d="M18 41Q22 43 26 40" fill="none" stroke="#263D48" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></g><g transform="rotate(-25 28 98)"><rect x="24" y="89" width="9" height="25" rx="4" fill="#263D48"/><ellipse cx="28.5" cy="87" rx="9" ry="12" fill="#70838B"/><path d="M22 82 35 87M21 87 34 92" fill="none" stroke="#FFF9ED" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/><rect x="25" y="98" width="7" height="3" rx="1" fill="#E6B65D"/></g><g transform="translate(30 104) rotate(-25)"><path d="M-5-6Q-5-10-1-10L4-9 7-5 7 4Q6 9 1 9L-4 5-8-1Q-10-5-7-6L-4-3Z" fill="#9A6247"/><path d="M-3-2 0 2" fill="none" stroke="#7D4A36" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/></g><path d="M35 113Q24 148 30 176Q33 197 63 199" fill="none" stroke="#71868E" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 240" role="img" aria-labelledby="esfp-title" aria-describedby="esfp-desc">
+<title id="esfp-title">ESFP: The performer dancing with a microphone</title>
+<desc id="esfp-desc">An expressive moustached male performer in a magenta jacket dances in light sneakers. A clearly held microphone, a loose cable and an open raised hand complete the movement.</desc>
+<circle cx="120" cy="122" r="84" fill="#F9E9F2"/>
+<ellipse cx="120" cy="216" rx="65" ry="3" fill="#263D48" opacity=".08"/>
+<g fill="none" stroke="#263D48" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
+<path d="M96 153 119 159 109 184 84 206 72 196 96 175Z" fill="#263D48"/>
+<path d="M119 155 140 149 159 171 182 182 176 199 148 186 125 175Z" fill="#4F435A"/>
+<g transform="translate(78 202) rotate(-7) scale(-1 1)">
+<path d="M0 0H14Q18 4 26 5Q30 6 29 11H-1Q-4 8 0 0Z" fill="#FFF9ED"/>
+<path d="M0 9H27" stroke-width="1" opacity=".38"/>
+</g>
+<g transform="translate(180 186) rotate(58) scale(1 1)">
+<path d="M0 0H14Q18 4 26 5Q30 6 29 11H-1Q-4 8 0 0Z" fill="#FFF9ED"/>
+<path d="M0 9H27" stroke-width="1" opacity=".38"/>
+</g>
+<path d="M42 111Q25 135 31 167Q35 190 64 195" stroke="#71868E"/>
+<path d="M91 107 70 139Q66 144 61 135L43 113" stroke-width="16.6"/>
+<path d="M91 107 70 139Q66 144 61 135L43 113" stroke="#A3477A" stroke-width="14"/>
+<path d="M136 107 157 114Q161 115 166 108L182 88" stroke-width="16.6"/>
+<path d="M136 107 157 114Q161 115 166 108L182 88" stroke="#A3477A" stroke-width="14"/>
+<g transform="translate(113 0) rotate(-6 0 126)">
+<path d="M-10 96Q-26 97-28 109L-24 158Q0 163 26 156L25 109Q23 99 10 96Z" fill="#A3477A"/>
+<path d="M-9 97 0 104 10 97 12 156-7 159Z" fill="#FFF9ED" stroke="none"/>
+<path d="M-11 96-2 104-10 122-20 108Z" fill="#C570A0" stroke="none"/>
+<path d="M11 96 2 104 12 121 21 107Z" fill="#C570A0" stroke="none"/>
+<path d="M-10 124-11 154M13 125 16 153" stroke="#FFF9ED" stroke-width="1" opacity=".28"/>
+</g>
+<path d="M91 148 110 157 96 176 80 163Z" fill="#C570A0" stroke="none"/>
+<g transform="translate(113 65) rotate(-10)">
+<rect x="-6" y="17" width="12" height="16" rx="3" fill="#9A6247"/>
+<path d="M-5 21Q0 26 6 22V28Q0 30-5 27Z" fill="#7D4A36" stroke="none"/>
+<ellipse cx="-16.5" cy="3" rx="3.5" ry="5" fill="#9A6247"/>
+<ellipse cx="16.5" cy="3" rx="3.5" ry="5" fill="#9A6247"/>
+<path d="M-16-12Q-16-24 0-24Q16-24 16-12V7Q15 21 0 24Q-14 22-16 8Z" fill="#9A6247"/>
+<path d="M-16 4Q-22-5-17-12Q-21-22-10-23Q-3-30 5-25Q16-29 18-18Q24-13 17-5L13 2V-9Q3-4-4-13Q-8-7-12-8V4Z" fill="#342F38" stroke="#342F38"/>
+<path d="M-11-2Q-7-4-3-2M4-2Q8-4 12-2" stroke="#342F38"/>
+<circle cx="-7" cy="3" r="1.15" fill="#263D48" stroke="none"/>
+<circle cx="8" cy="3" r="1.15" fill="#263D48" stroke="none"/>
+<path d="M1 4-1 9 2 10" stroke="#7D4A36" stroke-width="1.2"/>
+<path d="M-9 13Q-4 9 0 12Q5 9 10 13Q7 17 1 14Q-5 17-9 13Z" fill="#342F38" stroke="none"/>
+<path d="M-3 19Q1 21 5 18" stroke-width="1.1"/>
+</g>
+<g transform="translate(187 81) rotate(34)">
+<path d="M-4 6-7-1Q-9-5-7-6Q-5-7-3-3L-2-9Q-2-12 0-11L3-4 6-8Q8-9 9-7L7 2Q6 7 2 8Z" fill="#9A6247"/>
+<path d="M-3-2 1 2" stroke="#7D4A36" stroke-width="1"/>
+</g>
+<g transform="translate(39 94) rotate(-26)">
+<rect x="-4" y="-3" width="8" height="28" rx="4" fill="#263D48"/>
+<ellipse cx="0" cy="-10" rx="8" ry="11" fill="#70838B"/>
+<path d="M-5-16 6-12M-6-11 6-7M-5-6 4-3" stroke="#FFF9ED" stroke-width="1"/>
+<rect x="-2" y="7" width="4" height="3" rx="1" fill="#E6B65D" stroke="none"/>
+</g>
+<g transform="translate(45 108) rotate(-26)">
+<path d="M-5 3V-4Q-5-7-2-7H3Q7-7 7-3V3Q6 8 1 8Q-3 8-5 3Z" fill="#9A6247"/>
+<path d="M-5 0-1-2Q2-3 3 0L0 3" stroke="#7D4A36" stroke-width="1"/>
+</g>
+<path d="M63 209 76 208M181 198 185 205" stroke="#A3477A"/>
+</g>
 </svg>

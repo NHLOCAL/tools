@@ -1,3 +1,61 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 240" role="img" aria-labelledby="title-esfj"><title id="title-esfj">ESFJ: a warm moustached male host offering two cups and a welcome</title>
-<ellipse cx="121" cy="218" rx="79" ry="5" fill="#263D48" opacity=".08"/><circle cx="122" cy="123" r="83" fill="#FAEAE3"/><path d="M91 154 117 156 109 206 92 207Z" fill="#BCB09A"/><path d="M117 156 143 152 154 206 136 208 119 180Z" fill="#D5C6AA"/><path d="M92 202 110 202 113 217H80Q77 213 92 202Z" fill="#263D48"/><path d="M136 204 152 202 168 211Q170 218 156 218H137Z" fill="#263D48"/><path d="M85 100 106 88 127 89 149 104 144 158 85 159Z" fill="#FFF9ED"/><path d="M98 91 114 111 132 91 144 154Q115 171 87 155L87 106Z" fill="#AE5743"/><path d="M99 93 113 110 129 94 124 110 113 122 104 112Z" fill="#D8947C"/><path d="M89 102Q76 100 72 114L65 133 49 132 47 147 69 151Q77 151 81 143L93 116Z" fill="#FFF9ED"/><path d="M67 132 80 137 76 146 62 141Z" fill="#E1CEB4"/><path d="M37 140Q33 136 38 134L51 132H59Q63 135 57 138L48 141 44 146Z" fill="#E3AF87"/><path d="M143 103Q157 104 161 119L167 140 190 126 199 139 173 157Q162 163 155 151L142 118Z" fill="#FFF9ED"/><path d="M180 130 189 145 198 139 189 124Z" fill="#E1CEB4"/><g transform="translate(199 129) rotate(45)"><path d="M-5-6Q-5-10-1-10L4-9 7-5 7 4Q6 9 1 9L-4 5-8-1Q-10-5-7-6L-4-3Z" fill="#E3AF87"/><path d="M-3-2 0 2" fill="none" stroke="#C98963" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/></g><g transform="translate(96 41)"><rect x="14" y="37" width="14" height="17" rx="2" fill="#E3AF87"/><path d="M14 40H28V46L14 49Z" fill="#C98963"/></g><g transform="translate(96 41) rotate(-2 20 25)"><ellipse cx="5" cy="27" rx="4.5" ry="6" fill="#E3AF87"/><ellipse cx="36" cy="27" rx="4" ry="5.5" fill="#E3AF87"/><path d="M4 17Q4 5 21 5Q36 5 37 18L37 32Q34 42 22 44Q10 44 5 33Z" fill="#E3AF87"/><path d="M3 25Q-2 19 2 13Q-2 4 8 3Q12-5 20 0Q29-5 32 3Q42 2 39 13L35 25 31 22 31 14Q22 16 16 9L9 16 8 25Z" fill="#75513F"/><path d="M10 23 16 22M25 22 30 23" fill="none" stroke="#263D48" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><circle cx="13.5" cy="27" r="1.45" fill="#263D48"/><circle cx="27.5" cy="27" r="1.45" fill="#263D48"/><path d="M21 26 19 33 23 33" fill="none" stroke="#C98963" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M12 35Q16 31 21 34Q26 31 30 35L28 38 21 36 15 38Z" fill="#75513F"/><path d="M18 41Q22 43 26 40" fill="none" stroke="#263D48" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></g><path d="M22 126H80L74 133H29Z" fill="#263D48"/><rect x="29" y="107" width="15" height="18" rx="2" fill="#FFF9ED"/><path d="M44 111H49Q54 118 45 120" fill="none" stroke="#AE5743" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><rect x="59" y="106" width="14" height="19" rx="2" fill="#EAC28C"/><path d="M73 110H77Q82 117 73 120" fill="none" stroke="#AE5743" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M36 100Q32 96 36 92M65 100Q69 96 65 92" fill="none" stroke="#AE5743" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 240" role="img" aria-labelledby="esfj-title" aria-describedby="esfj-desc">
+<title id="esfj-title">ESFJ: The host offering a warm welcome</title>
+<desc id="esfj-desc">A warm moustached male host in a terracotta waistcoat balances a tray with two steaming cups. His free hand opens in a relaxed gesture of welcome.</desc>
+<circle cx="120" cy="122" r="84" fill="#FAEAE3"/>
+<ellipse cx="120" cy="216" rx="65" ry="3" fill="#263D48" opacity=".08"/>
+<g fill="none" stroke="#263D48" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
+<g transform="translate(121 0)">
+<path d="M-23 153H1L-4 201H-20Z" fill="#BCB09A"/>
+<path d="M1 153H24L30 200 14 203 4 174Z" fill="#D5C6AA"/>
+<g transform="translate(-22 200) rotate(0) scale(-1 1)">
+<path d="M0 0H14Q18 4 26 5Q30 6 29 11H-1Q-4 8 0 0Z" fill="#263D48"/>
+<path d="M0 9H27" stroke="#FFF9ED" stroke-width="1" opacity=".38"/>
+</g>
+<g transform="translate(13 201) rotate(0) scale(1 1)">
+<path d="M0 0H14Q18 4 26 5Q30 6 29 11H-1Q-4 8 0 0Z" fill="#263D48"/>
+<path d="M0 9H27" stroke="#FFF9ED" stroke-width="1" opacity=".38"/>
+</g>
+</g>
+<path d="M96 107 78 140Q75 145 66 141L52 135" stroke-width="16.6"/>
+<path d="M96 107 78 140Q75 145 66 141L52 135" stroke="#FFF9ED" stroke-width="14"/>
+<path d="M144 107 164 144Q167 149 174 143L191 128" stroke-width="16.6"/>
+<path d="M144 107 164 144Q167 149 174 143L191 128" stroke="#FFF9ED" stroke-width="14"/>
+<g transform="translate(121 0) rotate(0 0 126)">
+<path d="M-10 96Q-26 97-28 109L-24 158Q0 163 26 156L25 109Q23 99 10 96Z" fill="#FFF9ED"/>
+<path d="M-9 97 0 104 10 97 12 156-7 159Z" fill="#FFF9ED" stroke="none"/>
+<path d="M-13 96-1 115 12 96 24 105 22 156 3 161-2 156-23 159-25 105Z" fill="#A1503E"/>
+<path d="M0 116V151" stroke="#FFF9ED" stroke-width="1" opacity=".45"/>
+<circle cx="5" cy="132" r="1" fill="#FFF9ED" stroke="none"/>
+<circle cx="6" cy="143" r="1" fill="#FFF9ED" stroke="none"/>
+</g>
+<g transform="translate(121 67) rotate(-3)">
+<rect x="-6" y="17" width="12" height="16" rx="3" fill="#E3AF87"/>
+<path d="M-5 21Q0 26 6 22V28Q0 30-5 27Z" fill="#C98963" stroke="none"/>
+<ellipse cx="-16.5" cy="3" rx="3.5" ry="5" fill="#E3AF87"/>
+<ellipse cx="16.5" cy="3" rx="3.5" ry="5" fill="#E3AF87"/>
+<path d="M-16-12Q-16-24 0-24Q16-24 16-12V7Q15 21 0 24Q-14 22-16 8Z" fill="#E3AF87"/>
+<path d="M-16 4Q-22-5-17-12Q-21-22-10-23Q-3-30 5-25Q16-29 18-18Q24-13 17-5L13 2V-9Q3-4-4-13Q-8-7-12-8V4Z" fill="#75513F" stroke="#75513F"/>
+<path d="M-11-2Q-7-4-3-2M4-2Q8-4 12-2" stroke="#75513F"/>
+<circle cx="-7" cy="3" r="1.15" fill="#263D48" stroke="none"/>
+<circle cx="8" cy="3" r="1.15" fill="#263D48" stroke="none"/>
+<path d="M1 4-1 9 2 10" stroke="#C98963" stroke-width="1.2"/>
+<path d="M-9 13Q-4 9 0 12Q5 9 10 13Q7 17 1 14Q-5 17-9 13Z" fill="#75513F" stroke="none"/>
+<path d="M-3 19Q1 21 5 18" stroke-width="1.1"/>
+</g>
+<g transform="translate(198 122) rotate(37)">
+<path d="M-4 6-7-1Q-9-5-7-6Q-5-7-3-3L-2-9Q-2-12 0-11L3-4 6-8Q8-9 9-7L7 2Q6 7 2 8Z" fill="#E3AF87"/>
+<path d="M-3-2 1 2" stroke="#C98963" stroke-width="1"/>
+</g>
+<g>
+<path d="M40 137Q42 132 50 132L59 134Q61 137 57 139L50 142 43 141Z" fill="#E3AF87"/>
+<path d="M25 125H81L77 131H29Z" fill="#263D48"/>
+</g>
+<g stroke="#A1503E">
+<rect x="31" y="104" width="15" height="20" rx="3" fill="#FFF9ED"/>
+<path d="M46 108H49Q55 108 53 115Q52 119 46 118" stroke-width="2"/>
+<rect x="60" y="103" width="14" height="21" rx="3" fill="#EAC28C"/>
+<path d="M74 107H77Q83 108 81 115Q79 119 74 118" stroke-width="2"/>
+<path d="M38 97Q33 93 38 87M67 96Q72 92 67 86" stroke-width="1.2"/>
+</g>
+</g>
 </svg>

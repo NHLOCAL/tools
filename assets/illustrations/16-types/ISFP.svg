@@ -1,3 +1,69 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 240" role="img" aria-labelledby="title-isfp"><title id="title-isfp">ISFP: a bearded male artist painting at a small easel</title>
-<ellipse cx="121" cy="218" rx="79" ry="5" fill="#263D48" opacity=".08"/><circle cx="122" cy="123" r="83" fill="#F2EAF9"/><rect x="78" y="164" width="51" height="9" rx="3" fill="#BCA383"/><path d="M84 173 74 214M123 173 134 215" fill="none" stroke="#A88C70" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/><path d="M101 150 123 152 144 174 139 204 123 205 127 182 104 175Z" fill="#C8B99C"/><path d="M84 154 105 158 106 182 91 205 76 201 88 178 82 169Z" fill="#D9CBAE"/><path d="M77 198 93 204 87 215H62Q57 211 70 205Z" fill="#263D48"/><path d="M123 200 139 201 154 211Q158 217 147 218H123Z" fill="#263D48"/><path d="M76 102 98 89 116 92 134 110 126 157Q107 168 77 155L69 123Z" fill="#8262A3"/><path d="M92 92Q101 108 117 95L120 104Q102 116 88 100Z" fill="#FFF9ED"/><path d="M82 101 75 110 68 121 56 142 68 151 94 119Z" fill="#8262A3"/><path d="M56 140 70 150 65 156 51 146Z" fill="#B498CC"/><path d="M60 148 49 161 59 168 72 156Z" fill="#EDC2A1"/><g transform="translate(54 165) rotate(50)"><path d="M-5-6Q-5-10-1-10L4-9 7-5 7 4Q6 9 1 9L-4 5-8-1Q-10-5-7-6L-4-3Z" fill="#EDC2A1"/><path d="M-3-2 0 2" fill="none" stroke="#D89C77" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/></g><path d="M124 108 140 125 158 118 164 131 141 142Q133 143 127 138L111 122Z" fill="#8262A3"/><path d="M150 119 154 134 164 131 160 116Z" fill="#B498CC"/><g transform="translate(82 44)"><rect x="14" y="37" width="14" height="17" rx="2" fill="#EDC2A1"/><path d="M14 40H28V46L14 49Z" fill="#D89C77"/></g><g transform="translate(82 44) rotate(7 20 25)"><ellipse cx="5" cy="27" rx="4.5" ry="6" fill="#EDC2A1"/><ellipse cx="36" cy="27" rx="4" ry="5.5" fill="#EDC2A1"/><path d="M5 17Q5 4 21 5Q37 5 36 19L35 31Q34 45 21 47Q8 44 6 33Z" fill="#EDC2A1"/><path d="M6 28 10 32 15 33 20 31 25 33 31 31 35 27 34 37Q29 46 21 46Q10 44 7 37Z" fill="#6B4E3D"/><path d="M4 25 2 14Q1 3 12 0L25 0Q37 2 38 14L35 25 31 22V14L20 9 9 15 8 25Z" fill="#6B4E3D"/><path d="M10 23 16 22M25 22 30 23" fill="none" stroke="#263D48" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><circle cx="13.5" cy="27" r="1.45" fill="#263D48"/><circle cx="27.5" cy="27" r="1.45" fill="#263D48"/><path d="M21 26 19 33 23 33" fill="none" stroke="#D89C77" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M15 37Q21 41 27 36Q23 43 18 40Z" fill="#FFF9ED"/></g><path d="M158 211 174 83 181 83 194 211" fill="none" stroke="#A78B70" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/><path d="M169 99H207V161H161Z" fill="#B99C7D"/><path d="M172 103H203V156H165Z" fill="#FFF9ED"/><path d="M168 142 183 122 195 142 201 133V152H167Z" fill="#A4B990"/><circle cx="193" cy="114" r="6" fill="#E6B65D"/><path d="M172 146 178 142 185 149 178 153 167 152Z" fill="#8262A3"/><path d="M161 163H207" fill="none" stroke="#9C8069" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/><path d="M171 206 199 206" fill="none" stroke="#A78B70" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M162 124 185 114" fill="none" stroke="#263D48" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M183 113 190 111 186 116Z" fill="#8262A3"/><g transform="translate(163 123) rotate(75)"><path d="M-5-6Q-5-10-1-10L4-9 7-5 7 4Q6 9 1 9L-4 5-8-1Q-10-5-7-6L-4-3Z" fill="#EDC2A1"/><path d="M-3-2 0 2" fill="none" stroke="#D89C77" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/></g>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 240" role="img" aria-labelledby="isfp-title" aria-describedby="isfp-desc">
+<title id="isfp-title">ISFP: The artist painting at an easel</title>
+<desc id="isfp-desc">A bearded male artist in a lilac sweater sits at a wooden easel. He holds a small palette and touches a brush to a quiet mountain-and-sun landscape.</desc>
+<circle cx="120" cy="122" r="84" fill="#F2EAF9"/>
+<ellipse cx="120" cy="216" rx="65" ry="3" fill="#263D48" opacity=".08"/>
+<g fill="none" stroke="#263D48" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
+<rect x="69" y="166" width="60" height="7" rx="3" fill="#BCA383"/>
+<path d="M76 174 67 213M122 174 131 213" stroke="#A88C70" stroke-width="4"/>
+<path d="M81 156 105 159 100 181 84 203 69 198 85 176Z" fill="#D9CBAE"/>
+<path d="M103 154 126 159 141 175 137 203H120L124 182 104 176Z" fill="#C8B99C"/>
+<g transform="translate(75 201) rotate(0) scale(-1 1)">
+<path d="M0 0H14Q18 4 26 5Q30 6 29 11H-1Q-4 8 0 0Z" fill="#263D48"/>
+<path d="M0 9H27" stroke="#FFF9ED" stroke-width="1" opacity=".38"/>
+</g>
+<g transform="translate(121 202) rotate(0) scale(1 1)">
+<path d="M0 0H14Q18 4 26 5Q30 6 29 11H-1Q-4 8 0 0Z" fill="#263D48"/>
+<path d="M0 9H27" stroke="#FFF9ED" stroke-width="1" opacity=".38"/>
+</g>
+<path d="M78 109 62 134Q59 141 65 149" stroke-width="16.6"/>
+<path d="M78 109 62 134Q59 141 65 149" stroke="#795B98" stroke-width="14"/>
+<path d="M124 112 138 136Q142 141 151 137L158 132" stroke-width="16.6"/>
+<path d="M124 112 138 136Q142 141 151 137L158 132" stroke="#795B98" stroke-width="14"/>
+<g transform="translate(101 0) rotate(0 0 126)">
+<path d="M-10 96Q-28 99-28 110L-24 157Q0 164 26 157L25 108Q22 99 10 96Z" fill="#795B98"/>
+<path d="M-10 97Q0 110 11 97" stroke="#FFF9ED" stroke-width="4"/>
+<path d="M-21 152Q0 158 23 152" stroke="#B498CC" stroke-width="1.3"/>
+</g>
+<g transform="translate(99 69) rotate(7)">
+<rect x="-6" y="17" width="12" height="16" rx="3" fill="#EDC2A1"/>
+<path d="M-5 21Q0 26 6 22V28Q0 30-5 27Z" fill="#D89C77" stroke="none"/>
+<ellipse cx="-16.5" cy="3" rx="3.5" ry="5" fill="#EDC2A1"/>
+<ellipse cx="16.5" cy="3" rx="3.5" ry="5" fill="#EDC2A1"/>
+<path d="M-16-12Q-16-24 0-24Q16-24 16-12V7Q15 21 0 24Q-14 22-16 8Z" fill="#EDC2A1"/>
+<path d="M-16 4Q-23-13-13-21Q-4-30 8-25Q16-25 19-17Q23-14 18-9L14-7Q6-9 0-16Q-5-9-12-9L-12 3Z" fill="#6B4E3D" stroke="#6B4E3D"/>
+<path d="M-15 6-10 10-5 10 0 8 6 10 11 9 15 5 13 16Q8 24 0 24Q-10 22-14 15Z" fill="#6B4E3D" stroke="#6B4E3D"/>
+<path d="M-11-2Q-7-4-3-2M4-2Q8-4 12-2" stroke="#6B4E3D"/>
+<circle cx="-7" cy="3" r="1.15" fill="#263D48" stroke="none"/>
+<circle cx="8" cy="3" r="1.15" fill="#263D48" stroke="none"/>
+<path d="M1 4-1 9 2 10" stroke="#D89C77" stroke-width="1.2"/>
+<path d="M-5 14Q0 19 6 14" stroke="#FFF9ED"/>
+</g>
+<g>
+<path d="M156 212 177 82 181 82 203 212" stroke="#A78B70" stroke-width="4"/>
+<path d="M163 202H196" stroke="#A78B70" stroke-width="2"/>
+<rect x="161" y="94" width="47" height="68" rx="2" fill="#B99C7D"/>
+<rect x="165" y="98" width="39" height="59" rx="1" fill="#FFF9ED" stroke="none"/>
+<circle cx="193" cy="111" r="5.5" fill="#E6B65D" stroke="none"/>
+<path d="M166 140 178 122 192 141 203 130V156H166Z" fill="#A4B990" stroke="none"/>
+<path d="M166 150 177 139 190 154 181 157H166Z" fill="#795B98" stroke="none"/>
+<path d="M157 165H211" stroke="#9C8069" stroke-width="4"/>
+</g>
+<g>
+<path d="M42 162Q43 147 61 147Q76 148 77 158Q78 165 69 165L62 163Q57 163 60 169Q56 175 48 171Q42 169 42 162Z" fill="#E8D4A8"/>
+<circle cx="50" cy="157" r="3" fill="#795B98" stroke="none"/>
+<circle cx="58" cy="152" r="2.6" fill="#E6B65D" stroke="none"/>
+<circle cx="69" cy="156" r="2.7" fill="#6A925E" stroke="none"/>
+</g>
+<g transform="translate(65 150) rotate(15)">
+<path d="M-5 3V-4Q-5-7-2-7H3Q7-7 7-3V3Q6 8 1 8Q-3 8-5 3Z" fill="#EDC2A1"/>
+<path d="M-5 0-1-2Q2-3 3 0L0 3" stroke="#D89C77" stroke-width="1"/>
+</g>
+<path d="M156 136 183 125" stroke-width="2"/>
+<path d="M182 123Q188 120 191 123L184 128Z" fill="#795B98" stroke="none"/>
+<g transform="translate(158 134) rotate(67)">
+<path d="M-5 3V-4Q-5-7-2-7H3Q7-7 7-3V3Q6 8 1 8Q-3 8-5 3Z" fill="#EDC2A1"/>
+<path d="M-5 0-1-2Q2-3 3 0L0 3" stroke="#D89C77" stroke-width="1"/>
+</g>
+</g>
 </svg>

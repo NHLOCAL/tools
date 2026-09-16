@@ -1,3 +1,59 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 240" role="img" aria-labelledby="title-infp"><title id="title-infp">INFP: a contemplative male reader with an open book</title>
-<ellipse cx="121" cy="218" rx="79" ry="5" fill="#263D48" opacity=".08"/><circle cx="122" cy="123" r="83" fill="#EFF2E2"/><rect x="72" y="167" width="53" height="41" rx="8" fill="#D1D8B9"/><path d="M108 153 130 155 148 173Q153 178 148 186L134 202 120 194 132 181 111 177Z" fill="#263D48"/><path d="M85 155 109 158 112 179 100 205 84 205 94 179 82 169Z" fill="#415340"/><path d="M85 200 101 202 102 216H76Q69 212 85 200Z" fill="#263D48"/><path d="M122 195 134 200 146 210Q152 216 141 216L126 211Z" fill="#263D48"/><path d="M80 101 102 87 119 91 137 107 132 161Q103 172 73 154Z" fill="#687C3A"/><path d="M99 94 109 104 119 93 122 156 100 159Z" fill="#FFF9ED"/><path d="M84 106Q73 111 70 133L88 155 99 145 85 130 98 118Z" fill="#687C3A"/><g transform="translate(95 149) rotate(-35)"><path d="M-5-6Q-5-10-1-10L4-9 7-5 7 4Q6 9 1 9L-4 5-8-1Q-10-5-7-6L-4-3Z" fill="#EDC2A1"/><path d="M-3-2 0 2" fill="none" stroke="#D89C77" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/></g><path d="M132 105 144 121 150 107 162 113 154 139Q151 146 142 142L129 128Z" fill="#687C3A"/><g transform="translate(155 108) rotate(25)"><path d="M-5-6Q-5-10-1-10L4-9 7-5 7 4Q6 9 1 9L-4 5-8-1Q-10-5-7-6L-4-3Z" fill="#EDC2A1"/><path d="M-3-2 0 2" fill="none" stroke="#D89C77" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/></g><g transform="translate(88 43)"><rect x="14" y="37" width="14" height="17" rx="2" fill="#EDC2A1"/><path d="M14 40H28V46L14 49Z" fill="#D89C77"/></g><g transform="translate(88 43) rotate(8 20 25)"><ellipse cx="5" cy="27" rx="4.5" ry="6" fill="#EDC2A1"/><ellipse cx="36" cy="27" rx="4" ry="5.5" fill="#EDC2A1"/><path d="M5 17Q5 4 21 5Q37 5 36 19L35 31Q34 45 21 47Q8 44 6 33Z" fill="#EDC2A1"/><path d="M3 25Q-2 19 2 13Q-2 4 8 3Q12-5 20 0Q29-5 32 3Q42 2 39 13L35 25 31 22 31 14Q22 16 16 9L9 16 8 25Z" fill="#624A39"/><path d="M10 23 16 22M25 22 30 23" fill="none" stroke="#263D48" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><circle cx="13.5" cy="27" r="1.45" fill="#263D48"/><circle cx="27.5" cy="27" r="1.45" fill="#263D48"/><path d="M21 26 19 33 23 33" fill="none" stroke="#D89C77" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M15 37Q21 41 27 36Q23 43 18 40Z" fill="#263D48"/></g><path d="M95 147Q111 139 124 149Q139 140 152 146L148 169Q134 166 122 174Q108 167 96 170Z" fill="#E8D4A8"/><path d="M98 145Q112 140 124 148Q138 140 149 143L145 165Q133 164 123 171Q111 164 99 167Z" fill="#FFF9ED"/><path d="M124 148 123 170M104 150 116 152M103 156 115 158M131 151 143 148M130 157 141 154" fill="none" stroke="#687C3A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 240" role="img" aria-labelledby="infp-title" aria-describedby="infp-desc">
+<title id="infp-title">INFP: The reader absorbed in a book</title>
+<desc id="infp-desc">A gentle male reader in an olive jacket sits on a small cushion. He leans toward an open book, with both hands resting naturally on the page edges.</desc>
+<circle cx="120" cy="122" r="84" fill="#EFF2E2"/>
+<ellipse cx="120" cy="216" rx="65" ry="3" fill="#263D48" opacity=".08"/>
+<g fill="none" stroke="#263D48" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
+<rect x="67" y="166" width="55" height="43" rx="9" fill="#D1D8B9" stroke="none"/>
+<path d="M72 174H117" stroke="#5E7034" opacity=".25"/>
+<path d="M87 155 108 157 103 185 88 204H73L88 177Z" fill="#415340"/>
+<path d="M106 153Q125 151 143 173Q149 180 143 188L128 204 115 196 129 180 107 177Z" fill="#263D48"/>
+<g transform="translate(77 202) rotate(0) scale(-1 1)">
+<path d="M0 0H14Q18 4 26 5Q30 6 29 11H-1Q-4 8 0 0Z" fill="#263D48"/>
+<path d="M0 9H27" stroke="#FFF9ED" stroke-width="1" opacity=".38"/>
+</g>
+<g transform="translate(119 199) rotate(20) scale(1 1)">
+<path d="M0 0H14Q18 4 26 5Q30 6 29 11H-1Q-4 8 0 0Z" fill="#263D48"/>
+<path d="M0 9H27" stroke="#FFF9ED" stroke-width="1" opacity=".38"/>
+</g>
+<path d="M82 108Q67 126 81 145L100 150" stroke-width="16.6"/>
+<path d="M82 108Q67 126 81 145L100 150" stroke="#5E7034" stroke-width="14"/>
+<path d="M127 108Q146 121 152 140" stroke-width="16.6"/>
+<path d="M127 108Q146 121 152 140" stroke="#5E7034" stroke-width="14"/>
+<g transform="translate(104 0) rotate(0 0 126)">
+<path d="M-10 96Q-26 97-28 109L-24 158Q0 163 26 156L25 109Q23 99 10 96Z" fill="#5E7034"/>
+<path d="M-9 97 0 104 10 97 12 156-7 159Z" fill="#FFF9ED" stroke="none"/>
+<path d="M-11 96-2 104-10 122-20 108Z" fill="#889A56" stroke="none"/>
+<path d="M11 96 2 104 12 121 21 107Z" fill="#889A56" stroke="none"/>
+<path d="M-10 124-11 154M13 125 16 153" stroke="#FFF9ED" stroke-width="1" opacity=".28"/>
+</g>
+<g transform="translate(103 69) rotate(8)">
+<rect x="-6" y="17" width="12" height="16" rx="3" fill="#EDC2A1"/>
+<path d="M-5 21Q0 26 6 22V28Q0 30-5 27Z" fill="#D89C77" stroke="none"/>
+<ellipse cx="-16.5" cy="3" rx="3.5" ry="5" fill="#EDC2A1"/>
+<ellipse cx="16.5" cy="3" rx="3.5" ry="5" fill="#EDC2A1"/>
+<path d="M-16-12Q-16-24 0-24Q16-24 16-12V7Q15 21 0 24Q-14 22-16 8Z" fill="#EDC2A1"/>
+<path d="M-16 4Q-22-5-17-12Q-21-22-10-23Q-3-30 5-25Q16-29 18-18Q24-13 17-5L13 2V-9Q3-4-4-13Q-8-7-12-8V4Z" fill="#624A39" stroke="#624A39"/>
+<path d="M-11-2Q-7-4-3-2M4-2Q8-4 12-2" stroke="#624A39"/>
+<circle cx="-7" cy="3" r="1.15" fill="#263D48" stroke="none"/>
+<circle cx="8" cy="3" r="1.15" fill="#263D48" stroke="none"/>
+<path d="M1 4-1 9 2 10" stroke="#D89C77" stroke-width="1.2"/>
+<path d="M-5 14Q0 19 6 14"/>
+</g>
+<path d="M79 143 100 151" stroke-width="14.6"/>
+<path d="M79 143 100 151" stroke="#5E7034" stroke-width="12"/>
+<g stroke="#5E7034">
+<path d="M96 140Q110 137 124 145Q138 135 156 138L153 168Q139 166 126 176Q110 169 97 172Z" fill="#E8D4A8"/>
+<path d="M99 139Q111 137 124 144Q140 134 153 137L150 164Q137 164 125 172Q112 166 100 168Z" fill="#FFF9ED"/>
+<path d="M124 145 125 171M105 145 117 148M105 151 117 154M132 147 146 143M132 153 145 149" stroke-width="1.2"/>
+</g>
+<g transform="translate(98 156) rotate(-9)">
+<path d="M-5 3V-4Q-5-7-2-7H3Q7-7 7-3V3Q6 8 1 8Q-3 8-5 3Z" fill="#EDC2A1"/>
+<path d="M-5 0-1-2Q2-3 3 0L0 3" stroke="#D89C77" stroke-width="1"/>
+</g>
+<g transform="translate(154 153) rotate(9)">
+<path d="M-5 3V-4Q-5-7-2-7H3Q7-7 7-3V3Q6 8 1 8Q-3 8-5 3Z" fill="#EDC2A1"/>
+<path d="M-5 0-1-2Q2-3 3 0L0 3" stroke="#D89C77" stroke-width="1"/>
+</g>
+</g>
 </svg>
