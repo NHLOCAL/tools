@@ -6,15 +6,19 @@
 <g fill="none" stroke="#263D48" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
 <path d="M139 215V192H166V172H192V150H214V215Z" fill="#E8C8CE" stroke="none"/>
 <path d="M166 191H191M192 171H212" stroke="#933F56" opacity=".25"/>
-<path d="M84 152H108L104 202H86Z" fill="#263D48"/>
-<path d="M108 151 131 149Q142 150 151 160L154 180H138L136 170 114 174Z" fill="#374A57"/>
-<g transform="translate(85 201) rotate(0) scale(-1 1)">
-<path d="M0 0H14Q18 4 26 5Q30 6 29 11H-1Q-4 8 0 0Z" fill="#263D48"/>
-<path d="M0 9H27" stroke="#FFF9ED" stroke-width="1" opacity=".38"/>
+<g data-part="leg">
+<g data-part="shoe" transform="translate(95 204) rotate(0) scale(-1 1)">
+<path d="M-7.5 -3H7.5Q7.5 0 9.5 2L17 4.5Q21 5.5 21 8V10H-7.5Q-8.5 10 -8.5 7Z" fill="#263D48"/>
+<path d="M-6.5 8H19" stroke="#FFF9ED" stroke-width="1" opacity=".32"/>
 </g>
-<g transform="translate(139 181) rotate(0) scale(1 1)">
-<path d="M0 0H14Q18 4 26 5Q30 6 29 11H-1Q-4 8 0 0Z" fill="#263D48"/>
-<path d="M0 9H27" stroke="#FFF9ED" stroke-width="1" opacity=".38"/>
+<path d="M84 151H109Q109 170 106 184L102.5 204 L87.5 204Q84 183 84 151Z" fill="#263D48" data-part="trousers"/>
+</g>
+<g data-part="leg">
+<g data-part="shoe" transform="translate(144 182) rotate(0) scale(1 1)">
+<path d="M-7 -3H7Q7 0 9 2L17 4.5Q21 5.5 21 8V10H-7Q-8 10 -8 7Z" fill="#263D48"/>
+<path d="M-6 8H19" stroke="#FFF9ED" stroke-width="1" opacity=".32"/>
+</g>
+<path d="M107 151Q127 145 140 153Q152 158 152 168L151 182 L137 182L135 171Q122 175 110 174L105 164Z" fill="#374A57" data-part="trousers"/>
 </g>
 <path d="M87 107 72 133Q70 143 93 147" stroke-width="16.6"/>
 <path d="M87 107 72 133Q70 143 93 147" stroke="#933F56" stroke-width="14"/>

@@ -4,15 +4,21 @@
 <circle cx="120" cy="122" r="84" fill="#F9E9F2"/>
 <ellipse cx="120" cy="216" rx="65" ry="3" fill="#263D48" opacity=".08"/>
 <g fill="none" stroke="#263D48" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
-<path d="M96 153 119 159 109 184 84 206 72 196 96 175Z" fill="#263D48"/>
-<path d="M119 155 140 149 159 171 182 182 176 199 148 186 125 175Z" fill="#4F435A"/>
-<g transform="translate(78 202) rotate(-7) scale(-1 1)">
-<path d="M0 0H14Q18 4 26 5Q30 6 29 11H-1Q-4 8 0 0Z" fill="#FFF9ED"/>
-<path d="M0 9H27" stroke-width="1" opacity=".38"/>
+<g data-part="leg">
+<g data-part="shoe" transform="translate(85 204) rotate(0) scale(-1 1)">
+<path d="M-7 -3H7Q7 0 9 2L17 4.5Q21 5.5 21 8V10H-7Q-8 10 -8 7Z" fill="#FFF9ED"/>
+<path d="M-6 8H19" stroke="#A3477A" stroke-width="1" opacity=".7"/>
+<path d="M7 2 10 3M5 4 8 5" stroke="#A3477A" stroke-width="1"/>
 </g>
-<g transform="translate(180 186) rotate(58) scale(1 1)">
-<path d="M0 0H14Q18 4 26 5Q30 6 29 11H-1Q-4 8 0 0Z" fill="#FFF9ED"/>
-<path d="M0 9H27" stroke-width="1" opacity=".38"/>
+<path d="M96 152L120 157Q115 177 106 188Q99 198 92 204 L78 204Q78 194 90 180L96 170Z" fill="#263D48" data-part="trousers"/>
+</g>
+<g data-part="leg">
+<g data-part="shoe" transform="translate(179 196) rotate(-28) scale(1 1)">
+<path d="M-7 -3H7Q7 0 9 2L17 4.5Q21 5.5 21 8V10H-7Q-8 10 -8 7Z" fill="#FFF9ED"/>
+<path d="M-6 8H19" stroke="#A3477A" stroke-width="1" opacity=".7"/>
+<path d="M7 2 10 3M5 4 8 5" stroke="#A3477A" stroke-width="1"/>
+</g>
+<path d="M118 154L140 149Q149 161 156 169Q163 175 185.18 192.71 L172.82 199.29Q154 191 145 183L125 175Z" fill="#4F435A" data-part="trousers"/>
 </g>
 <path d="M42 111Q25 135 31 167Q35 190 64 195" stroke="#71868E"/>
 <path d="M91 107 70 139Q66 144 61 135L43 113" stroke-width="16.6"/>
@@ -55,6 +61,5 @@
 <path d="M-5 3V-4Q-5-7-2-7H3Q7-7 7-3V3Q6 8 1 8Q-3 8-5 3Z" fill="#9A6247"/>
 <path d="M-5 0-1-2Q2-3 3 0L0 3" stroke="#7D4A36" stroke-width="1"/>
 </g>
-<path d="M63 209 76 208M181 198 185 205" stroke="#A3477A"/>
 </g>
 </svg>

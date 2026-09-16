@@ -5,15 +5,19 @@
 <ellipse cx="120" cy="216" rx="65" ry="3" fill="#263D48" opacity=".08"/>
 <g fill="none" stroke="#263D48" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
 <g transform="translate(118 0)">
-<path d="M-23 153H1L-4 201H-20Z" fill="#263D48"/>
-<path d="M1 153H24L34 200 18 203 4 174Z" fill="#34565A"/>
-<g transform="translate(-22 200) rotate(0) scale(-1 1)">
-<path d="M0 0H14Q18 4 26 5Q30 6 29 11H-1Q-4 8 0 0Z" fill="#263D48"/>
-<path d="M0 9H27" stroke="#FFF9ED" stroke-width="1" opacity=".38"/>
+<g data-part="leg">
+<g data-part="shoe" transform="translate(-13 204) rotate(0) scale(-1 1)">
+<path d="M-7.5 -3H7.5Q7.5 0 9.5 2L17 4.5Q21 5.5 21 8V10H-7.5Q-8.5 10 -8.5 7Z" fill="#263D48"/>
+<path d="M-6.5 8H19" stroke="#FFF9ED" stroke-width="1" opacity=".32"/>
 </g>
-<g transform="translate(17 201) rotate(0) scale(1 1)">
-<path d="M0 0H14Q18 4 26 5Q30 6 29 11H-1Q-4 8 0 0Z" fill="#263D48"/>
-<path d="M0 9H27" stroke="#FFF9ED" stroke-width="1" opacity=".38"/>
+<path d="M-23 152H2Q1 168-3 180L-5.5 204 L-20.5 204Q-23 181-23 152Z" fill="#263D48" data-part="trousers"/>
+</g>
+<g data-part="leg">
+<g data-part="shoe" transform="translate(25 204) rotate(0) scale(1 1)">
+<path d="M-7.5 -3H7.5Q7.5 0 9.5 2L17 4.5Q21 5.5 21 8V10H-7.5Q-8.5 10 -8.5 7Z" fill="#263D48"/>
+<path d="M-6.5 8H19" stroke="#FFF9ED" stroke-width="1" opacity=".32"/>
+</g>
+<path d="M1 152H23Q24 170 25 184L32.5 204 L17.5 204Q8 184 3 173L-1 166Z" fill="#34565A" data-part="trousers"/>
 </g>
 </g>
 <path d="M95 107 75 137Q71 143 63 138L39 124" stroke-width="16.6"/>
