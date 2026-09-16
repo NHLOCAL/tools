@@ -126,33 +126,39 @@
   window.addEventListener('resize', resize, { passive: true });
   new MutationObserver(() => { palette(); draw(); }).observe(root, { attributes: true, attributeFilter: ['data-theme'] });
 
-  // Easter eggs: the Konami sequence, three terminal-title clicks, and a 42 search.
+  // Easter eggs: G twice, the terminal cat, and a 42 search.
   const egg = document.getElementById('easter-egg');
   let eggTimer;
   function message(text) {
     clearTimeout(eggTimer); egg.textContent = text; egg.hidden = false;
     eggTimer = setTimeout(() => { egg.hidden = true; }, 5000);
   }
-  const sequence = ['ArrowUp', 'ArrowUp', 'ArrowDown', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'ArrowLeft', 'ArrowRight', 'b', 'a'];
-  let step = 0;
+  let lastG = null;
   document.addEventListener('keydown', event => {
     if (event.target.closest('input, textarea, select, [contenteditable]') || event.ctrlKey || event.metaKey || event.altKey) return;
-    if (event.key === 'Escape') { stop(); egg.hidden = true; step = 0; return; }
-    const key = event.key.length === 1 ? event.key.toLowerCase() : event.key;
-    step = key === sequence[step] ? step + 1 : (key === sequence[0] ? 1 : 0);
-    if (step !== sequence.length) return;
-    step = 0; message('קוד קונאמי התקבל. נוספו 30 חיים לארגז.');
+    if (event.key === 'Escape') { stop(); egg.hidden = true; lastG = null; return; }
+    if (event.repeat) return;
+    if (event.code !== 'KeyG') { lastG = null; return; }
+    const now = performance.now();
+    if (lastG === null || now - lastG > 1200) { lastG = now; return; }
+    lastG = null; message('GG! נוספו 30 חיים לארגז.');
     if (motion.matches) return;
     particles = Array.from({ length: 48 }, (_, index) => ({ x: width / 2, y: Math.min(height / 2, 350), vx: Math.cos(index * 2.399) * (2 + index % 5), vy: Math.sin(index * 2.399) * 5 - 3, size: 3 + index % 3, color: ['#789a37', '#60988f', '#a16f82'][index % 3], life: 1 }));
     addWell(width / 2, Math.min(height / 2, 350)); start();
   });
   const title = document.querySelector('.window-title');
-  let clicks = 0, clickedAt = 0;
-  title?.addEventListener('click', () => {
-    const now = performance.now();
-    clicks = now - clickedAt < 1500 ? clicks + 1 : 1; clickedAt = now;
-    if (clicks === 3) { clicks = 0; message(' /\_/\\\n( o.o )  נמצא חתול בקוד\n > ^ <'); }
-  });
+  function showCat() {
+    message('מיאו! נמצא חתול בקוד');
+    const cat = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+    cat.setAttribute('viewBox', '0 0 24 20');
+    cat.setAttribute('class', 'pixel-cat');
+    cat.setAttribute('role', 'img');
+    cat.setAttribute('aria-label', 'חתול פיקסלים');
+    cat.innerHTML = '<path fill="currentColor" d="M3 2h4v3h10V2h4v16H3z"/><path fill="var(--accent)" d="M6 8h4v4H6zm8 0h4v4h-4zM9 15h6v1H9z"/><path fill="currentColor" d="M8 9h2v2H8zm6 0h2v2h-2z"/>';
+    egg.prepend(cat);
+  }
+  title?.addEventListener('click', showCat);
+  document.querySelector('[data-show-cat]')?.addEventListener('click', showCat);
   const input = document.getElementById('tool-search');
   let found42 = false;
   input?.addEventListener('input', () => {
