@@ -3,7 +3,16 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="theme-color" content="#fcf7f1">
+  <meta id="theme-color" name="theme-color" content="#fcf7f1">
+  <script>
+    (() => {
+      let saved;
+      try { saved = localStorage.getItem("nhlocal.16-types.theme"); } catch {}
+      const dark = saved === "dark" || (saved !== "light" && matchMedia("(prefers-color-scheme: dark)").matches);
+      document.documentElement.dataset.theme = dark ? "dark" : "light";
+      document.getElementById("theme-color").content = dark ? "#171d28" : "#fcf7f1";
+    })();
+  </script>
   <title>מבחן 16 הטיפוסים | שאלון אישיות בעברית</title>
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='18' fill='%23e9eef5'/%3E%3Ctext x='32' y='45' font-family='Arial' font-size='36' font-weight='700' text-anchor='middle' fill='%23526b91'%3E16%3C/text%3E%3C/svg%3E">
   <style>/* STYLES */</style>
@@ -12,7 +21,13 @@
 <a class="skip-link" href="#main">דילוג לתוכן</a>
 <header class="site-header shell">
   <a class="brand" href="the_16_types.html" aria-label="16 הטיפוסים, דף הפתיחה"><span class="brand-mark" aria-hidden="true">16</span><span>הטיפוסים</span></a>
-  <a class="back-link" href="../index.html">לארגז הכלים <svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M7 17 17 7M7 7h10v10"/></svg></a>
+  <div class="header-actions">
+    <a class="back-link" href="../index.html">לארגז הכלים <svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M7 17 17 7M7 7h10v10"/></svg></a>
+    <button id="theme-toggle" class="theme-toggle" type="button" aria-label="מצב אפל" aria-pressed="false" title="מעבר למצב אפל">
+      <svg class="icon theme-moon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M20.5 13A8.5 8.5 0 0 1 11 3.5 8.5 8.5 0 1 0 20.5 13Z"/></svg>
+      <svg class="icon theme-sun" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="4"/><path d="M12 2v2m0 16v2M2 12h2m16 0h2M5 5l1.5 1.5m11 11L19 19M5 19l1.5-1.5m11-11L19 5"/></svg>
+    </button>
+  </div>
 </header>
 <main id="main" class="shell" tabindex="-1">
   <section id="welcome" class="screen">

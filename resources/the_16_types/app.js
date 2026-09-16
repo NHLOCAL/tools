@@ -3,6 +3,24 @@
   const $ = id => document.getElementById(id);
   const questions = MBTI_DATA.questions;
   const key = 'nhlocal.16-types.v1';
+  const themeKey = 'nhlocal.16-types.theme';
+  const systemTheme = matchMedia('(prefers-color-scheme: dark)');
+  let explicitTheme = null;
+  try { const saved = localStorage.getItem(themeKey); if (saved === 'light' || saved === 'dark') explicitTheme = saved; } catch {}
+  function applyTheme(theme) {
+    document.documentElement.dataset.theme = theme;
+    const dark = theme === 'dark';
+    $('theme-toggle').setAttribute('aria-pressed', String(dark));
+    $('theme-toggle').title = dark ? 'מעבר למצב בהיר' : 'מעבר למצב אפל';
+    $('theme-color').content = dark ? '#171d28' : '#fcf7f1';
+  }
+  applyTheme(explicitTheme || (systemTheme.matches ? 'dark' : 'light'));
+  $('theme-toggle').addEventListener('click', () => {
+    explicitTheme = document.documentElement.dataset.theme === 'dark' ? 'light' : 'dark';
+    applyTheme(explicitTheme);
+    try { localStorage.setItem(themeKey, explicitTheme); } catch {}
+  });
+  systemTheme.addEventListener('change', event => { if (!explicitTheme) applyTheme(event.matches ? 'dark' : 'light'); });
   const optionLabels = ["בבירור א'", "נוטה ל-א'", 'לא ברור', "נוטה ל-ב'", "בבירור ב'"];
   const fullLabels = ["בבירור א', העדפה ברורה לאפשרות א'", "נוטה ל-א', העדפה קלה לאפשרות א'", 'לא ברור, אין העדפה ברורה בין האפשרויות', "נוטה ל-ב', העדפה קלה לאפשרות ב'", "בבירור ב', העדפה ברורה לאפשרות ב'"];
   let answers = Array(questions.length).fill(null), current = 0, screen = 'welcome', returnToReview = false, result = null, storageWorks = true, resetStartsQuiz = false, toastTimer;
