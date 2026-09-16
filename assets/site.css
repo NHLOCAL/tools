@@ -75,6 +75,8 @@ main { max-inline-size: 1264px; padding-inline: 40px; margin-inline: auto; outli
 .window-dots { display: flex; gap: 5px; }
 .window-dots i { inline-size: 8px; block-size: 8px; border: 1px solid currentColor; }
 .window-dots i:last-child { background: currentColor; }
+.window-title[data-cat-step="1"] .window-dots i:first-child,
+.window-title[data-cat-step="2"] .window-dots i { background: currentColor; }
 .toolbox-screen { padding: 20px; background: var(--screen); color: var(--screen-ink); }
 .terminal-line { display: flex; gap: 10px; font: 12px var(--mono); margin-block-end: 22px; }
 .terminal-line > span:first-child, .cursor { color: var(--accent); }
@@ -187,6 +189,7 @@ kbd { display: grid; place-items: center; inline-size: 24px; block-size: 26px; b
 .footer-secrets p { margin-block-start: 10px; line-height: 1.9; }
 .footer-secrets kbd { display: inline; border: 0; font-size: 12px; direction: ltr; unicode-bidi: isolate; }
 .secret-trigger { color: inherit; border: 0; padding: 2px 4px; font: inherit; min-block-size: 28px; text-decoration: underline; text-underline-offset: 3px; }
+.secret-trigger[data-cat-step]::after { content: " (" attr(data-cat-step) "/3)"; font-size: 11px; }
 .footer-bottom { border-block-start: 1px solid var(--line); padding-block-start: 19px; grid-column: 1 / -1; display: flex; flex-wrap: wrap; gap: 20px; font-size: 12px; color: var(--muted); }
 .footer-bottom > span:last-child { margin-inline-start: auto; font: 9px var(--mono); display: flex; align-items: center; gap: 10px; }
 .footer-square { inline-size: 8px; block-size: 8px; background: var(--ink); }

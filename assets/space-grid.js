@@ -135,8 +135,8 @@
   }
   let lastG = null;
   document.addEventListener('keydown', event => {
-    if (event.target.closest('input, textarea, select, [contenteditable]') || event.ctrlKey || event.metaKey || event.altKey) return;
     if (event.key === 'Escape') { stop(); egg.hidden = true; lastG = null; return; }
+    if (event.target.closest('input, textarea, select, [contenteditable]') || event.ctrlKey || event.metaKey || event.altKey) return;
     if (event.repeat) return;
     if (event.code !== 'KeyG') { lastG = null; return; }
     const now = performance.now();
@@ -157,8 +157,19 @@
     cat.innerHTML = '<path fill="currentColor" d="M3 2h4v3h10V2h4v16H3z"/><path fill="var(--accent)" d="M6 8h4v4H6zm8 0h4v4h-4zM9 15h6v1H9z"/><path fill="currentColor" d="M8 9h2v2H8zm6 0h2v2h-2z"/>';
     egg.prepend(cat);
   }
-  title?.addEventListener('click', showCat);
-  document.querySelector('[data-show-cat]')?.addEventListener('click', showCat);
+  for (const trigger of [title, document.querySelector('[data-show-cat]')].filter(Boolean)) {
+    let catClicks = 0;
+    trigger.addEventListener('click', () => {
+      catClicks++;
+      if (catClicks === 3) {
+        catClicks = 0;
+        trigger.removeAttribute('data-cat-step');
+        showCat();
+      } else {
+        trigger.dataset.catStep = String(catClicks);
+      }
+    });
+  }
   const input = document.getElementById('tool-search');
   let found42 = false;
   input?.addEventListener('input', () => {
