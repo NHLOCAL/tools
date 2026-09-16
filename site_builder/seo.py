@@ -22,9 +22,10 @@ def write_seo(tools, pages):
         head, separator, body = html.partition("</head>")
         if not separator:
             raise ValueError(f"Missing head element in {tool.path}")
-        # The generator owns only this head block. Standalone tool behavior is untouched.
+        # Replace catalog-owned metadata, including descriptions from standalone builds.
         head = re.sub(re.escape(START) + r".*?" + re.escape(END) + r"\n?", "", head, flags=re.S)
         head = re.sub(r"[ \t]*<title>.*?</title>[ \t]*\n?", "", head, count=1, flags=re.S)
+        head = re.sub(r'''[ \t]*<meta\b(?=[^>]*\bname\s*=\s*(['"])description\1)[^>]*>[ \t]*\n?''', "", head, flags=re.I)
         block = metadata(tool.name + " | " + SITE_NAME, tool.description, tool.path)
         html = head + f"{START}\n{block}\n{END}\n" + separator + body
         path.write_text(html, encoding="utf-8", newline="\n")

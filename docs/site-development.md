@@ -31,7 +31,7 @@ Run the build after editing README.md, templates, or a browser tool. Commit the 
 | assets/site.js | Search, sharing, navigation and downloads |
 | assets/space-grid.js | Interactive grid and Easter eggs |
 
-Generated files: index.html, catalog/*.html, about.html, downloads.html, 404.html, robots.txt, sitemap.xml, and assets/downloads/*.js. The builder updates only the marked metadata block and title in a tool's head, leaving the body and its behavior intact.
+Generated files: index.html, catalog/*.html, about.html, downloads.html, 404.html, robots.txt, sitemap.xml, and assets/downloads/*.js. The builder replaces the marked metadata block, title and description in a tool's head, leaving the body and its behavior intact. Descriptions from standalone builds are replaced to prevent duplicate metadata.
 
 ## Download contract
 

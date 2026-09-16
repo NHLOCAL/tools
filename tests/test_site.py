@@ -5,6 +5,8 @@ import base64
 import re
 import sys
 import unittest
+from tempfile import TemporaryDirectory
+from unittest.mock import patch
 from html.parser import HTMLParser
 from pathlib import Path
 from urllib.parse import unquote, urlsplit
@@ -16,6 +18,7 @@ sys.path.insert(0, str(ROOT))
 from build import main
 from site_builder.catalog import CATEGORIES, Tool, read_catalog
 from site_builder.render import SITE_URL, tool_card
+from site_builder.seo import write_seo
 
 
 class Document(HTMLParser):
@@ -143,6 +146,21 @@ class SiteTests(unittest.TestCase):
         self.assertNotIn('<script>', rendered)
         self.assertNotIn('<img ', rendered)
         self.assertIn('&lt;script&gt;', rendered)
+
+    def test_standalone_description_is_replaced_without_changing_body(self):
+        tool = next(t for t in self.tools if t.category == "web")
+        with TemporaryDirectory() as directory, patch("site_builder.seo.ROOT", Path(directory)):
+            path = Path(directory) / tool.path
+            path.parent.mkdir(parents=True)
+            body = '<body><p>Original tool content</p></body></html>'
+            path.write_text('<html><head><title>Tool</title><meta content="Standalone description" name="description"></head>' + body, encoding="utf-8")
+            write_seo([tool], [])
+            source = path.read_text(encoding="utf-8")
+            descriptions = [a["content"] for a in Document(source).attrs("meta") if a.get("name") == "description"]
+            self.assertEqual(descriptions, [tool.description])
+            self.assertTrue(source.endswith(body))
+            write_seo([tool], [])
+            self.assertEqual(source, path.read_text(encoding="utf-8"))
 
     def test_rebuilding_is_byte_identical_including_standalone_tools(self):
         paths = self.paths + [t.path for t in self.tools if t.category == "web"] + ["robots.txt", "sitemap.xml"]
