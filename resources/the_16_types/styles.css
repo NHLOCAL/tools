@@ -157,7 +157,9 @@ main.shell:has(#results:not([hidden])) { max-width: 1400px; }
 #results, .type-profile, .type-chip { --type-accent: var(--type-light-accent, var(--accent)); --type-soft: var(--type-light-soft, var(--blue-soft)); }
 [data-theme="dark"] #results, [data-theme="dark"] .type-profile, [data-theme="dark"] .type-chip { --type-accent: var(--type-dark-accent, var(--accent)); --type-soft: var(--type-dark-soft, var(--blue-soft)); }
 #results .profile-card { border-color: color-mix(in srgb, var(--type-accent) 30%, var(--line)); }
-.type-profile .profile-top { background: var(--type-soft); }
+/* Keep the illustration backdrop distinct from its surrounding surface. */
+.type-profile, .type-chip { --type-art-surface: color-mix(in srgb, var(--type-soft) 40%, var(--white)); }
+.type-profile .profile-top { background: var(--type-art-surface); }
 .type-profile .type-code, .profile-card .type-profile h4, .preview-card.type-profile h4 { color: var(--type-accent); }
 .type-profile .experiment { background: var(--type-soft); }
 #results .axis-pole.is-dominant { border-color: var(--type-accent); color: var(--type-accent); }
@@ -206,8 +208,8 @@ main.shell:has(#results:not([hidden])) { max-width: 1400px; }
 .type-chips, .type-picker { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; }
 .type-chip { display: flex; flex-direction: column; align-items: stretch; gap: 8px; min-width: 0; border: 1px solid var(--line); border-radius: 18px; background: var(--white); color: var(--ink); padding: 16px; text-align: start; cursor: pointer; transition: background var(--ease), border-color var(--ease); }
 .type-chip { border-block-start: 3px solid var(--type-accent); }
-.type-chip:hover { background: var(--type-soft); border-color: var(--type-accent); }
-.type-chip[aria-pressed="true"] { background: var(--type-soft); border-color: var(--type-accent); box-shadow: inset 0 0 0 1px var(--type-accent); }
+.type-chip:hover { background: var(--type-art-surface); border-color: var(--type-accent); }
+.type-chip[aria-pressed="true"] { background: var(--type-art-surface); border-color: var(--type-accent); box-shadow: inset 0 0 0 1px var(--type-accent); }
 .type-chip-codes { display: flex; align-items: baseline; justify-content: space-between; gap: 8px; }
 .type-chip-codes bdi { font-size: 1.3rem; font-weight: 750; color: var(--type-accent); letter-spacing: .04em; }
 .type-chip-codes > span { color: var(--muted); font-size: .95rem; }
