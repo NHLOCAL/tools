@@ -62,7 +62,7 @@ test('uniform answers from 1 through 5 never produce a primary type or dominant 
   }
 });
 
-test('exact top ties abstain for both type and instinct', () => {
+test('close types retain a leading result while tied instincts remain unchanged', () => {
   const result = engine.score(answersFor({
     1: 5, 2: 5,
     3: 2, 4: 2, 5: 2, 6: 2, 7: 2, 8: 2, 9: 2,
@@ -70,8 +70,8 @@ test('exact top ties abstain for both type and instinct', () => {
   }));
 
   assert.equal(result.typeRanking[0].score, result.typeRanking[1].score);
-  assert.equal(result.primaryStatus, 'close');
-  assert.equal(result.primary, null);
+  assert.equal(result.primaryStatus, 'suggested');
+  assert.equal(result.primary, 1);
   assert.deepEqual(result.candidates, [1, 2]);
   assert.equal(result.instinctRanking[0].score, result.instinctRanking[1].score);
   assert.equal(result.instinctStatus, 'close');
@@ -90,10 +90,10 @@ test('wing neighbors wrap at types 1 and 9 and exclude nonadjacent types', () =>
   assert.equal(nine.dominant, 1);
 });
 
-test('low support abstains from type, instinct, and wing suggestions', () => {
+test('low type scores still have a leader without inventing weak wings or instincts', () => {
   const result = engine.score(answersFor({1: 2, sp: 2}));
-  assert.equal(result.primaryStatus, 'weak');
-  assert.equal(result.primary, null);
+  assert.equal(result.primaryStatus, 'suggested');
+  assert.equal(result.primary, 1);
   assert.equal(result.instinctStatus, 'weak');
   assert.equal(result.dominantInstinct, null);
 
@@ -117,8 +117,8 @@ test('primary type and dominant instinct are determined independently', () => {
     1: 3, 2: 3, 3: 3, 4: 3, 5: 3, 6: 3, 7: 3, 8: 3, 9: 3,
     sp: 5, so: 2, sx: 2
   }));
-  assert.equal(clearInstinct.primaryStatus, 'close');
-  assert.equal(clearInstinct.primary, null);
+  assert.equal(clearInstinct.primaryStatus, 'suggested');
+  assert.equal(clearInstinct.primary, 1);
   assert.equal(clearInstinct.instinctStatus, 'suggested');
   assert.equal(clearInstinct.dominantInstinct, 'sp');
 });
@@ -208,30 +208,30 @@ test('adjacent core and wing reversals are resolved symmetrically for all nine t
   }
 });
 
-test('one neutral or contradictory comparison cannot force a core choice', () => {
+test('neutral or contradictory comparisons preserve the original leader', () => {
   for(const value of [3,5]){
     const answers=answersFor({1:4,2:4});
     answers[engine.questions.findIndex(q=>q.id==='c10')]=5;
     answers[engine.questions.findIndex(q=>q.id==='c1')]=value;
     const r=engine.score(answers);
-    assert.equal(r.primary,null);assert.equal(r.wing,null);
+    assert.equal(r.primary,1);
   }
 });
 
-test('a choice that depends on one original style answer stays unresolved', () => {
+test('single-answer sensitivity no longer suppresses the leading result', () => {
   const answers=answersFor({1:4,5:4});
   answers[engine.questions.findIndex(q=>q.id==='t5-1')]=1;
   answers[engine.questions.findIndex(q=>q.id==='t5-2')]=3;
   const r=engine.score(answers);
-  assert.equal(r.primaryStatus,'unstable');assert.equal(r.primary,null);
+  assert.equal(r.primaryStatus,'suggested');assert.equal(r.primary,1);
 });
 
-test('nonadjacent close candidates cannot be decided by unrelated pair comparisons', () => {
+test('nonadjacent close candidates fall back to the original ranking', () => {
   const r=engine.score(answersFor({1:5,5:5}));
-  assert.equal(r.primary,null);assert.equal(r.wing,null);assert.ok(r.candidates.includes(1)&&r.candidates.includes(5));
+  assert.equal(r.primary,1);assert.ok(r.candidates.includes(1)&&r.candidates.includes(5));
 });
 
-test('weak wings are excluded, close strong wings are not called dominant', () => {
+test('weak wings are excluded; supported wings need a lead, not an eight-point gap', () => {
   for(let core=1;core<=9;core++) {
     const a=core===1?9:core-1,b=core===9?1:core+1;
     let w=engine.getWing(core,{[core]:95,[a]:50,[b]:10});
@@ -241,7 +241,9 @@ test('weak wings are excluded, close strong wings are not called dominant', () =
     w=engine.getWing(core,{[core]:95,[a]:80,[b]:10});
     assert.equal(w.dominant,a);assert.deepEqual(w.eligible,[a]);
     w=engine.getWing(core,{[core]:95,[a]:80,[b]:78});
-    assert.equal(w.dominant,null);assert.equal(w.status,'close');assert.equal(w.eligible.length,2);
+    assert.equal(w.dominant,a);assert.equal(w.eligible.length,2);
+    w=engine.getWing(core,{[core]:95,[a]:80,[b]:80});
+    assert.equal(w.dominant,null);assert.equal(w.status,'close');
   }
 });
 
@@ -255,4 +257,32 @@ test('75-answer saves migrate without losing answers or inventing answers to new
   assert.equal(engine.migrateState({...old,answers:Array(75).fill(null)}),null);
   assert.equal(engine.migrateState({...old,version:'1.0.0'}),null);
   assert.equal(old.answers.length,75);
+});
+
+test('comparisons refine a close three-type result consistently around the whole circle', () => {
+  for(let offset=0;offset<9;offset++){
+    const rotate=n=>(n-1+offset)%9+1;
+    const sums=Object.fromEntries(Object.entries({1:15,2:11,3:15,4:23,5:21,6:22,7:16,8:20,9:18}).map(([k,v])=>[rotate(Number(k)),v]));
+    const core=rotate(5),wing=rotate(4);
+    const answers=engine.questions.map(q=>{
+      if(q.kind==='contrast')return q.pair.includes(core)?(q.pair[0]===core?1:5):3;
+      if(!engine.types[q.scale])return q.reverse?2:4;
+      const sum=sums[q.scale],item=Number(q.id.split('-')[1])-1;
+      const value=Math.floor(sum/6)+(item<sum%6?1:0);
+      return q.reverse?6-value:value;
+    });
+    const r=engine.score(answers);
+    assert.equal(r.primary,core);assert.equal(r.wing.dominant,wing);
+    const neutral=answers.map((v,i)=>engine.questions[i].kind==='contrast'?3:v);
+    assert.equal(engine.score(neutral).primary,wing,'without supporting comparisons the original leader remains');
+    for(const key of INSTINCT_KEYS)assert.equal(engine.score(neutral).scores[key],r.scores[key]);
+  }
+});
+
+test('v3 saves are rescored without losing answers or reopening a completed quiz', () => {
+  const old={version:'3.0.0',answers:answersFor({5:5,4:4,sp:5}),index:92,screen:'results',updatedAt:'2026-09-16T10:00:00Z'};
+  const migrated=engine.migrateState(old);
+  assert.ok(engine.validState(migrated));assert.equal(migrated.screen,'results');
+  assert.deepEqual(migrated.answers,old.answers);assert.equal(old.version,'3.0.0');
+  assert.equal(engine.migrateState({...old,answers:[1]}),null);
 });

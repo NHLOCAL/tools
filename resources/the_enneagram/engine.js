@@ -1,13 +1,12 @@
 /* Original Hebrew reflection questionnaire. No third-party test items are reproduced. */
 (function (root) {
   'use strict';
-  const VERSION = '3.0.0';
+  const VERSION = '3.1.0';
   const CORE_WINDOW = 15;
   const PAIR_MIN = 75;
   const WING_MIN = 62.5;
   const WING_RATIO = 0.75;
-  const TYPE_GAP = 8;
-  const WING_GAP = 8;
+  const WING_GAP = 0;
   const INSTINCT_GAP = 8;
   const typeItems = {
     1: [
@@ -193,7 +192,7 @@
     const gap = ranked[0].score-ranked[1].score;
     const threshold = Math.max(WING_MIN,(scores[type]||0)*WING_RATIO);
     const eligible = ranked.filter(t=>t.score>=threshold).map(t=>Number(t.key));
-    const status = !primaryClear ? 'conditional' : !eligible.length ? 'weak' : gap < WING_GAP ? 'close' : 'suggested';
+    const status = !primaryClear ? 'conditional' : !eligible.length ? 'weak' : gap <= WING_GAP ? 'close' : 'suggested';
     return {adjacent,ranked,gap,threshold,eligible,status,dominant:status==='suggested'?Number(ranked[0].key):null};
   }
 
@@ -219,35 +218,19 @@
       return {types,scores:{[types[0]]:mean,[types[1]]:100-mean},dominant};
     });
     const beats=(a,b)=>comparisons.some(p=>p.types.includes(a)&&p.types.includes(b)&&p.dominant===a);
-    const choose=current=>{
-      const ranked=rank(current,Object.keys(types)),leader=Number(ranked[0].key);
-      const pool=ranked.filter(t=>t.score>=50&&ranked[0].score-t.score<=CORE_WINDOW).map(t=>Number(t.key));
-      const supported=pool.filter(n=>{
-        const adjacent=[n===1?9:n-1,n===9?1:n+1];
-        if(adjacent.some(other=>beats(other,n)))return false;
-        return pool.every(other=>other===n||(adjacent.includes(other)?beats(n,other):current[n]-current[other]>=TYPE_GAP));
-      });
-      return {selected:supported.length===1?supported[0]:null,pool};
-    };
     const typeRanking=rank(scores,Object.keys(types)),instinctRanking=rank(scores,Object.keys(instincts));
     const gap=typeRanking[0].score-typeRanking[1].score,uniform=answers.every(v=>v===answers[0]);
-    const choice=choose(scores),candidates=[...choice.pool];
-    let stable=!!choice.selected;
-    // Omit each of the original type items; comparison evidence remains fixed.
-    if(choice.selected)for(const [i,q] of questions.entries()){
-      if(q.kind==='contrast'||!types[q.scale])continue;
-      const value=q.reverse?6-answers[i]:answers[i];
-      const changed={...scores,[q.scale]:((totals[q.scale]-value)/(counts[q.scale]-1)-1)*25};
-      if(choose(changed).selected!==choice.selected)stable=false;
-    }
-    const primaryStatus=uniform?'undifferentiated':typeRanking[0].score<50?'weak':
-      !choice.selected?(gap<TYPE_GAP?'close':'mixed'):!stable?'unstable':'suggested';
-    const primary=primaryStatus==='suggested'?choice.selected:null;
+    const candidates=typeRanking.filter(t=>typeRanking[0].score-t.score<=CORE_WINDOW).map(t=>Number(t.key));
+    // Start with the original ranking. Only clear comparisons between nearby
+    // candidates can displace it; neutral, conflicting or distant pairs cannot veto it.
+    const remaining=candidates.filter(n=>!candidates.some(other=>other!==n&&beats(other,n)));
+    const primaryStatus=uniform?'undifferentiated':'suggested';
+    const primary=uniform?null:(remaining[0]??Number(typeRanking[0].key));
     const instinctGap=instinctRanking[0].score-instinctRanking[1].score;
     const instinctStatus=uniform?'undifferentiated':instinctRanking[0].score<50?'weak':instinctGap<INSTINCT_GAP?'close':'suggested';
     const dominantInstinct=instinctStatus==='suggested'?instinctRanking[0].key:null;
     const stackClear=!!dominantInstinct && instinctRanking[1].score-instinctRanking[2].score>=INSTINCT_GAP;
-    return {version:VERSION,scores,comparisons,stable,typeRanking,instinctRanking,gap,primaryStatus,primary,candidates,
+    return {version:VERSION,scores,comparisons,typeRanking,instinctRanking,gap,primaryStatus,primary,candidates,
       wing:primary?getWing(primary,scores):null,instinctStatus,dominantInstinct,stackClear,uniform};
   }
   function validState(value) {
@@ -259,6 +242,10 @@
   }
   function migrateState(value) {
     if(validState(value))return value;
+    if(value?.version==='3.0.0'){
+      const migrated={...value,version:VERSION};
+      return validState(migrated)?migrated:null;
+    }
     if(!value||value.version!=='2.0.0'||!Array.isArray(value.answers)||value.answers.length!==75)return null;
     const migrated={...value,version:VERSION,answers:[...value.answers,...Array(18).fill(null)],screen:'quiz'};
     if(!['quiz','results'].includes(value.screen)||!Number.isInteger(value.index)||value.index<0||value.index>=75)return null;
@@ -266,7 +253,7 @@
     migrated.index=value.screen==='results'?75:value.index;
     return validState(migrated)?migrated:null;
   }
-  const api={VERSION,CORE_WINDOW,PAIR_MIN,WING_MIN,WING_RATIO,TYPE_GAP,WING_GAP,INSTINCT_GAP,questions,types,instincts,wingNotes,score,getWing,validState,migrateState};
+  const api={VERSION,CORE_WINDOW,PAIR_MIN,WING_MIN,WING_RATIO,WING_GAP,INSTINCT_GAP,questions,types,instincts,wingNotes,score,getWing,validState,migrateState};
   if(typeof module!=='undefined'&&module.exports) module.exports=api;
   else root.Enneagram=api;
 })(typeof globalThis!=='undefined'?globalThis:this);

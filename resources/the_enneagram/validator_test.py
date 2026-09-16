@@ -107,18 +107,18 @@ class ValidatorTests(unittest.TestCase):
         self.assertIn("הטיפוס הראשי 1 זוהה", validation["verdict_text"])
         self.assertIn("הכנף הצפויה (2) לא אושרה", validation["verdict_text"])
 
-    def test_primary_tie_is_preserved_as_abstention(self):
+    def test_primary_tie_returns_the_ranked_leader(self):
         answers = low_keyed_answers()
         set_type_rating(answers, 1, 5)
         set_type_rating(answers, 2, 5)
 
         scores = calculate_enneagram_scores(answers)
-        self.assertIsNone(scores.engine_result["primary"])
-        self.assertEqual(scores.engine_result["primaryStatus"], "close")
+        self.assertEqual(scores.engine_result["primary"], 1)
+        self.assertEqual(scores.engine_result["primaryStatus"], "suggested")
 
         validation = validate_simulation(scores, {"main_type": 1, "wing": 2})
-        self.assertEqual(validation["verdict_code"], "PARTIAL")
-        self.assertEqual(validation["calculated_top_two"], "abstain")
+        self.assertEqual(validation["verdict_code"], "SUCCESS")
+        self.assertEqual(validation["calculated_top_two"], "1w2")
 
     def test_validate_requires_engine_backed_scores(self):
         with self.assertRaisesRegex(ValueError, r"calculate_enneagram_scores"):
