@@ -224,10 +224,12 @@
       const pool=ranked.filter(t=>t.score>=50&&ranked[0].score-t.score<=CORE_WINDOW).map(t=>Number(t.key));
       const supported=pool.filter(n=>{
         const adjacent=[n===1?9:n-1,n===9?1:n+1];
-        if(adjacent.some(other=>beats(other,n)))return false;
-        return pool.every(other=>other===n||(adjacent.includes(other)?beats(n,other):current[n]-current[other]>=TYPE_GAP));
+        return adjacent.every(other=>beats(n,other))&&(n===leader||beats(n,leader));
       });
-      return {selected:supported.length===1?supported[0]:null,pool};
+      const selected=supported.length===1?supported[0]:null;
+      // Pair comparisons cannot settle close, nonadjacent alternatives.
+      const unresolved=selected&&pool.some(n=>n!==selected&&!beats(selected,n)&&current[selected]-current[n]<TYPE_GAP);
+      return {selected:unresolved?null:selected,pool};
     };
     const typeRanking=rank(scores,Object.keys(types)),instinctRanking=rank(scores,Object.keys(instincts));
     const gap=typeRanking[0].score-typeRanking[1].score,uniform=answers.every(v=>v===answers[0]);

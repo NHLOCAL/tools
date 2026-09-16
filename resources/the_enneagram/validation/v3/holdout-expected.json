@@ -1,0 +1,38 @@
+{
+  "H1": {
+    "primary": 1,
+    "dominantInstinct": "sp"
+  },
+  "H2": {
+    "primary": 2,
+    "dominantInstinct": "so"
+  },
+  "H3": {
+    "primary": 3,
+    "dominantInstinct": "sx"
+  },
+  "H4": {
+    "primary": 4,
+    "dominantInstinct": "so"
+  },
+  "H5": {
+    "primary": 5,
+    "dominantInstinct": "sp"
+  },
+  "H6": {
+    "primary": 6,
+    "dominantInstinct": "so"
+  },
+  "H7": {
+    "primary": 7,
+    "dominantInstinct": "sx"
+  },
+  "H8": {
+    "primary": 8,
+    "dominantInstinct": "sp"
+  },
+  "H9": {
+    "primary": 9,
+    "dominantInstinct": "so"
+  }
+}

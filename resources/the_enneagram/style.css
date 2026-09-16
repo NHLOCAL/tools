@@ -10,3 +10,7 @@
 
 /* Keep the task surface quiet; explanations live in About. */
 .save-choice{margin-top:16px}.map-explainer{min-height:78px}.journey ol{margin-top:24px}#save-status:empty,#export-status:empty{display:none}main{padding-bottom:34px}
+
+.wing-choices:has(>.wing-choice:only-child){grid-template-columns:1fr}
+
+.contrast-options{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:20px}.contrast-options>div{display:flex;align-items:flex-start;gap:12px;background:var(--soft);padding:18px;border-radius:12px}.contrast-options b{color:var(--accent);font-size:23px}.contrast-options p{font-size:19px;line-height:1.55}.paired-question #question-text{min-height:0}.instinct-section .section-intro{display:block}.instinct-section .section-intro h2{max-width:none}@media(max-width:650px){.contrast-options{grid-template-columns:1fr;gap:10px}.contrast-options>div{padding:13px}.contrast-options p{font-size:18px}}

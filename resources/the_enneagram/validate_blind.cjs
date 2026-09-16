@@ -4,6 +4,9 @@ const fs = require('node:fs');
 const path = require('node:path');
 const crypto = require('node:crypto');
 const engine = require('./engine.js');
+if (engine.questions.length !== 75) {
+  throw new Error('Historical v2 evaluator requires the 75-question engine. Use validate_v3.cjs for the current questionnaire; archived v2 reports remain in validation/.');
+}
 
 const validationDir = path.join(__dirname, 'validation');
 const holdoutMode = process.argv.slice(2).includes('--holdout');

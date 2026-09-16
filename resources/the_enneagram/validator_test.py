@@ -1,4 +1,9 @@
 import unittest
+import json
+import subprocess
+from pathlib import Path
+
+QUESTIONS = json.loads(subprocess.check_output(["node", "-e", "process.stdout.write(JSON.stringify(require(process.argv[1]).questions))", str(Path(__file__).with_name("engine.js"))], text=True, encoding="utf-8"))
 
 from enneagram_validator import (
     EngineScores,
@@ -17,20 +22,30 @@ TYPE_POSITIONS = {
 
 
 def low_keyed_answers():
-    answers = [1] * 75
+    answers = [1] * 93
     for position in REVERSE_POSITIONS:
         answers[position - 1] = 5
+    answers[75:] = [3] * 18
     return answers
 
 
 def set_type_rating(answers, type_number, rating):
     for position in TYPE_POSITIONS[type_number]:
         answers[position - 1] = 6 - rating if position in REVERSE_POSITIONS else rating
+    for i, question in enumerate(QUESTIONS):
+        if question.get("kind") != "contrast":
+            continue
+        a, b = question["pair"]
+        def average(t):
+            items = [(6 - answers[j] if q.get("reverse") else answers[j]) for j, q in enumerate(QUESTIONS) if q.get("scale") == str(t)]
+            return sum(items) / len(items)
+        av, bv = average(a), average(b)
+        answers[i] = 3 if av == bv else 1 if av > bv else 5
 
 
 class ValidatorTests(unittest.TestCase):
     def test_scores_are_list_compatible_and_carry_engine_abstention(self):
-        scores = calculate_enneagram_scores([3] * 75)
+        scores = calculate_enneagram_scores([3] * 93)
         self.assertIsInstance(scores, list)
         self.assertIsInstance(scores, EngineScores)
         self.assertEqual(len(scores), 9)
@@ -38,13 +53,13 @@ class ValidatorTests(unittest.TestCase):
         self.assertEqual(scores.engine_result["primaryStatus"], "undifferentiated")
 
     def test_historical_45_answer_input_has_clear_error(self):
-        with self.assertRaisesRegex(ValueError, r"Historical 45-answer input.*75 answers"):
+        with self.assertRaisesRegex(ValueError, r"Historical 45-answer input.*93 answers"):
             calculate_enneagram_scores([3] * 45)
 
     def test_invalid_values_are_rejected_before_node_scoring(self):
         for value in (True, 2.5, 0, 6):
             with self.subTest(value=value):
-                answers = [3] * 75
+                answers = [3] * 93
                 answers[7] = value
                 with self.assertRaisesRegex(ValueError, r"position 8"):
                     calculate_enneagram_scores(answers)
@@ -110,7 +125,7 @@ class ValidatorTests(unittest.TestCase):
             validate_simulation([(1, 100), (5, 90)], {"main_type": 1, "wing": 9})
 
     def test_expected_neutral_profile_treats_engine_abstention_as_success(self):
-        scores = calculate_enneagram_scores([3] * 75)
+        scores = calculate_enneagram_scores([3] * 93)
         validation = validate_simulation(scores, {"main_type": None, "wing": None})
 
         self.assertEqual(validation["verdict_code"], "SUCCESS")

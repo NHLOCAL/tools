@@ -9,7 +9,7 @@ import subprocess
 from typing import Any, Iterable
 
 
-ANSWER_COUNT = 75
+ANSWER_COUNT = 93
 HISTORICAL_ANSWER_COUNT = 45
 ENGINE_PATH = Path(__file__).with_name("engine.js")
 
@@ -31,11 +31,11 @@ class EngineScores(list):
 
 def _validated_answers(answers: Any) -> list[int]:
     if not isinstance(answers, (list, tuple)):
-        raise ValueError("Answers must be a list or tuple of 75 integers between 1 and 5.")
+        raise ValueError("Answers must be a list or tuple of 93 integers between 1 and 5.")
     if len(answers) == HISTORICAL_ANSWER_COUNT:
         raise ValueError(
             "Historical 45-answer input is no longer supported; "
-            "the current engine requires all 75 answers."
+            "the current engine requires all 93 answers."
         )
     if len(answers) != ANSWER_COUNT:
         raise ValueError(f"Expected {ANSWER_COUNT} answers, but found {len(answers)}.")

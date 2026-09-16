@@ -1,0 +1,43 @@
+{
+  "rule": "1/2 = א, 3 = שווה, 4/5 = ב. Agents reconciled own documented choices without receiving any scores. No scoring thresholds changed.",
+  "cases": [
+    {
+      "id": "H1",
+      "model": "luna",
+      "issue": "answers had75 values; respondent appended18. Subsequent check found B choices encoded as1 at84,85,90."
+    },
+    {
+      "id": "H7",
+      "model": "luna",
+      "issue": "answers had75 values; respondent appended18 matching existing choices."
+    },
+    {
+      "id": "H8",
+      "model": "luna",
+      "issue": "A choices encoded as4/5 at83,86,88,89,91,93."
+    }
+  ],
+  "terraReplicationDraftChecks": {
+    "model": "gpt-5.6-terra",
+    "note": "Numeric/text mismatches were detected while respondents were still preparing their files. Respondents were asked to reconcile their intended choices without score feedback and preserve answers 1-75. Final evaluation requires zero mismatches.",
+    "cases": {
+      "P02": "A numeric response paired with a neutral textual choice",
+      "P13": [
+        86,
+        88,
+        89,
+        90,
+        91
+      ],
+      "P14": [
+        92
+      ],
+      "P15": [
+        90
+      ],
+      "P18": [
+        85
+      ]
+    }
+  }
+}

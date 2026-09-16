@@ -1,0 +1,42 @@
+{
+  "model": "gpt-5.6-luna",
+  "reasoning": "high",
+  "cases": [
+    {
+      "id": "P01",
+      "answers": [3,5,2,5,4,3,2,2,2,2,3,3,2,2,2,2,3,3,5,2,2,4,2,5,5,3,4,4,2,2,2,5,2,3,3,3,2,2,3,5,4,5,3,2,4,4,2,3,4,4,2,1,2,2,2,2,3,3,5,5,4,2,3,2,1,2,2,5,2,4,3,2,4,1,4,3,5,3,4,3,2,2,2,3,2,2,2,3,3,5,3,4,4],
+      "unclearItems": [],
+      "notes": "All wording was clear; ratings reflect a resource conserving, self contained and physically attentive pattern with quiet emotional depth"
+    },
+    {
+      "id": "P02",
+      "answers": [3,5,2,5,3,3,2,2,2,2,5,3,2,2,2,2,5,3,5,2,2,4,2,5,5,3,3,3,2,2,2,5,2,5,3,3,2,2,5,5,4,5,3,2,3,4,2,2,4,3,2,2,2,2,2,2,5,3,5,5,4,1,3,2,1,2,3,5,2,4,3,2,4,1,4,3,5,3,3,4,2,2,2,5,2,2,2,5,3,5,3,3,4],
+      "unclearItems": [],
+      "notes": "All wording was clear; ratings add pronounced caution, verification and contingency planning to the same resource conserving pattern"
+    },
+    {
+      "id": "P03",
+      "answers": [4,2,4,3,2,2,2,4,2,5,3,2,3,2,5,5,4,5,3,2,5,3,3,3,2,3,3,3,5,2,2,3,5,4,5,5,2,5,3,3,5,3,4,5,3,2,3,3,3,3,4,5,3,3,5,3,4,5,3,3,1,3,2,2,3,2,4,3,3,3,3,5,1,3,4,5,2,5,4,2,2,2,5,4,3,2,5,4,5,3,4,2,2],
+      "unclearItems": [],
+      "notes": "All wording was clear; ratings prioritize anticipatory care, closeness, belonging and responsibility, with a strong corrective streak"
+    },
+    {
+      "id": "P04",
+      "answers": [3,2,3,3,2,2,4,5,3,5,3,3,5,3,5,5,4,4,2,3,4,2,3,3,2,2,2,3,5,5,3,3,5,3,3,5,4,5,3,3,4,2,3,5,3,2,5,3,2,2,4,5,5,4,5,3,3,4,2,3,2,3,2,3,4,3,4,3,3,2,2,5,1,3,3,3,2,5,3,2,5,3,5,3,5,3,5,3,4,2,3,2,2],
+      "unclearItems": [],
+      "notes": "All wording was clear; ratings prioritize helping and social belonging while adding achievement focus, presentation and external recognition"
+    },
+    {
+      "id": "P05",
+      "answers": [3,3,1,2,3,5,3,3,5,3,3,5,3,4,2,2,3,3,2,5,2,4,5,3,3,1,2,5,5,3,5,3,2,3,2,2,5,2,3,2,2,2,1,3,2,1,4,5,1,3,5,2,3,5,3,5,4,4,2,3,4,3,2,5,3,3,3,1,4,3,1,2,2,3,1,3,2,1,3,5,3,5,2,3,3,5,2,3,2,3,1,3,5],
+      "unclearItems": [],
+      "notes": "All wording was clear; ratings prioritize autonomy, direct boundaries, protection and intense engagement, with marked appetite for novelty"
+    },
+    {
+      "id": "P06",
+      "answers": [3,3,3,2,2,5,3,3,3,3,3,4,2,3,3,2,3,3,2,4,3,3,5,3,3,3,2,4,5,2,3,3,3,3,2,2,3,2,3,2,3,3,3,3,2,1,3,4,5,2,5,2,2,3,3,4,4,3,2,3,4,3,3,4,4,4,3,3,1,4,3,2,2,3,2,3,3,3,2,5,2,3,2,3,2,4,3,3,2,3,4,2,5],
+      "unclearItems": [],
+      "notes": "All wording was clear; ratings prioritize autonomy and protection while allowing substantial accommodation, calm and delayed conflict"
+    }
+  ]
+}

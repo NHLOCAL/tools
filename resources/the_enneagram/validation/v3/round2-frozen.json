@@ -1,0 +1,7 @@
+{
+  "engineSHA256": "75f0f95e4dfe7313d6ec41a1ca3d6f65c0509504eeb5d991385c2a3b1e89fb30",
+  "questionnaireSHA256": "372152b041e4bf6d3af8994a79fc0cc2606a87a3f864695ef9c766fc687ddf51",
+  "model": "gpt-5.6-luna",
+  "reasoning": "high",
+  "note": "Second revision fixed before fresh-agent blind responses; first revision retained. Input-only access is an instruction boundary, not OS isolation."
+}

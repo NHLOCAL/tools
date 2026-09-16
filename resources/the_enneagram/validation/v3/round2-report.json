@@ -1,0 +1,3484 @@
+{
+  "note": "Pilot revision required agreement on both neighboring pairs, including distant alternatives; superseded by candidate-focused comparisons.",
+  "rows": [
+    {
+      "id": "P01",
+      "expected": {
+        "primary": 5,
+        "wing": 4,
+        "dominantInstinct": "sp"
+      },
+      "result": {
+        "version": "3.0.0",
+        "scores": {
+          "1": 41.666666666666664,
+          "2": 25,
+          "3": 25,
+          "4": 70.83333333333334,
+          "5": 75,
+          "6": 45.833333333333336,
+          "7": 20.833333333333332,
+          "8": 37.5,
+          "9": 45.833333333333336,
+          "sp": 100,
+          "so": 28.57142857142857,
+          "sx": 60.71428571428571
+        },
+        "comparisons": [
+          {
+            "types": [
+              1,
+              2
+            ],
+            "scores": {
+              "1": 50,
+              "2": 50
+            },
+            "dominant": null
+          },
+          {
+            "types": [
+              2,
+              3
+            ],
+            "scores": {
+              "2": 50,
+              "3": 50
+            },
+            "dominant": null
+          },
+          {
+            "types": [
+              3,
+              4
+            ],
+            "scores": {
+              "3": 75,
+              "4": 25
+            },
+            "dominant": 3
+          },
+          {
+            "types": [
+              4,
+              5
+            ],
+            "scores": {
+              "4": 25,
+              "5": 75
+            },
+            "dominant": null
+          },
+          {
+            "types": [
+              5,
+              6
+            ],
+            "scores": {
+              "5": 37.5,
+              "6": 62.5
+            },
+            "dominant": null
+          },
+          {
+            "types": [
+              6,
+              7
+            ],
+            "scores": {
+              "6": 50,
+              "7": 50
+            },
+            "dominant": null
+          },
+          {
+            "types": [
+              7,
+              8
+            ],
+            "scores": {
+              "7": 50,
+              "8": 50
+            },
+            "dominant": null
+          },
+          {
+            "types": [
+              8,
+              9
+            ],
+            "scores": {
+              "8": 50,
+              "9": 50
+            },
+            "dominant": null
+          },
+          {
+            "types": [
+              1,
+              9
+            ],
+            "scores": {
+              "1": 50,
+              "9": 50
+            },
+            "dominant": null
+          }
+        ],
+        "stable": false,
+        "typeRanking": [
+          {
+            "key": "5",
+            "score": 75
+          },
+          {
+            "key": "4",
+            "score": 70.83333333333334
+          },
+          {
+            "key": "6",
+            "score": 45.833333333333336
+          },
+          {
+            "key": "9",
+            "score": 45.833333333333336
+          },
+          {
+            "key": "1",
+            "score": 41.666666666666664
+          },
+          {
+            "key": "8",
+            "score": 37.5
+          },
+          {
+            "key": "2",
+            "score": 25
+          },
+          {
+            "key": "3",
+            "score": 25
+          },
+          {
+            "key": "7",
+            "score": 20.833333333333332
+          }
+        ],
+        "instinctRanking": [
+          {
+            "key": "sp",
+            "score": 100
+          },
+          {
+            "key": "sx",
+            "score": 60.71428571428571
+          },
+          {
+            "key": "so",
+            "score": 28.57142857142857
+          }
+        ],
+        "gap": 4.166666666666657,
+        "primaryStatus": "close",
+        "primary": null,
+        "candidates": [
+          5,
+          4
+        ],
+        "wing": null,
+        "instinctStatus": "suggested",
+        "dominantInstinct": "sp",
+        "stackClear": true,
+        "uniform": false
+      }
+    },
+    {
+      "id": "P02",
+      "expected": {
+        "primary": 5,
+        "wing": 6,
+        "dominantInstinct": "sp"
+      },
+      "result": {
+        "version": "3.0.0",
+        "scores": {
+          "1": 45.833333333333336,
+          "2": 25,
+          "3": 25,
+          "4": 54.166666666666664,
+          "5": 87.5,
+          "6": 100,
+          "7": 16.666666666666668,
+          "8": 37.5,
+          "9": 45.833333333333336,
+          "sp": 100,
+          "so": 25,
+          "sx": 60.71428571428571
+        },
+        "comparisons": [
+          {
+            "types": [
+              1,
+              2
+            ],
+            "scores": {
+              "1": 50,
+              "2": 50
+            },
+            "dominant": null
+          },
+          {
+            "types": [
+              2,
+              3
+            ],
+            "scores": {
+              "2": 50,
+              "3": 50
+            },
+            "dominant": null
+          },
+          {
+            "types": [
+              3,
+              4
+            ],
+            "scores": {
+              "3": 75,
+              "4": 25
+            },
+            "dominant": 3
+          },
+          {
+            "types": [
+              4,
+              5
+            ],
+            "scores": {
+              "4": 37.5,
+              "5": 62.5
+            },
+            "dominant": null
+          },
+          {
+            "types": [
+              5,
+              6
+            ],
+            "scores": {
+              "5": 50,
+              "6": 50
+            },
+            "dominant": null
+          },
+          {
+            "types": [
+              6,
+              7
+            ],
+            "scores": {
+              "6": 50,
+              "7": 50
+            },
+            "dominant": null
+          },
+          {
+            "types": [
+              7,
+              8
+            ],
+            "scores": {
+              "7": 50,
+              "8": 50
+            },
+            "dominant": null
+          },
+          {
+            "types": [
+              8,
+              9
+            ],
+            "scores": {
+              "8": 50,
+              "9": 50
+            },
+            "dominant": null
+          },
+          {
+            "types": [
+              1,
+              9
+            ],
+            "scores": {
+              "1": 50,
+              "9": 50
+            },
+            "dominant": null
+          }
+        ],
+        "stable": false,
+        "typeRanking": [
+          {
+            "key": "6",
+            "score": 100
+          },
+          {
+            "key": "5",
+            "score": 87.5
+          },
+          {
+            "key": "4",
+            "score": 54.166666666666664
+          },
+          {
+            "key": "1",
+            "score": 45.833333333333336
+          },
+          {
+            "key": "9",
+            "score": 45.833333333333336
+          },
+          {
+            "key": "8",
+            "score": 37.5
+          },
+          {
+            "key": "2",
+            "score": 25
+          },
+          {
+            "key": "3",
+            "score": 25
+          },
+          {
+            "key": "7",
+            "score": 16.666666666666668
+          }
+        ],
+        "instinctRanking": [
+          {
+            "key": "sp",
+            "score": 100
+          },
+          {
+            "key": "sx",
+            "score": 60.71428571428571
+          },
+          {
+            "key": "so",
+            "score": 25
+          }
+        ],
+        "gap": 12.5,
+        "primaryStatus": "mixed",
+        "primary": null,
+        "candidates": [
+          6,
+          5
+        ],
+        "wing": null,
+        "instinctStatus": "suggested",
+        "dominantInstinct": "sp",
+        "stackClear": true,
+        "uniform": false
+      }
+    },
+    {
+      "id": "P03",
+      "expected": {
+        "primary": 2,
+        "wing": 1,
+        "dominantInstinct": "so"
+      },
+      "result": {
+        "version": "3.0.0",
+        "scores": {
+          "1": 100,
+          "2": 100,
+          "3": 45.833333333333336,
+          "4": 25,
+          "5": 33.333333333333336,
+          "6": 62.5,
+          "7": 33.333333333333336,
+          "8": 45.833333333333336,
+          "9": 66.66666666666666,
+          "sp": 53.57142857142857,
+          "so": 100,
+          "sx": 28.57142857142857
+        },
+        "comparisons": [
+          {
+            "types": [
+              1,
+              2
+            ],
+            "scores": {
+              "1": 62.5,
+              "2": 37.5
+            },
+            "dominant": null
+          },
+          {
+            "types": [
+              2,
+              3
+            ],
+            "scores": {
+              "2": 50,
+              "3": 50
+            },
+            "dominant": null
+          },
+          {
+            "types": [
+              3,
+              4
+            ],
+            "scores": {
+              "3": 25,
+              "4": 75
+            },
+            "dominant": 4
+          },
+          {
+            "types": [
+              4,
+              5
+            ],
+            "scores": {
+              "4": 62.5,
+              "5": 37.5
+            },
+            "dominant": null
+          },
+          {
+            "types": [
+              5,
+              6
+            ],
+            "scores": {
+              "5": 50,
+              "6": 50
+            },
+            "dominant": null
+          },
+          {
+            "types": [
+              6,
+              7
+            ],
+            "scores": {
+              "6": 37.5,
+              "7": 62.5
+            },
+            "dominant": null
+          },
+          {
+            "types": [
+              7,
+              8
+            ],
+            "scores": {
+              "7": 50,
+              "8": 50
+            },
+            "dominant": null
+          },
+          {
+            "types": [
+              8,
+              9
+            ],
+            "scores": {
+              "8": 25,
+              "9": 75
+            },
+            "dominant": null
+          },
+          {
+            "types": [
+              1,
+              9
+            ],
+            "scores": {
+              "1": 37.5,
+              "9": 62.5
+            },
+            "dominant": null
+          }
+        ],
+        "stable": false,
+        "typeRanking": [
+          {
+            "key": "1",
+            "score": 100
+          },
+          {
+            "key": "2",
+            "score": 100
+          },
+          {
+            "key": "9",
+            "score": 66.66666666666666
+          },
+          {
+            "key": "6",
+            "score": 62.5
+          },
+          {
+            "key": "3",
+            "score": 45.833333333333336
+          },
+          {
+            "key": "8",
+            "score": 45.833333333333336
+          },
+          {
+            "key": "5",
+            "score": 33.333333333333336
+          },
+          {
+            "key": "7",
+            "score": 33.333333333333336
+          },
+          {
+            "key": "4",
+            "score": 25
+          }
+        ],
+        "instinctRanking": [
+          {
+            "key": "so",
+            "score": 100
+          },
+          {
+            "key": "sp",
+            "score": 53.57142857142857
+          },
+          {
+            "key": "sx",
+            "score": 28.57142857142857
+          }
+        ],
+        "gap": 0,
+        "primaryStatus": "close",
+        "primary": null,
+        "candidates": [
+          1,
+          2
+        ],
+        "wing": null,
+        "instinctStatus": "suggested",
+        "dominantInstinct": "so",
+        "stackClear": true,
+        "uniform": false
+      }
+    },
+    {
+      "id": "P04",
+      "expected": {
+        "primary": 2,
+        "wing": 3,
+        "dominantInstinct": "so"
+      },
+      "result": {
+        "version": "3.0.0",
+        "scores": {
+          "1": 50,
+          "2": 95.83333333333333,
+          "3": 91.66666666666667,
+          "4": 25,
+          "5": 33.333333333333336,
+          "6": 62.5,
+          "7": 33.333333333333336,
+          "8": 45.833333333333336,
+          "9": 62.5,
+          "sp": 53.57142857142857,
+          "so": 100,
+          "sx": 28.57142857142857
+        },
+        "comparisons": [
+          {
+            "types": [
+              1,
+              2
+            ],
+            "scores": {
+              "1": 50,
+              "2": 50
+            },
+            "dominant": null
+          },
+          {
+            "types": [
+              2,
+              3
+            ],
+            "scores": {
+              "2": 75,
+              "3": 25
+            },
+            "dominant": null
+          },
+          {
+            "types": [
+              3,
+              4
+            ],
+            "scores": {
+              "3": 12.5,
+              "4": 87.5
+            },
+            "dominant": 4
+          },
+          {
+            "types": [
+              4,
+              5
+            ],
+            "scores": {
+              "4": 62.5,
+              "5": 37.5
+            },
+            "dominant": null
+          },
+          {
+            "types": [
+              5,
+              6
+            ],
+            "scores": {
+              "5": 50,
+              "6": 50
+            },
+            "dominant": null
+          },
+          {
+            "types": [
+              6,
+              7
+            ],
+            "scores": {
+              "6": 50,
+              "7": 50
+            },
+            "dominant": null
+          },
+          {
+            "types": [
+              7,
+              8
+            ],
+            "scores": {
+              "7": 50,
+              "8": 50
+            },
+            "dominant": null
+          },
+          {
+            "types": [
+              8,
+              9
+            ],
+            "scores": {
+              "8": 25,
+              "9": 75
+            },
+            "dominant": null
+          },
+          {
+            "types": [
+              1,
+              9
+            ],
+            "scores": {
+              "1": 50,
+              "9": 50
+            },
+            "dominant": null
+          }
+        ],
+        "stable": false,
+        "typeRanking": [
+          {
+            "key": "2",
+            "score": 95.83333333333333
+          },
+          {
+            "key": "3",
+            "score": 91.66666666666667
+          },
+          {
+            "key": "6",
+            "score": 62.5
+          },
+          {
+            "key": "9",
+            "score": 62.5
+          },
+          {
+            "key": "1",
+            "score": 50
+          },
+          {
+            "key": "8",
+            "score": 45.833333333333336
+          },
+          {
+            "key": "5",
+            "score": 33.333333333333336
+          },
+          {
+            "key": "7",
+            "score": 33.333333333333336
+          },
+          {
+            "key": "4",
+            "score": 25
+          }
+        ],
+        "instinctRanking": [
+          {
+            "key": "so",
+            "score": 100
+          },
+          {
+            "key": "sp",
+            "score": 53.57142857142857
+          },
+          {
+            "key": "sx",
+            "score": 28.57142857142857
+          }
+        ],
+        "gap": 4.166666666666657,
+        "primaryStatus": "close",
+        "primary": null,
+        "candidates": [
+          2,
+          3
+        ],
+        "wing": null,
+        "instinctStatus": "suggested",
+        "dominantInstinct": "so",
+        "stackClear": true,
+        "uniform": false
+      }
+    },
+    {
+      "id": "P05",
+      "expected": {
+        "primary": 8,
+        "wing": 7,
+        "dominantInstinct": "sx"
+      },
+      "result": {
+        "version": "3.0.0",
+        "scores": {
+          "1": 50,
+          "2": 37.5,
+          "3": 66.66666666666666,
+          "4": 58.333333333333336,
+          "5": 29.166666666666664,
+          "6": 54.166666666666664,
+          "7": 100,
+          "8": 100,
+          "9": 4.166666666666669,
+          "sp": 50,
+          "so": 28.57142857142857,
+          "sx": 100
+        },
+        "comparisons": [
+          {
+            "types": [
+              1,
+              2
+            ],
+            "scores": {
+              "1": 37.5,
+              "2": 62.5
+            },
+            "dominant": null
+          },
+          {
+            "types": [
+              2,
+              3
+            ],
+            "scores": {
+              "2": 50,
+              "3": 50
+            },
+            "dominant": null
+          },
+          {
+            "types": [
+              3,
+              4
+            ],
+            "scores": {
+              "3": 50,
+              "4": 50
+            },
+            "dominant": null
+          },
+          {
+            "types": [
+              4,
+              5
+            ],
+            "scores": {
+              "4": 37.5,
+              "5": 62.5
+            },
+            "dominant": null
+          },
+          {
+            "types": [
+              5,
+              6
+            ],
+            "scores": {
+              "5": 37.5,
+              "6": 62.5
+            },
+            "dominant": null
+          },
+          {
+            "types": [
+              6,
+              7
+            ],
+            "scores": {
+              "6": 37.5,
+              "7": 62.5
+            },
+            "dominant": null
+          },
+          {
+            "types": [
+              7,
+              8
+            ],
+            "scores": {
+              "7": 50,
+              "8": 50
+            },
+            "dominant": null
+          },
+          {
+            "types": [
+              8,
+              9
+            ],
+            "scores": {
+              "8": 50,
+              "9": 50
+            },
+            "dominant": null
+          },
+          {
+            "types": [
+              1,
+              9
+            ],
+            "scores": {
+              "1": 50,
+              "9": 50
+            },
+            "dominant": null
+          }
+        ],
+        "stable": false,
+        "typeRanking": [
+          {
+            "key": "7",
+            "score": 100
+          },
+          {
+            "key": "8",
+            "score": 100
+          },
+          {
+            "key": "3",
+            "score": 66.66666666666666
+          },
+          {
+            "key": "4",
+            "score": 58.333333333333336
+          },
+          {
+            "key": "6",
+            "score": 54.166666666666664
+          },
+          {
+            "key": "1",
+            "score": 50
+          },
+          {
+            "key": "2",
+            "score": 37.5
+          },
+          {
+            "key": "5",
+            "score": 29.166666666666664
+          },
+          {
+            "key": "9",
+            "score": 4.166666666666669
+          }
+        ],
+        "instinctRanking": [
+          {
+            "key": "sx",
+            "score": 100
+          },
+          {
+            "key": "sp",
+            "score": 50
+          },
+          {
+            "key": "so",
+            "score": 28.57142857142857
+          }
+        ],
+        "gap": 0,
+        "primaryStatus": "close",
+        "primary": null,
+        "candidates": [
+          7,
+          8
+        ],
+        "wing": null,
+        "instinctStatus": "suggested",
+        "dominantInstinct": "sx",
+        "stackClear": true,
+        "uniform": false
+      }
+    },
+    {
+      "id": "P06",
+      "expected": {
+        "primary": 8,
+        "wing": 9,
+        "dominantInstinct": "sx"
+      },
+      "result": {
+        "version": "3.0.0",
+        "scores": {
+          "1": 45.833333333333336,
+          "2": 41.666666666666664,
+          "3": 66.66666666666666,
+          "4": 58.333333333333336,
+          "5": 33.333333333333336,
+          "6": 54.166666666666664,
+          "7": 79.16666666666667,
+          "8": 91.66666666666667,
+          "9": 58.333333333333336,
+          "sp": 50,
+          "so": 35.71428571428571,
+          "sx": 100
+        },
+        "comparisons": [
+          {
+            "types": [
+              1,
+              2
+            ],
+            "scores": {
+              "1": 50,
+              "2": 50
+            },
+            "dominant": null
+          },
+          {
+            "types": [
+              2,
+              3
+            ],
+            "scores": {
+              "2": 50,
+              "3": 50
+            },
+            "dominant": null
+          },
+          {
+            "types": [
+              3,
+              4
+            ],
+            "scores": {
+              "3": 37.5,
+              "4": 62.5
+            },
+            "dominant": null
+          },
+          {
+            "types": [
+              4,
+              5
+            ],
+            "scores": {
+              "4": 50,
+              "5": 50
+            },
+            "dominant": null
+          },
+          {
+            "types": [
+              5,
+              6
+            ],
+            "scores": {
+              "5": 37.5,
+              "6": 62.5
+            },
+            "dominant": null
+          },
+          {
+            "types": [
+              6,
+              7
+            ],
+            "scores": {
+              "6": 50,
+              "7": 50
+            },
+            "dominant": null
+          },
+          {
+            "types": [
+              7,
+              8
+            ],
+            "scores": {
+              "7": 50,
+              "8": 50
+            },
+            "dominant": null
+          },
+          {
+            "types": [
+              8,
+              9
+            ],
+            "scores": {
+              "8": 50,
+              "9": 50
+            },
+            "dominant": null
+          },
+          {
+            "types": [
+              1,
+              9
+            ],
+            "scores": {
+              "1": 50,
+              "9": 50
+            },
+            "dominant": null
+          }
+        ],
+        "stable": false,
+        "typeRanking": [
+          {
+            "key": "8",
+            "score": 91.66666666666667
+          },
+          {
+            "key": "7",
+            "score": 79.16666666666667
+          },
+          {
+            "key": "3",
+            "score": 66.66666666666666
+          },
+          {
+            "key": "4",
+            "score": 58.333333333333336
+          },
+          {
+            "key": "9",
+            "score": 58.333333333333336
+          },
+          {
+            "key": "6",
+            "score": 54.166666666666664
+          },
+          {
+            "key": "1",
+            "score": 45.833333333333336
+          },
+          {
+            "key": "2",
+            "score": 41.666666666666664
+          },
+          {
+            "key": "5",
+            "score": 33.333333333333336
+          }
+        ],
+        "instinctRanking": [
+          {
+            "key": "sx",
+            "score": 100
+          },
+          {
+            "key": "sp",
+            "score": 50
+          },
+          {
+            "key": "so",
+            "score": 35.71428571428571
+          }
+        ],
+        "gap": 12.5,
+        "primaryStatus": "mixed",
+        "primary": null,
+        "candidates": [
+          8,
+          7
+        ],
+        "wing": null,
+        "instinctStatus": "suggested",
+        "dominantInstinct": "sx",
+        "stackClear": true,
+        "uniform": false
+      }
+    },
+    {
+      "id": "P07",
+      "expected": {
+        "primary": 1,
+        "wing": 9,
+        "dominantInstinct": "sp"
+      },
+      "result": {
+        "version": "3.0.0",
+        "scores": {
+          "1": 100,
+          "2": 41.666666666666664,
+          "3": 50,
+          "4": 45.833333333333336,
+          "5": 70.83333333333334,
+          "6": 58.333333333333336,
+          "7": 29.166666666666664,
+          "8": 58.333333333333336,
+          "9": 54.166666666666664,
+          "sp": 100,
+          "so": 60.71428571428571,
+          "sx": 25
+        },
+        "comparisons": [
+          {
+            "types": [
+              1,
+              2
+            ],
+            "scores": {
+              "1": 50,
+              "2": 50
+            },
+            "dominant": null
+          },
+          {
+            "types": [
+              2,
+              3
+            ],
+            "scores": {
+              "2": 50,
+              "3": 50
+            },
+            "dominant": null
+          },
+          {
+            "types": [
+              3,
+              4
+            ],
+            "scores": {
+              "3": 75,
+              "4": 25
+            },
+            "dominant": 3
+          },
+          {
+            "types": [
+              4,
+              5
+            ],
+            "scores": {
+              "4": 25,
+              "5": 75
+            },
+            "dominant": 5
+          },
+          {
+            "types": [
+              5,
+              6
+            ],
+            "scores": {
+              "5": 75,
+              "6": 25
+            },
+            "dominant": 5
+          },
+          {
+            "types": [
+              6,
+              7
+            ],
+            "scores": {
+              "6": 50,
+              "7": 50
+            },
+            "dominant": null
+          },
+          {
+            "types": [
+              7,
+              8
+            ],
+            "scores": {
+              "7": 25,
+              "8": 75
+            },
+            "dominant": 8
+          },
+          {
+            "types": [
+              8,
+              9
+            ],
+            "scores": {
+              "8": 62.5,
+              "9": 37.5
+            },
+            "dominant": null
+          },
+          {
+            "types": [
+              1,
+              9
+            ],
+            "scores": {
+              "1": 50,
+              "9": 50
+            },
+            "dominant": null
+          }
+        ],
+        "stable": false,
+        "typeRanking": [
+          {
+            "key": "1",
+            "score": 100
+          },
+          {
+            "key": "5",
+            "score": 70.83333333333334
+          },
+          {
+            "key": "6",
+            "score": 58.333333333333336
+          },
+          {
+            "key": "8",
+            "score": 58.333333333333336
+          },
+          {
+            "key": "9",
+            "score": 54.166666666666664
+          },
+          {
+            "key": "3",
+            "score": 50
+          },
+          {
+            "key": "4",
+            "score": 45.833333333333336
+          },
+          {
+            "key": "2",
+            "score": 41.666666666666664
+          },
+          {
+            "key": "7",
+            "score": 29.166666666666664
+          }
+        ],
+        "instinctRanking": [
+          {
+            "key": "sp",
+            "score": 100
+          },
+          {
+            "key": "so",
+            "score": 60.71428571428571
+          },
+          {
+            "key": "sx",
+            "score": 25
+          }
+        ],
+        "gap": 29.166666666666657,
+        "primaryStatus": "mixed",
+        "primary": null,
+        "candidates": [
+          1
+        ],
+        "wing": null,
+        "instinctStatus": "suggested",
+        "dominantInstinct": "sp",
+        "stackClear": true,
+        "uniform": false
+      }
+    },
+    {
+      "id": "P08",
+      "expected": {
+        "primary": 1,
+        "wing": 2,
+        "dominantInstinct": "sp"
+      },
+      "result": {
+        "version": "3.0.0",
+        "scores": {
+          "1": 100,
+          "2": 83.33333333333333,
+          "3": 50,
+          "4": 50,
+          "5": 70.83333333333334,
+          "6": 58.333333333333336,
+          "7": 29.166666666666664,
+          "8": 62.5,
+          "9": 58.333333333333336,
+          "sp": 100,
+          "so": 60.71428571428571,
+          "sx": 28.57142857142857
+        },
+        "comparisons": [
+          {
+            "types": [
+              1,
+              2
+            ],
+            "scores": {
+              "1": 62.5,
+              "2": 37.5
+            },
+            "dominant": null
+          },
+          {
+            "types": [
+              2,
+              3
+            ],
+            "scores": {
+              "2": 87.5,
+              "3": 12.5
+            },
+            "dominant": 2
+          },
+          {
+            "types": [
+              3,
+              4
+            ],
+            "scores": {
+              "3": 75,
+              "4": 25
+            },
+            "dominant": 3
+          },
+          {
+            "types": [
+              4,
+              5
+            ],
+            "scores": {
+              "4": 37.5,
+              "5": 62.5
+            },
+            "dominant": null
+          },
+          {
+            "types": [
+              5,
+              6
+            ],
+            "scores": {
+              "5": 75,
+              "6": 25
+            },
+            "dominant": 5
+          },
+          {
+            "types": [
+              6,
+              7
+            ],
+            "scores": {
+              "6": 50,
+              "7": 50
+            },
+            "dominant": null
+          },
+          {
+            "types": [
+              7,
+              8
+            ],
+            "scores": {
+              "7": 25,
+              "8": 75
+            },
+            "dominant": 8
+          },
+          {
+            "types": [
+              8,
+              9
+            ],
+            "scores": {
+              "8": 62.5,
+              "9": 37.5
+            },
+            "dominant": null
+          },
+          {
+            "types": [
+              1,
+              9
+            ],
+            "scores": {
+              "1": 50,
+              "9": 50
+            },
+            "dominant": null
+          }
+        ],
+        "stable": false,
+        "typeRanking": [
+          {
+            "key": "1",
+            "score": 100
+          },
+          {
+            "key": "2",
+            "score": 83.33333333333333
+          },
+          {
+            "key": "5",
+            "score": 70.83333333333334
+          },
+          {
+            "key": "8",
+            "score": 62.5
+          },
+          {
+            "key": "6",
+            "score": 58.333333333333336
+          },
+          {
+            "key": "9",
+            "score": 58.333333333333336
+          },
+          {
+            "key": "3",
+            "score": 50
+          },
+          {
+            "key": "4",
+            "score": 50
+          },
+          {
+            "key": "7",
+            "score": 29.166666666666664
+          }
+        ],
+        "instinctRanking": [
+          {
+            "key": "sp",
+            "score": 100
+          },
+          {
+            "key": "so",
+            "score": 60.71428571428571
+          },
+          {
+            "key": "sx",
+            "score": 28.57142857142857
+          }
+        ],
+        "gap": 16.66666666666667,
+        "primaryStatus": "mixed",
+        "primary": null,
+        "candidates": [
+          1
+        ],
+        "wing": null,
+        "instinctStatus": "suggested",
+        "dominantInstinct": "sp",
+        "stackClear": true,
+        "uniform": false
+      }
+    },
+    {
+      "id": "P09",
+      "expected": {
+        "primary": 6,
+        "wing": 5,
+        "dominantInstinct": "so"
+      },
+      "result": {
+        "version": "3.0.0",
+        "scores": {
+          "1": 54.166666666666664,
+          "2": 54.166666666666664,
+          "3": 37.5,
+          "4": 25,
+          "5": 95.83333333333333,
+          "6": 100,
+          "7": 33.333333333333336,
+          "8": 83.33333333333333,
+          "9": 62.5,
+          "sp": 75,
+          "so": 82.14285714285714,
+          "sx": 32.14285714285714
+        },
+        "comparisons": [
+          {
+            "types": [
+              1,
+              2
+            ],
+            "scores": {
+              "1": 25,
+              "2": 75
+            },
+            "dominant": 2
+          },
+          {
+            "types": [
+              2,
+              3
+            ],
+            "scores": {
+              "2": 62.5,
+              "3": 37.5
+            },
+            "dominant": null
+          },
+          {
+            "types": [
+              3,
+              4
+            ],
+            "scores": {
+              "3": 87.5,
+              "4": 12.5
+            },
+            "dominant": 3
+          },
+          {
+            "types": [
+              4,
+              5
+            ],
+            "scores": {
+              "4": 0,
+              "5": 100
+            },
+            "dominant": 5
+          },
+          {
+            "types": [
+              5,
+              6
+            ],
+            "scores": {
+              "5": 0,
+              "6": 100
+            },
+            "dominant": 6
+          },
+          {
+            "types": [
+              6,
+              7
+            ],
+            "scores": {
+              "6": 50,
+              "7": 50
+            },
+            "dominant": null
+          },
+          {
+            "types": [
+              7,
+              8
+            ],
+            "scores": {
+              "7": 25,
+              "8": 75
+            },
+            "dominant": 8
+          },
+          {
+            "types": [
+              8,
+              9
+            ],
+            "scores": {
+              "8": 62.5,
+              "9": 37.5
+            },
+            "dominant": null
+          },
+          {
+            "types": [
+              1,
+              9
+            ],
+            "scores": {
+              "1": 50,
+              "9": 50
+            },
+            "dominant": null
+          }
+        ],
+        "stable": false,
+        "typeRanking": [
+          {
+            "key": "6",
+            "score": 100
+          },
+          {
+            "key": "5",
+            "score": 95.83333333333333
+          },
+          {
+            "key": "8",
+            "score": 83.33333333333333
+          },
+          {
+            "key": "9",
+            "score": 62.5
+          },
+          {
+            "key": "1",
+            "score": 54.166666666666664
+          },
+          {
+            "key": "2",
+            "score": 54.166666666666664
+          },
+          {
+            "key": "3",
+            "score": 37.5
+          },
+          {
+            "key": "7",
+            "score": 33.333333333333336
+          },
+          {
+            "key": "4",
+            "score": 25
+          }
+        ],
+        "instinctRanking": [
+          {
+            "key": "so",
+            "score": 82.14285714285714
+          },
+          {
+            "key": "sp",
+            "score": 75
+          },
+          {
+            "key": "sx",
+            "score": 32.14285714285714
+          }
+        ],
+        "gap": 4.166666666666671,
+        "primaryStatus": "close",
+        "primary": null,
+        "candidates": [
+          6,
+          5
+        ],
+        "wing": null,
+        "instinctStatus": "close",
+        "dominantInstinct": null,
+        "stackClear": false,
+        "uniform": false
+      }
+    },
+    {
+      "id": "P10",
+      "expected": {
+        "primary": 6,
+        "wing": 7,
+        "dominantInstinct": "so"
+      },
+      "result": {
+        "version": "3.0.0",
+        "scores": {
+          "1": 54.166666666666664,
+          "2": 45.833333333333336,
+          "3": 50,
+          "4": 25,
+          "5": 62.5,
+          "6": 100,
+          "7": 100,
+          "8": 83.33333333333333,
+          "9": 58.333333333333336,
+          "sp": 75,
+          "so": 82.14285714285714,
+          "sx": 32.14285714285714
+        },
+        "comparisons": [
+          {
+            "types": [
+              1,
+              2
+            ],
+            "scores": {
+              "1": 25,
+              "2": 75
+            },
+            "dominant": 2
+          },
+          {
+            "types": [
+              2,
+              3
+            ],
+            "scores": {
+              "2": 62.5,
+              "3": 37.5
+            },
+            "dominant": null
+          },
+          {
+            "types": [
+              3,
+              4
+            ],
+            "scores": {
+              "3": 87.5,
+              "4": 12.5
+            },
+            "dominant": 3
+          },
+          {
+            "types": [
+              4,
+              5
+            ],
+            "scores": {
+              "4": 12.5,
+              "5": 87.5
+            },
+            "dominant": 5
+          },
+          {
+            "types": [
+              5,
+              6
+            ],
+            "scores": {
+              "5": 0,
+              "6": 100
+            },
+            "dominant": 6
+          },
+          {
+            "types": [
+              6,
+              7
+            ],
+            "scores": {
+              "6": 37.5,
+              "7": 62.5
+            },
+            "dominant": null
+          },
+          {
+            "types": [
+              7,
+              8
+            ],
+            "scores": {
+              "7": 37.5,
+              "8": 62.5
+            },
+            "dominant": null
+          },
+          {
+            "types": [
+              8,
+              9
+            ],
+            "scores": {
+              "8": 50,
+              "9": 50
+            },
+            "dominant": null
+          },
+          {
+            "types": [
+              1,
+              9
+            ],
+            "scores": {
+              "1": 50,
+              "9": 50
+            },
+            "dominant": null
+          }
+        ],
+        "stable": false,
+        "typeRanking": [
+          {
+            "key": "6",
+            "score": 100
+          },
+          {
+            "key": "7",
+            "score": 100
+          },
+          {
+            "key": "8",
+            "score": 83.33333333333333
+          },
+          {
+            "key": "5",
+            "score": 62.5
+          },
+          {
+            "key": "9",
+            "score": 58.333333333333336
+          },
+          {
+            "key": "1",
+            "score": 54.166666666666664
+          },
+          {
+            "key": "3",
+            "score": 50
+          },
+          {
+            "key": "2",
+            "score": 45.833333333333336
+          },
+          {
+            "key": "4",
+            "score": 25
+          }
+        ],
+        "instinctRanking": [
+          {
+            "key": "so",
+            "score": 82.14285714285714
+          },
+          {
+            "key": "sp",
+            "score": 75
+          },
+          {
+            "key": "sx",
+            "score": 32.14285714285714
+          }
+        ],
+        "gap": 0,
+        "primaryStatus": "close",
+        "primary": null,
+        "candidates": [
+          6,
+          7
+        ],
+        "wing": null,
+        "instinctStatus": "close",
+        "dominantInstinct": null,
+        "stackClear": false,
+        "uniform": false
+      }
+    },
+    {
+      "id": "P11",
+      "expected": {
+        "primary": 3,
+        "wing": 2,
+        "dominantInstinct": "sx"
+      },
+      "result": {
+        "version": "3.0.0",
+        "scores": {
+          "1": 45.833333333333336,
+          "2": 79.16666666666667,
+          "3": 79.16666666666667,
+          "4": 41.666666666666664,
+          "5": 20.833333333333332,
+          "6": 25,
+          "7": 75,
+          "8": 54.166666666666664,
+          "9": 33.333333333333336,
+          "sp": 50,
+          "so": 53.57142857142857,
+          "sx": 100
+        },
+        "comparisons": [
+          {
+            "types": [
+              1,
+              2
+            ],
+            "scores": {
+              "1": 62.5,
+              "2": 37.5
+            },
+            "dominant": null
+          },
+          {
+            "types": [
+              2,
+              3
+            ],
+            "scores": {
+              "2": 0,
+              "3": 100
+            },
+            "dominant": 3
+          },
+          {
+            "types": [
+              3,
+              4
+            ],
+            "scores": {
+              "3": 50,
+              "4": 50
+            },
+            "dominant": null
+          },
+          {
+            "types": [
+              4,
+              5
+            ],
+            "scores": {
+              "4": 50,
+              "5": 50
+            },
+            "dominant": null
+          },
+          {
+            "types": [
+              5,
+              6
+            ],
+            "scores": {
+              "5": 37.5,
+              "6": 62.5
+            },
+            "dominant": null
+          },
+          {
+            "types": [
+              6,
+              7
+            ],
+            "scores": {
+              "6": 37.5,
+              "7": 62.5
+            },
+            "dominant": null
+          },
+          {
+            "types": [
+              7,
+              8
+            ],
+            "scores": {
+              "7": 37.5,
+              "8": 62.5
+            },
+            "dominant": null
+          },
+          {
+            "types": [
+              8,
+              9
+            ],
+            "scores": {
+              "8": 50,
+              "9": 50
+            },
+            "dominant": null
+          },
+          {
+            "types": [
+              1,
+              9
+            ],
+            "scores": {
+              "1": 50,
+              "9": 50
+            },
+            "dominant": null
+          }
+        ],
+        "stable": false,
+        "typeRanking": [
+          {
+            "key": "2",
+            "score": 79.16666666666667
+          },
+          {
+            "key": "3",
+            "score": 79.16666666666667
+          },
+          {
+            "key": "7",
+            "score": 75
+          },
+          {
+            "key": "8",
+            "score": 54.166666666666664
+          },
+          {
+            "key": "1",
+            "score": 45.833333333333336
+          },
+          {
+            "key": "4",
+            "score": 41.666666666666664
+          },
+          {
+            "key": "9",
+            "score": 33.333333333333336
+          },
+          {
+            "key": "6",
+            "score": 25
+          },
+          {
+            "key": "5",
+            "score": 20.833333333333332
+          }
+        ],
+        "instinctRanking": [
+          {
+            "key": "sx",
+            "score": 100
+          },
+          {
+            "key": "so",
+            "score": 53.57142857142857
+          },
+          {
+            "key": "sp",
+            "score": 50
+          }
+        ],
+        "gap": 0,
+        "primaryStatus": "close",
+        "primary": null,
+        "candidates": [
+          2,
+          3,
+          7
+        ],
+        "wing": null,
+        "instinctStatus": "suggested",
+        "dominantInstinct": "sx",
+        "stackClear": false,
+        "uniform": false
+      }
+    },
+    {
+      "id": "P12",
+      "expected": {
+        "primary": 3,
+        "wing": 4,
+        "dominantInstinct": "sx"
+      },
+      "result": {
+        "version": "3.0.0",
+        "scores": {
+          "1": 41.666666666666664,
+          "2": 54.166666666666664,
+          "3": 70.83333333333334,
+          "4": 87.5,
+          "5": 50,
+          "6": 29.166666666666664,
+          "7": 41.666666666666664,
+          "8": 58.333333333333336,
+          "9": 33.333333333333336,
+          "sp": 50,
+          "so": 46.42857142857143,
+          "sx": 100
+        },
+        "comparisons": [
+          {
+            "types": [
+              1,
+              2
+            ],
+            "scores": {
+              "1": 50,
+              "2": 50
+            },
+            "dominant": null
+          },
+          {
+            "types": [
+              2,
+              3
+            ],
+            "scores": {
+              "2": 25,
+              "3": 75
+            },
+            "dominant": 3
+          },
+          {
+            "types": [
+              3,
+              4
+            ],
+            "scores": {
+              "3": 50,
+              "4": 50
+            },
+            "dominant": null
+          },
+          {
+            "types": [
+              4,
+              5
+            ],
+            "scores": {
+              "4": 50,
+              "5": 50
+            },
+            "dominant": null
+          },
+          {
+            "types": [
+              5,
+              6
+            ],
+            "scores": {
+              "5": 50,
+              "6": 50
+            },
+            "dominant": null
+          },
+          {
+            "types": [
+              6,
+              7
+            ],
+            "scores": {
+              "6": 50,
+              "7": 50
+            },
+            "dominant": null
+          },
+          {
+            "types": [
+              7,
+              8
+            ],
+            "scores": {
+              "7": 50,
+              "8": 50
+            },
+            "dominant": null
+          },
+          {
+            "types": [
+              8,
+              9
+            ],
+            "scores": {
+              "8": 37.5,
+              "9": 62.5
+            },
+            "dominant": null
+          },
+          {
+            "types": [
+              1,
+              9
+            ],
+            "scores": {
+              "1": 50,
+              "9": 50
+            },
+            "dominant": null
+          }
+        ],
+        "stable": false,
+        "typeRanking": [
+          {
+            "key": "4",
+            "score": 87.5
+          },
+          {
+            "key": "3",
+            "score": 70.83333333333334
+          },
+          {
+            "key": "8",
+            "score": 58.333333333333336
+          },
+          {
+            "key": "2",
+            "score": 54.166666666666664
+          },
+          {
+            "key": "5",
+            "score": 50
+          },
+          {
+            "key": "1",
+            "score": 41.666666666666664
+          },
+          {
+            "key": "7",
+            "score": 41.666666666666664
+          },
+          {
+            "key": "9",
+            "score": 33.333333333333336
+          },
+          {
+            "key": "6",
+            "score": 29.166666666666664
+          }
+        ],
+        "instinctRanking": [
+          {
+            "key": "sx",
+            "score": 100
+          },
+          {
+            "key": "sp",
+            "score": 50
+          },
+          {
+            "key": "so",
+            "score": 46.42857142857143
+          }
+        ],
+        "gap": 16.666666666666657,
+        "primaryStatus": "mixed",
+        "primary": null,
+        "candidates": [
+          4
+        ],
+        "wing": null,
+        "instinctStatus": "suggested",
+        "dominantInstinct": "sx",
+        "stackClear": false,
+        "uniform": false
+      }
+    },
+    {
+      "id": "P13",
+      "expected": {
+        "primary": 9,
+        "wing": 8,
+        "dominantInstinct": "sp"
+      },
+      "result": {
+        "version": "3.0.0",
+        "scores": {
+          "1": 50,
+          "2": 66.66666666666666,
+          "3": 29.166666666666664,
+          "4": 25,
+          "5": 62.5,
+          "6": 50,
+          "7": 33.333333333333336,
+          "8": 66.66666666666666,
+          "9": 83.33333333333333,
+          "sp": 100,
+          "so": 35.71428571428571,
+          "sx": 21.42857142857143
+        },
+        "comparisons": [
+          {
+            "types": [
+              1,
+              2
+            ],
+            "scores": {
+              "1": 12.5,
+              "2": 87.5
+            },
+            "dominant": 2
+          },
+          {
+            "types": [
+              2,
+              3
+            ],
+            "scores": {
+              "2": 50,
+              "3": 50
+            },
+            "dominant": null
+          },
+          {
+            "types": [
+              3,
+              4
+            ],
+            "scores": {
+              "3": 75,
+              "4": 25
+            },
+            "dominant": 3
+          },
+          {
+            "types": [
+              4,
+              5
+            ],
+            "scores": {
+              "4": 50,
+              "5": 50
+            },
+            "dominant": null
+          },
+          {
+            "types": [
+              5,
+              6
+            ],
+            "scores": {
+              "5": 50,
+              "6": 50
+            },
+            "dominant": null
+          },
+          {
+            "types": [
+              6,
+              7
+            ],
+            "scores": {
+              "6": 62.5,
+              "7": 37.5
+            },
+            "dominant": null
+          },
+          {
+            "types": [
+              7,
+              8
+            ],
+            "scores": {
+              "7": 37.5,
+              "8": 62.5
+            },
+            "dominant": null
+          },
+          {
+            "types": [
+              8,
+              9
+            ],
+            "scores": {
+              "8": 0,
+              "9": 100
+            },
+            "dominant": 9
+          },
+          {
+            "types": [
+              1,
+              9
+            ],
+            "scores": {
+              "1": 0,
+              "9": 100
+            },
+            "dominant": 9
+          }
+        ],
+        "stable": true,
+        "typeRanking": [
+          {
+            "key": "9",
+            "score": 83.33333333333333
+          },
+          {
+            "key": "2",
+            "score": 66.66666666666666
+          },
+          {
+            "key": "8",
+            "score": 66.66666666666666
+          },
+          {
+            "key": "5",
+            "score": 62.5
+          },
+          {
+            "key": "1",
+            "score": 50
+          },
+          {
+            "key": "6",
+            "score": 50
+          },
+          {
+            "key": "7",
+            "score": 33.333333333333336
+          },
+          {
+            "key": "3",
+            "score": 29.166666666666664
+          },
+          {
+            "key": "4",
+            "score": 25
+          }
+        ],
+        "instinctRanking": [
+          {
+            "key": "sp",
+            "score": 100
+          },
+          {
+            "key": "so",
+            "score": 35.71428571428571
+          },
+          {
+            "key": "sx",
+            "score": 21.42857142857143
+          }
+        ],
+        "gap": 16.66666666666667,
+        "primaryStatus": "suggested",
+        "primary": 9,
+        "candidates": [
+          9
+        ],
+        "wing": {
+          "adjacent": [
+            8,
+            1
+          ],
+          "ranked": [
+            {
+              "key": "8",
+              "score": 66.66666666666666
+            },
+            {
+              "key": "1",
+              "score": 50
+            }
+          ],
+          "gap": 16.666666666666657,
+          "threshold": 62.5,
+          "eligible": [
+            8
+          ],
+          "status": "suggested",
+          "dominant": 8
+        },
+        "instinctStatus": "suggested",
+        "dominantInstinct": "sp",
+        "stackClear": true,
+        "uniform": false
+      }
+    },
+    {
+      "id": "P14",
+      "expected": {
+        "primary": 9,
+        "wing": 1,
+        "dominantInstinct": "sp"
+      },
+      "result": {
+        "version": "3.0.0",
+        "scores": {
+          "1": 91.66666666666667,
+          "2": 66.66666666666666,
+          "3": 45.833333333333336,
+          "4": 25,
+          "5": 62.5,
+          "6": 70.83333333333334,
+          "7": 29.166666666666664,
+          "8": 50,
+          "9": 87.5,
+          "sp": 100,
+          "so": 35.71428571428571,
+          "sx": 21.42857142857143
+        },
+        "comparisons": [
+          {
+            "types": [
+              1,
+              2
+            ],
+            "scores": {
+              "1": 87.5,
+              "2": 12.5
+            },
+            "dominant": 1
+          },
+          {
+            "types": [
+              2,
+              3
+            ],
+            "scores": {
+              "2": 50,
+              "3": 50
+            },
+            "dominant": null
+          },
+          {
+            "types": [
+              3,
+              4
+            ],
+            "scores": {
+              "3": 87.5,
+              "4": 12.5
+            },
+            "dominant": 3
+          },
+          {
+            "types": [
+              4,
+              5
+            ],
+            "scores": {
+              "4": 50,
+              "5": 50
+            },
+            "dominant": null
+          },
+          {
+            "types": [
+              5,
+              6
+            ],
+            "scores": {
+              "5": 37.5,
+              "6": 62.5
+            },
+            "dominant": null
+          },
+          {
+            "types": [
+              6,
+              7
+            ],
+            "scores": {
+              "6": 75,
+              "7": 25
+            },
+            "dominant": null
+          },
+          {
+            "types": [
+              7,
+              8
+            ],
+            "scores": {
+              "7": 50,
+              "8": 50
+            },
+            "dominant": null
+          },
+          {
+            "types": [
+              8,
+              9
+            ],
+            "scores": {
+              "8": 12.5,
+              "9": 87.5
+            },
+            "dominant": 9
+          },
+          {
+            "types": [
+              1,
+              9
+            ],
+            "scores": {
+              "1": 100,
+              "9": 0
+            },
+            "dominant": 1
+          }
+        ],
+        "stable": true,
+        "typeRanking": [
+          {
+            "key": "1",
+            "score": 91.66666666666667
+          },
+          {
+            "key": "9",
+            "score": 87.5
+          },
+          {
+            "key": "6",
+            "score": 70.83333333333334
+          },
+          {
+            "key": "2",
+            "score": 66.66666666666666
+          },
+          {
+            "key": "5",
+            "score": 62.5
+          },
+          {
+            "key": "8",
+            "score": 50
+          },
+          {
+            "key": "3",
+            "score": 45.833333333333336
+          },
+          {
+            "key": "7",
+            "score": 29.166666666666664
+          },
+          {
+            "key": "4",
+            "score": 25
+          }
+        ],
+        "instinctRanking": [
+          {
+            "key": "sp",
+            "score": 100
+          },
+          {
+            "key": "so",
+            "score": 35.71428571428571
+          },
+          {
+            "key": "sx",
+            "score": 21.42857142857143
+          }
+        ],
+        "gap": 4.166666666666671,
+        "primaryStatus": "suggested",
+        "primary": 1,
+        "candidates": [
+          1,
+          9
+        ],
+        "wing": {
+          "adjacent": [
+            9,
+            2
+          ],
+          "ranked": [
+            {
+              "key": "9",
+              "score": 87.5
+            },
+            {
+              "key": "2",
+              "score": 66.66666666666666
+            }
+          ],
+          "gap": 20.833333333333343,
+          "threshold": 68.75,
+          "eligible": [
+            9
+          ],
+          "status": "suggested",
+          "dominant": 9
+        },
+        "instinctStatus": "suggested",
+        "dominantInstinct": "sp",
+        "stackClear": true,
+        "uniform": false
+      }
+    },
+    {
+      "id": "P15",
+      "expected": {
+        "primary": 4,
+        "wing": 3,
+        "dominantInstinct": "so"
+      },
+      "result": {
+        "version": "3.0.0",
+        "scores": {
+          "1": 50,
+          "2": 100,
+          "3": 75,
+          "4": 100,
+          "5": 70.83333333333334,
+          "6": 29.166666666666664,
+          "7": 54.166666666666664,
+          "8": 50,
+          "9": 41.666666666666664,
+          "sp": 64.28571428571429,
+          "so": 100,
+          "sx": 78.57142857142858
+        },
+        "comparisons": [
+          {
+            "types": [
+              1,
+              2
+            ],
+            "scores": {
+              "1": 37.5,
+              "2": 62.5
+            },
+            "dominant": null
+          },
+          {
+            "types": [
+              2,
+              3
+            ],
+            "scores": {
+              "2": 50,
+              "3": 50
+            },
+            "dominant": null
+          },
+          {
+            "types": [
+              3,
+              4
+            ],
+            "scores": {
+              "3": 50,
+              "4": 50
+            },
+            "dominant": null
+          },
+          {
+            "types": [
+              4,
+              5
+            ],
+            "scores": {
+              "4": 100,
+              "5": 0
+            },
+            "dominant": 4
+          },
+          {
+            "types": [
+              5,
+              6
+            ],
+            "scores": {
+              "5": 75,
+              "6": 25
+            },
+            "dominant": 5
+          },
+          {
+            "types": [
+              6,
+              7
+            ],
+            "scores": {
+              "6": 62.5,
+              "7": 37.5
+            },
+            "dominant": null
+          },
+          {
+            "types": [
+              7,
+              8
+            ],
+            "scores": {
+              "7": 37.5,
+              "8": 62.5
+            },
+            "dominant": null
+          },
+          {
+            "types": [
+              8,
+              9
+            ],
+            "scores": {
+              "8": 50,
+              "9": 50
+            },
+            "dominant": null
+          },
+          {
+            "types": [
+              1,
+              9
+            ],
+            "scores": {
+              "1": 62.5,
+              "9": 37.5
+            },
+            "dominant": null
+          }
+        ],
+        "stable": false,
+        "typeRanking": [
+          {
+            "key": "2",
+            "score": 100
+          },
+          {
+            "key": "4",
+            "score": 100
+          },
+          {
+            "key": "3",
+            "score": 75
+          },
+          {
+            "key": "5",
+            "score": 70.83333333333334
+          },
+          {
+            "key": "7",
+            "score": 54.166666666666664
+          },
+          {
+            "key": "1",
+            "score": 50
+          },
+          {
+            "key": "8",
+            "score": 50
+          },
+          {
+            "key": "9",
+            "score": 41.666666666666664
+          },
+          {
+            "key": "6",
+            "score": 29.166666666666664
+          }
+        ],
+        "instinctRanking": [
+          {
+            "key": "so",
+            "score": 100
+          },
+          {
+            "key": "sx",
+            "score": 78.57142857142858
+          },
+          {
+            "key": "sp",
+            "score": 64.28571428571429
+          }
+        ],
+        "gap": 0,
+        "primaryStatus": "close",
+        "primary": null,
+        "candidates": [
+          2,
+          4
+        ],
+        "wing": null,
+        "instinctStatus": "suggested",
+        "dominantInstinct": "so",
+        "stackClear": true,
+        "uniform": false
+      }
+    },
+    {
+      "id": "P16",
+      "expected": {
+        "primary": 4,
+        "wing": 5,
+        "dominantInstinct": "so"
+      },
+      "result": {
+        "version": "3.0.0",
+        "scores": {
+          "1": 50,
+          "2": 75,
+          "3": 50,
+          "4": 100,
+          "5": 95.83333333333333,
+          "6": 70.83333333333334,
+          "7": 33.333333333333336,
+          "8": 50,
+          "9": 41.666666666666664,
+          "sp": 64.28571428571429,
+          "so": 100,
+          "sx": 57.14285714285714
+        },
+        "comparisons": [
+          {
+            "types": [
+              1,
+              2
+            ],
+            "scores": {
+              "1": 50,
+              "2": 50
+            },
+            "dominant": null
+          },
+          {
+            "types": [
+              2,
+              3
+            ],
+            "scores": {
+              "2": 37.5,
+              "3": 62.5
+            },
+            "dominant": null
+          },
+          {
+            "types": [
+              3,
+              4
+            ],
+            "scores": {
+              "3": 50,
+              "4": 50
+            },
+            "dominant": null
+          },
+          {
+            "types": [
+              4,
+              5
+            ],
+            "scores": {
+              "4": 62.5,
+              "5": 37.5
+            },
+            "dominant": null
+          },
+          {
+            "types": [
+              5,
+              6
+            ],
+            "scores": {
+              "5": 100,
+              "6": 0
+            },
+            "dominant": 5
+          },
+          {
+            "types": [
+              6,
+              7
+            ],
+            "scores": {
+              "6": 62.5,
+              "7": 37.5
+            },
+            "dominant": null
+          },
+          {
+            "types": [
+              7,
+              8
+            ],
+            "scores": {
+              "7": 37.5,
+              "8": 62.5
+            },
+            "dominant": null
+          },
+          {
+            "types": [
+              8,
+              9
+            ],
+            "scores": {
+              "8": 50,
+              "9": 50
+            },
+            "dominant": null
+          },
+          {
+            "types": [
+              1,
+              9
+            ],
+            "scores": {
+              "1": 50,
+              "9": 50
+            },
+            "dominant": null
+          }
+        ],
+        "stable": false,
+        "typeRanking": [
+          {
+            "key": "4",
+            "score": 100
+          },
+          {
+            "key": "5",
+            "score": 95.83333333333333
+          },
+          {
+            "key": "2",
+            "score": 75
+          },
+          {
+            "key": "6",
+            "score": 70.83333333333334
+          },
+          {
+            "key": "1",
+            "score": 50
+          },
+          {
+            "key": "3",
+            "score": 50
+          },
+          {
+            "key": "8",
+            "score": 50
+          },
+          {
+            "key": "9",
+            "score": 41.666666666666664
+          },
+          {
+            "key": "7",
+            "score": 33.333333333333336
+          }
+        ],
+        "instinctRanking": [
+          {
+            "key": "so",
+            "score": 100
+          },
+          {
+            "key": "sp",
+            "score": 64.28571428571429
+          },
+          {
+            "key": "sx",
+            "score": 57.14285714285714
+          }
+        ],
+        "gap": 4.166666666666671,
+        "primaryStatus": "close",
+        "primary": null,
+        "candidates": [
+          4,
+          5
+        ],
+        "wing": null,
+        "instinctStatus": "suggested",
+        "dominantInstinct": "so",
+        "stackClear": false,
+        "uniform": false
+      }
+    },
+    {
+      "id": "P17",
+      "expected": {
+        "primary": 7,
+        "wing": 6,
+        "dominantInstinct": "sx"
+      },
+      "result": {
+        "version": "3.0.0",
+        "scores": {
+          "1": 29.166666666666664,
+          "2": 29.166666666666664,
+          "3": 62.5,
+          "4": 41.666666666666664,
+          "5": 29.166666666666664,
+          "6": 95.83333333333333,
+          "7": 100,
+          "8": 54.166666666666664,
+          "9": 33.333333333333336,
+          "sp": 50,
+          "so": 25,
+          "sx": 96.42857142857142
+        },
+        "comparisons": [
+          {
+            "types": [
+              1,
+              2
+            ],
+            "scores": {
+              "1": 50,
+              "2": 50
+            },
+            "dominant": null
+          },
+          {
+            "types": [
+              2,
+              3
+            ],
+            "scores": {
+              "2": 37.5,
+              "3": 62.5
+            },
+            "dominant": null
+          },
+          {
+            "types": [
+              3,
+              4
+            ],
+            "scores": {
+              "3": 87.5,
+              "4": 12.5
+            },
+            "dominant": 3
+          },
+          {
+            "types": [
+              4,
+              5
+            ],
+            "scores": {
+              "4": 50,
+              "5": 50
+            },
+            "dominant": null
+          },
+          {
+            "types": [
+              5,
+              6
+            ],
+            "scores": {
+              "5": 12.5,
+              "6": 87.5
+            },
+            "dominant": 6
+          },
+          {
+            "types": [
+              6,
+              7
+            ],
+            "scores": {
+              "6": 0,
+              "7": 100
+            },
+            "dominant": 7
+          },
+          {
+            "types": [
+              7,
+              8
+            ],
+            "scores": {
+              "7": 50,
+              "8": 50
+            },
+            "dominant": null
+          },
+          {
+            "types": [
+              8,
+              9
+            ],
+            "scores": {
+              "8": 12.5,
+              "9": 87.5
+            },
+            "dominant": 9
+          },
+          {
+            "types": [
+              1,
+              9
+            ],
+            "scores": {
+              "1": 25,
+              "9": 75
+            },
+            "dominant": 9
+          }
+        ],
+        "stable": false,
+        "typeRanking": [
+          {
+            "key": "7",
+            "score": 100
+          },
+          {
+            "key": "6",
+            "score": 95.83333333333333
+          },
+          {
+            "key": "3",
+            "score": 62.5
+          },
+          {
+            "key": "8",
+            "score": 54.166666666666664
+          },
+          {
+            "key": "4",
+            "score": 41.666666666666664
+          },
+          {
+            "key": "9",
+            "score": 33.333333333333336
+          },
+          {
+            "key": "1",
+            "score": 29.166666666666664
+          },
+          {
+            "key": "2",
+            "score": 29.166666666666664
+          },
+          {
+            "key": "5",
+            "score": 29.166666666666664
+          }
+        ],
+        "instinctRanking": [
+          {
+            "key": "sx",
+            "score": 96.42857142857142
+          },
+          {
+            "key": "sp",
+            "score": 50
+          },
+          {
+            "key": "so",
+            "score": 25
+          }
+        ],
+        "gap": 4.166666666666671,
+        "primaryStatus": "close",
+        "primary": null,
+        "candidates": [
+          7,
+          6
+        ],
+        "wing": null,
+        "instinctStatus": "suggested",
+        "dominantInstinct": "sx",
+        "stackClear": true,
+        "uniform": false
+      }
+    },
+    {
+      "id": "P18",
+      "expected": {
+        "primary": 7,
+        "wing": 8,
+        "dominantInstinct": "sx"
+      },
+      "result": {
+        "version": "3.0.0",
+        "scores": {
+          "1": 45.833333333333336,
+          "2": 29.166666666666664,
+          "3": 62.5,
+          "4": 41.666666666666664,
+          "5": 37.5,
+          "6": 70.83333333333334,
+          "7": 100,
+          "8": 100,
+          "9": 8.333333333333332,
+          "sp": 50,
+          "so": 25,
+          "sx": 96.42857142857142
+        },
+        "comparisons": [
+          {
+            "types": [
+              1,
+              2
+            ],
+            "scores": {
+              "1": 75,
+              "2": 25
+            },
+            "dominant": 1
+          },
+          {
+            "types": [
+              2,
+              3
+            ],
+            "scores": {
+              "2": 37.5,
+              "3": 62.5
+            },
+            "dominant": null
+          },
+          {
+            "types": [
+              3,
+              4
+            ],
+            "scores": {
+              "3": 62.5,
+              "4": 37.5
+            },
+            "dominant": null
+          },
+          {
+            "types": [
+              4,
+              5
+            ],
+            "scores": {
+              "4": 50,
+              "5": 50
+            },
+            "dominant": null
+          },
+          {
+            "types": [
+              5,
+              6
+            ],
+            "scores": {
+              "5": 37.5,
+              "6": 62.5
+            },
+            "dominant": null
+          },
+          {
+            "types": [
+              6,
+              7
+            ],
+            "scores": {
+              "6": 25,
+              "7": 75
+            },
+            "dominant": 7
+          },
+          {
+            "types": [
+              7,
+              8
+            ],
+            "scores": {
+              "7": 25,
+              "8": 75
+            },
+            "dominant": null
+          },
+          {
+            "types": [
+              8,
+              9
+            ],
+            "scores": {
+              "8": 50,
+              "9": 50
+            },
+            "dominant": null
+          },
+          {
+            "types": [
+              1,
+              9
+            ],
+            "scores": {
+              "1": 75,
+              "9": 25
+            },
+            "dominant": 1
+          }
+        ],
+        "stable": false,
+        "typeRanking": [
+          {
+            "key": "7",
+            "score": 100
+          },
+          {
+            "key": "8",
+            "score": 100
+          },
+          {
+            "key": "6",
+            "score": 70.83333333333334
+          },
+          {
+            "key": "3",
+            "score": 62.5
+          },
+          {
+            "key": "1",
+            "score": 45.833333333333336
+          },
+          {
+            "key": "4",
+            "score": 41.666666666666664
+          },
+          {
+            "key": "5",
+            "score": 37.5
+          },
+          {
+            "key": "2",
+            "score": 29.166666666666664
+          },
+          {
+            "key": "9",
+            "score": 8.333333333333332
+          }
+        ],
+        "instinctRanking": [
+          {
+            "key": "sx",
+            "score": 96.42857142857142
+          },
+          {
+            "key": "sp",
+            "score": 50
+          },
+          {
+            "key": "so",
+            "score": 25
+          }
+        ],
+        "gap": 0,
+        "primaryStatus": "close",
+        "primary": null,
+        "candidates": [
+          7,
+          8
+        ],
+        "wing": null,
+        "instinctStatus": "suggested",
+        "dominantInstinct": "sx",
+        "stackClear": true,
+        "uniform": false
+      }
+    }
+  ]
+}

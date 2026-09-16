@@ -1,0 +1,7 @@
+{
+  "engineSHA256": "da2f03d337653e81b319a72998f571c94682ad69a766b93c6dce781e5f80b86d",
+  "questionnaireSHA256": "91e35b81d3716990754de36a473b92f43dd2964a586dc3a4b87d6b5f2cc4e9e1",
+  "model": "gpt-5.6-luna",
+  "reasoning": "high",
+  "note": "Scoring frozen before blind responses. Agent instructions limit access to assigned input only; this is not OS-enforced isolation."
+}

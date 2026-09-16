@@ -1,0 +1,92 @@
+{
+  "P01": {
+    "primary": 5,
+    "wing": 4,
+    "dominantInstinct": "sp"
+  },
+  "P02": {
+    "primary": 5,
+    "wing": 6,
+    "dominantInstinct": "sp"
+  },
+  "P03": {
+    "primary": 2,
+    "wing": 1,
+    "dominantInstinct": "so"
+  },
+  "P04": {
+    "primary": 2,
+    "wing": 3,
+    "dominantInstinct": "so"
+  },
+  "P05": {
+    "primary": 8,
+    "wing": 7,
+    "dominantInstinct": "sx"
+  },
+  "P06": {
+    "primary": 8,
+    "wing": 9,
+    "dominantInstinct": "sx"
+  },
+  "P07": {
+    "primary": 1,
+    "wing": 9,
+    "dominantInstinct": "sp"
+  },
+  "P08": {
+    "primary": 1,
+    "wing": 2,
+    "dominantInstinct": "sp"
+  },
+  "P09": {
+    "primary": 6,
+    "wing": 5,
+    "dominantInstinct": "so"
+  },
+  "P10": {
+    "primary": 6,
+    "wing": 7,
+    "dominantInstinct": "so"
+  },
+  "P11": {
+    "primary": 3,
+    "wing": 2,
+    "dominantInstinct": "sx"
+  },
+  "P12": {
+    "primary": 3,
+    "wing": 4,
+    "dominantInstinct": "sx"
+  },
+  "P13": {
+    "primary": 9,
+    "wing": 8,
+    "dominantInstinct": "sp"
+  },
+  "P14": {
+    "primary": 9,
+    "wing": 1,
+    "dominantInstinct": "sp"
+  },
+  "P15": {
+    "primary": 4,
+    "wing": 3,
+    "dominantInstinct": "so"
+  },
+  "P16": {
+    "primary": 4,
+    "wing": 5,
+    "dominantInstinct": "so"
+  },
+  "P17": {
+    "primary": 7,
+    "wing": 6,
+    "dominantInstinct": "sx"
+  },
+  "P18": {
+    "primary": 7,
+    "wing": 8,
+    "dominantInstinct": "sx"
+  }
+}

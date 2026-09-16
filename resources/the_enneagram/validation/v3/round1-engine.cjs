@@ -2,8 +2,8 @@
 (function (root) {
   'use strict';
   const VERSION = '3.0.0';
-  const CORE_WINDOW = 15;
-  const PAIR_MIN = 75;
+  const CORE_MIN = 62.5;
+  const MOTIVE_CONFLICT_GAP = 12.5;
   const WING_MIN = 62.5;
   const WING_RATIO = 0.75;
   const TYPE_GAP = 8;
@@ -161,29 +161,49 @@
     }
   }
   ['so','sp','sx'].forEach(key => questions.push({id:`${key}-7`,scale:key,reverse:true,text:instinctItems[key][6]}));
-  // Equal exposure: two original comparisons for each adjacent pair, four per type.
-  // The second item reverses option order; 3 explicitly leaves the preference open.
-  const contrastItems = [
-    [1,2,'כשאני שוקל להעיר לאדם קרוב, מה משפיע עליי יותר?','הרצון שהדבר ייעשה בדרך הנכונה.','הרצון לשמור על הקרבה בינינו.'],
-    [2,3,'כשאני משקיע הרבה באנשים, מה חסר לי יותר אם אינו חוזר אליי?','התחושה שאני נחוץ ואהוב.','הכרה ביכולת ובהישגים שלי.'],
-    [3,4,'דרך פעולה מצליחה אינה מרגישה אישית במיוחד. למה אני נוטה?','לאמץ אותה כדי להגיע לתוצאה טובה.','לחפש דרך שתבטא אותי, גם במחיר של הצלחה פחותה.'],
-    [4,5,'כשקשה לי לשתף במה שעובר עליי, מה מעסיק אותי יותר?','החשש שלא יבינו את החוויה האישית שלי.','החשש שהשיחה תדרוש ממני יותר כוחות משיש לי.'],
-    [5,6,'לפני משימה לא מוכרת, מה נותן לי יותר ביטחון?','הבנה שתאפשר לי להתמודד בכוחות עצמי.','תוכנית בדוקה שאפשר לסמוך עליה כשמשהו משתבש.'],
-    [6,7,'כשעולה דאגה שמכבידה עליי, לאן תשומת הלב שלי פונה?','לבדיקת הסיכון ולמציאת דרך להיערך אליו.','לאפשרות מעודדת שתעזור לי לצאת מהתחושה.'],
-    [7,8,'כשמגבילים את חופש הפעולה שלי, מה חשוב לי יותר להשיג?','אפשרויות אחרות שיאפשרו לי להמשיך ליהנות ולהתקדם.','יכולת לקבוע בעצמי, גם אם אצטרך להישאר בעימות.'],
-    [8,9,'אדם קרוב דוחף להחלטה שאינה מתאימה לי. למה אני נוטה?','להעמיד גבול ברור, גם אם השיחה תהפוך לעימות.','להרגיע את המצב, גם אם הרצון שלי יידחק בינתיים.'],
-    [9,1,'בקבוצה מתגבשת הסכמה שיש בה ליקוי. מה מושך אותי יותר?','לשמור על ההסכמה ועל האווירה הרגועה.','לעצור ולתקן את הליקוי, גם אם זה ייצור מתח.'],
-    [2,1,'עזרתי במשימה והדברים לא הסתדרו. מה נשאר איתי יותר?','האכזבה שהעזרה שלי לא חיזקה את הקשר.','התחושה שלא מילאתי את האחריות שלי כראוי.'],
-    [3,2,'אחרי תקופה של עשייה מוצלחת, למה אני מייחל יותר?','שיראו מה הצלחתי להשיג.','שארגיש קרוב וחשוב לאנשים שעזרתי להם.'],
-    [4,3,'רגש קשה מתעורר באמצע פרויקט חשוב. למה אני נוטה?','לעצור כדי להבין מה הרגש אומר עליי.','לשים אותו בצד כדי להשלים את המשימה.'],
-    [5,4,'כשאני חוזר לבד לחוויה מורכבת, מה אני מחפש יותר?','הסבר שייתן לי יכולת להתמודד איתה.','משמעות שתעזור לי להבין מי אני בתוכה.'],
-    [6,5,'אחרי שאספתי מידע, מה נוטה לעכב את ההחלטה שלי?','ספק אם המידע והאנשים שמאחוריו אמינים מספיק.','תחושה שעדיין איני מבין מספיק כדי לפעול באופן עצמאי.'],
-    [7,6,'לפני התחייבות ארוכה, מה מושך אותי יותר?','להשאיר פתוחות אפשרויות מעניינות שעוד עשויות להגיע.','לבסס מסגרת יציבה שאפשר להישען עליה.'],
-    [8,7,'כשנוצר מאבק על הדרך שבה אפעל, למה אני נוטה?','להתעקש שלא יחליטו במקומי.','לחפש מוצא שיפתח עבורי חוויה טובה יותר.'],
-    [9,8,'מתח עם אדם קרוב נמשך כמה ימים. מה התגובה הרגילה שלי?','לדחות את ההתנגשות ולקוות שהמתח יירגע.','לשים את הדברים על השולחן כדי להחזיר לעצמי השפעה.'],
-    [1,9,'הדרך הפשוטה תסיים ויכוח, אבל אינה נראית לי נכונה. מה גובר אצלי?','הצורך לפעול לפי מה שאני מאמין שראוי.','הרצון להניח לוויכוח ולחזור לשקט.' ]
-  ];
-  contrastItems.forEach(([a,b,text,left,right],i)=>questions.push({id:`c${i+1}`,kind:'contrast',pair:[a,b],text,options:[left,right]}));
+  // Two original motive checks per type, equal weight, appended to preserve old answers.
+  const motiveItems = {
+    1: [
+      'גם כשכולם מרוצים ממני, קשה לי להירגע אם פעלתי בניגוד לעיקרון שלי.',
+      'כשאני מתלבט אם להעיר על טעות, תחושת החובה לתקן גוברת אצלי על הרצון להימנע מחיכוך.'
+    ],
+    2: [
+      'כשאדם קרוב מסתדר בלי העזרה שלי, אני חושש לפעמים שהמקום שלי בחייו יקטן.',
+      'אני נוטה להיענות לבקשה גם כשאין לי כוח, כדי לשמור על תחושת הקרבה לאדם שמבקש.'
+    ],
+    3: [
+      'כשלא מבחינים בהישגים שלי, אני מרגיש דחף להוכיח מחדש את הערך שלי.',
+      'כדי להצליח בסביבה חדשה, אני עשוי להציג גרסה של עצמי שמתאימה לציפיות שלה.'
+    ],
+    4: [
+      'כשלא מבינים רגש שאני משתף, מה שמכאיב לי הוא התחושה שלא רואים מי אני באמת.',
+      'קשה לי לבחור בדרך שכולם בוחרים בה אם היא גורמת לי להרגיש שאני מאבד את הייחוד שלי.'
+    ],
+    5: [
+      'כשמצפים ממני למעורבות רבה, אני מצמצם את הנוכחות שלי מחשש שלא יישארו לי כוחות להתמודד.',
+      'מול משימה לא מוכרת, אני מחפש קודם הבנה שתאפשר לי להסתדר בלי להיות תלוי באחרים.'
+    ],
+    6: [
+      'גם כשאני מבין את העובדות, קשה לי להתקדם בלי לברר על מי או על מה אפשר לסמוך.',
+      'כשמבטיחים לי שהכול יסתדר, אני עדיין מרגיש צורך לבדוק אם יש סיבה להיזהר.'
+    ],
+    7: [
+      'כשאני מרגיש תקוע, עצם התכנון של אפשרות חדשה עוזר לי להתרחק מהתחושה הקשה.',
+      'אני מתקשה לבחור מסלול אחד כשהבחירה סוגרת בפניי חוויות אחרות שמושכות אותי.'
+    ],
+    8: [
+      'אני מוכן לשאת אי נעימות ממושכת כדי שלא יכפו עליי החלטה שנוגעת לחיי.',
+      'כשאני זקוק לעזרה, קשה לי לחשוף את הצורך כי אני לא רוצה לתת למישהו כוח עליי.'
+    ],
+    9: [
+      'אני נוטה להניח בצד העדפה אישית כדי לשמור על האווירה הטובה עם אנשים שחשובים לי.',
+      'כשבעיה עלולה להוביל לעימות, אני מוצא את עצמי דוחה אותה כדי לשמור בינתיים על השקט.'
+    ]
+  };
+  for(let round=0;round<2;round++) for(let step=0;step<9;step++) {
+    const type=((step*4+round*2)%9)+1;
+    questions.push({id:`t${type}-${round+7}`,scale:String(type),reverse:false,facet:'motive',text:motiveItems[type][round]});
+  }
   const scaleKeys = [...Object.keys(types),...Object.keys(instincts)];
   function rank(scores, keys) { return keys.map(key=>({key,score:scores[key]})).sort((a,b)=>b.score-a.score); }
   function getWing(type, scores, primaryClear=true) {
@@ -201,53 +221,37 @@
     if (!Array.isArray(answers) || answers.length!==questions.length || Array.from(answers).some(v=>!Number.isInteger(v)||v<1||v>5)) {
       throw new Error(`Expected ${questions.length} integer answers between 1 and 5`);
     }
-    const totals=Object.fromEntries(scaleKeys.map(k=>[k,0])),counts={...totals};
-    const pairGroups={};
-    questions.forEach((q,i)=>{
-      if(q.kind==='contrast'){
-        const [a,b]=q.pair,key=[a,b].sort((x,y)=>x-y).join('-');
-        const group=pairGroups[key]||(pairGroups[key]={types:[Math.min(a,b),Math.max(a,b)],votes:[]});
-        const firstScore=a===group.types[0]?(5-answers[i])*25:(answers[i]-1)*25;
-        group.votes.push(firstScore);return;
-      }
-      totals[q.scale]+=q.reverse?6-answers[i]:answers[i];counts[q.scale]++;
-    });
+    const totals=Object.fromEntries(scaleKeys.map(k=>[k,0]));
+    const counts={...totals},motiveTotals=Object.fromEntries(Object.keys(types).map(k=>[k,0]));
+    questions.forEach((q,i)=>{const value=q.reverse?6-answers[i]:answers[i];totals[q.scale]+=value;counts[q.scale]++;if(q.facet==='motive')motiveTotals[q.scale]+=value;});
     const scores=Object.fromEntries(scaleKeys.map(k=>[k,(totals[k]/counts[k]-1)*25]));
-    const comparisons=Object.values(pairGroups).map(({types,votes})=>{
-      const mean=votes.reduce((a,b)=>a+b,0)/votes.length;
-      const dominant=mean>=PAIR_MIN&&votes.every(v=>v>50)?types[0]:mean<=100-PAIR_MIN&&votes.every(v=>v<50)?types[1]:null;
-      return {types,scores:{[types[0]]:mean,[types[1]]:100-mean},dominant};
-    });
-    const beats=(a,b)=>comparisons.some(p=>p.types.includes(a)&&p.types.includes(b)&&p.dominant===a);
-    const choose=current=>{
-      const ranked=rank(current,Object.keys(types)),leader=Number(ranked[0].key);
-      const pool=ranked.filter(t=>t.score>=50&&ranked[0].score-t.score<=CORE_WINDOW).map(t=>Number(t.key));
-      const supported=pool.filter(n=>{
-        const adjacent=[n===1?9:n-1,n===9?1:n+1];
-        if(adjacent.some(other=>beats(other,n)))return false;
-        return pool.every(other=>other===n||(adjacent.includes(other)?beats(n,other):current[n]-current[other]>=TYPE_GAP));
-      });
-      return {selected:supported.length===1?supported[0]:null,pool};
-    };
-    const typeRanking=rank(scores,Object.keys(types)),instinctRanking=rank(scores,Object.keys(instincts));
-    const gap=typeRanking[0].score-typeRanking[1].score,uniform=answers.every(v=>v===answers[0]);
-    const choice=choose(scores),candidates=[...choice.pool];
-    let stable=!!choice.selected;
-    // Omit each of the original type items; comparison evidence remains fixed.
-    if(choice.selected)for(const [i,q] of questions.entries()){
-      if(q.kind==='contrast'||!types[q.scale])continue;
+    const typeRanking=rank(scores,Object.keys(types));
+    const instinctRanking=rank(scores,Object.keys(instincts));
+    const gap=typeRanking[0].score-typeRanking[1].score;
+    const uniform=answers.every(v=>v===answers[0]);
+    const motiveScores=Object.fromEntries(Object.keys(types).map(k=>[k,(motiveTotals[k]/2-1)*25]));
+    const leader=typeRanking[0].key;
+    const conflicting=Object.keys(types).filter(k=>k!==leader&&motiveScores[k]>=CORE_MIN&&motiveScores[k]-motiveScores[leader]>=MOTIVE_CONFLICT_GAP);
+    // Sensitivity check, not a confidence interval: omit each type item in turn.
+    const unstableCandidates=new Set();
+    for(const [i,q] of questions.entries()) {
+      if(!types[q.scale])continue;
       const value=q.reverse?6-answers[i]:answers[i];
-      const changed={...scores,[q.scale]:((totals[q.scale]-value)/(counts[q.scale]-1)-1)*25};
-      if(choose(changed).selected!==choice.selected)stable=false;
+      const omittedScore=((totals[q.scale]-value)/(counts[q.scale]-1)-1)*25;
+      const changed={...scores,[q.scale]:omittedScore};
+      for(const key of Object.keys(types)) if(key!==leader&&changed[key]>=changed[leader]-1e-9)unstableCandidates.add(Number(key));
     }
+    const stable=unstableCandidates.size===0;
     const primaryStatus=uniform?'undifferentiated':typeRanking[0].score<50?'weak':
-      !choice.selected?(gap<TYPE_GAP?'close':'mixed'):!stable?'unstable':'suggested';
-    const primary=primaryStatus==='suggested'?choice.selected:null;
+      gap<TYPE_GAP?'close':motiveScores[leader]<CORE_MIN||conflicting.length?'mixed':!stable?'unstable':'suggested';
+    const primary=primaryStatus==='suggested'?Number(leader):null;
+    const candidates=[...new Set([...typeRanking.filter(t=>typeRanking[0].score-t.score<TYPE_GAP).map(t=>Number(t.key)),
+      ...(!primary?conflicting.map(Number):[]),...(!primary?[...unstableCandidates]:[])])];
     const instinctGap=instinctRanking[0].score-instinctRanking[1].score;
     const instinctStatus=uniform?'undifferentiated':instinctRanking[0].score<50?'weak':instinctGap<INSTINCT_GAP?'close':'suggested';
     const dominantInstinct=instinctStatus==='suggested'?instinctRanking[0].key:null;
     const stackClear=!!dominantInstinct && instinctRanking[1].score-instinctRanking[2].score>=INSTINCT_GAP;
-    return {version:VERSION,scores,comparisons,stable,typeRanking,instinctRanking,gap,primaryStatus,primary,candidates,
+    return {version:VERSION,scores,motiveScores,stable,typeRanking,instinctRanking,gap,primaryStatus,primary,candidates,
       wing:primary?getWing(primary,scores):null,instinctStatus,dominantInstinct,stackClear,uniform};
   }
   function validState(value) {
@@ -266,7 +270,7 @@
     migrated.index=value.screen==='results'?75:value.index;
     return validState(migrated)?migrated:null;
   }
-  const api={VERSION,CORE_WINDOW,PAIR_MIN,WING_MIN,WING_RATIO,TYPE_GAP,WING_GAP,INSTINCT_GAP,questions,types,instincts,wingNotes,score,getWing,validState,migrateState};
+  const api={VERSION,CORE_MIN,MOTIVE_CONFLICT_GAP,WING_MIN,WING_RATIO,TYPE_GAP,WING_GAP,INSTINCT_GAP,questions,types,instincts,wingNotes,score,getWing,validState,migrateState};
   if(typeof module!=='undefined'&&module.exports) module.exports=api;
   else root.Enneagram=api;
 })(typeof globalThis!=='undefined'?globalThis:this);

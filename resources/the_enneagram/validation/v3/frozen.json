@@ -1,0 +1,7 @@
+{
+  "engineSHA256": "db71ba2e88ccfcf98c65c766325a26bc8cef4139fddbdcab09a1a255f5f5e073",
+  "questionnaireSHA256": "372152b041e4bf6d3af8994a79fc0cc2606a87a3f864695ef9c766fc687ddf51",
+  "model": "gpt-5.6-luna",
+  "reasoning": "high",
+  "note": "Final candidate-focused rules frozen before independent holdout responses; pilot development data and intermediate rules retained."
+}

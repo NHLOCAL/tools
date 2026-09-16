@@ -1,0 +1,1924 @@
+{
+  "note": "Exploratory first revision, before changing rating items to motive comparisons. Abstentions are not matches.",
+  "rows": [
+    {
+      "id": "P01",
+      "expected": {
+        "primary": 5,
+        "wing": 4,
+        "dominantInstinct": "sp"
+      },
+      "result": {
+        "version": "3.0.0",
+        "scores": {
+          "1": 53.125,
+          "2": 25,
+          "3": 25,
+          "4": 75,
+          "5": 100,
+          "6": 53.125,
+          "7": 28.125,
+          "8": 50,
+          "9": 50,
+          "sp": 100,
+          "so": 25,
+          "sx": 39.28571428571429
+        },
+        "motiveScores": {
+          "1": 50,
+          "2": 25,
+          "3": 25,
+          "4": 75,
+          "5": 100,
+          "6": 50,
+          "7": 25,
+          "8": 62.5,
+          "9": 50
+        },
+        "stable": true,
+        "typeRanking": [
+          {
+            "key": "5",
+            "score": 100
+          },
+          {
+            "key": "4",
+            "score": 75
+          },
+          {
+            "key": "1",
+            "score": 53.125
+          },
+          {
+            "key": "6",
+            "score": 53.125
+          },
+          {
+            "key": "8",
+            "score": 50
+          },
+          {
+            "key": "9",
+            "score": 50
+          },
+          {
+            "key": "7",
+            "score": 28.125
+          },
+          {
+            "key": "2",
+            "score": 25
+          },
+          {
+            "key": "3",
+            "score": 25
+          }
+        ],
+        "instinctRanking": [
+          {
+            "key": "sp",
+            "score": 100
+          },
+          {
+            "key": "sx",
+            "score": 39.28571428571429
+          },
+          {
+            "key": "so",
+            "score": 25
+          }
+        ],
+        "gap": 25,
+        "primaryStatus": "suggested",
+        "primary": 5,
+        "candidates": [
+          5
+        ],
+        "wing": {
+          "adjacent": [
+            4,
+            6
+          ],
+          "ranked": [
+            {
+              "key": "4",
+              "score": 75
+            },
+            {
+              "key": "6",
+              "score": 53.125
+            }
+          ],
+          "gap": 21.875,
+          "threshold": 75,
+          "eligible": [
+            4
+          ],
+          "status": "suggested",
+          "dominant": 4
+        },
+        "instinctStatus": "suggested",
+        "dominantInstinct": "sp",
+        "stackClear": true,
+        "uniform": false
+      }
+    },
+    {
+      "id": "P02",
+      "expected": {
+        "primary": 5,
+        "wing": 6,
+        "dominantInstinct": "sp"
+      },
+      "result": {
+        "version": "3.0.0",
+        "scores": {
+          "1": 53.125,
+          "2": 25,
+          "3": 25,
+          "4": 53.125,
+          "5": 100,
+          "6": 100,
+          "7": 28.125,
+          "8": 53.125,
+          "9": 50,
+          "sp": 100,
+          "so": 28.57142857142857,
+          "sx": 32.14285714285714
+        },
+        "motiveScores": {
+          "1": 50,
+          "2": 25,
+          "3": 25,
+          "4": 50,
+          "5": 100,
+          "6": 100,
+          "7": 25,
+          "8": 75,
+          "9": 50
+        },
+        "stable": false,
+        "typeRanking": [
+          {
+            "key": "5",
+            "score": 100
+          },
+          {
+            "key": "6",
+            "score": 100
+          },
+          {
+            "key": "1",
+            "score": 53.125
+          },
+          {
+            "key": "4",
+            "score": 53.125
+          },
+          {
+            "key": "8",
+            "score": 53.125
+          },
+          {
+            "key": "9",
+            "score": 50
+          },
+          {
+            "key": "7",
+            "score": 28.125
+          },
+          {
+            "key": "2",
+            "score": 25
+          },
+          {
+            "key": "3",
+            "score": 25
+          }
+        ],
+        "instinctRanking": [
+          {
+            "key": "sp",
+            "score": 100
+          },
+          {
+            "key": "sx",
+            "score": 32.14285714285714
+          },
+          {
+            "key": "so",
+            "score": 28.57142857142857
+          }
+        ],
+        "gap": 0,
+        "primaryStatus": "close",
+        "primary": null,
+        "candidates": [
+          5,
+          6
+        ],
+        "wing": null,
+        "instinctStatus": "suggested",
+        "dominantInstinct": "sp",
+        "stackClear": false,
+        "uniform": false
+      }
+    },
+    {
+      "id": "P03",
+      "expected": {
+        "primary": 2,
+        "wing": 1,
+        "dominantInstinct": "so"
+      },
+      "result": {
+        "version": "3.0.0",
+        "scores": {
+          "1": 93.75,
+          "2": 100,
+          "3": 40.625,
+          "4": 43.75,
+          "5": 40.625,
+          "6": 65.625,
+          "7": 31.25,
+          "8": 46.875,
+          "9": 75,
+          "sp": 50,
+          "so": 96.42857142857142,
+          "sx": 35.71428571428571
+        },
+        "motiveScores": {
+          "1": 100,
+          "2": 100,
+          "3": 37.5,
+          "4": 50,
+          "5": 37.5,
+          "6": 75,
+          "7": 25,
+          "8": 25,
+          "9": 87.5
+        },
+        "stable": true,
+        "typeRanking": [
+          {
+            "key": "2",
+            "score": 100
+          },
+          {
+            "key": "1",
+            "score": 93.75
+          },
+          {
+            "key": "9",
+            "score": 75
+          },
+          {
+            "key": "6",
+            "score": 65.625
+          },
+          {
+            "key": "8",
+            "score": 46.875
+          },
+          {
+            "key": "4",
+            "score": 43.75
+          },
+          {
+            "key": "3",
+            "score": 40.625
+          },
+          {
+            "key": "5",
+            "score": 40.625
+          },
+          {
+            "key": "7",
+            "score": 31.25
+          }
+        ],
+        "instinctRanking": [
+          {
+            "key": "so",
+            "score": 96.42857142857142
+          },
+          {
+            "key": "sp",
+            "score": 50
+          },
+          {
+            "key": "sx",
+            "score": 35.71428571428571
+          }
+        ],
+        "gap": 6.25,
+        "primaryStatus": "close",
+        "primary": null,
+        "candidates": [
+          2,
+          1
+        ],
+        "wing": null,
+        "instinctStatus": "suggested",
+        "dominantInstinct": "so",
+        "stackClear": true,
+        "uniform": false
+      }
+    },
+    {
+      "id": "P04",
+      "expected": {
+        "primary": 2,
+        "wing": 3,
+        "dominantInstinct": "so"
+      },
+      "result": {
+        "version": "3.0.0",
+        "scores": {
+          "1": 65.625,
+          "2": 96.875,
+          "3": 93.75,
+          "4": 31.25,
+          "5": 25,
+          "6": 53.125,
+          "7": 59.375,
+          "8": 46.875,
+          "9": 53.125,
+          "sp": 50,
+          "so": 100,
+          "sx": 50
+        },
+        "motiveScores": {
+          "1": 62.5,
+          "2": 100,
+          "3": 100,
+          "4": 37.5,
+          "5": 25,
+          "6": 50,
+          "7": 50,
+          "8": 25,
+          "9": 75
+        },
+        "stable": true,
+        "typeRanking": [
+          {
+            "key": "2",
+            "score": 96.875
+          },
+          {
+            "key": "3",
+            "score": 93.75
+          },
+          {
+            "key": "1",
+            "score": 65.625
+          },
+          {
+            "key": "7",
+            "score": 59.375
+          },
+          {
+            "key": "6",
+            "score": 53.125
+          },
+          {
+            "key": "9",
+            "score": 53.125
+          },
+          {
+            "key": "8",
+            "score": 46.875
+          },
+          {
+            "key": "4",
+            "score": 31.25
+          },
+          {
+            "key": "5",
+            "score": 25
+          }
+        ],
+        "instinctRanking": [
+          {
+            "key": "so",
+            "score": 100
+          },
+          {
+            "key": "sp",
+            "score": 50
+          },
+          {
+            "key": "sx",
+            "score": 50
+          }
+        ],
+        "gap": 3.125,
+        "primaryStatus": "close",
+        "primary": null,
+        "candidates": [
+          2,
+          3
+        ],
+        "wing": null,
+        "instinctStatus": "suggested",
+        "dominantInstinct": "so",
+        "stackClear": false,
+        "uniform": false
+      }
+    },
+    {
+      "id": "P05",
+      "expected": {
+        "primary": 8,
+        "wing": 7,
+        "dominantInstinct": "sx"
+      },
+      "result": {
+        "version": "3.0.0",
+        "scores": {
+          "1": 46.875,
+          "2": 31.25,
+          "3": 53.125,
+          "4": 46.875,
+          "5": 37.5,
+          "6": 53.125,
+          "7": 96.875,
+          "8": 78.125,
+          "9": 9.375,
+          "sp": 35.71428571428571,
+          "so": 39.28571428571429,
+          "sx": 100
+        },
+        "motiveScores": {
+          "1": 37.5,
+          "2": 25,
+          "3": 50,
+          "4": 50,
+          "5": 37.5,
+          "6": 50,
+          "7": 100,
+          "8": 100,
+          "9": 0
+        },
+        "stable": true,
+        "typeRanking": [
+          {
+            "key": "7",
+            "score": 96.875
+          },
+          {
+            "key": "8",
+            "score": 78.125
+          },
+          {
+            "key": "3",
+            "score": 53.125
+          },
+          {
+            "key": "6",
+            "score": 53.125
+          },
+          {
+            "key": "1",
+            "score": 46.875
+          },
+          {
+            "key": "4",
+            "score": 46.875
+          },
+          {
+            "key": "5",
+            "score": 37.5
+          },
+          {
+            "key": "2",
+            "score": 31.25
+          },
+          {
+            "key": "9",
+            "score": 9.375
+          }
+        ],
+        "instinctRanking": [
+          {
+            "key": "sx",
+            "score": 100
+          },
+          {
+            "key": "so",
+            "score": 39.28571428571429
+          },
+          {
+            "key": "sp",
+            "score": 35.71428571428571
+          }
+        ],
+        "gap": 18.75,
+        "primaryStatus": "suggested",
+        "primary": 7,
+        "candidates": [
+          7
+        ],
+        "wing": {
+          "adjacent": [
+            6,
+            8
+          ],
+          "ranked": [
+            {
+              "key": "8",
+              "score": 78.125
+            },
+            {
+              "key": "6",
+              "score": 53.125
+            }
+          ],
+          "gap": 25,
+          "threshold": 72.65625,
+          "eligible": [
+            8
+          ],
+          "status": "suggested",
+          "dominant": 8
+        },
+        "instinctStatus": "suggested",
+        "dominantInstinct": "sx",
+        "stackClear": false,
+        "uniform": false
+      }
+    },
+    {
+      "id": "P06",
+      "expected": {
+        "primary": 8,
+        "wing": 9,
+        "dominantInstinct": "sx"
+      },
+      "result": {
+        "version": "3.0.0",
+        "scores": {
+          "1": 43.75,
+          "2": 40.625,
+          "3": 31.25,
+          "4": 31.25,
+          "5": 40.625,
+          "6": 53.125,
+          "7": 53.125,
+          "8": 87.5,
+          "9": 56.25,
+          "sp": 42.85714285714286,
+          "so": 39.28571428571429,
+          "sx": 75
+        },
+        "motiveScores": {
+          "1": 37.5,
+          "2": 37.5,
+          "3": 25,
+          "4": 25,
+          "5": 50,
+          "6": 50,
+          "7": 62.5,
+          "8": 100,
+          "9": 62.5
+        },
+        "stable": true,
+        "typeRanking": [
+          {
+            "key": "8",
+            "score": 87.5
+          },
+          {
+            "key": "9",
+            "score": 56.25
+          },
+          {
+            "key": "6",
+            "score": 53.125
+          },
+          {
+            "key": "7",
+            "score": 53.125
+          },
+          {
+            "key": "1",
+            "score": 43.75
+          },
+          {
+            "key": "2",
+            "score": 40.625
+          },
+          {
+            "key": "5",
+            "score": 40.625
+          },
+          {
+            "key": "3",
+            "score": 31.25
+          },
+          {
+            "key": "4",
+            "score": 31.25
+          }
+        ],
+        "instinctRanking": [
+          {
+            "key": "sx",
+            "score": 75
+          },
+          {
+            "key": "sp",
+            "score": 42.85714285714286
+          },
+          {
+            "key": "so",
+            "score": 39.28571428571429
+          }
+        ],
+        "gap": 31.25,
+        "primaryStatus": "suggested",
+        "primary": 8,
+        "candidates": [
+          8
+        ],
+        "wing": {
+          "adjacent": [
+            7,
+            9
+          ],
+          "ranked": [
+            {
+              "key": "9",
+              "score": 56.25
+            },
+            {
+              "key": "7",
+              "score": 53.125
+            }
+          ],
+          "gap": 3.125,
+          "threshold": 65.625,
+          "eligible": [],
+          "status": "weak",
+          "dominant": null
+        },
+        "instinctStatus": "suggested",
+        "dominantInstinct": "sx",
+        "stackClear": false,
+        "uniform": false
+      }
+    },
+    {
+      "id": "P07",
+      "expected": {
+        "primary": 1,
+        "wing": 9,
+        "dominantInstinct": "sp"
+      },
+      "result": {
+        "version": "3.0.0",
+        "scores": {
+          "1": 100,
+          "2": 34.375,
+          "3": 50,
+          "4": 53.125,
+          "5": 78.125,
+          "6": 68.75,
+          "7": 25,
+          "8": 46.875,
+          "9": 90.625,
+          "sp": 100,
+          "so": 53.57142857142857,
+          "sx": 14.285714285714285
+        },
+        "motiveScores": {
+          "1": 100,
+          "2": 25,
+          "3": 37.5,
+          "4": 62.5,
+          "5": 75,
+          "6": 75,
+          "7": 25,
+          "8": 50,
+          "9": 100
+        },
+        "stable": true,
+        "typeRanking": [
+          {
+            "key": "1",
+            "score": 100
+          },
+          {
+            "key": "9",
+            "score": 90.625
+          },
+          {
+            "key": "5",
+            "score": 78.125
+          },
+          {
+            "key": "6",
+            "score": 68.75
+          },
+          {
+            "key": "4",
+            "score": 53.125
+          },
+          {
+            "key": "3",
+            "score": 50
+          },
+          {
+            "key": "8",
+            "score": 46.875
+          },
+          {
+            "key": "2",
+            "score": 34.375
+          },
+          {
+            "key": "7",
+            "score": 25
+          }
+        ],
+        "instinctRanking": [
+          {
+            "key": "sp",
+            "score": 100
+          },
+          {
+            "key": "so",
+            "score": 53.57142857142857
+          },
+          {
+            "key": "sx",
+            "score": 14.285714285714285
+          }
+        ],
+        "gap": 9.375,
+        "primaryStatus": "suggested",
+        "primary": 1,
+        "candidates": [
+          1
+        ],
+        "wing": {
+          "adjacent": [
+            9,
+            2
+          ],
+          "ranked": [
+            {
+              "key": "9",
+              "score": 90.625
+            },
+            {
+              "key": "2",
+              "score": 34.375
+            }
+          ],
+          "gap": 56.25,
+          "threshold": 75,
+          "eligible": [
+            9
+          ],
+          "status": "suggested",
+          "dominant": 9
+        },
+        "instinctStatus": "suggested",
+        "dominantInstinct": "sp",
+        "stackClear": true,
+        "uniform": false
+      }
+    },
+    {
+      "id": "P08",
+      "expected": {
+        "primary": 1,
+        "wing": 2,
+        "dominantInstinct": "sp"
+      },
+      "result": {
+        "version": "3.0.0",
+        "scores": {
+          "1": 96.875,
+          "2": 96.875,
+          "3": 56.25,
+          "4": 53.125,
+          "5": 59.375,
+          "6": 65.625,
+          "7": 28.125,
+          "8": 43.75,
+          "9": 62.5,
+          "sp": 100,
+          "so": 57.14285714285714,
+          "sx": 32.14285714285714
+        },
+        "motiveScores": {
+          "1": 100,
+          "2": 100,
+          "3": 62.5,
+          "4": 62.5,
+          "5": 62.5,
+          "6": 75,
+          "7": 25,
+          "8": 37.5,
+          "9": 62.5
+        },
+        "stable": false,
+        "typeRanking": [
+          {
+            "key": "1",
+            "score": 96.875
+          },
+          {
+            "key": "2",
+            "score": 96.875
+          },
+          {
+            "key": "6",
+            "score": 65.625
+          },
+          {
+            "key": "9",
+            "score": 62.5
+          },
+          {
+            "key": "5",
+            "score": 59.375
+          },
+          {
+            "key": "3",
+            "score": 56.25
+          },
+          {
+            "key": "4",
+            "score": 53.125
+          },
+          {
+            "key": "8",
+            "score": 43.75
+          },
+          {
+            "key": "7",
+            "score": 28.125
+          }
+        ],
+        "instinctRanking": [
+          {
+            "key": "sp",
+            "score": 100
+          },
+          {
+            "key": "so",
+            "score": 57.14285714285714
+          },
+          {
+            "key": "sx",
+            "score": 32.14285714285714
+          }
+        ],
+        "gap": 0,
+        "primaryStatus": "close",
+        "primary": null,
+        "candidates": [
+          1,
+          2
+        ],
+        "wing": null,
+        "instinctStatus": "suggested",
+        "dominantInstinct": "sp",
+        "stackClear": true,
+        "uniform": false
+      }
+    },
+    {
+      "id": "P09",
+      "expected": {
+        "primary": 6,
+        "wing": 5,
+        "dominantInstinct": "so"
+      },
+      "result": {
+        "version": "3.0.0",
+        "scores": {
+          "1": 56.25,
+          "2": 37.5,
+          "3": 34.375,
+          "4": 43.75,
+          "5": 93.75,
+          "6": 100,
+          "7": 31.25,
+          "8": 75,
+          "9": 53.125,
+          "sp": 75,
+          "so": 96.42857142857142,
+          "sx": 32.14285714285714
+        },
+        "motiveScores": {
+          "1": 50,
+          "2": 50,
+          "3": 25,
+          "4": 62.5,
+          "5": 100,
+          "6": 100,
+          "7": 37.5,
+          "8": 87.5,
+          "9": 37.5
+        },
+        "stable": true,
+        "typeRanking": [
+          {
+            "key": "6",
+            "score": 100
+          },
+          {
+            "key": "5",
+            "score": 93.75
+          },
+          {
+            "key": "8",
+            "score": 75
+          },
+          {
+            "key": "1",
+            "score": 56.25
+          },
+          {
+            "key": "9",
+            "score": 53.125
+          },
+          {
+            "key": "4",
+            "score": 43.75
+          },
+          {
+            "key": "2",
+            "score": 37.5
+          },
+          {
+            "key": "3",
+            "score": 34.375
+          },
+          {
+            "key": "7",
+            "score": 31.25
+          }
+        ],
+        "instinctRanking": [
+          {
+            "key": "so",
+            "score": 96.42857142857142
+          },
+          {
+            "key": "sp",
+            "score": 75
+          },
+          {
+            "key": "sx",
+            "score": 32.14285714285714
+          }
+        ],
+        "gap": 6.25,
+        "primaryStatus": "close",
+        "primary": null,
+        "candidates": [
+          6,
+          5
+        ],
+        "wing": null,
+        "instinctStatus": "suggested",
+        "dominantInstinct": "so",
+        "stackClear": true,
+        "uniform": false
+      }
+    },
+    {
+      "id": "P10",
+      "expected": {
+        "primary": 6,
+        "wing": 7,
+        "dominantInstinct": "so"
+      },
+      "result": {
+        "version": "3.0.0",
+        "scores": {
+          "1": 53.125,
+          "2": 40.625,
+          "3": 50,
+          "4": 28.125,
+          "5": 43.75,
+          "6": 96.875,
+          "7": 100,
+          "8": 71.875,
+          "9": 53.125,
+          "sp": 71.42857142857143,
+          "so": 100,
+          "sx": 67.85714285714286
+        },
+        "motiveScores": {
+          "1": 50,
+          "2": 50,
+          "3": 50,
+          "4": 25,
+          "5": 50,
+          "6": 100,
+          "7": 100,
+          "8": 75,
+          "9": 50
+        },
+        "stable": false,
+        "typeRanking": [
+          {
+            "key": "7",
+            "score": 100
+          },
+          {
+            "key": "6",
+            "score": 96.875
+          },
+          {
+            "key": "8",
+            "score": 71.875
+          },
+          {
+            "key": "1",
+            "score": 53.125
+          },
+          {
+            "key": "9",
+            "score": 53.125
+          },
+          {
+            "key": "3",
+            "score": 50
+          },
+          {
+            "key": "5",
+            "score": 43.75
+          },
+          {
+            "key": "2",
+            "score": 40.625
+          },
+          {
+            "key": "4",
+            "score": 28.125
+          }
+        ],
+        "instinctRanking": [
+          {
+            "key": "so",
+            "score": 100
+          },
+          {
+            "key": "sp",
+            "score": 71.42857142857143
+          },
+          {
+            "key": "sx",
+            "score": 67.85714285714286
+          }
+        ],
+        "gap": 3.125,
+        "primaryStatus": "close",
+        "primary": null,
+        "candidates": [
+          7,
+          6
+        ],
+        "wing": null,
+        "instinctStatus": "suggested",
+        "dominantInstinct": "so",
+        "stackClear": false,
+        "uniform": false
+      }
+    },
+    {
+      "id": "P11",
+      "expected": {
+        "primary": 3,
+        "wing": 2,
+        "dominantInstinct": "sx"
+      },
+      "result": {
+        "version": "3.0.0",
+        "scores": {
+          "1": 46.875,
+          "2": 93.75,
+          "3": 100,
+          "4": 40.625,
+          "5": 28.125,
+          "6": 50,
+          "7": 71.875,
+          "8": 62.5,
+          "9": 40.625,
+          "sp": 50,
+          "so": 35.71428571428571,
+          "sx": 96.42857142857142
+        },
+        "motiveScores": {
+          "1": 37.5,
+          "2": 87.5,
+          "3": 100,
+          "4": 50,
+          "5": 25,
+          "6": 50,
+          "7": 62.5,
+          "8": 50,
+          "9": 37.5
+        },
+        "stable": true,
+        "typeRanking": [
+          {
+            "key": "3",
+            "score": 100
+          },
+          {
+            "key": "2",
+            "score": 93.75
+          },
+          {
+            "key": "7",
+            "score": 71.875
+          },
+          {
+            "key": "8",
+            "score": 62.5
+          },
+          {
+            "key": "6",
+            "score": 50
+          },
+          {
+            "key": "1",
+            "score": 46.875
+          },
+          {
+            "key": "4",
+            "score": 40.625
+          },
+          {
+            "key": "9",
+            "score": 40.625
+          },
+          {
+            "key": "5",
+            "score": 28.125
+          }
+        ],
+        "instinctRanking": [
+          {
+            "key": "sx",
+            "score": 96.42857142857142
+          },
+          {
+            "key": "sp",
+            "score": 50
+          },
+          {
+            "key": "so",
+            "score": 35.71428571428571
+          }
+        ],
+        "gap": 6.25,
+        "primaryStatus": "close",
+        "primary": null,
+        "candidates": [
+          3,
+          2
+        ],
+        "wing": null,
+        "instinctStatus": "suggested",
+        "dominantInstinct": "sx",
+        "stackClear": true,
+        "uniform": false
+      }
+    },
+    {
+      "id": "P12",
+      "expected": {
+        "primary": 3,
+        "wing": 4,
+        "dominantInstinct": "sx"
+      },
+      "result": {
+        "version": "3.0.0",
+        "scores": {
+          "1": 50,
+          "2": 56.25,
+          "3": 93.75,
+          "4": 100,
+          "5": 40.625,
+          "6": 31.25,
+          "7": 62.5,
+          "8": 56.25,
+          "9": 25,
+          "sp": 50,
+          "so": 25,
+          "sx": 100
+        },
+        "motiveScores": {
+          "1": 50,
+          "2": 50,
+          "3": 87.5,
+          "4": 100,
+          "5": 25,
+          "6": 25,
+          "7": 87.5,
+          "8": 62.5,
+          "9": 25
+        },
+        "stable": true,
+        "typeRanking": [
+          {
+            "key": "4",
+            "score": 100
+          },
+          {
+            "key": "3",
+            "score": 93.75
+          },
+          {
+            "key": "7",
+            "score": 62.5
+          },
+          {
+            "key": "2",
+            "score": 56.25
+          },
+          {
+            "key": "8",
+            "score": 56.25
+          },
+          {
+            "key": "1",
+            "score": 50
+          },
+          {
+            "key": "5",
+            "score": 40.625
+          },
+          {
+            "key": "6",
+            "score": 31.25
+          },
+          {
+            "key": "9",
+            "score": 25
+          }
+        ],
+        "instinctRanking": [
+          {
+            "key": "sx",
+            "score": 100
+          },
+          {
+            "key": "sp",
+            "score": 50
+          },
+          {
+            "key": "so",
+            "score": 25
+          }
+        ],
+        "gap": 6.25,
+        "primaryStatus": "close",
+        "primary": null,
+        "candidates": [
+          4,
+          3
+        ],
+        "wing": null,
+        "instinctStatus": "suggested",
+        "dominantInstinct": "sx",
+        "stackClear": true,
+        "uniform": false
+      }
+    },
+    {
+      "id": "P13",
+      "expected": {
+        "primary": 9,
+        "wing": 8,
+        "dominantInstinct": "sp"
+      },
+      "result": {
+        "version": "3.0.0",
+        "scores": {
+          "1": 71.875,
+          "2": 62.5,
+          "3": 31.25,
+          "4": 25,
+          "5": 68.75,
+          "6": 53.125,
+          "7": 25,
+          "8": 87.5,
+          "9": 93.75,
+          "sp": 100,
+          "so": 32.14285714285714,
+          "sx": 7.142857142857145
+        },
+        "motiveScores": {
+          "1": 62.5,
+          "2": 62.5,
+          "3": 50,
+          "4": 25,
+          "5": 75,
+          "6": 50,
+          "7": 25,
+          "8": 87.5,
+          "9": 100
+        },
+        "stable": true,
+        "typeRanking": [
+          {
+            "key": "9",
+            "score": 93.75
+          },
+          {
+            "key": "8",
+            "score": 87.5
+          },
+          {
+            "key": "1",
+            "score": 71.875
+          },
+          {
+            "key": "5",
+            "score": 68.75
+          },
+          {
+            "key": "2",
+            "score": 62.5
+          },
+          {
+            "key": "6",
+            "score": 53.125
+          },
+          {
+            "key": "3",
+            "score": 31.25
+          },
+          {
+            "key": "4",
+            "score": 25
+          },
+          {
+            "key": "7",
+            "score": 25
+          }
+        ],
+        "instinctRanking": [
+          {
+            "key": "sp",
+            "score": 100
+          },
+          {
+            "key": "so",
+            "score": 32.14285714285714
+          },
+          {
+            "key": "sx",
+            "score": 7.142857142857145
+          }
+        ],
+        "gap": 6.25,
+        "primaryStatus": "close",
+        "primary": null,
+        "candidates": [
+          9,
+          8
+        ],
+        "wing": null,
+        "instinctStatus": "suggested",
+        "dominantInstinct": "sp",
+        "stackClear": true,
+        "uniform": false
+      }
+    },
+    {
+      "id": "P14",
+      "expected": {
+        "primary": 9,
+        "wing": 1,
+        "dominantInstinct": "sp"
+      },
+      "result": {
+        "version": "3.0.0",
+        "scores": {
+          "1": 100,
+          "2": 62.5,
+          "3": 25,
+          "4": 25,
+          "5": 68.75,
+          "6": 53.125,
+          "7": 25,
+          "8": 65.625,
+          "9": 93.75,
+          "sp": 100,
+          "so": 32.14285714285714,
+          "sx": 7.142857142857145
+        },
+        "motiveScores": {
+          "1": 100,
+          "2": 62.5,
+          "3": 25,
+          "4": 25,
+          "5": 75,
+          "6": 50,
+          "7": 25,
+          "8": 87.5,
+          "9": 100
+        },
+        "stable": false,
+        "typeRanking": [
+          {
+            "key": "1",
+            "score": 100
+          },
+          {
+            "key": "9",
+            "score": 93.75
+          },
+          {
+            "key": "5",
+            "score": 68.75
+          },
+          {
+            "key": "8",
+            "score": 65.625
+          },
+          {
+            "key": "2",
+            "score": 62.5
+          },
+          {
+            "key": "6",
+            "score": 53.125
+          },
+          {
+            "key": "3",
+            "score": 25
+          },
+          {
+            "key": "4",
+            "score": 25
+          },
+          {
+            "key": "7",
+            "score": 25
+          }
+        ],
+        "instinctRanking": [
+          {
+            "key": "sp",
+            "score": 100
+          },
+          {
+            "key": "so",
+            "score": 32.14285714285714
+          },
+          {
+            "key": "sx",
+            "score": 7.142857142857145
+          }
+        ],
+        "gap": 6.25,
+        "primaryStatus": "close",
+        "primary": null,
+        "candidates": [
+          1,
+          9
+        ],
+        "wing": null,
+        "instinctStatus": "suggested",
+        "dominantInstinct": "sp",
+        "stackClear": true,
+        "uniform": false
+      }
+    },
+    {
+      "id": "P15",
+      "expected": {
+        "primary": 4,
+        "wing": 3,
+        "dominantInstinct": "so"
+      },
+      "result": {
+        "version": "3.0.0",
+        "scores": {
+          "1": 65.625,
+          "2": 53.125,
+          "3": 71.875,
+          "4": 100,
+          "5": 56.25,
+          "6": 40.625,
+          "7": 59.375,
+          "8": 43.75,
+          "9": 31.25,
+          "sp": 46.42857142857143,
+          "so": 96.42857142857142,
+          "sx": 78.57142857142858
+        },
+        "motiveScores": {
+          "1": 75,
+          "2": 37.5,
+          "3": 75,
+          "4": 100,
+          "5": 50,
+          "6": 37.5,
+          "7": 50,
+          "8": 37.5,
+          "9": 37.5
+        },
+        "stable": true,
+        "typeRanking": [
+          {
+            "key": "4",
+            "score": 100
+          },
+          {
+            "key": "3",
+            "score": 71.875
+          },
+          {
+            "key": "1",
+            "score": 65.625
+          },
+          {
+            "key": "7",
+            "score": 59.375
+          },
+          {
+            "key": "5",
+            "score": 56.25
+          },
+          {
+            "key": "2",
+            "score": 53.125
+          },
+          {
+            "key": "8",
+            "score": 43.75
+          },
+          {
+            "key": "6",
+            "score": 40.625
+          },
+          {
+            "key": "9",
+            "score": 31.25
+          }
+        ],
+        "instinctRanking": [
+          {
+            "key": "so",
+            "score": 96.42857142857142
+          },
+          {
+            "key": "sx",
+            "score": 78.57142857142858
+          },
+          {
+            "key": "sp",
+            "score": 46.42857142857143
+          }
+        ],
+        "gap": 28.125,
+        "primaryStatus": "suggested",
+        "primary": 4,
+        "candidates": [
+          4
+        ],
+        "wing": {
+          "adjacent": [
+            3,
+            5
+          ],
+          "ranked": [
+            {
+              "key": "3",
+              "score": 71.875
+            },
+            {
+              "key": "5",
+              "score": 56.25
+            }
+          ],
+          "gap": 15.625,
+          "threshold": 75,
+          "eligible": [],
+          "status": "weak",
+          "dominant": null
+        },
+        "instinctStatus": "suggested",
+        "dominantInstinct": "so",
+        "stackClear": true,
+        "uniform": false
+      }
+    },
+    {
+      "id": "P16",
+      "expected": {
+        "primary": 4,
+        "wing": 5,
+        "dominantInstinct": "so"
+      },
+      "result": {
+        "version": "3.0.0",
+        "scores": {
+          "1": 62.5,
+          "2": 31.25,
+          "3": 46.875,
+          "4": 100,
+          "5": 100,
+          "6": 62.5,
+          "7": 50,
+          "8": 43.75,
+          "9": 46.875,
+          "sp": 67.85714285714286,
+          "so": 78.57142857142858,
+          "sx": 71.42857142857143
+        },
+        "motiveScores": {
+          "1": 62.5,
+          "2": 25,
+          "3": 50,
+          "4": 100,
+          "5": 100,
+          "6": 62.5,
+          "7": 50,
+          "8": 62.5,
+          "9": 50
+        },
+        "stable": false,
+        "typeRanking": [
+          {
+            "key": "4",
+            "score": 100
+          },
+          {
+            "key": "5",
+            "score": 100
+          },
+          {
+            "key": "1",
+            "score": 62.5
+          },
+          {
+            "key": "6",
+            "score": 62.5
+          },
+          {
+            "key": "7",
+            "score": 50
+          },
+          {
+            "key": "3",
+            "score": 46.875
+          },
+          {
+            "key": "9",
+            "score": 46.875
+          },
+          {
+            "key": "8",
+            "score": 43.75
+          },
+          {
+            "key": "2",
+            "score": 31.25
+          }
+        ],
+        "instinctRanking": [
+          {
+            "key": "so",
+            "score": 78.57142857142858
+          },
+          {
+            "key": "sx",
+            "score": 71.42857142857143
+          },
+          {
+            "key": "sp",
+            "score": 67.85714285714286
+          }
+        ],
+        "gap": 0,
+        "primaryStatus": "close",
+        "primary": null,
+        "candidates": [
+          4,
+          5
+        ],
+        "wing": null,
+        "instinctStatus": "close",
+        "dominantInstinct": null,
+        "stackClear": false,
+        "uniform": false
+      }
+    },
+    {
+      "id": "P17",
+      "expected": {
+        "primary": 7,
+        "wing": 6,
+        "dominantInstinct": "sx"
+      },
+      "result": {
+        "version": "3.0.0",
+        "scores": {
+          "1": 28.125,
+          "2": 31.25,
+          "3": 56.25,
+          "4": 56.25,
+          "5": 25,
+          "6": 93.75,
+          "7": 100,
+          "8": 53.125,
+          "9": 34.375,
+          "sp": 46.42857142857143,
+          "so": 25,
+          "sx": 100
+        },
+        "motiveScores": {
+          "1": 25,
+          "2": 25,
+          "3": 50,
+          "4": 62.5,
+          "5": 25,
+          "6": 100,
+          "7": 100,
+          "8": 50,
+          "9": 37.5
+        },
+        "stable": true,
+        "typeRanking": [
+          {
+            "key": "7",
+            "score": 100
+          },
+          {
+            "key": "6",
+            "score": 93.75
+          },
+          {
+            "key": "3",
+            "score": 56.25
+          },
+          {
+            "key": "4",
+            "score": 56.25
+          },
+          {
+            "key": "8",
+            "score": 53.125
+          },
+          {
+            "key": "9",
+            "score": 34.375
+          },
+          {
+            "key": "2",
+            "score": 31.25
+          },
+          {
+            "key": "1",
+            "score": 28.125
+          },
+          {
+            "key": "5",
+            "score": 25
+          }
+        ],
+        "instinctRanking": [
+          {
+            "key": "sx",
+            "score": 100
+          },
+          {
+            "key": "sp",
+            "score": 46.42857142857143
+          },
+          {
+            "key": "so",
+            "score": 25
+          }
+        ],
+        "gap": 6.25,
+        "primaryStatus": "close",
+        "primary": null,
+        "candidates": [
+          7,
+          6
+        ],
+        "wing": null,
+        "instinctStatus": "suggested",
+        "dominantInstinct": "sx",
+        "stackClear": true,
+        "uniform": false
+      }
+    },
+    {
+      "id": "P18",
+      "expected": {
+        "primary": 7,
+        "wing": 8,
+        "dominantInstinct": "sx"
+      },
+      "result": {
+        "version": "3.0.0",
+        "scores": {
+          "1": 37.5,
+          "2": 31.25,
+          "3": 56.25,
+          "4": 56.25,
+          "5": 21.875,
+          "6": 53.125,
+          "7": 100,
+          "8": 100,
+          "9": 6.25,
+          "sp": 42.85714285714286,
+          "so": 28.57142857142857,
+          "sx": 100
+        },
+        "motiveScores": {
+          "1": 37.5,
+          "2": 25,
+          "3": 50,
+          "4": 62.5,
+          "5": 25,
+          "6": 50,
+          "7": 100,
+          "8": 100,
+          "9": 0
+        },
+        "stable": false,
+        "typeRanking": [
+          {
+            "key": "7",
+            "score": 100
+          },
+          {
+            "key": "8",
+            "score": 100
+          },
+          {
+            "key": "3",
+            "score": 56.25
+          },
+          {
+            "key": "4",
+            "score": 56.25
+          },
+          {
+            "key": "6",
+            "score": 53.125
+          },
+          {
+            "key": "1",
+            "score": 37.5
+          },
+          {
+            "key": "2",
+            "score": 31.25
+          },
+          {
+            "key": "5",
+            "score": 21.875
+          },
+          {
+            "key": "9",
+            "score": 6.25
+          }
+        ],
+        "instinctRanking": [
+          {
+            "key": "sx",
+            "score": 100
+          },
+          {
+            "key": "sp",
+            "score": 42.85714285714286
+          },
+          {
+            "key": "so",
+            "score": 28.57142857142857
+          }
+        ],
+        "gap": 0,
+        "primaryStatus": "close",
+        "primary": null,
+        "candidates": [
+          7,
+          8
+        ],
+        "wing": null,
+        "instinctStatus": "suggested",
+        "dominantInstinct": "sx",
+        "stackClear": true,
+        "uniform": false
+      }
+    }
+  ]
+}

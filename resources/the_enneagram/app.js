@@ -3,7 +3,7 @@
   const E=window.Enneagram;
   const $=id=>document.getElementById(id);
   const KEYS={draft:'nh-enneagram-v2-draft',result:'nh-enneagram-v2-result',prefs:'nh-enneagram-v2-prefs'};
-  const chapters=['מבט פנימה','בחיי היומיום','בין אנשים','מתחת לפני השטח','התמונה מתחברת'];
+  const chapters=['מבט פנימה','בחיי היומיום','בין אנשים','מתחת לפני השטח','התמונה מתחברת','מה מניע אותי'];
   const labels=['בכלל לא','מעט','במידה בינונית','במידה רבה','מאוד'];
   let answers=Array(E.questions.length).fill(null), index=0, currentScreen='start', result=null;
   let completedAt=null, autoSave=true, theme='light', pendingAction=null, focusBeforeDialog=null;
@@ -25,7 +25,7 @@
     catch {notice('השמירה במכשיר אינה זמינה. אפשר להמשיך כל עוד העמוד פתוח ולהוריד את הדוח בסיום.');return false;}
   }
   function remove(key){try{localStorage.removeItem(key);return true;}catch{return false;}}
-  function getStoredState(key){const value=read(key);if(value===null)return null;if(E.validState(value))return value;remove(key);notice('נמצאה שמירה ישנה או לא תקינה שלא ניתן לשחזר. אפשר להתחיל מבחן חדש.');return null;}
+  function getStoredState(key){const value=read(key);if(value===null)return null;if(E.validState(value))return value;const migrated=E.migrateState(value);if(migrated){write(key,migrated);notice('התשובות הקודמות נשמרו. נוספו 18 שאלות, ויש להשלים אותן לפני חישוב תוצאה מעודכנת.');return migrated;}remove(key);notice('נמצאה שמירה ישנה או לא תקינה שלא ניתן לשחזר. אפשר להתחיל מבחן חדש.');return null;}
   function snapshot(screen=currentScreen){return{version:E.VERSION,answers:[...answers],index,screen:screen==='results'?'results':'quiz',updatedAt:completedAt||new Date().toISOString()};}
   function storeDraft(){
     if(!autoSave){$('save-status').textContent='';return false;}
@@ -46,7 +46,7 @@
     $('resume-box').hidden=!draft;
     if(draft){const count=draft.answers.filter(v=>v!==null).length;$('resume-text').textContent=draft.screen==='results'?'המבחן האחרון הושלם. אפשר לחזור לתוצאה.':`כבר ענית על ${count} מתוך ${E.questions.length} שאלות`;$('resume-btn').textContent=draft.screen==='results'?'לחזור לתוצאה האחרונה':'להמשיך מהמקום שעצרתי';}
     $('saved-box').hidden=!saved;
-    if(saved)$('saved-text').textContent=`תוצאה שמורה במכשיר מ-${dateText(saved.updatedAt)}`;
+    if(saved){$('saved-text').textContent=saved.screen==='results'?`תוצאה שמורה במכשיר מ-${dateText(saved.updatedAt)}`:'התשובות מהגרסה הקודמת נשמרו';$('saved-btn').textContent=saved.screen==='results'?'לתוצאה השמורה':'להשלמת השאלות החדשות';}
   }
   function confirmAction(title,description,label,action){
     pendingAction=action;focusBeforeDialog=document.activeElement;
@@ -85,14 +85,20 @@
   }
   function showQuestion(){
     const question=E.questions[index];
-    const chapter=Math.floor(index/15), answered=answers.filter(v=>v!==null).length;
+    const chapter=Math.min(chapters.length-1,Math.floor(index/15)), answered=answers.filter(v=>v!==null).length;
     $('pause-btn').textContent=autoSave?'שמירה ויציאה':'יציאה מהמבחן';
     $('question-text').textContent=question.text;
+    const paired=question.kind==='contrast';
+    $('answers-form').classList.toggle('paired-question',paired);
+    $('contrast-options').hidden=!paired;
+    $('contrast-options').innerHTML=paired?question.options.map((text,i)=>`<div><b>${i?'ב':'א'}</b><p>${escapeHtml(text)}</p></div>`).join(''):'';
+    $('answer-hint').textContent=paired?'מה מתאר אותך יותר?':'עד כמה זה מתאר אותך?';
+    const currentLabels=paired?['א בבירור','יותר א','שניהם או אף אחד','יותר ב','ב בבירור']:labels;
     $('question-counter').textContent=`שאלה ${index+1} מתוך ${E.questions.length}`;
-    $('chapter-name').textContent=`חלק ${chapter+1} מתוך 5 · ${chapters[chapter]}`;
+    $('chapter-name').textContent=`חלק ${chapter+1} מתוך ${chapters.length} · ${chapters[chapter]}`;
     $('progress').value=answered;$('progress').setAttribute('aria-valuetext',`${answered} מתוך ${E.questions.length} שאלות נענו`);
     $('chapter-list').innerHTML=chapters.map((name,i)=>`<li${i===chapter?' aria-current="step"':''} class="${i<chapter?'done':''}"><span>${i+1}</span>${name}</li>`).join('');
-    $('answers-container').innerHTML=labels.map((label,i)=>`<label class="answer-label"><input type="radio" name="answer" value="${i+1}" aria-label="${i+1}, ${label}"${answers[index]===i+1?' checked':''}><span class="answer-dot" aria-hidden="true"></span><span>${label}</span></label>`).join('');
+    $('answers-container').innerHTML=currentLabels.map((label,i)=>`<label class="answer-label"><input type="radio" name="answer" value="${i+1}" aria-label="${i+1}, ${label}"${answers[index]===i+1?' checked':''}><span class="answer-dot" aria-hidden="true"></span><span>${label}</span></label>`).join('');
     $('prev-btn').disabled=index===0;$('next-btn').textContent=index===E.questions.length-1?'למפה האישית שלי ←':'הבא ←';
     $('error-msg').hidden=true;
     $('question-text').focus({preventScroll:true});
@@ -120,29 +126,30 @@
     if(r.primary)return`טיפוס ${r.primary} · ${E.types[r.primary].name}`;
     if(r.primaryStatus==='undifferentiated')return'עוד אין כאן כיוון מוביל';
     if(r.primaryStatus==='weak')return'ההתאמה לטיפוסים נמוכה';
+    if(r.primaryStatus==='mixed')return'כדאי להבחין בין הסגנון למניע';
+    if(r.primaryStatus==='unstable')return'הכיוון המוביל עדיין לא יציב';
     return'כמה כיוונים קרובים זה לזה';
   }
   function mainDescription(r){
     if(r.primary)return E.types[r.primary].description;
-    if(r.primaryStatus==='undifferentiated')return'כל האמירות קיבלו אותה תשובה, ולכן אין בסיס שימושי להעדיף טיפוס מסוים. אפשר לחזור לתשובות ולחשוב על דוגמאות מהחיים.';
-    if(r.primaryStatus==='weak')return'אף טיפוס לא הגיע לרמת ההתאמה המינימלית שהוגדרה בכלי. יכול להיות שהניסוחים אינם מייצגים אותך היטב. כדאי לקרוא את התיאורים בלי למהר לבחור תווית.';
-    return`הציונים של ${r.candidates.map(n=>`${n} (${E.types[n].name})`).join(', ')} קרובים מכדי לבחור טיפוס אחד. כדאי להשוות מה מניע אותך בכל אחד מהתיאורים.`;
+    if(r.primaryStatus==='undifferentiated')return'כל התשובות זהות. אפשר לחזור לשאלות או להכיר את הטיפוסים בהמשך.';
+    if(r.primaryStatus==='weak')return'לא בלט טיפוס מסוים בתשובות שלך.';
+    return`כדאי להשוות בין ${r.candidates.map(n=>`${n} (${E.types[n].name})`).join(', ')} ולבדוק איזה מניע מוכר לך יותר.`;
   }
-  function mainCaution(r){return r.primary?`זה הכיוון המוביל בתשובות כרגע, בפער של ${round(r.gap)} נקודות מהבא אחריו. ההפרש אינו מדד לביטחון סטטיסטי.`:'הכלי משאיר את ההכרעה פתוחה. הסדר ברשימת הציונים אינו הכרעה כאשר יש תיקו או קרבה.';}
   function wingTitle(r){
     if(!r.primary)return'כדאי לברר קודם את הטיפוס המוביל';
-    if(r.wing.dominant)return`כנף אפשרית: ${r.primary}w${r.wing.dominant}`;
+    if(r.wing.dominant)return`כנף בולטת: ${r.primary}w${r.wing.dominant}`;
     return'לא נמצאה כנף מובחנת';
   }
   function wingDescription(r){
-    if(!r.primary)return'כנפיים נבדקות ביחס לטיפוס מסוים. כל עוד כמה טיפוסים קרובים, אין טעם להצמיד לך כנף של אחד מהם. בהמשך אפשר לעיין בכל טיפוס ובשני שכניו.';
-    if(r.wing.status==='weak')return'ההתאמה לשני הטיפוסים השכנים נמוכה. זה לא אומר שאין להם השפעה: שאלות על מניע של טיפוס שלם לא תמיד לוכדות גוון עדין של כנף. אפשר לקרוא את שתי האפשרויות בלי להכריע.';
-    if(r.wing.status==='close')return'שני השכנים קיבלו ציונים קרובים. ייתכן שיש השפעה משניהם, או שהשאלון אינו מבחין ביניהם אצלך. אין צורך לבחור בכוח.';
-    return'זו השערה המבוססת על ההתאמה לשני השכנים במעגל. כנף מתארת גוון אפשרי בתוך הטיפוס, ולא טיפוס נוסף או אבחנה נפרדת.';
+    if(!r.primary)return'נבחר כנף רק לאחר שתתבהר ההבחנה בין הטיפוסים.';
+    if(r.wing.status==='weak')return'ההתאמה לשכנים נמוכה מכדי להציג כנף בולטת.';
+    if(r.wing.status==='close')return'אין העדפה ברורה בין השכנים.';
+    return'';
   }
   function renderWing(r){
-    let html=`<h3>${wingTitle(r)}</h3><p style="margin-top:13px">${wingDescription(r)}</p>`;
-    if(r.primary)html+=`<div class="wing-choices">${r.wing.adjacent.map(n=>`<div class="wing-choice ${n===r.wing.dominant?'suggested':''}"><h3><bdi>${r.primary}w${n}</bdi></h3><div class="wing-score">התאמה לטיפוס ${n}: ${round(r.scores[n])} מתוך 100</div><p>${E.wingNotes[`${r.primary}w${n}`]}</p>${n===r.wing.dominant?'<span class="result-badge">נטייה מובילה</span>':''}</div>`).join('')}</div><p class="small muted" style="margin-top:18px">כדאי לבדוק: האם הגוון הזה חוזר בכמה תחומי חיים, או מופיע בעיקר במצב מסוים? גם כאשר כנף אינה מובחנת, הטיפוס המוביל יכול להיות כיוון מועיל.</p>`;
+    let html=`<h3>${wingTitle(r)}</h3>${wingDescription(r)?`<p style="margin-top:13px">${wingDescription(r)}</p>`:''}`;
+    if(r.primary&&r.wing.eligible.length)html+=`<div class="wing-choices">${r.wing.eligible.map(n=>`<div class="wing-choice ${n===r.wing.dominant?'suggested':''}"><h3><bdi>${r.primary}w${n}</bdi></h3><div class="wing-score">התאמה לטיפוס ${n}: ${round(r.scores[n])} מתוך 100</div><p>${E.wingNotes[`${r.primary}w${n}`]}</p>${n===r.wing.dominant?'<span class="result-badge">הגוון הבולט</span>':''}</div>`).join('')}</div>`;
     $('wing-result').innerHTML=html;
   }
   function instinctTitle(r){
@@ -154,13 +161,12 @@
   }
   function instinctCaution(r){
     if(r.uniform)return'מענה אחיד אינו מספיק כדי לזהות העדפה.';
-    if(r.instinctStatus==='weak')return'ההתאמה לתחומים נמוכה מכדי להציע העדפה. כדאי לקרוא את התיאורים ולבדוק מה קורה בפועל ביומיום.';
-    if(!r.dominantInstinct)return'הפער בין המובילים קטן, ולכן לא נקבע אינסטינקט דומיננטי או סדר חד משמעי.';
-    if(!r.stackClear)return'המוביל מובחן, אך שני התחומים האחרים קרובים. לכן לא מוצג סדר מלא.';
-    return'הסדר משקף את התשובות כרגע. ציון נמוך יותר מצביע על פחות קשב מדווח, ולא על היעדר יכולת או על אינסטינקט חסר.';
+    if(r.instinctStatus==='weak'||!r.dominantInstinct)return'';
+    if(!r.stackClear)return'שני התחומים האחרים קרובים זה לזה.';
+    return'';
   }
   function renderInstincts(r){
-    $('instinct-result').innerHTML=`<div class="instinct-summary">${r.stackClear?`<bdi>${instinctTitle(r)}</bdi>`:instinctTitle(r)}</div><p style="margin-bottom:24px">${instinctCaution(r)}</p><div class="instinct-grid">${r.instinctRanking.map(({key,score})=>{const data=E.instincts[key];return`<div class="instinct-item"><h3>${data.name} <bdi>(${data.code})</bdi></h3><div class="score-row"><div class="score-track"><div class="score-fill" style="width:${score}%"></div></div><span class="score-value">${round(score)}</span></div><p>${data.description}</p>${key===r.dominantInstinct?`<p><strong>נקודה להתבוננות:</strong> ${data.practice}</p>`:''}</div>`;}).join('')}</div>`;
+    $('instinct-result').innerHTML=`<div class="instinct-summary">${r.stackClear?`<bdi>${instinctTitle(r)}</bdi>`:instinctTitle(r)}</div>${instinctCaution(r)?`<p style="margin-bottom:24px">${instinctCaution(r)}</p>`:''}<div class="instinct-grid">${r.instinctRanking.map(({key,score})=>{const data=E.instincts[key];return`<div class="instinct-item"><h3>${data.name} <bdi>(${data.code})</bdi></h3><div class="score-row"><div class="score-track"><div class="score-fill" style="width:${score}%"></div></div><span class="score-value">${round(score)}</span></div><p>${data.description.split('. ')[0]}.</p>${key===r.dominantInstinct?`<p><strong>נקודה להתבוננות:</strong> ${data.practice}</p>`:''}</div>`;}).join('')}</div>`;
   }
   function showType(n){
     const data=E.types[n],neighbors=[n===1?9:n-1,n===9?1:n+1];
@@ -172,10 +178,9 @@
     result=E.score(answers);completedAt=completedAt||new Date().toISOString();
     const r=result;
     $('result-date').textContent=`${E.questions.length} תשובות · ${dateText(completedAt)}`;
-    $('result-summary').innerHTML=`<div class="result-number">${r.primary||'?'}<small>${r.primary?'הכיוון המוביל בתשובות':'מרחב לבדיקה נוספת'}</small></div><div><h2>${mainTitle(r)}</h2><p>${mainDescription(r)}</p><p class="result-caution">${mainCaution(r)}</p></div>`;
+    $('result-summary').innerHTML=`<div class="result-number">${r.primary||'?'}<small>${r.primary?'הכיוון המוביל בתשובות':'מרחב לבדיקה נוספת'}</small></div><div><h2>${mainTitle(r)}</h2><p>${mainDescription(r)}</p></div>`;
     $('type-scores').innerHTML=r.typeRanking.map(({key,score})=>`<div class="score-row ${Number(key)===r.primary?'leading':''}"><span class="score-label"><b>${key}</b> ${E.types[key].name}</span><div class="score-track" aria-hidden="true"><div class="score-fill" style="width:${score}%"></div></div><span class="score-value" aria-label="${round(score)} מתוך 100">${round(score)}</span></div>`).join('');
     renderWing(r);renderInstincts(r);
-    $('instinct-result').insertAdjacentHTML('afterbegin','<p class="small muted" style="margin-bottom:16px">גם כאן כל ציון הוא מידת התאמה מתוך 100, בסולם עצמאי. הציונים אינם אחוזי ודאות.</p>');
     $('instinct-result').querySelectorAll('.score-value').forEach(node=>node.setAttribute('aria-label',`${node.textContent} מתוך 100`));
     $('explore-types').innerHTML=Object.keys(E.types).map(n=>`<button class="type-tab" data-type="${n}" aria-label="קריאה על טיפוס ${n}, ${E.types[n].name}" aria-pressed="false">${n}</button>`).join('');
     $('explore-types').querySelectorAll('button').forEach(b=>b.addEventListener('click',()=>showType(Number(b.dataset.type))));
@@ -186,19 +191,19 @@
   function reportData(){
     return {schema:'nh-enneagram-result',version:E.VERSION,createdAt:completedAt,questionCount:E.questions.length,
       note:'כלי להתבוננות עצמית, לא אבחון פסיכולוגי. הציונים אינם הסתברויות. השאלון לא עבר תיקוף על מדגם אנושי.',
-      scoring:{typeGap:E.TYPE_GAP,wingGap:E.WING_GAP,instinctGap:E.INSTINCT_GAP},
+      scoring:{typeGap:E.TYPE_GAP,coreWindow:E.CORE_WINDOW,pairMinimum:E.PAIR_MIN,requireLeaveOneOutStability:true,wingGap:E.WING_GAP,wingMinimum:E.WING_MIN,wingRatio:E.WING_RATIO,instinctGap:E.INSTINCT_GAP},
       typeLabels:Object.fromEntries(Object.entries(E.types).map(([key,{name,aliases}])=>[key,{name,aliases}])),
-      result,answers:E.questions.map((q,i)=>({id:q.id,question:q.text,answer:answers[i]})),
-      explanations:{title:mainTitle(result),description:mainDescription(result),caution:mainCaution(result),wing:wingTitle(result),wingExplanation:wingDescription(result),instincts:instinctTitle(result),instinctCaution:instinctCaution(result)},
-      sources:['https://www.enneagraminstitute.com/how-the-enneagram-system-works/','https://www.enneagraminstitute.com/type-descriptions/','https://pubmed.ncbi.nlm.nih.gov/33332604/']};
+      result,answers:E.questions.map((q,i)=>({id:q.id,question:q.text,...(q.options?{options:q.options,responseScale:['א בבירור','יותר א','שניהם או אף אחד','יותר ב','ב בבירור']}:{responseScale:labels}),answer:answers[i]})),
+      explanations:{title:mainTitle(result),description:mainDescription(result),wing:wingTitle(result),wingExplanation:wingDescription(result),instincts:instinctTitle(result),instinctCaution:instinctCaution(result)},
+      sources:['https://www.enneagraminstitute.com/how-the-enneagram-system-works/','https://www.enneagraminstitute.com/type-descriptions/','https://pubmed.ncbi.nlm.nih.gov/33332604/','https://www.enneagraminstitute.com/interpreting-your-enneagram-test-results/','https://www.pewresearch.org/writing-survey-questions/']};
   }
   function reportHtml(){
     const r=result, data=reportData();
     const typeRows=r.typeRanking.map(({key,score})=>`<tr><td>${key} · ${E.types[key].name}</td><td>${round(score)}</td></tr>`).join('');
-    const wingHtml=r.primary?r.wing.adjacent.map(n=>`<p><strong><bdi>${r.primary}w${n}</bdi>:</strong> ${E.wingNotes[`${r.primary}w${n}`]} (התאמה לטיפוס ${n}: ${round(r.scores[n])})</p>`).join(''):'';
+    const wingHtml=r.primary?r.wing.eligible.map(n=>`<p><strong><bdi>${r.primary}w${n}</bdi>:</strong> ${E.wingNotes[`${r.primary}w${n}`]} (התאמה לטיפוס ${n}: ${round(r.scores[n])})</p>`).join(''):'';
     const descriptions=r.typeRanking.slice(0,3).map(({key})=>{const t=E.types[key];return`<section><h3>טיפוס ${key} · ${t.name}</h3><p>מכונה גם: ${t.aliases.join(', ')}</p><p>${t.description}</p><p><strong>משאב:</strong> ${t.strength}</p><p><strong>אתגר:</strong> ${t.cost}</p><p><strong>ניסוי קטן:</strong> ${t.practice}</p><p><strong>שאלה למחשבה:</strong> ${t.reflection}</p></section>`;}).join('');
-    const limitations='הציונים בסולם 0 עד 100 מתארים התאמה לתשובות, ולא הסתברות או אחוזי ודאות. הספים הם כללי תצוגה של הכלי, לא ערכים מתוקפים מחקרית. כל סולם מחושב כממוצע תשובות, לאחר היפוך אמירה אחת בכיוון נגדי. זיהוי מוביל דורש ציון של 50 ופער של 8 נקודות לפחות; כנף דורשת ציון של 40 ופער של 8 לפחות בין שני השכנים. מענה אחיד אינו מוכרע. סדר מלא של אינסטינקטים דורש פער של 8 נקודות גם בין השני לשלישי. השאלון לא עבר תיקוף על מדגם אנושי. סקירת המחקר מצאה ראיות מעורבות לתוקף האניאגרמה ומעט תמיכה בכנפיים. זה אינו שאלון רשמי של Enneagram Institute.';
-    return`<!DOCTYPE html><html lang="he" dir="rtl"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>המפה האישית שלי | אניאגרמה</title><style>body{font:18px/1.75 'Segoe UI',Arial,sans-serif;color:#29263d;max-width:850px;margin:35px auto;padding:0 25px;background:#fff}h1,h2,h3{line-height:1.3}h1{font-size:38px;color:#5443a8}h2{margin-top:35px}section{break-inside:avoid;border-top:1px solid #ddd;padding-top:15px;margin-top:22px}table{width:100%;border-collapse:collapse}th,td{text-align:start;border-bottom:1px solid #ddd;padding:9px}header{padding-bottom:20px;border-bottom:2px solid #5443a8}.note{font-size:15px;color:#555}a{color:#443387;overflow-wrap:anywhere}bdi{unicode-bidi:isolate}@media print{body{font-size:11pt;margin:0;padding:0}h1{font-size:26pt}h2{font-size:19pt}@page{size:A4;margin:17mm}}</style></head><body><header><h1>המפה האישית שלי</h1><p>${escapeHtml(dateText(completedAt))} · ${E.questions.length} תשובות · גרסה ${E.VERSION}</p><p class="note">${data.note}</p></header><h2>${mainTitle(r)}</h2><p>${mainDescription(r)}</p><p class="note">${mainCaution(r)}</p><h2>כל ציוני ההתאמה</h2><p class="note">0 עד 100 בכל סולם בנפרד. הציונים אינם אמורים להסתכם ב-100.</p><table><thead><tr><th>טיפוס</th><th>ציון התאמה</th></tr></thead><tbody>${typeRows}</tbody></table><section><h2>${wingTitle(r)}</h2><p>${wingDescription(r)}</p>${wingHtml}</section><section><h2>האינסטינקטים</h2><p>כל ציון הוא מידת התאמה מתוך 100, בסולם עצמאי, ולא אחוזי ודאות.</p><h3>${instinctTitle(r)}</h3><p>${instinctCaution(r)}</p>${r.instinctRanking.map(({key,score})=>`<h3>${E.instincts[key].name} <bdi>(${E.instincts[key].code})</bdi> · ${round(score)}</h3><p>${E.instincts[key].description}</p><p>${E.instincts[key].practice}</p>`).join('')}</section><h2>${r.primary?'כיוונים להמשך התבוננות':'תיאורים להתחלת בירור, ללא הכרעה'}</h2><p class="note">${r.primary?'שלושת הציונים הגבוהים בתשובות.':'מוצגים שלושה מתוך תשעת הטיפוסים, לפי סדר הציונים. בתיקו הסדר מספרי ואינו מעיד על התאמה עדיפה.'}</p>${descriptions}<section><h2>שיטה, גבולות ומקורות</h2><p class="note">${limitations}</p><ul>${data.sources.map((url,i)=>`<li><a href="${url}" rel="noopener noreferrer">${['מבנה האניאגרמה, כנפיים ואינסטינקטים','תשעת הטיפוסים','Hook ועמיתיו, סקירה שיטתית, 2021'][i]}</a></li>`).join('')}</ul><p class="note">הדוח נוצר במכשיר שלך. אין בו קוד מעקב או בקשות לרשת. אפשר לפתוח בדפדפן ולהשתמש בהדפסה לשמירה כ-PDF.</p></section></body></html>`;
+    const limitations='הציונים בסולם 0 עד 100 מתארים התאמה לתשובות, ולא הסתברות או אחוזי ודאות. הספים הם כללי תצוגה של הכלי, לא ערכים מתוקפים מחקרית. ציוני הסגנונות הם ממוצעי שש האמירות המקוריות לכל טיפוס. 18 ההשוואות אינן מתווספות לממוצע הזה. נבחנים טיפוסים עם ציון של 50 לפחות ועד 15 נקודות מהמוביל. בין מועמדים שכנים נדרשת העדפה באותו כיוון בשתי ההשוואות, בממוצע של 75 לפחות. תשובה ניטרלית משאירה את ההשוואה פתוחה. מועמד לא ייבחר אם השוואה ישירה מעדיפה אחד משכניו. כשנותר מועמד יחיד, אין דרישה להעדפה מול כל חלופה רחוקה, אך סתירה מפורשת עדיין מונעת הכרעה. חלופות שאינן שכנות וקרובות בפחות מ-8 נקודות נשארות פתוחות. הבחירה נדרשת להישאר גם בהשמטת כל אמירת סגנון בודדת. זו בדיקת רגישות, לא מדד לביטחון סטטיסטי. כנף דורשת ציון של 62.5 לפחות, לפחות 75% מציון הטיפוס המוביל ופער של 8 לפחות מהשכן השני. שכנים מתחת לסף אינם מוצגים ככנפיים אישיות. מענה אחיד אינו מוכרע. סדר מלא של אינסטינקטים דורש פער של 8 נקודות גם בין השני לשלישי. השאלון לא עבר תיקוף על מדגם אנושי. סקירת המחקר מצאה ראיות מעורבות לתוקף האניאגרמה ומעט תמיכה בכנפיים. זה אינו שאלון רשמי של Enneagram Institute.';
+    return`<!DOCTYPE html><html lang="he" dir="rtl"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>המפה האישית שלי | אניאגרמה</title><style>body{font:18px/1.75 'Segoe UI',Arial,sans-serif;color:#29263d;max-width:850px;margin:35px auto;padding:0 25px;background:#fff}h1,h2,h3{line-height:1.3}h1{font-size:38px;color:#5443a8}h2{margin-top:35px}section{break-inside:avoid;border-top:1px solid #ddd;padding-top:15px;margin-top:22px}table{width:100%;border-collapse:collapse}th,td{text-align:start;border-bottom:1px solid #ddd;padding:9px}header{padding-bottom:20px;border-bottom:2px solid #5443a8}.note{font-size:15px;color:#555}a{color:#443387;overflow-wrap:anywhere}bdi{unicode-bidi:isolate}@media print{body{font-size:11pt;margin:0;padding:0}h1{font-size:26pt}h2{font-size:19pt}@page{size:A4;margin:17mm}}</style></head><body><header><h1>המפה האישית שלי</h1><p>${escapeHtml(dateText(completedAt))} · ${E.questions.length} תשובות · גרסה ${E.VERSION}</p></header><h2>${mainTitle(r)}</h2><p>${mainDescription(r)}</p><h2>הסגנונות בתשובות שלך</h2><table><thead><tr><th>טיפוס</th><th>ציון (0-100)</th></tr></thead><tbody>${typeRows}</tbody></table><section><h2>${wingTitle(r)}</h2><p>${wingDescription(r)}</p>${wingHtml}</section><section><h2>האינסטינקטים</h2><h3>${instinctTitle(r)}</h3><p>${instinctCaution(r)}</p>${r.instinctRanking.map(({key,score})=>`<h3>${E.instincts[key].name} <bdi>(${E.instincts[key].code})</bdi> · ${round(score)}</h3><p>${E.instincts[key].description}</p><p>${E.instincts[key].practice}</p>`).join('')}</section><h2>${r.primary?'כיוונים להמשך התבוננות':'תיאורים להתחלת בירור, ללא הכרעה'}</h2><p class="note">${r.primary?'שלושת הציונים הגבוהים בתשובות.':'מוצגים שלושה מתוך תשעת הטיפוסים, לפי סדר הציונים. בתיקו הסדר מספרי ואינו מעיד על התאמה עדיפה.'}</p>${descriptions}<section><details><summary>על המבחן והשיטה</summary><p class="note">${data.note} ${limitations}</p><ul>${data.sources.map((url,i)=>`<li><a href="${url}" rel="noopener noreferrer">${['מבנה האניאגרמה, כנפיים ואינסטינקטים','תשעת הטיפוסים','Hook ועמיתיו, סקירה שיטתית, 2021','פירוש תוצאות והבחנה בין טיפוס לכנף','Pew Research Center: ניסוח שאלות'][i]}</a></li>`).join('')}</ul></details></section></body></html>`;
   }
   function download(content,type,extension){
     try{
