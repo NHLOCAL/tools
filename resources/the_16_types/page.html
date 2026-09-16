@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#fcf7f1">
+  <title>מבחן 16 הטיפוסים | שאלון אישיות בעברית</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='18' fill='%23e9eef5'/%3E%3Ctext x='32' y='45' font-family='Arial' font-size='36' font-weight='700' text-anchor='middle' fill='%23526b91'%3E16%3C/text%3E%3C/svg%3E">
+  <style>/* STYLES */</style>
+</head>
+<body>
+<a class="skip-link" href="#main">דילוג לתוכן</a>
+<header class="site-header shell">
+  <a class="brand" href="the_16_types.html" aria-label="16 הטיפוסים, דף הפתיחה"><span class="brand-mark" aria-hidden="true">16</span><span>הטיפוסים</span></a>
+  <a class="back-link" href="../index.html">לארגז הכלים <svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M7 17 17 7M7 7h10v10"/></svg></a>
+</header>
+<main id="main" class="shell" tabindex="-1">
+  <section id="welcome" class="screen">
+    <div class="hero">
+      <div class="hero-copy">
+        <h1>מה בדרך כלל<br><em>טבעי לך?</em></h1>
+        <p class="lead">לחשוב בקול או לעבד בשקט? לתכנן מראש או להחליט בדרך?<br>64 שאלות על ההעדפות שלך ביומיום, ובסופן פרופיל לפי מודל 16 הטיפוסים.</p>
+        <button id="start" class="button primary">להתחלת השאלון <svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M19 12H5m7-7-7 7 7 7"/></svg></button>
+        <button id="resume" class="button primary" hidden><span>להמשיך מאיפה שעצרתי</span> <svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M19 12H5m7-7-7 7 7 7"/></svg></button>
+        <button id="fresh" class="text-button" hidden>להתחיל מחדש ולמחוק את ההתקדמות</button>
+      </div>
+      <aside class="type-sheet" aria-label="ארבעת צירי השאלון">
+        <div class="sheet-number" aria-hidden="true">16</div>
+        <div class="sheet-axes"><div><span>מוחצן</span><bdi>E / I</bdi><span>מופנם</span></div><div><span>קונקרטי</span><bdi>S / N</bdi><span>עיוני</span></div><div><span>שכלתני</span><bdi>T / F</bdi><span>רגשי</span></div><div><span>גבולני</span><bdi>J / P</bdi><span>פתוח</span></div></div>
+      </aside>
+    </div>
+    <div class="intro-details">
+      <details><summary>רגע לפני: איך כדאי לענות?</summary><p>כדאי לחשוב על ההעדפות הרגילות שלך בחודשים האחרונים, כשיש לך חופש לבחור, ולא רק על יום עמוס במיוחד או על תפקיד בעבודה. בכל מצב יש שתי אפשרויות טובות. בוחרים למה נוטים יותר, ובאיזו מידה. כששתיהן מתאימות באותה מידה, אפשר לבחור באמצע.</p><p>אפשר לחזור ולשנות כל תשובה. ההתקדמות נשמרת במכשיר הזה, כל עוד הדפדפן מאפשר זאת. אין צורך לענות מהר.</p></details>
+      <details><summary>מה זה MBTI, ומה המבחן הזה מציע?</summary><p>מודל 16 הטיפוסים מחבר ארבעה זוגות של העדפות: מוחצן או מופנם, קונקרטי או עיוני, שכלתני או רגשי, גבולני או פתוח. הצירוף של ארבע הבחירות יוצר אחד מ-16 טיפוסים אפשריים.</p><p>המינוחים בעברית וכינויי הטיפוסים כאן תואמים לטבלה שסופקה לפרויקט. <b>גבולני</b> הוא הכינוי כאן להעדפה למסגרת ולסגירת קצוות (J), ללא משמעות קלינית. <b>רגשי</b> מתאר מתן משקל לערכים ולאנשים, ולא חוסר היגיון. <b>עיוני</b> מתייחס לדפוסים ולאפשרויות, ולא לרמת השכלה.</p><p>זהו שאלון עצמאי בהשראת ארבעת צירי MBTI, ולא מבחן MBTI רשמי או שאלון של 16Personalities. הוא נועד להיכרות עצמית, אינו אבחון ולא עבר תיקוף פסיכומטרי. טיפוס אינו מדד ליכולת או לערך אישי.</p></details>
+    </div>
+  </section>
+  <section id="quiz" class="screen quiz-wrap" hidden aria-labelledby="question-heading">
+    <div class="quiz-top"><span id="chapter-label" class="eyebrow"></span><button id="pause" class="text-button">שמירה ויציאה</button></div>
+    <div class="progress-heading"><span id="question-counter"></span><span id="progress-text"></span></div>
+    <progress id="progress" max="64" value="0" aria-label="שאלות שנענו"></progress>
+    <form id="quiz-form" novalidate>
+      <div class="question-card">
+        <h2 id="question-heading" tabindex="-1"></h2>
+        <div class="situation-options"><div class="situation option-a"><span aria-hidden="true">א'</span><p id="option-a"></p></div><div class="situation option-b"><span aria-hidden="true">ב'</span><p id="option-b"></p></div></div>
+        <fieldset><legend>מה מרגיש לך יותר טבעי?</legend><div id="answer-options" class="answer-options"></div></fieldset>
+        <p id="answer-error" class="error" role="alert" hidden>צריך לבחור תשובה כדי להמשיך. אפשר לבחור גם באמצע</p>
+      </div>
+      <div class="quiz-nav"><button id="previous" type="button" class="button secondary"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M5 12h14m-7-7 7 7-7 7"/></svg> <span>הקודם</span></button><button id="next" type="submit" class="button primary"><span>הבא</span> <svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M19 12H5m7-7-7 7 7 7"/></svg></button></div>
+    </form>
+    <div class="quiz-bottom"><button id="review-link" class="text-button">כל התשובות שלי</button></div>
+  </section>
+  <section id="review" class="screen reading-width" hidden aria-labelledby="review-heading">
+    <span class="eyebrow">בדיקה ועריכה</span><h2 id="review-heading" tabindex="-1">התשובות שלך</h2><p>לחיצה על שאלה מאפשרת לעדכן את התשובה. אין צורך לענות מחדש על הכול.</p><p id="review-count"></p><div id="review-list"></div><div class="action-row"><button id="review-finish" class="button primary"><span>לתוצאות</span> <svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M19 12H5m7-7-7 7 7 7"/></svg></button><button id="review-back" class="button secondary">חזרה לשאלון</button></div>
+  </section>
+  <section id="results" class="screen" hidden aria-labelledby="result-heading">
+    <div class="result-intro"><span class="eyebrow">סיכום השאלון</span><h2 id="result-heading" tabindex="-1"></h2><p id="result-subtitle" class="lead"></p></div>
+    <div id="result-notice" class="notice" hidden></div>
+    <div class="result-layout"><div id="profile-card" class="profile-card"></div><div class="axis-panel"><h3>התוצאה בכל ציר</h3><div id="axis-results"></div><p class="micro">האחוזים הם ציוני נטייה מתוך התשובות, לא הסתברות לטיפוס או דירוג ביחס לאנשים אחרים</p></div></div>
+    <div id="nearby" class="nearby" hidden><h3>טיפוסים נוספים להשוואה</h3><p id="nearby-explanation"></p><div id="nearby-types" class="type-chips"></div></div>
+    <div class="result-actions action-row"><button id="download" class="button primary"><span>לשמור את התוצאה</span> <svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 3v12m-5-5 5 5 5-5M5 16v5h14v-5"/></svg></button><button id="copy" class="button secondary">העתקת סיכום</button><button id="print" class="button secondary">הדפסה</button><button id="edit" class="text-button">לעבור על התשובות</button><button id="restart" class="text-button">להתחיל מחדש</button></div>
+    <p class="micro result-disclaimer">זהו שאלון עצמאי שלא עבר תיקוף פסיכומטרי, והתוצאה אינה אבחון. כדאי לבדוק אילו חלקים בתיאור תואמים את ההעדפות שלך ואילו פחות.</p>
+    <details class="explore"><summary>כל 16 הטיפוסים</summary><p>אפשר לעיין בכל התיאורים. הבחירה כאן אינה משנה את התוצאה שלך.</p><label for="type-select">טיפוס לעיון</label><select id="type-select"></select><div id="type-preview"></div></details>
+  </section>
+  <p id="storage-status" class="storage-status" role="status" hidden></p>
+  <noscript><div class="notice">כדי למלא את השאלון נדרש להפעיל JavaScript בדפדפן. אין צורך בחיבור לרשת</div></noscript>
+</main>
+<footer class="shell site-footer"><div><button id="about-toggle" class="text-button" aria-expanded="false" aria-controls="method">מקורות ושיטת החישוב</button><button id="erase" class="text-button">מחיקת התשובות מהמכשיר</button></div>
+<section id="method" hidden><h2>על מה מבוסס השאלון?</h2><p>64 השאלות נכתבו במיוחד לשאלון זה. בכל ציר 16 שאלות במשקל שווה, במחציתן כל צד מופיע ראשון. השאלות עוסקות באנרגיה ועיבוד, קליטת מידע, שיקולי החלטה וגישה למסגרת. הן אינן העתק של שאלון מסחרי.</p><p>כל תשובה מקבלת ערך בין 2- ל-2 בהתאם לכיוון ולמידת ההעדפה. סכום של 16 התשובות בציר מומר לסולם 0 עד 100, עם אמצע ב-50. בשוויון מוצג X ולא נבחר צד שרירותי. כשציון הצד המוביל אינו עולה על 62.5, מוצעים גם צירופים קרובים להשוואה. זהו סף תצוגה שנבחר לשאלון, לא גבול מחקרי או רווח סמך.</p><p>המודל של 16Personalities מוסיף ממד חמישי משלו; הוא אינו נמדד כאן. תיאורי הטיפוסים הם הצעות להתבוננות שנכתבו לשאלון, ולא ניבוי של הצלחה בעבודה או בקשרים. סימולציות עם סוכני שפה שימשו לאיתור בעיות ניסוח וניקוד, ואינן תיקוף על בני אדם.</p><ul><li><a href="https://www.myersbriggs.org/my-mbti-personality-type/the-mbti-preferences/" target="_blank" rel="noopener noreferrer">Myers &amp; Briggs Foundation: ארבעת זוגות ההעדפות</a></li><li><a href="https://www.myersbriggs.org/my-mbti-personality-type/my-mbti-results/" target="_blank" rel="noopener noreferrer">Myers &amp; Briggs Foundation: פרשנות התוצאה והתאמה אישית</a></li><li><a href="https://www.16personalities.com/articles/our-theory" target="_blank" rel="noopener noreferrer">16Personalities: ההבדל בין המודל שלהם ל-MBTI</a></li><li><a href="https://pubmed.ncbi.nlm.nih.gov/2709300/" target="_blank" rel="noopener noreferrer">McCrae &amp; Costa (1989): בחינה ביקורתית של החלוקה לטיפוסים</a></li><li><a href="https://pubmed.ncbi.nlm.nih.gov/16367525/" target="_blank" rel="noopener noreferrer">Tzeng ואחרים (1984): תוקף פריטים וסוגיות בבניית שאלות</a></li></ul></section></footer>
+<div id="announcement" class="sr-only" aria-live="polite"></div><div id="toast" class="toast" role="status" hidden></div>
+<dialog id="reset-dialog"><h2 id="reset-title">למחוק את התשובות?</h2><p>התשובות והתוצאה השמורות בדפדפן הזה יימחקו. אפשר לבטל ולהמשיך מהמצב הקיים.</p><div class="action-row"><button id="confirm-reset" class="button primary">למחוק ולהתחיל מחדש</button><button id="cancel-reset" class="button secondary" autofocus>ביטול</button></div></dialog>
+<script>/* DATA */</script>
+<script>/* SCORING */</script>
+<script>/* APP */</script>
+</body>
+</html>
