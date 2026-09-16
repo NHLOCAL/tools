@@ -1,3 +1,68 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 240" role="img" aria-labelledby="title-intj"><title id="title-intj">INTJ: a thoughtful male architect with a folded blueprint</title>
-<ellipse cx="121" cy="218" rx="79" ry="5" fill="#263D48" opacity=".08"/><circle cx="122" cy="123" r="83" fill="#EBEDF7"/><path d="M91 153 118 154 105 204 88 204Z" fill="#263D48"/><path d="M119 153 140 154 147 202 132 205 122 178Z" fill="#344B5E"/><path d="M88 200 105 202 108 214H77Q70 211 88 200Z" fill="#263D48"/><path d="M131 202 147 200 161 210Q162 215 150 215H131Z" fill="#263D48"/><path d="M93 95 111 88 127 89 143 103 150 151Q119 161 85 153Z" fill="#43558B"/><path d="M107 93 119 104 129 94 124 142H109Z" fill="#FFF9ED"/><path d="M103 91 114 98 109 117 100 111 96 130 91 103ZM131 93 122 103 126 120 136 109Z" fill="#364673"/><path d="M92 101Q82 104 73 119L60 145 72 151 93 133 103 111Z" fill="#43558B"/><path d="M139 100Q151 103 156 122L162 146 148 153 137 126Z" fill="#43558B"/><g transform="translate(72 145) rotate(-65)"><path d="M-5-6Q-5-10-1-10L4-9 7-5 7 4Q6 9 1 9L-4 5-8-1Q-10-5-7-6L-4-3Z" fill="#E3AF87"/><path d="M-3-2 0 2" fill="none" stroke="#C98963" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/></g><g transform="translate(152 146) rotate(35)"><path d="M-5-6Q-5-10-1-10L4-9 7-5 7 4Q6 9 1 9L-4 5-8-1Q-10-5-7-6L-4-3Z" fill="#E3AF87"/><path d="M-3-2 0 2" fill="none" stroke="#C98963" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/></g><path d="M68 133 97 126 124 132 152 122 153 160 124 171 98 165 69 171Z" fill="#B9CFDE"/><path d="M97 126 98 165 124 171 124 132Z" fill="#DCE7EF"/><path d="M78 148 89 145V157M104 153V141L115 145V159M132 157V142L143 138V153" fill="none" stroke="#43558B" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/><path d="M98 165V132M124 165V136" fill="none" stroke="#43558B" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" opacity=".45"/><path d="M68 143Q68 139 72 140L76 144Q77 148 73 149L69 146Z" fill="#E3AF87"/><path d="M153 139Q150 137 148 141L146 147Q148 151 151 147L154 144Z" fill="#E3AF87"/><g transform="translate(97 43)"><rect x="14" y="37" width="14" height="17" rx="2" fill="#E3AF87"/><path d="M14 40H28V46L14 49Z" fill="#C98963"/></g><g transform="translate(97 43) rotate(-5 20 25)"><ellipse cx="5" cy="27" rx="4.5" ry="6" fill="#E3AF87"/><ellipse cx="36" cy="27" rx="4" ry="5.5" fill="#E3AF87"/><path d="M4 16Q6 3 20 4Q35 4 36 18L35 34 28 44 14 44 6 36Z" fill="#E3AF87"/><path d="M4 25 2 16Q0 0 17 0L32 1 41 9 34 16Q24 15 15 8L9 17 9 27Z" fill="#263D48"/><path d="M10 23 16 22M25 22 30 23" fill="none" stroke="#263D48" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><circle cx="13.5" cy="27" r="1.45" fill="#263D48"/><circle cx="27.5" cy="27" r="1.45" fill="#263D48"/><path d="M21 26 19 33 23 33" fill="none" stroke="#C98963" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><rect x="7" y="24" width="12" height="9" rx="3" fill="none" stroke="#263D48" stroke-width="1.5"/><rect x="23" y="24" width="12" height="9" rx="3" fill="none" stroke="#263D48" stroke-width="1.5"/><path d="M19 27H23M4 26H7" fill="none" stroke="#263D48" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/><path d="M17 38 25 37" fill="none" stroke="#263D48" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></g>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 240" role="img" aria-labelledby="intj-title" aria-describedby="intj-desc">
+<title id="intj-title">INTJ: The architect with a folded blueprint</title>
+<desc id="intj-desc">A bespectacled male architect in an indigo jacket studies a three-panel architectural plan. His balanced stance and precise drawing convey quiet planning.</desc>
+<circle cx="120" cy="122" r="84" fill="#EBEDF7"/>
+<ellipse cx="120" cy="216" rx="65" ry="3" fill="#263D48" opacity=".08"/>
+<g fill="none" stroke="#263D48" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
+<g transform="translate(117 0)">
+<g data-part="leg">
+<g data-part="shoe" transform="translate(-13 204) rotate(0) scale(-1 1)">
+<path d="M-7.5 -3H7.5Q7.5 0 9.5 2L17 4.5Q21 5.5 21 8V10H-7.5Q-8.5 10 -8.5 7Z" fill="#263D48"/>
+<path d="M-6.5 8H19" stroke="#FFF9ED" stroke-width="1" opacity=".32"/>
+</g>
+<path d="M-23 152H2Q1 168-3 180L-5.5 204 L-20.5 204Q-23 181-23 152Z" fill="#263D48" data-part="trousers"/>
+</g>
+<g data-part="leg">
+<g data-part="shoe" transform="translate(21 204) rotate(0) scale(1 1)">
+<path d="M-7.5 -3H7.5Q7.5 0 9.5 2L17 4.5Q21 5.5 21 8V10H-7.5Q-8.5 10 -8.5 7Z" fill="#263D48"/>
+<path d="M-6.5 8H19" stroke="#FFF9ED" stroke-width="1" opacity=".32"/>
+</g>
+<path d="M1 152H23Q24 170 25 184L28.5 204 L13.5 204Q8 184 3 173L-1 166Z" fill="#344B5E" data-part="trousers"/>
+</g>
+</g>
+<path d="M94 107Q83 116 77 140" stroke-width="16.6"/>
+<path d="M94 107Q83 116 77 140" stroke="#43558B" stroke-width="14"/>
+<path d="M139 107Q151 119 157 139" stroke-width="16.6"/>
+<path d="M139 107Q151 119 157 139" stroke="#43558B" stroke-width="14"/>
+<g transform="translate(117 0) rotate(0 0 126)">
+<path d="M-10 96Q-26 97-28 109L-24 158Q0 163 26 156L25 109Q23 99 10 96Z" fill="#43558B"/>
+<path d="M-9 97 0 104 10 97 12 156-7 159Z" fill="#FFF9ED" stroke="none"/>
+<path d="M-11 96-2 104-10 122-20 108Z" fill="#364673" stroke="none"/>
+<path d="M11 96 2 104 12 121 21 107Z" fill="#364673" stroke="none"/>
+<path d="M-10 124-11 154M13 125 16 153" stroke="#FFF9ED" stroke-width="1" opacity=".28"/>
+</g>
+<g transform="translate(117 67) rotate(-5)">
+<rect x="-6" y="17" width="12" height="16" rx="3" fill="#E3AF87"/>
+<path d="M-5 21Q0 26 6 22V28Q0 30-5 27Z" fill="#C98963" stroke="none"/>
+<ellipse cx="-16.5" cy="3" rx="3.5" ry="5" fill="#E3AF87"/>
+<ellipse cx="16.5" cy="3" rx="3.5" ry="5" fill="#E3AF87"/>
+<path d="M-16-12Q-16-24 0-24Q16-24 16-12V7Q15 21 0 24Q-14 22-16 8Z" fill="#E3AF87"/>
+<path d="M-16 4Q-23-13-13-21Q-4-30 8-25Q16-25 19-17Q23-14 18-9L14-7Q6-9 0-16Q-5-9-12-9L-12 3Z" fill="#263D48"/>
+<path d="M-11-2-4-3M4-3 11-1"/>
+<circle cx="-7" cy="3" r="1.15" fill="#263D48" stroke="none"/>
+<circle cx="8" cy="3" r="1.15" fill="#263D48" stroke="none"/>
+<path d="M1 4-1 9 2 10" stroke="#C98963" stroke-width="1.2"/>
+<g stroke-width="1.2">
+<circle cx="-7" cy="3" r="5.8"/>
+<circle cx="8" cy="3" r="5.8"/>
+<path d="M-1 2H2M-16 1-13 2M14 2 17 1"/>
+</g>
+<path d="M-4 15 4 14" stroke-width="1.3"/>
+</g>
+<g stroke="#43558B">
+<path d="M72 135 99 130 127 135 157 128V165L128 172 99 167 72 172Z" fill="#B9CFDE"/>
+<path d="M99 130 127 135 128 172 99 167Z" fill="#DCE7EF" stroke="none"/>
+<path d="M99 134V164M127 139V168" opacity=".45"/>
+<path d="M79 145 91 142V155H85V161M106 159V143L120 146V163M134 159V145L149 141V156" stroke-width="1.5"/>
+<path d="M108 150 119 152M141 145V157" stroke-width="1"/>
+</g>
+<g transform="translate(73 149) rotate(-8)">
+<path d="M-5 3V-4Q-5-7-2-7H3Q7-7 7-3V3Q6 8 1 8Q-3 8-5 3Z" fill="#E3AF87"/>
+<path d="M-5 0-1-2Q2-3 3 0L0 3" stroke="#C98963" stroke-width="1"/>
+</g>
+<g transform="translate(156 146) rotate(14)">
+<path d="M-5 3V-4Q-5-7-2-7H3Q7-7 7-3V3Q6 8 1 8Q-3 8-5 3Z" fill="#E3AF87"/>
+<path d="M-5 0-1-2Q2-3 3 0L0 3" stroke="#C98963" stroke-width="1"/>
+</g>
+</g>
 </svg>
