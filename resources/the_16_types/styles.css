@@ -335,3 +335,5 @@ dialog::backdrop { background: #41495c80; backdrop-filter: blur(4px); }
   :root[data-theme="dark"] .situation p { color: #f5f7fb; font-size: 1.125rem; font-weight: 550; line-height: 1.7; }
   :root[data-theme="dark"] .situation > span { background: #3c5270; color: #f3f7ff; font-weight: 700; }
 }
+
+#reset-dialog .action-row { justify-content: flex-end; }
