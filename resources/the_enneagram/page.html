@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="מבחן אניאגרמה בעברית: 75 שאלות להיכרות עם תשעת הטיפוסים, הכנפיים ושלושת האינסטינקטים. עם שמירת התקדמות ודוח אישי להורדה.">
+  <meta name="theme-color" content="#f5f5fa">
+  <title>מבחן אניאגרמה | קצת יותר קרוב לעצמך</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'%3E%3Crect width='40' height='40' rx='10' fill='%235443a8'/%3E%3Ccircle cx='20' cy='20' r='13' stroke='%23e3f0af' fill='none' stroke-width='2'/%3E%3Cpath d='M20 7 31 27H9Z' stroke='%23e3f0af' fill='none' stroke-width='2'/%3E%3C/svg%3E">
+  <style>/* INLINE_STYLE */</style>
+</head>
+<body>
+  <a class="skip-link" href="#main">דילוג לתוכן</a>
+  <header class="site-header">
+    <a class="brand" href="#" id="home-link" aria-label="מבחן אניאגרמה, למסך הפתיחה">
+      <svg viewBox="0 0 40 40" width="36" height="36" aria-hidden="true"><circle cx="20" cy="20" r="17"/><path d="M20 3 35 28H5ZM31 7 37 20 9 33 9 7 37 20 31 33Z"/></svg>
+      <span>אניאגרמה</span>
+    </a>
+    <div class="header-actions"><button id="about-btn" class="text-btn">על המבחן</button><button id="theme-btn" class="icon-btn" aria-label="מעבר לתצוגה כהה" title="שינוי תצוגה"><svg viewBox="0 0 24 24" width="21" height="21" aria-hidden="true"><path d="M20 15.4A8.5 8.5 0 0 1 8.6 4 8.5 8.5 0 1 0 20 15.4Z"/></svg></button></div>
+  </header>
+  <main id="main" tabindex="-1">
+    <section id="start-screen" class="screen" aria-labelledby="start-title">
+      <div class="intro-grid">
+        <div class="intro-copy">
+          <h1 id="start-title" tabindex="-1">יש יותר מדרך אחת<br>להיות <span>עצמך.</span></h1>
+          <p class="lead">מה מניע אותך? מגלים את הטיפוס, הכנפיים והאינסטינקטים במפה אישית אחת.</p>
+          <div class="quiz-facts"><span>75 שאלות</span><span>כ-10 דקות</span><span>בקצב שלך</span></div>
+          <button id="start-btn" class="button primary large">מתחילים להכיר <span aria-hidden="true">←</span></button>
+          <label class="save-choice"><input type="checkbox" id="auto-save" checked> שמירת התקדמות במכשיר</label>
+          <div id="resume-box" class="resume-box" hidden><p id="resume-text"></p><button id="resume-btn" class="text-btn">להמשיך מהמקום שעצרתי</button></div>
+          <div id="saved-box" class="resume-box" hidden><p id="saved-text">יש במכשיר הזה תוצאה שמורה</p><button id="saved-btn" class="text-btn">לפתוח את התוצאה</button></div>
+        </div>
+        <div class="map-panel">
+          <div id="intro-wheel" class="wheel"></div>
+          <div class="map-explainer"><strong id="type-preview-title">מגלים את תשעת הטיפוסים</strong><p id="type-preview-text"></p></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="quiz-screen" class="screen" aria-labelledby="question-text" hidden>
+      <div class="quiz-layout">
+        <aside class="journey" aria-label="התקדמות במבחן"><h2>הדרך שלך</h2><ol id="chapter-list"></ol><button id="pause-btn" class="text-btn">שמירה ויציאה</button><p id="save-status" class="small" role="status"></p></aside>
+        <div class="question-area">
+          <div class="progress-caption"><span id="chapter-name"></span><span id="question-counter"></span></div>
+          <progress id="progress" value="0" max="75" aria-label="מספר השאלות שנענו"></progress>
+          <form id="answers-form">
+            <fieldset><legend id="question-text" tabindex="-1"></legend><p id="answer-hint" class="muted">עד כמה זה מתאר אותך?</p><div id="answers-container" class="answers" aria-describedby="answer-hint"></div></fieldset>
+            <p id="error-msg" class="error" role="alert" hidden>כדי להמשיך, צריך לבחור תשובה אחת.</p>
+            <div class="quiz-nav"><button type="button" id="prev-btn" class="button secondary">→ הקודם</button><button type="submit" id="next-btn" class="button primary">הבא ←</button></div>
+          </form>
+        </div>
+      </div>
+    </section>
+
+    <section id="results-screen" class="screen" aria-labelledby="results-title" hidden>
+      <div class="result-heading"><div><h1 id="results-title" tabindex="-1">המפה האישית שלך</h1><p id="result-date" class="muted"></p></div><button id="edit-btn" class="text-btn">חזרה לתשובות</button></div>
+      <div id="result-summary" class="result-summary"></div>
+      <div class="result-columns"><section class="result-section" aria-labelledby="scores-title"><h2 id="scores-title">תשעה דפוסים, מבט אחד</h2><p class="muted">המספרים מציגים מידת התאמה לתשובות, בסולם 0 עד 100. הם אינם אחוזי ודאות, ואינם אמורים להסתכם ב-100.</p><div id="type-scores" class="score-list"></div></section><section class="result-section" aria-labelledby="wing-heading"><h2 id="wing-heading">הגוונים שלצד הטיפוס</h2><div id="wing-result"></div></section></div>
+      <section class="instinct-section" aria-labelledby="instinct-heading"><div class="section-intro"><h2 id="instinct-heading">לאן תשומת הלב הולכת?</h2><p>לפי מודל האניאגרמה, שלושת האינסטינקטים קיימים בכולנו. כאן נבחנת מידת הקשב לכל תחום, בנפרד מהטיפוס.</p></div><div id="instinct-result"></div></section>
+      <section class="result-section" aria-labelledby="explore-heading"><h2 id="explore-heading">ומה אם טיפוס אחר מרגיש קרוב יותר?</h2><p class="muted">התוצאה היא התחלה לבדיקה. אפשר לקרוא על כל טיפוס ולהשוות את המניע, מעבר להתנהגות החיצונית.</p><div id="explore-types" class="type-tabs" role="group" aria-label="בחירת טיפוס לקריאה"></div><div id="type-detail" class="type-detail" aria-live="polite"></div></section>
+      <div class="export-panel"><div><h2>לקחת את התובנות איתך</h2><p>דוח אישי לקריאה חוזרת, לשמירה או להדפסה.</p></div><div class="export-actions"><button id="save-result-btn" class="button primary">שמירת התוצאה במכשיר</button><button id="download-btn" class="button secondary">הורדת דוח אישי</button><button id="print-btn" class="button secondary">הדפסה / PDF</button><button id="json-btn" class="text-btn">הורדת נתונים (JSON)</button></div><p id="export-status" class="small" role="status"></p></div>
+      <div class="result-footer"><button id="restart-btn" class="text-btn">להתחיל מבחן חדש</button><button id="clear-btn" class="text-btn">מחיקת הנתונים מהמכשיר</button></div>
+    </section>
+
+    <section id="about-panel" class="about-panel" hidden aria-labelledby="about-title"><h2 id="about-title" tabindex="-1">על המבחן והשיטה</h2><p>זהו כלי להתבוננות עצמית, לא אבחון פסיכולוגי. כדאי לענות לפי הדפוסים שלך לאורך זמן. אפשר לבחור תשובה עם המקשים 1 עד 5 ולהמשיך עם Enter.</p><details><summary>שמירה ופרטיות</summary><p>התשובות מעובדות בדפדפן ואינן נשלחות לשרת. השמירה האוטומטית נעשית במכשיר הזה, ואפשר לבטל אותה במסך הפתיחה. במכשיר משותף כדאי לבטל שמירה או למחוק את הנתונים בסיום. קובצי דוח שהורדו אינם נמחקים במחיקת נתוני האתר.</p></details><p>האניאגרמה מציעה תשעה דפוסי מוטיבציה. לכל טיפוס שני שכנים במעגל, הנקראים כנפיים. כנף היא השפעה אפשרית של שכן, ולא בהכרח הטיפוס שבמקום השני בתוצאה.</p><p>השאלון כולל 54 אמירות על הטיפוסים, שש לכל טיפוס, ו-21 אמירות על אינסטינקטים, שבע לכל תחום. השאלות נכתבו מחדש והורחבו בעברית מקורית. זה אינו שאלון RHETI או IVQ ואינו תרגום או גרסה רשמית שלהם.</p><p>שלושת תחומי הקשב הם שימור עצמי (SP), חברתי (SO), ומשיכה ועוצמה (SX). המינוח והפרשנות משתנים בין אסכולות. כאן לא מסיקים חברותיות מהאינסטינקט החברתי, ולא מסיקים את האינסטינקט מהטיפוס או מכישורים בין אישיים.</p><details><summary>איך מחושב הציון?</summary><p>כל תשובה מדורגת מ-1 עד 5. בכל סולם יש גם אמירה בכיוון ההפוך, שהניקוד שלה מתהפך. ממוצע התשובות מומר לסולם 0 עד 100. לכל סולם משקל עצמאי ושווה בין השאלות שבו.</p><p>פער קטן מ-8 נקודות בין המובילים מוצג כקרבה, ולא כהכרעה. זיהוי מוביל דורש גם ציון של 50 לפחות. כנף נבחנת רק בין שני השכנים של טיפוס מוביל, ודורשת פער של 8 נקודות וציון של 40 לפחות. סדר מלא של אינסטינקטים מוצג רק כאשר יש הפרדה גם בין המקום השני לשלישי.</p><p>אלה כללי תצוגה זהירים שנבחרו עבור הכלי, לא ספים שנקבעו במחקר פסיכומטרי. שאלון זה לא עבר תיקוף על מדגם אנושי. תשובות אחידות, קרבה בין ציונים או התאמה נמוכה אינן מוכרעות לטיפוס שרירותי.</p></details><details><summary>מה המחקר אומר, ועל מה התבססנו?</summary><p>סקירה שיטתית של 104 מדגמים מצאה ראיות מעורבות למהימנות ולתוקף האניאגרמה, ומעט מחקר שתומך בהיבטים כמו כנפיים. השימוש כאן הוא לסקרנות ולהתבוננות, ולא לקבלת החלטות טיפוליות או תעסוקתיות.</p><ul class="sources"><li><a href="https://www.enneagraminstitute.com/how-the-enneagram-system-works/" target="_blank" rel="noopener noreferrer">Enneagram Institute: מבנה המודל, כנפיים ואינסטינקטים</a></li><li><a href="https://www.enneagraminstitute.com/type-descriptions/" target="_blank" rel="noopener noreferrer">Enneagram Institute: תשעת הטיפוסים</a></li><li><a href="https://pubmed.ncbi.nlm.nih.gov/33332604/" target="_blank" rel="noopener noreferrer">Hook ועמיתיו, 2021: סקירת המחקר</a></li></ul><p class="small">נבדק בספטמבר 2026. סימולציות של סוכני AI משמשות לבדיקת ניסוח ולוגיקה בלבד ואינן ראיה לתוקף פסיכולוגי.</p></details><button id="close-about-btn" class="text-btn">סגירת ההסבר</button></section>
+    <p id="notice" class="notice" role="status" hidden></p>
+  </main>
+  <dialog id="confirm-dialog" aria-labelledby="confirm-title" aria-describedby="confirm-description"><h2 id="confirm-title">להתחיל מחדש?</h2><p id="confirm-description"></p><div class="dialog-actions"><button id="confirm-cancel" class="button secondary">ביטול</button><button id="confirm-ok" class="button primary">אישור</button></div></dialog>
+  <noscript><p class="notice">כדי לענות על המבחן ולחשב תוצאות, יש להפעיל JavaScript בדפדפן.</p></noscript>
+  <script id="enneagram-engine">/* INLINE_ENGINE */</script>
+  <script>/* INLINE_APP */</script>
+</body>
+</html>

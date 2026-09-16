@@ -1,0 +1,108 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-09-16T04:20:56.8789412+03:00",
+  "title": "Design System: Hebrew Enneagram Self-Reflection",
+  "extensions": {
+    "colorMeta": {
+      "accent": { "role": "primary", "displayName": "Reflective Violet", "canonical": "#5443a8", "tonalRamp": ["oklch(22% 0.10 290)", "oklch(32% 0.12 290)", "oklch(42% 0.13 290)", "#5443a8", "oklch(62% 0.12 290)", "oklch(74% 0.09 290)", "oklch(86% 0.05 290)", "oklch(95% 0.02 290)"] },
+      "map-lime": { "role": "secondary", "displayName": "Personal Map Lime", "canonical": "#e5eecb", "tonalRamp": ["oklch(20% 0.04 115)", "oklch(31% 0.05 115)", "oklch(43% 0.06 115)", "oklch(56% 0.07 115)", "oklch(68% 0.07 115)", "oklch(79% 0.06 115)", "#e5eecb", "oklch(95% 0.03 115)"] },
+      "instinct-mint": { "role": "tertiary", "displayName": "Instinct Mint", "canonical": "#e5f0ed", "tonalRamp": ["oklch(19% 0.025 175)", "oklch(31% 0.03 175)", "oklch(43% 0.035 175)", "oklch(56% 0.04 175)", "oklch(68% 0.04 175)", "oklch(80% 0.035 175)", "#e5f0ed", "oklch(96% 0.015 175)"] },
+      "paper": { "role": "neutral", "displayName": "Cool Paper", "canonical": "#f5f5fa", "tonalRamp": ["oklch(16% 0.01 285)", "oklch(28% 0.01 285)", "oklch(41% 0.01 285)", "oklch(54% 0.01 285)", "oklch(67% 0.01 285)", "oklch(80% 0.01 285)", "oklch(90% 0.01 285)", "#f5f5fa"] },
+      "ink": { "role": "neutral", "displayName": "Deep Ink", "canonical": "#29263d", "tonalRamp": ["oklch(15% 0.03 290)", "#29263d", "oklch(38% 0.03 290)", "oklch(50% 0.025 290)", "oklch(62% 0.02 290)", "oklch(74% 0.015 290)", "oklch(86% 0.01 290)", "oklch(95% 0.005 290)"] }
+    },
+    "typographyMeta": {
+      "display": { "displayName": "Display", "purpose": "Opening statement and major identity moments." },
+      "question": { "displayName": "Question", "purpose": "The active reflective prompt." },
+      "body": { "displayName": "Body", "purpose": "Questionnaire guidance and long-form results." }
+    },
+    "shadows": [],
+    "motion": [
+      { "name": "ease-standard", "value": "cubic-bezier(.16,1,.3,1)", "purpose": "Button lift, node scale, and map reveal." },
+      { "name": "state-fast", "value": "150ms", "purpose": "Button and answer state transitions." },
+      { "name": "map-reveal", "value": "700ms", "purpose": "Initial clipped reveal of the personal map when motion is allowed." }
+    ],
+    "breakpoints": [
+      { "name": "compact-desktop", "value": "900px" },
+      { "name": "mobile", "value": "650px" }
+    ]
+  },
+  "components": [
+    {
+      "name": "Primary Button",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "Main progression and save action.",
+      "html": "<button class=\"ds-btn-primary\">הבא ←</button>",
+      "css": ".ds-btn-primary{background:var(--accent,#5443a8);color:var(--on-accent,#fff);min-height:50px;padding:11px 23px;border:0;border-radius:9px;font:750 18px/1.4 Assistant,'Segoe UI',Arial,sans-serif;transition:background .15s,transform .15s cubic-bezier(.16,1,.3,1);cursor:pointer}.ds-btn-primary:hover{transform:translateY(-2px)}.ds-btn-primary:focus-visible{outline:3px solid var(--accent,#5443a8);outline-offset:5px}.ds-btn-primary:active{transform:translateY(0)}"
+    },
+    {
+      "name": "Secondary Button",
+      "kind": "button",
+      "refersTo": "button-secondary",
+      "description": "Previous, download, print, and cancel actions.",
+      "html": "<button class=\"ds-btn-secondary\">→ הקודם</button>",
+      "css": ".ds-btn-secondary{background:var(--surface,#fff);color:var(--ink,#29263d);min-height:50px;padding:11px 23px;border:1px solid var(--line,#d4d1df);border-radius:9px;font:750 18px/1.4 Assistant,'Segoe UI',Arial,sans-serif;transition:background .15s,transform .15s cubic-bezier(.16,1,.3,1);cursor:pointer}.ds-btn-secondary:hover{transform:translateY(-2px)}.ds-btn-secondary:focus-visible{outline:3px solid var(--accent,#5443a8);outline-offset:5px}.ds-btn-secondary:active{transform:translateY(0)}"
+    },
+    {
+      "name": "Answer Option",
+      "kind": "input",
+      "refersTo": "answer-option",
+      "description": "A native radio answer presented as a full-card target.",
+      "html": "<label class=\"ds-answer\" dir=\"rtl\"><input type=\"radio\" name=\"answer-demo\"><span class=\"ds-answer-dot\"></span><span>מתאר אותי מאוד</span></label>",
+      "css": ".ds-answer{position:relative;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:15px;min-height:121px;padding:15px 8px;border:1px solid var(--line,#d4d1df);border-radius:12px;background:var(--surface,#fff);color:var(--ink,#29263d);font:600 16px/1.35 Assistant,'Segoe UI',Arial,sans-serif;cursor:pointer;transition:background .15s,border-color .15s}.ds-answer:hover{border-color:var(--accent,#5443a8);background:var(--soft,#ebe7fa)}.ds-answer:has(input:checked){border:2px solid var(--accent,#5443a8);padding:14px 7px;background:var(--soft,#ebe7fa);color:var(--accent,#5443a8)}.ds-answer:has(input:focus-visible){outline:3px solid var(--accent,#5443a8);outline-offset:4px}.ds-answer input{position:absolute;opacity:0;width:1px;height:1px}.ds-answer-dot{width:25px;height:25px;border:1.5px solid var(--muted,#625e75);border-radius:50%;display:grid;place-items:center}.ds-answer input:checked+.ds-answer-dot{border-color:var(--accent,#5443a8);background:var(--accent,#5443a8)}.ds-answer input:checked+.ds-answer-dot:after{content:'';width:9px;height:9px;background:var(--on-accent,#fff);border-radius:50%}"
+    },
+    {
+      "name": "Map Node",
+      "kind": "custom",
+      "refersTo": "interactive-map-node",
+      "description": "Circular type selector used on the nine-point map.",
+      "html": "<button class=\"ds-map-node\" aria-pressed=\"false\">5</button>",
+      "css": ".ds-map-node{width:45px;height:45px;padding:0;border:1px solid transparent;border-radius:50%;background:var(--surface,#fff);color:var(--ink,#29263d);font:750 21px/1 Assistant,'Segoe UI',Arial,sans-serif;transition:background .2s,color .2s,scale .2s cubic-bezier(.16,1,.3,1);cursor:pointer}.ds-map-node:hover,.ds-map-node[aria-pressed=true]{background:var(--accent,#5443a8);color:var(--on-accent,#fff);scale:1.1}.ds-map-node:focus-visible{outline:3px solid var(--accent,#5443a8);outline-offset:5px}.ds-map-node:active{scale:1}"
+    },
+    {
+      "name": "Type Tab",
+      "kind": "chip",
+      "refersTo": "type-tab",
+      "description": "Compact selector for reading any of the nine result profiles.",
+      "html": "<button class=\"ds-type-tab\" aria-pressed=\"true\">5</button>",
+      "css": ".ds-type-tab{height:43px;min-width:43px;padding:0 13px;border:1px solid var(--line,#d4d1df);border-radius:8px;background:var(--surface,#fff);color:var(--ink,#29263d);font:700 18px Assistant,'Segoe UI',Arial,sans-serif;cursor:pointer}.ds-type-tab:hover{border-color:var(--accent,#5443a8)}.ds-type-tab[aria-pressed=true]{background:var(--accent,#5443a8);color:var(--on-accent,#fff);border-color:transparent}.ds-type-tab:focus-visible{outline:3px solid var(--accent,#5443a8);outline-offset:5px}"
+    },
+    {
+      "name": "Result Summary",
+      "kind": "card",
+      "refersTo": "result-summary",
+      "description": "The leading result and its cautious interpretation.",
+      "html": "<section class=\"ds-result\" dir=\"rtl\"><div class=\"ds-result-number\">5<small>הכיוון המוביל בתשובות</small></div><div><h2>כיוון להתבוננות</h2><p>הציון מציג התאמה לתשובות ואינו אחוז ודאות.</p></div></section>",
+      "css": ".ds-result{display:grid;grid-template-columns:160px 1fr;gap:32px;align-items:center;padding:36px;border-radius:20px;background:var(--soft,#ebe7fa);color:var(--ink,#29263d);font:18px/1.65 Assistant,'Segoe UI',Arial,sans-serif}.ds-result-number{font-size:88px;font-weight:800;line-height:1;text-align:center;color:var(--accent,#5443a8);border-inline-end:1px solid var(--line,#d4d1df);padding-inline-end:24px}.ds-result-number small{display:block;font-size:15px;font-weight:600;line-height:1.4;margin-top:12px}.ds-result h2{font-size:28px;line-height:1.2;margin:0 0 13px}.ds-result p{margin:0;color:var(--muted,#625e75)}.ds-result:focus-within{outline:3px solid var(--accent,#5443a8);outline-offset:5px}"
+    }
+  ],
+  "narrative": {
+    "northStar": "The Personal Map",
+    "overview": "The interface is an independent, portable Hebrew RTL questionnaire that frames self-reflection as exploring a map. Purple provides direction and selection; pale lime gives the nine-point map its own recognizable field. The opening stays intentionally lean: title, short lead, three facts, one action, one save choice, and the interactive map.\n\nThe five-chapter questionnaire favors native accessible forms and a quiet task surface. The results become denser because they must remain readable, useful, and candid about uncertainty. Scores are presented as fit, not diagnosis or statistical confidence. Progress and results stay local to the browser, and the downloaded report remains readable on its own.",
+    "keyCharacteristics": [
+      "Hebrew-first RTL composition with embedded Assistant typography",
+      "Purple action language paired with a pale lime personal-map field",
+      "Sparse opening and questionnaire screens, followed by a structured long-form report",
+      "Native controls, visible focus, error feedback, dark mode, reduced motion, and print support",
+      "Flat tonal hierarchy with borders and color fields instead of shadows"
+    ],
+    "rules": [
+      { "name": "The Semantic Pair Rule", "body": "Purple means action, progress, or selection; lime and mint identify reflective content regions.", "section": "colors" },
+      { "name": "The Theme Token Rule", "body": "Use the existing semantic variables for dark mode. Do not hard-code light values into interactive components.", "section": "colors" },
+      { "name": "The Hebrew Rhythm Rule", "body": "Preserve the generous body line height and balanced headings; compact metadata before compacting explanatory prose.", "section": "typography" },
+      { "name": "The Flat Surface Rule", "body": "Keep surfaces flat at rest. Use color, border, and spacing to express hierarchy.", "section": "elevation" }
+    ],
+    "dos": [
+      "Do keep the opening limited to its title, lead, facts, primary action, save choice, and map.",
+      "Do keep explanatory privacy, keyboard, method, and research material in About while retaining material uncertainty in results.",
+      "Do use native form semantics, visible focus, status roles, and RTL-aware logical properties.",
+      "Do preserve local-only progress and result language and the readable standalone report."
+    ],
+    "donts": [
+      "Don't add helper paragraphs or persistent success messages to the main task flow.",
+      "Don't use shadows or decorative gradients where the established tonal fields and borders provide hierarchy.",
+      "Don't force a definitive type, wing, or instinct interpretation when the result is close or weak.",
+      "Don't reduce answer targets below their implemented 55px mobile minimum."
+    ]
+  }
+}

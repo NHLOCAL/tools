@@ -1,0 +1,112 @@
+'use strict';
+const {chromium}=require(process.env.PLAYWRIGHT_MODULE||'playwright');
+const assert=require('node:assert/strict');
+const fs=require('node:fs/promises');
+const path=require('node:path');
+const os=require('node:os');
+const {pathToFileURL}=require('node:url');
+const E=require('./engine.js');
+
+(async()=>{
+  const out=process.argv[2]||await fs.mkdtemp(path.join(os.tmpdir(),'enneagram-qa-'));
+  await fs.mkdir(out,{recursive:true});
+  const url=pathToFileURL(path.resolve(__dirname,'../../tools/the_enneagram.html')).href;
+  const browser=await chromium.launch({headless:true});
+  const context=await browser.newContext({viewport:{width:1440,height:1050},colorScheme:'light',acceptDownloads:true});
+  const page=await context.newPage();
+  const errors=[],network=[];
+  page.on('pageerror',e=>errors.push(e.message));
+  page.on('request',r=>{if(/^https?:/.test(r.url()))network.push(r.url());});
+  // Applied to child frames too: verify the print action without opening an OS dialog.
+  await context.addInitScript(()=>{window.print=()=>{window.__printed=true;};});
+  try{
+    await page.goto(url);
+    await page.evaluate(()=>document.fonts.ready);
+    await page.screenshot({path:path.join(out,'desktop-start.png'),fullPage:true,animations:'disabled'});
+    await page.getByRole('button',{name:'טיפוס 5, החוקר',exact:true}).click();
+    assert.match(await page.locator('#type-preview-title').innerText(),/החוקר/);
+    await page.setViewportSize({width:390,height:844});
+    await page.screenshot({path:path.join(out,'mobile-start.png'),fullPage:true,animations:'disabled'});
+    assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth>innerWidth),false,'mobile landing overflow');
+    await page.getByRole('button',{name:/מתחילים להכיר/}).click();
+    await page.locator('#next-btn').click();
+    assert.equal(await page.locator('#error-msg').isVisible(),true,'unanswered item blocks navigation');
+    await page.screenshot({path:path.join(out,'mobile-question.png'),fullPage:true,animations:'disabled'});
+    await page.keyboard.press('5');await page.keyboard.press('Enter');
+    assert.match(await page.locator('#question-counter').innerText(),/שאלה 2 מתוך 75/);
+    await page.locator('#prev-btn').click();
+    assert.equal(await page.locator('input[name=answer]:checked').inputValue(),'5');
+    // A refresh must restore a selected answer even before pressing Next.
+    await page.reload();await page.locator('#resume-btn').click();
+    assert.equal(await page.locator('input[name=answer]:checked').inputValue(),'5');
+    await page.setViewportSize({width:1440,height:1050});
+    await page.screenshot({path:path.join(out,'desktop-question.png'),fullPage:true,animations:'disabled'});
+    const fixture=JSON.parse(await fs.readFile(path.join(__dirname,'validation/blind-a.json'),'utf8')).cases[0];
+    // Complete the actual 75-item UI; do not inject scores or answers into app state.
+    for(const answer of fixture.answers){
+      await page.locator(`input[name=answer][value="${answer}"]`).check();
+      await page.locator('#next-btn').click();
+    }
+    await page.locator('#results-title').waitFor({state:'visible'});
+    assert.match(await page.locator('#result-summary').innerText(),/טיפוס 1 · המתקן/);
+    assert.match(await page.locator('#wing-result').innerText(),/1w9/);
+    assert.match(await page.locator('#instinct-result').innerText(),/SP \/ SO \/ SX/);
+    await page.screenshot({path:path.join(out,'desktop-results.png'),fullPage:true,animations:'disabled'});
+    await page.setViewportSize({width:390,height:844});
+    assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth>innerWidth),false,'mobile results overflow');
+    await page.screenshot({path:path.join(out,'mobile-results.png'),fullPage:true,animations:'disabled'});
+    await page.locator('#save-result-btn').click();
+    assert.match(await page.locator('#export-status').innerText(),/התוצאה נשמרה/);
+    const [htmlDownload]=await Promise.all([page.waitForEvent('download'),page.locator('#download-btn').click()]);
+    const reportPath=path.join(out,htmlDownload.suggestedFilename());await htmlDownload.saveAs(reportPath);
+    const html=await fs.readFile(reportPath,'utf8');
+    for(const text of ['1w9','SP / SO / SX','כנף','מתוך 100','לא עבר תיקוף','ניסוי קטן','Hook'])assert.ok(html.includes(text),`report includes ${text}`);
+    assert.ok(!/<script|<link|<iframe/i.test(html),'download is self-contained inert HTML');
+    const [jsonDownload]=await Promise.all([page.waitForEvent('download'),page.locator('#json-btn').click()]);
+    const jsonPath=path.join(out,jsonDownload.suggestedFilename());await jsonDownload.saveAs(jsonPath);
+    const exported=JSON.parse(await fs.readFile(jsonPath,'utf8'));
+    assert.equal(exported.answers.length,75);assert.deepEqual(exported.result,E.score(fixture.answers));
+    await page.locator('#print-btn').click();
+    const printFrame=page.frameLocator('iframe[title="דוח אישי להדפסה"]');
+    await printFrame.locator('h1').waitFor({state:'attached'});
+    assert.match(await printFrame.locator('body').innerText(),/שיטה, גבולות ומקורות/);
+    await page.waitForFunction(()=>document.querySelector('iframe')?.contentWindow.__printed===true);
+    await page.reload();await page.locator('#saved-btn').click();
+    assert.match(await page.locator('#result-summary').innerText(),/טיפוס 1/);
+    await page.locator('#theme-btn').click();
+    assert.equal(await page.locator('html').getAttribute('data-theme'),'dark');
+    await page.screenshot({path:path.join(out,'mobile-dark-results.png'),fullPage:true,animations:'disabled'});
+    await page.locator('#edit-btn').click();
+    assert.equal(await page.locator('input[name=answer]:checked').inputValue(),String(fixture.answers[0]));
+    await page.locator('#pause-btn').click();
+    await page.locator('#start-btn').click();await page.locator('#confirm-cancel').click();
+    assert.equal(await page.locator('#resume-box').isVisible(),true,'cancel keeps draft');
+    await page.locator('#saved-btn').click();
+    await page.locator('#clear-btn').click();await page.locator('#confirm-ok').click();
+    assert.equal(await page.evaluate(()=>localStorage.getItem('nh-enneagram-v2-draft')),null);
+    assert.equal(await page.evaluate(()=>localStorage.getItem('nh-enneagram-v2-result')),null);
+    await page.reload();assert.equal(await page.locator('#saved-box').isVisible(),false);
+    assert.equal(await page.locator('#auto-save').isChecked(),false);
+    const report=await context.newPage();await report.goto(pathToFileURL(reportPath).href);
+    await report.pdf({path:path.join(out,'report-print.pdf'),format:'A4',printBackground:true});await report.close();
+    assert.deepEqual(errors,[]);assert.deepEqual(network,[],'tool makes no external requests');
+    const blocked=await browser.newContext({viewport:{width:390,height:844}});
+    await blocked.addInitScript(()=>{for(const key of ['getItem','setItem','removeItem'])Storage.prototype[key]=()=>{throw new DOMException('blocked','SecurityError');};});
+    const blockedPage=await blocked.newPage();await blockedPage.goto(url);await blockedPage.locator('#start-btn').click();
+    await blockedPage.locator('input[value="4"]').check();await blockedPage.locator('#next-btn').click();
+    assert.match(await blockedPage.locator('#notice').innerText(),/השמירה במכשיר אינה זמינה/);
+    assert.match(await blockedPage.locator('#question-counter').innerText(),/שאלה 2/);
+    await blocked.close();
+    const corrupt=await browser.newContext();const corruptPage=await corrupt.newPage();await corruptPage.goto(url);
+    await corruptPage.evaluate(()=>localStorage.setItem('nh-enneagram-v2-draft','{bad json'));await corruptPage.reload();
+    assert.match(await corruptPage.locator('#notice').innerText(),/נתוני שמירה פגומים/);
+    assert.equal(await corruptPage.evaluate(()=>localStorage.getItem('nh-enneagram-v2-draft')),null);
+    // The neutral control must stay unclassified on screen and in exports.
+    await corruptPage.evaluate(version=>localStorage.setItem('nh-enneagram-v2-draft',JSON.stringify({version,answers:Array(75).fill(3),index:74,screen:'results',updatedAt:'2026-09-16T10:00:00Z'})),E.VERSION);
+    await corruptPage.reload();await corruptPage.locator('#resume-btn').click();
+    assert.match(await corruptPage.locator('#result-summary').innerText(),/עוד אין כאן כיוון מוביל/);
+    assert.match(await corruptPage.locator('#wing-result').innerText(),/כדאי לברר קודם/);
+    await corrupt.close();
+    console.log(JSON.stringify({status:'PASS',questions:75,browserErrors:errors,externalRequests:network,output:out},null,2));
+  }finally{await browser.close();}
+})().catch(error=>{console.error(error);process.exitCode=1;});

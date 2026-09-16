@@ -1,0 +1,993 @@
+{
+  "schemaVersion": 1,
+  "round": 1,
+  "mode": "round1",
+  "engineVersion": "2.0.0",
+  "sha256": {
+    "engine": "9b4ea92c2275d181f70ec197ceda5852b31cf498865936a3ffe11f604d1c4bb5",
+    "blindQuestionnaire": "5fbe1d2f35249929ffb984db127cd1c7a050de9c86edbf788848cadabd57e1e3"
+  },
+  "thresholds": {
+    "typeGap": 8,
+    "wingGap": 8,
+    "instinctGap": 8
+  },
+  "sourceFiles": [
+    "blind-a.json",
+    "blind-b.json",
+    "blind-c.json",
+    "blind-d.json",
+    "blind-e.json"
+  ],
+  "summary": {
+    "primary": {
+      "correct": 9,
+      "correct_abstention": 1
+    },
+    "wing": {
+      "correct": 8,
+      "abstention": 1,
+      "correct_abstention": 1
+    },
+    "dominantInstinct": {
+      "correct": 9,
+      "correct_abstention": 1
+    },
+    "stack": {
+      "correct": 9,
+      "correct_abstention": 1
+    }
+  },
+  "cases": [
+    {
+      "id": "A1",
+      "sourceFile": "blind-a.json",
+      "expected": {
+        "primary": 1,
+        "wing": 9,
+        "dominantInstinct": "sp",
+        "stack": [
+          "sp",
+          "so",
+          "sx"
+        ]
+      },
+      "actual": {
+        "primary": 1,
+        "wing": 9,
+        "dominantInstinct": "sp",
+        "stack": [
+          "sp",
+          "so",
+          "sx"
+        ]
+      },
+      "evaluation": {
+        "primary": "correct",
+        "wing": "correct",
+        "dominantInstinct": "correct",
+        "stack": "correct"
+      },
+      "evidence": {
+        "primaryStatus": "suggested",
+        "primaryGap": 29.166666666666657,
+        "candidates": [
+          1
+        ],
+        "typeRanking": [
+          {
+            "key": "1",
+            "score": 100
+          },
+          {
+            "key": "9",
+            "score": 70.83333333333334
+          },
+          {
+            "key": "5",
+            "score": 62.5
+          },
+          {
+            "key": "6",
+            "score": 62.5
+          },
+          {
+            "key": "2",
+            "score": 37.5
+          },
+          {
+            "key": "8",
+            "score": 37.5
+          },
+          {
+            "key": "3",
+            "score": 33.333333333333336
+          },
+          {
+            "key": "4",
+            "score": 33.333333333333336
+          },
+          {
+            "key": "7",
+            "score": 25
+          }
+        ],
+        "wingStatus": "suggested",
+        "wingGap": 33.33333333333334,
+        "instinctStatus": "suggested",
+        "instinctGap": 39.28571428571429,
+        "stackClear": true,
+        "instinctRanking": [
+          {
+            "key": "sp",
+            "score": 100
+          },
+          {
+            "key": "so",
+            "score": 60.71428571428571
+          },
+          {
+            "key": "sx",
+            "score": 7.142857142857145
+          }
+        ],
+        "uniform": false
+      }
+    },
+    {
+      "id": "A2",
+      "sourceFile": "blind-a.json",
+      "expected": {
+        "primary": 2,
+        "wing": 1,
+        "dominantInstinct": "so",
+        "stack": [
+          "so",
+          "sp",
+          "sx"
+        ]
+      },
+      "actual": {
+        "primary": 2,
+        "wing": 1,
+        "dominantInstinct": "so",
+        "stack": [
+          "so",
+          "sp",
+          "sx"
+        ]
+      },
+      "evaluation": {
+        "primary": "correct",
+        "wing": "correct",
+        "dominantInstinct": "correct",
+        "stack": "correct"
+      },
+      "evidence": {
+        "primaryStatus": "suggested",
+        "primaryGap": 12.5,
+        "candidates": [
+          2
+        ],
+        "typeRanking": [
+          {
+            "key": "2",
+            "score": 100
+          },
+          {
+            "key": "1",
+            "score": 87.5
+          },
+          {
+            "key": "9",
+            "score": 75
+          },
+          {
+            "key": "6",
+            "score": 50
+          },
+          {
+            "key": "3",
+            "score": 45.833333333333336
+          },
+          {
+            "key": "8",
+            "score": 41.666666666666664
+          },
+          {
+            "key": "4",
+            "score": 29.166666666666664
+          },
+          {
+            "key": "5",
+            "score": 25
+          },
+          {
+            "key": "7",
+            "score": 25
+          }
+        ],
+        "wingStatus": "suggested",
+        "wingGap": 41.666666666666664,
+        "instinctStatus": "suggested",
+        "instinctGap": 46.42857142857143,
+        "stackClear": true,
+        "instinctRanking": [
+          {
+            "key": "so",
+            "score": 100
+          },
+          {
+            "key": "sp",
+            "score": 53.57142857142857
+          },
+          {
+            "key": "sx",
+            "score": 10.714285714285715
+          }
+        ],
+        "uniform": false
+      }
+    },
+    {
+      "id": "B1",
+      "sourceFile": "blind-b.json",
+      "expected": {
+        "primary": 3,
+        "wing": 2,
+        "dominantInstinct": "so",
+        "stack": [
+          "so",
+          "sx",
+          "sp"
+        ]
+      },
+      "actual": {
+        "primary": 3,
+        "wing": 2,
+        "dominantInstinct": "so",
+        "stack": [
+          "so",
+          "sx",
+          "sp"
+        ]
+      },
+      "evaluation": {
+        "primary": "correct",
+        "wing": "correct",
+        "dominantInstinct": "correct",
+        "stack": "correct"
+      },
+      "evidence": {
+        "primaryStatus": "suggested",
+        "primaryGap": 25,
+        "candidates": [
+          3
+        ],
+        "typeRanking": [
+          {
+            "key": "3",
+            "score": 100
+          },
+          {
+            "key": "2",
+            "score": 75
+          },
+          {
+            "key": "7",
+            "score": 66.66666666666666
+          },
+          {
+            "key": "8",
+            "score": 54.166666666666664
+          },
+          {
+            "key": "1",
+            "score": 50
+          },
+          {
+            "key": "6",
+            "score": 41.666666666666664
+          },
+          {
+            "key": "4",
+            "score": 29.166666666666664
+          },
+          {
+            "key": "9",
+            "score": 29.166666666666664
+          },
+          {
+            "key": "5",
+            "score": 25
+          }
+        ],
+        "wingStatus": "suggested",
+        "wingGap": 45.833333333333336,
+        "instinctStatus": "suggested",
+        "instinctGap": 21.428571428571416,
+        "stackClear": true,
+        "instinctRanking": [
+          {
+            "key": "so",
+            "score": 100
+          },
+          {
+            "key": "sx",
+            "score": 78.57142857142858
+          },
+          {
+            "key": "sp",
+            "score": 3.57142857142857
+          }
+        ],
+        "uniform": false
+      }
+    },
+    {
+      "id": "B2",
+      "sourceFile": "blind-b.json",
+      "expected": {
+        "primary": 4,
+        "wing": 5,
+        "dominantInstinct": "sx",
+        "stack": [
+          "sx",
+          "sp",
+          "so"
+        ]
+      },
+      "actual": {
+        "primary": 4,
+        "wing": 5,
+        "dominantInstinct": "sx",
+        "stack": [
+          "sx",
+          "sp",
+          "so"
+        ]
+      },
+      "evaluation": {
+        "primary": "correct",
+        "wing": "correct",
+        "dominantInstinct": "correct",
+        "stack": "correct"
+      },
+      "evidence": {
+        "primaryStatus": "suggested",
+        "primaryGap": 8.333333333333329,
+        "candidates": [
+          4
+        ],
+        "typeRanking": [
+          {
+            "key": "4",
+            "score": 100
+          },
+          {
+            "key": "5",
+            "score": 91.66666666666667
+          },
+          {
+            "key": "1",
+            "score": 66.66666666666666
+          },
+          {
+            "key": "6",
+            "score": 62.5
+          },
+          {
+            "key": "8",
+            "score": 45.833333333333336
+          },
+          {
+            "key": "9",
+            "score": 37.5
+          },
+          {
+            "key": "2",
+            "score": 33.333333333333336
+          },
+          {
+            "key": "7",
+            "score": 33.333333333333336
+          },
+          {
+            "key": "3",
+            "score": 16.666666666666668
+          }
+        ],
+        "wingStatus": "suggested",
+        "wingGap": 75,
+        "instinctStatus": "suggested",
+        "instinctGap": 28.57142857142857,
+        "stackClear": true,
+        "instinctRanking": [
+          {
+            "key": "sx",
+            "score": 100
+          },
+          {
+            "key": "sp",
+            "score": 71.42857142857143
+          },
+          {
+            "key": "so",
+            "score": 14.285714285714285
+          }
+        ],
+        "uniform": false
+      }
+    },
+    {
+      "id": "C1",
+      "sourceFile": "blind-c.json",
+      "expected": {
+        "primary": 5,
+        "wing": 6,
+        "dominantInstinct": "sp",
+        "stack": [
+          "sp",
+          "so",
+          "sx"
+        ]
+      },
+      "actual": {
+        "primary": 5,
+        "wing": 6,
+        "dominantInstinct": "sp",
+        "stack": [
+          "sp",
+          "so",
+          "sx"
+        ]
+      },
+      "evaluation": {
+        "primary": "correct",
+        "wing": "correct",
+        "dominantInstinct": "correct",
+        "stack": "correct"
+      },
+      "evidence": {
+        "primaryStatus": "suggested",
+        "primaryGap": 29.166666666666657,
+        "candidates": [
+          5
+        ],
+        "typeRanking": [
+          {
+            "key": "5",
+            "score": 100
+          },
+          {
+            "key": "6",
+            "score": 70.83333333333334
+          },
+          {
+            "key": "8",
+            "score": 62.5
+          },
+          {
+            "key": "1",
+            "score": 58.333333333333336
+          },
+          {
+            "key": "4",
+            "score": 33.333333333333336
+          },
+          {
+            "key": "9",
+            "score": 33.333333333333336
+          },
+          {
+            "key": "3",
+            "score": 16.666666666666668
+          },
+          {
+            "key": "2",
+            "score": 8.333333333333332
+          },
+          {
+            "key": "7",
+            "score": 8.333333333333332
+          }
+        ],
+        "wingStatus": "suggested",
+        "wingGap": 37.50000000000001,
+        "instinctStatus": "suggested",
+        "instinctGap": 46.42857142857143,
+        "stackClear": true,
+        "instinctRanking": [
+          {
+            "key": "sp",
+            "score": 100
+          },
+          {
+            "key": "so",
+            "score": 53.57142857142857
+          },
+          {
+            "key": "sx",
+            "score": 0
+          }
+        ],
+        "uniform": false
+      }
+    },
+    {
+      "id": "C2",
+      "sourceFile": "blind-c.json",
+      "expected": {
+        "primary": 6,
+        "wing": 5,
+        "dominantInstinct": "so",
+        "stack": [
+          "so",
+          "sp",
+          "sx"
+        ]
+      },
+      "actual": {
+        "primary": 6,
+        "wing": 5,
+        "dominantInstinct": "so",
+        "stack": [
+          "so",
+          "sp",
+          "sx"
+        ]
+      },
+      "evaluation": {
+        "primary": "correct",
+        "wing": "correct",
+        "dominantInstinct": "correct",
+        "stack": "correct"
+      },
+      "evidence": {
+        "primaryStatus": "suggested",
+        "primaryGap": 25,
+        "candidates": [
+          6
+        ],
+        "typeRanking": [
+          {
+            "key": "6",
+            "score": 100
+          },
+          {
+            "key": "1",
+            "score": 75
+          },
+          {
+            "key": "8",
+            "score": 75
+          },
+          {
+            "key": "5",
+            "score": 66.66666666666666
+          },
+          {
+            "key": "4",
+            "score": 29.166666666666664
+          },
+          {
+            "key": "2",
+            "score": 25
+          },
+          {
+            "key": "3",
+            "score": 25
+          },
+          {
+            "key": "9",
+            "score": 25
+          },
+          {
+            "key": "7",
+            "score": 8.333333333333332
+          }
+        ],
+        "wingStatus": "suggested",
+        "wingGap": 58.33333333333333,
+        "instinctStatus": "suggested",
+        "instinctGap": 21.428571428571416,
+        "stackClear": true,
+        "instinctRanking": [
+          {
+            "key": "so",
+            "score": 100
+          },
+          {
+            "key": "sp",
+            "score": 78.57142857142858
+          },
+          {
+            "key": "sx",
+            "score": 0
+          }
+        ],
+        "uniform": false
+      }
+    },
+    {
+      "id": "D1",
+      "sourceFile": "blind-d.json",
+      "expected": {
+        "primary": 7,
+        "wing": 8,
+        "dominantInstinct": "sx",
+        "stack": [
+          "sx",
+          "so",
+          "sp"
+        ]
+      },
+      "actual": {
+        "primary": 7,
+        "wing": 8,
+        "dominantInstinct": "sx",
+        "stack": [
+          "sx",
+          "so",
+          "sp"
+        ]
+      },
+      "evaluation": {
+        "primary": "correct",
+        "wing": "correct",
+        "dominantInstinct": "correct",
+        "stack": "correct"
+      },
+      "evidence": {
+        "primaryStatus": "suggested",
+        "primaryGap": 12.5,
+        "candidates": [
+          7
+        ],
+        "typeRanking": [
+          {
+            "key": "7",
+            "score": 100
+          },
+          {
+            "key": "8",
+            "score": 87.5
+          },
+          {
+            "key": "3",
+            "score": 37.5
+          },
+          {
+            "key": "4",
+            "score": 33.333333333333336
+          },
+          {
+            "key": "6",
+            "score": 33.333333333333336
+          },
+          {
+            "key": "1",
+            "score": 29.166666666666664
+          },
+          {
+            "key": "2",
+            "score": 25
+          },
+          {
+            "key": "9",
+            "score": 8.333333333333332
+          },
+          {
+            "key": "5",
+            "score": 4.166666666666669
+          }
+        ],
+        "wingStatus": "suggested",
+        "wingGap": 54.166666666666664,
+        "instinctStatus": "suggested",
+        "instinctGap": 28.57142857142857,
+        "stackClear": true,
+        "instinctRanking": [
+          {
+            "key": "sx",
+            "score": 100
+          },
+          {
+            "key": "so",
+            "score": 71.42857142857143
+          },
+          {
+            "key": "sp",
+            "score": 0
+          }
+        ],
+        "uniform": false
+      }
+    },
+    {
+      "id": "D2",
+      "sourceFile": "blind-d.json",
+      "expected": {
+        "primary": 8,
+        "wing": 9,
+        "dominantInstinct": "sp",
+        "stack": [
+          "sp",
+          "sx",
+          "so"
+        ]
+      },
+      "actual": {
+        "primary": 8,
+        "wing": null,
+        "dominantInstinct": "sp",
+        "stack": [
+          "sp",
+          "sx",
+          "so"
+        ]
+      },
+      "evaluation": {
+        "primary": "correct",
+        "wing": "abstention",
+        "dominantInstinct": "correct",
+        "stack": "correct"
+      },
+      "evidence": {
+        "primaryStatus": "suggested",
+        "primaryGap": 41.666666666666664,
+        "candidates": [
+          8
+        ],
+        "typeRanking": [
+          {
+            "key": "8",
+            "score": 100
+          },
+          {
+            "key": "1",
+            "score": 58.333333333333336
+          },
+          {
+            "key": "6",
+            "score": 58.333333333333336
+          },
+          {
+            "key": "5",
+            "score": 50
+          },
+          {
+            "key": "4",
+            "score": 37.5
+          },
+          {
+            "key": "2",
+            "score": 29.166666666666664
+          },
+          {
+            "key": "7",
+            "score": 25
+          },
+          {
+            "key": "9",
+            "score": 25
+          },
+          {
+            "key": "3",
+            "score": 20.833333333333332
+          }
+        ],
+        "wingStatus": "weak",
+        "wingGap": 0,
+        "instinctStatus": "suggested",
+        "instinctGap": 28.57142857142857,
+        "stackClear": true,
+        "instinctRanking": [
+          {
+            "key": "sp",
+            "score": 100
+          },
+          {
+            "key": "sx",
+            "score": 71.42857142857143
+          },
+          {
+            "key": "so",
+            "score": 17.857142857142854
+          }
+        ],
+        "uniform": false
+      }
+    },
+    {
+      "id": "E1",
+      "sourceFile": "blind-e.json",
+      "expected": {
+        "primary": 9,
+        "wing": 1,
+        "dominantInstinct": "so",
+        "stack": [
+          "so",
+          "sp",
+          "sx"
+        ]
+      },
+      "actual": {
+        "primary": 9,
+        "wing": 1,
+        "dominantInstinct": "so",
+        "stack": [
+          "so",
+          "sp",
+          "sx"
+        ]
+      },
+      "evaluation": {
+        "primary": "correct",
+        "wing": "correct",
+        "dominantInstinct": "correct",
+        "stack": "correct"
+      },
+      "evidence": {
+        "primaryStatus": "suggested",
+        "primaryGap": 16.66666666666667,
+        "candidates": [
+          9
+        ],
+        "typeRanking": [
+          {
+            "key": "9",
+            "score": 100
+          },
+          {
+            "key": "1",
+            "score": 83.33333333333333
+          },
+          {
+            "key": "2",
+            "score": 58.333333333333336
+          },
+          {
+            "key": "7",
+            "score": 54.166666666666664
+          },
+          {
+            "key": "5",
+            "score": 45.833333333333336
+          },
+          {
+            "key": "6",
+            "score": 45.833333333333336
+          },
+          {
+            "key": "4",
+            "score": 25
+          },
+          {
+            "key": "8",
+            "score": 25
+          },
+          {
+            "key": "3",
+            "score": 20.833333333333332
+          }
+        ],
+        "wingStatus": "suggested",
+        "wingGap": 58.33333333333333,
+        "instinctStatus": "suggested",
+        "instinctGap": 46.42857142857143,
+        "stackClear": true,
+        "instinctRanking": [
+          {
+            "key": "so",
+            "score": 100
+          },
+          {
+            "key": "sp",
+            "score": 53.57142857142857
+          },
+          {
+            "key": "sx",
+            "score": 17.857142857142854
+          }
+        ],
+        "uniform": false
+      }
+    },
+    {
+      "id": "E2",
+      "sourceFile": "blind-e.json",
+      "expected": {
+        "primary": null,
+        "wing": null,
+        "dominantInstinct": null,
+        "stack": null
+      },
+      "actual": {
+        "primary": null,
+        "wing": null,
+        "dominantInstinct": null,
+        "stack": null
+      },
+      "evaluation": {
+        "primary": "correct_abstention",
+        "wing": "correct_abstention",
+        "dominantInstinct": "correct_abstention",
+        "stack": "correct_abstention"
+      },
+      "evidence": {
+        "primaryStatus": "undifferentiated",
+        "primaryGap": 0,
+        "candidates": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9
+        ],
+        "typeRanking": [
+          {
+            "key": "1",
+            "score": 50
+          },
+          {
+            "key": "2",
+            "score": 50
+          },
+          {
+            "key": "3",
+            "score": 50
+          },
+          {
+            "key": "4",
+            "score": 50
+          },
+          {
+            "key": "5",
+            "score": 50
+          },
+          {
+            "key": "6",
+            "score": 50
+          },
+          {
+            "key": "7",
+            "score": 50
+          },
+          {
+            "key": "8",
+            "score": 50
+          },
+          {
+            "key": "9",
+            "score": 50
+          }
+        ],
+        "wingStatus": null,
+        "wingGap": null,
+        "instinctStatus": "undifferentiated",
+        "instinctGap": 0,
+        "stackClear": false,
+        "instinctRanking": [
+          {
+            "key": "sp",
+            "score": 50
+          },
+          {
+            "key": "so",
+            "score": 50
+          },
+          {
+            "key": "sx",
+            "score": 50
+          }
+        ],
+        "uniform": true
+      }
+    }
+  ]
+}
