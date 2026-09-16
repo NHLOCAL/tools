@@ -8,15 +8,16 @@ const profiles = require('./profiles.json');
 const q = data.questions;
 const ideal = type => q.map(item => type.includes(item.aPole) ? 1 : 5);
 
-test('64 unique interleaved items, 16 per axis, balanced option order', () => {
-  assert.equal(q.length,64); assert.equal(data.chapters.length,8);
-  assert.equal(new Set(q.map(x=>x.text)).size,64);
+test('56 unique interleaved items, 14 per axis, balanced option order', () => {
+  assert.equal(q.length,56); assert.equal(data.chapters.length,7);
+  assert.equal(new Set(q.map(x=>x.text)).size,56);
   q.forEach((item,i)=>{assert.equal(item.id,i+1);assert.ok(item.axis.includes(item.aPole));assert.ok(item.text&&item.a&&item.b);});
   for(const axis of axes){
-    const items=q.filter(x=>x.axis===axis.id);assert.equal(items.length,16);
-    assert.equal(items.filter(x=>x.aPole===axis.id[0]).length,8);
-    assert.ok(new Set(items.map(x=>x.facet)).size>=4);
-    for(let i=0;i<8;i++)assert.equal(q.slice(i*8,i*8+8).filter(x=>x.axis===axis.id).length,2);
+    const items=q.filter(x=>x.axis===axis.id);assert.equal(items.length,14);
+    assert.equal(items.filter(x=>x.aPole===axis.id[0]).length,7);
+    assert.ok(new Set(items.map(x=>x.facet)).size>=7);
+    for(const facet of new Set(items.map(x=>x.facet)))assert.ok(items.filter(x=>x.facet===facet).length<=2);
+    for(let i=0;i<data.chapters.length;i++)assert.equal(q.slice(i*8,i*8+8).filter(x=>x.axis===axis.id).length,2);
   }
 });
 test('all Hebrew codes and type names exactly match the supplied table', () => {
@@ -27,11 +28,11 @@ test('all Hebrew codes and type names exactly match the supplied table', () => {
 test('all 16 oriented profiles classify correctly at strong and moderate intensity', () => {
   for(const type of Object.keys(profiles)){
     const a=ideal(type),r=score(q,a);assert.equal(r.code,type);assert.deepEqual(r.candidates,[type]);
-    assert.ok(r.axes.every(x=>Math.abs(x.sum)===32));assert.equal(score(q,a.map(v=>v===1?2:4)).code,type);
+    assert.ok(r.axes.every(x=>Math.abs(x.sum)===28));assert.equal(score(q,a.map(v=>v===1?2:4)).code,type);
   }
 });
 test('midpoint and uniform position responses never receive an arbitrary type', () => {
-  for(const value of [1,2,3,4,5]){const r=score(q,Array(64).fill(value));assert.equal(r.code,'XXXX');assert.equal(r.candidates.length,16);assert.ok(r.axes.every(a=>a.firstPercent===50));}
+  for(const value of [1,2,3,4,5]){const r=score(q,Array(q.length).fill(value));assert.equal(r.code,'XXXX');assert.equal(r.candidates.length,16);assert.ok(r.axes.every(a=>a.firstPercent===50));}
 });
 test('changing option order or item order preserves results', () => {
   const a=ideal('ISFP');a[0]=3;a[20]=2;
@@ -43,21 +44,42 @@ test('a tied axis is X and alternatives expand only uncertain axes', () => {
   const a=ideal('ENTJ');q.forEach((item,i)=>{if(item.axis==='EI')a[i]=3;});
   const r=score(q,a);assert.equal(r.code,'XNTJ');assert.deepEqual(new Set(r.candidates),new Set(['ENTJ','INTJ']));
   const positions=q.flatMap((item,i)=>item.axis==='EI'?[i]:[]);
-  for(const i of positions.slice(0,4))a[i]=ideal('ENTJ')[i];
+  for(const i of positions.slice(0,3))a[i]=ideal('ENTJ')[i];
+  a[positions[3]]=ideal('ENTJ')[positions[3]]===1?2:4;
   const boundary=score(q,a);assert.equal(boundary.axes[0].normalized,.25);assert.equal(boundary.candidates.length,2);
-  a[positions[4]]=ideal('ENTJ')[positions[4]];assert.deepEqual(score(q,a).candidates,['ENTJ']);
+  a[positions[3]]=ideal('ENTJ')[positions[3]];assert.deepEqual(score(q,a).candidates,['ENTJ']);
 });
 test('invalid, incomplete, sparse and non-numeric answers are rejected', () => {
-  for(const a of [null,[],Array(63).fill(3),Array(65).fill(3),Array(64),Array(64).fill(null),Array(64).fill('3'),Array(64).fill(0),Array(64).fill(6),Array(64).fill(2.5),Array(64).fill(NaN)])assert.throws(()=>score(q,a));
+  for(const a of [null,[],Array(q.length-1).fill(3),Array(q.length+1).fill(3),Array(q.length),Array(q.length).fill(null),Array(q.length).fill('3'),Array(q.length).fill(0),Array(q.length).fill(6),Array(q.length).fill(2.5),Array(q.length).fill(NaN)])assert.throws(()=>score(q,a));
 });
 test('source and standalone assets contain no forbidden punctuation or external dependencies', () => {
   for(const file of ['page.html','questions.json','profiles.json','styles.css','scoring.js','app.js'])assert.ok(!/[\u2014\u05be]/u.test(fs.readFileSync(path.join(__dirname,file),'utf8')),file);
   const html=fs.readFileSync(path.join(__dirname,'../../tools/the_16_types.html'),'utf8');
   assert.ok(!/<script[^>]+src=|<link[^>]+rel="stylesheet"|@import|fetch\(/.test(html));
 });
-test('blind Sol medium regression fixtures match all 16 intended profiles', () => {
+test('historical blind Sol fixtures remain reproducible with unchanged scoring keys', () => {
   const fixtures=require('./validation-fixtures.json');assert.equal(fixtures.profiles.length,16);
   assert.equal(new Set(fixtures.profiles.map(p=>p.target)).size,16);
-  assert.equal(fixtures.questionHash,require('node:crypto').createHash('sha256').update(JSON.stringify(q)).digest('hex'));
-  for(const p of fixtures.profiles)assert.equal(score(q,p.answers).code,p.target,p.target);
+  const original=require('./validation-questions.v1.json');
+  assert.equal(fixtures.questionHash,require('node:crypto').createHash('sha256').update(JSON.stringify(original)).digest('hex'));
+  assert.deepEqual(q.map(({sourceId,axis,aPole})=>({id:sourceId,axis,aPole})),q.map(q=>original.find(o=>o.id===q.sourceId)).map(({id,axis,aPole})=>({id,axis,aPole})));
+  for(const p of fixtures.profiles)assert.equal(score(original,p.answers).code,p.target,p.target);
+  for(const p of fixtures.profiles)assert.equal(score(original,p.answers).code,p.target,p.target);
+});
+
+test('Terra observations reproduce the retained-item scores without fitting targets', () => {
+  const crypto=require('node:crypto');
+  for(const round of [1,2]){
+    const f=require('./terra-validation-round'+round+'.json');
+    assert.equal(f.questionHash,crypto.createHash('sha256').update(JSON.stringify(f.questions)).digest('hex'));
+    assert.equal(new Set(f.profiles.map(p=>p.target)).size,16);
+    for(const p of f.profiles){assert.equal(p.answers.length,f.questions.length);score(f.questions,p.answers);}
+  }
+  const f=require('./terra-validation-round2.json'), report=require('./terra-validation-report.json');
+  assert.equal(report.questionHash,crypto.createHash('sha256').update(JSON.stringify(q)).digest('hex'));
+  for(const p of f.profiles){
+    const mapped=q.map(item=>p.answers[f.questions.findIndex(old=>old.id===item.sourceId)]);
+    const r=score(q,mapped), expected=report.profiles.find(row=>row.target===p.target);
+    assert.equal(r.code,expected.result);assert.deepEqual(r.candidates,expected.candidates);
+  }
 });

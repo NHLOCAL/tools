@@ -54,7 +54,7 @@
   }
   function renderQuestion() {
     const q = questions[current], chapter = Math.floor(current / 8);
-    $('chapter-label').textContent = `פרק ${chapter + 1} מתוך 8 · ${MBTI_DATA.chapters[chapter]}`;
+    $('chapter-label').textContent = `פרק ${chapter + 1} מתוך ${MBTI_DATA.chapters.length} · ${MBTI_DATA.chapters[chapter]}`;
     $('question-counter').textContent = `שאלה ${current + 1} מתוך ${questions.length}`;
     $('question-heading').textContent = q.text;
     $('option-a').textContent = q.a; $('option-b').textContent = q.b;
@@ -94,7 +94,7 @@
     $('profile-card').innerHTML = tied ? `<div class="profile-top"><bdi class="type-code">${result.code}</bdi></div><h3>אין טיפוס יחיד בתוצאה הזו</h3><p>האות X מסמנת ציר שבו התקבל שוויון. לא בחרנו עבורך צד שרירותי, ולכן אין כאן תיאור של טיפוס יחיד.</p><p>אפשר לעיין בצירופים המוצעים בהמשך, ולחשוב איזו העדפה חוזרת בחיים שלך כשיש חופש לבחור.</p><div class="experiment"><h4>אפשר לנסות השבוע</h4><p>לתעד שלושה רגעים של בחירה חופשית: מה בחרת, למה, והאם זו הייתה העדפה או דרישה של המצב.</p></div>` : profileHTML(result.code);
     $('axis-results').innerHTML = result.axes.map(a => `<section class="axis-row"><div class="axis-title"><b>${a.title}</b><span>${a.label}</span></div><div class="axis-labels"><span><strong>${a.labels[0]}</strong> <bdi>${a.id[0]} · ${a.firstPercent}%</bdi></span><span><strong>${a.labels[1]}</strong> <bdi>${a.id[1]} · ${a.secondPercent}%</bdi></span></div><div class="axis-bar" role="img" aria-label="${a.labels[0]} ${a.firstPercent} אחוז, ${a.labels[1]} ${a.secondPercent} אחוז"><i style="width:${a.firstPercent}%"></i></div><p class="axis-explain">${a.labels[0]}: ${a.explanations[0]}<br>${a.labels[1]}: ${a.explanations[1]}</p></section>`).join('');
     const notices = [];
-    if (result.neutralCount >= 32) notices.push('בחלק גדול מהשאלות נבחר האמצע. ייתכן ששתי האפשרויות מתאימות לך או שההעדפות משתנות בין מצבים. כדאי לתת לתיאורים משקל מוגבל');
+    if (result.neutralCount >= questions.length / 2) notices.push('בחלק גדול מהשאלות נבחר האמצע. ייתכן ששתי האפשרויות מתאימות לך או שההעדפות משתנות בין מצבים. כדאי לתת לתיאורים משקל מוגבל');
     if (result.straightLine && result.neutralCount === 0) notices.push('נבחרה אותה עמדה בכל השאלות. מכיוון שכיוון האפשרויות מתחלף, התוצאה מאוזנת. כדאי לעבור על התשובות ולבדוק שהבחירות מבטאות את ההעדפות שלך');
     const close = result.axes.filter(a => a.close);
     if (close.length && !tied) notices.push(`בצירים ${close.map(a=>a.labels.join(' / ')).join(', ')} הנטייה קרובה לאמצע. שינוי בכמה תשובות עשוי לשנות את האות המתאימה`);
