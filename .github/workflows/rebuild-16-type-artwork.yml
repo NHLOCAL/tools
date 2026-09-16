@@ -28,6 +28,26 @@ jobs:
           node-version: '22'
       - name: Install the existing site build dependency
         run: python -m pip install -r requirements.txt
+      - name: Identify already-stale generated outputs before changing artwork
+        run: |
+          python build.py
+          python - <<'PY'
+          import difflib, hashlib, json, pathlib, subprocess
+          changed = subprocess.check_output(['git', 'diff', '--name-only'], text=True).splitlines()
+          baseline = {}
+          for name in changed:
+              data = pathlib.Path(name).read_bytes()
+              baseline[name] = hashlib.sha256(data).hexdigest()
+              print('Pre-existing generated difference:', name)
+              if name.startswith('tools/') and name.endswith('.html'):
+                  before = subprocess.check_output(['git', 'show', 'HEAD:' + name]).decode()
+                  after = data.decode()
+                  assert before.partition('</head>')[2] == after.partition('</head>')[2], name + ': body changed unexpectedly'
+                  for line in difflib.unified_diff(before.splitlines(), after.splitlines(), n=2):
+                      print(line[:300])
+          pathlib.Path('/tmp/preexisting-generated.json').write_text(json.dumps(baseline))
+          PY
+          git restore .
       - name: Regenerate artwork and its standalone consumers
         run: |
           python scripts/redraw_16_type_illustrations.py
@@ -51,11 +71,17 @@ jobs:
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
           git add assets/illustrations/16-types/*.svg tools/the_16_types.html assets/downloads/the_16_types.js catalog
-          if ! git diff --quiet; then
-            echo 'Unexpected changes outside the illustration build outputs:'
-            git diff --name-only
-            exit 1
-          fi
+          python - <<'PY'
+          import hashlib, json, pathlib, subprocess
+          baseline = json.loads(pathlib.Path('/tmp/preexisting-generated.json').read_text())
+          remaining = subprocess.check_output(['git', 'diff', '--name-only'], text=True).splitlines()
+          for name in remaining:
+              actual = hashlib.sha256(pathlib.Path(name).read_bytes()).hexdigest()
+              assert baseline.get(name) == actual, 'Unexpected non-artwork change: ' + name
+              print('Synchronizing unchanged pre-existing generated output:', name)
+              subprocess.run(['git', 'add', '--', name], check=True)
+          PY
+          if ! git diff --quiet; then exit 1; fi
           if git diff --cached --quiet; then exit 0; fi
-          git commit -m 'Rebuild all 16 SVG illustrations and standalone test outputs'
+          git commit -m 'Rebuild all 16 SVG illustrations and synchronize generated outputs'
           git push origin HEAD:refs/heads/codex/redesign-16-type-illustrations
