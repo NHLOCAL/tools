@@ -1,2 +1,4 @@
 # Auto detect text files and perform LF normalization
 * text=auto
+# Keep Windows script downloads byte-identical on every build platform.
+scripts/*.bat text eol=crlf

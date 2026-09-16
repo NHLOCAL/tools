@@ -1,48 +1,37 @@
-<!-- template.html -->
 <!DOCTYPE html>
 <html lang="he" dir="rtl">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ארגז הכלים של NH Local</title>
-    <link rel="icon" type="image/png" href="favicon.png">
-    
-    <script src="https://unpkg.com/feather-icons"></script>
-    
-    <link rel="stylesheet" href="assets/site.css">
-    <script src="https://nhlocal.github.io/general-settings.js"></script>
+    {{ META }}
+    <meta name="theme-color" content="#eceee8">
+    <link rel="icon" type="image/png" href="{{ PREFIX }}favicon.png">
+    <link rel="preload" href="{{ PREFIX }}assets/fonts/assistant-variable.ttf" as="font" type="font/ttf" crossorigin>
+    <script src="{{ PREFIX }}assets/theme.js"></script>
+    <link rel="stylesheet" href="{{ PREFIX }}assets/site.css">
+    <script src="{{ PREFIX }}assets/site.js" defer></script>
 </head>
-<body>
-    <div class="container">
-        <header class="site-header">
-            <div class="site-title">
-                <i data-feather="terminal"></i>
-                <span>ארגז הכלים // NH Local</span>
-            </div>
-            <button id="theme-toggle" title="שנה ערכת נושא">
-                <i data-feather="sun" class="icon-sun"></i>
-                <i data-feather="moon" class="icon-moon"></i>
-            </button>
-        </header>
-        
-        <main id="content">
-            {{ CONTENT }}
-        </main>
-
-        <footer class="site-footer">
-            <div class="footer-links">
-                 <a href="https://github.com/{{ GITHUB_USERNAME }}/{{ GITHUB_REPO_NAME }}" target="_blank" rel="noopener noreferrer"><i data-feather="github"></i> קוד מקור</a>
-                 <a href="https://nhlocal.github.io" target="_blank" rel="noopener noreferrer"><i data-feather="archive"></i> פרויקטים</a>
-                 <a href="https://blog.ze-kal.top" target="_blank" rel="noopener noreferrer"><i data-feather="edit-3"></i> בלוג</a>
-                 <a id="contact-link" href="#"><i data-feather="mail"></i> צור קשר</a>
-            </div>
-            <div class="footer-credits">
-                <p>נוצר על ידי <strong>NH Local</strong>. מורשה תחת <a href="https://raw.githubusercontent.com/{{ GITHUB_USERNAME }}/{{ GITHUB_REPO_NAME }}/main/LICENSE" target="_blank" rel="noopener noreferrer">רישיון MIT</a>.</p>
-                <p>עיצוב בהשראת מסופים, פיקסל-ארט ומשחקי רטרו.</p>
-            </div>
-        </footer>
-    </div>
-
-    <script src="assets/site.js" defer></script>
+<body data-page="{{ PAGE }}">
+    <!-- THESIS: A useful Hebrew tool directory as a carefully made retro desktop.
+    OWN-WORLD: Paper grey, ink green, phosphor lime, crisp frames, offset shadows, Hebrew Assistant.
+    STORY: Discover a category, find a tool, open or download, inspect its source.
+    FIRST VIEWPORT: Compact navigation, large Hebrew title beside an interactive directory window; catalog below.
+    FORM: User-selected polished terminal and pixels; user preference overrides seed 36ff221b.
+    FINISH: unreviewed and undocumented is unfinished; this build ends with the finish review, the verdict, and DESIGN.md -->
+    <a class="skip-link" href="#content">דילוג לתוכן הראשי</a>
+    <header class="site-header"><div class="header-inner">
+      <a class="brand" href="{{ PREFIX }}index.html" aria-label="ארגז הכלים של NH Local, דף הבית"><span class="brand-symbol">{{ TERMINAL_ICON }}</span><span>ארגז הכלים<small dir="ltr">NH LOCAL</small></span></a>
+      <nav class="main-nav" id="main-nav" aria-label="ניווט ראשי">{{ NAV }}</nav>
+      <div class="header-actions"><a class="github-link" href="{{ REPO_URL }}" aria-label="קוד המקור ב-GitHub">{{ CODE_ICON }}<span dir="ltr">GitHub</span></a>
+      <button class="icon-button theme-toggle" id="theme-toggle" type="button" aria-label="שינוי ערכת נושא" hidden><span class="theme-moon">{{ MOON_ICON }}</span><span class="theme-sun">{{ SUN_ICON }}</span></button>
+      <button class="icon-button menu-toggle" id="menu-toggle" type="button" aria-label="פתיחת תפריט ניווט" aria-controls="main-nav" aria-expanded="false" hidden>{{ MENU_ICON }}</button></div>
+    </div></header>
+    <main id="content" tabindex="-1">{{ CONTENT }}</main>
+    <footer class="site-footer"><div class="footer-inner"><a class="brand" href="{{ PREFIX }}index.html"><span class="brand-symbol">{{ TERMINAL_ICON }}</span><span>ארגז הכלים<small dir="ltr">NH LOCAL</small></span></a>
+      <p>כלים שימושיים. קוד פתוח. מקום לרעיונות חדשים.</p><a class="back-top text-action" href="#content">חזרה למעלה{{ ARROW_ICON }}</a>
+      <nav class="footer-links" aria-label="קישורים נוספים"><a href="{{ REPO_URL }}">קוד מקור</a><a href="https://nhlocal.github.io">פרויקטים נוספים</a><a href="https://blog.ze-kal.top">בלוג</a><a id="contact-link" href="mailto:nh.local11@gmail.com?subject=פנייה%20מאתר%20ארגז%20הכלים">יצירת קשר</a></nav>
+      <div class="footer-bottom"><span>נוצר על ידי <bdi>NH Local</bdi></span><a href="{{ REPO_URL }}/blob/main/LICENSE">רישיון MIT</a><span dir="ltr">BUILT TO BE USEFUL<span class="footer-square" aria-hidden="true"></span></span></div></div></footer>
+    <div id="toast" class="toast" role="status" aria-live="polite" aria-atomic="true" hidden></div>
+    <dialog id="share-dialog" aria-labelledby="share-title"><div class="dialog-heading"><h2 id="share-title">קישור ישיר לכלי</h2><button class="icon-button" type="button" data-close-dialog aria-label="סגירת חלון">{{ CLOSE_ICON }}</button></div><p>ההעתקה האוטומטית אינה זמינה. אפשר להעתיק את הקישור מהשדה הבא.</p><label for="share-url">כתובת הקישור</label><input id="share-url" dir="ltr" readonly><form method="dialog"><button class="button primary">סיום</button></form></dialog>
 </body>
 </html>

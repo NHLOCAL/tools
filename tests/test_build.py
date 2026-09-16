@@ -3,10 +3,12 @@ import subprocess
 import tempfile
 import unittest
 import zipfile
+import sys
 from pathlib import Path
 
 
 ROOT = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(ROOT))
 
 
 def load_build():
@@ -34,7 +36,7 @@ class SkillCardTests(unittest.TestCase):
         ]
         self.assertEqual(headings[0], "סקילים")
         website = (ROOT / "index.html").read_text(encoding="utf-8")
-        self.assertLess(website.index("סקילים"), website.index("כלי דפדפן"))
+        self.assertLess(website.index('id="skill-heading"'), website.index('id="web-heading"'))
 
     def test_skill_card_contains_only_release_download_and_source_actions(self):
         line = "- [ימות המשיח - מערכות טלפוניות](skills/yemot-telephony/) - סקיל מקיף"

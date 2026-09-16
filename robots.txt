@@ -1,0 +1,10 @@
+User-agent: *
+Allow: /
+Disallow: /resources/
+Disallow: /wip/
+Disallow: /template.html
+Disallow: /docs/
+Disallow: /tests/
+Disallow: /site_builder/
+
+Sitemap: https://tools.ze-kal.top/sitemap.xml
